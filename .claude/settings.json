@@ -1,0 +1,49 @@
+{
+  "extraKnownMarketplaces": {
+    "Morrison-Lab": {
+      "source": {
+        "source": "github",
+        "repo": "Morrison-Lab/ai-config"
+      }
+    }
+  },
+  "enabledPlugins": {
+    "ai-config@Morrison-Lab": true
+  },
+  "permissions": {
+    "allow": [
+      "Bash(gh api repos/Morrison-Lab/dds/*)",
+      "Bash(gh pr view *)",
+      "Bash(gh pr list *)",
+      "Bash(gh pr diff *)",
+      "Bash(gh pr checks *)",
+      "Bash(gh issue view *)",
+      "Bash(gh issue list *)",
+      "Bash(gh run view *)",
+      "Bash(gh run list *)",
+      "Bash(quarto render *)",
+      "Bash(Rscript -e 'lintr::lint*)",
+      "Bash(typos *)",
+      "Bash(python3 tools/check_site.py*)",
+      "Bash(python3 tools/check_code_examples.py*)"
+    ]
+  },
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/ai-config-skills.sh",
+            "timeout": 300
+          },
+          {
+            "type": "command",
+            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/render-toolchain.sh",
+            "timeout": 60
+          }
+        ]
+      }
+    ]
+  }
+}

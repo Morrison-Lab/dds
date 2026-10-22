@@ -1,0 +1,108 @@
+# Build half of the PR-preview family, delegated to the reusable workflow in
+# Morrison-Lab/gha. Renders the site in the (possibly fork) PR context and
+# uploads it plus PR metadata as an artifact; preview-deploy.yml publishes that
+# artifact to gh-pages. Every job here is read-only, which is what makes fork
+# previews safe.
+#
+# IMPORTANT: keep this workflow's `name:` in sync with the `workflows:` list in
+# preview-deploy.yml and check-equation-renders.yml -- that is how those halves
+# find this run.
+name: Quarto Preview Build
+
+on:
+  pull_request:
+    types: [opened, reopened, synchronize, labeled, closed]
+    # Skip the render, about 20 minutes, on a PR that changes nothing the
+    # site is built from, as rme's preview does with a path filter. The site
+    # renders from chapters/, images/, the Quarto config, styles, filters,
+    # extensions and tools/ (the pre-render scripts and check_site.py); the
+    # files below are none of those.
+    # A change to this workflow itself still renders, to test it.
+    # No status check is required on main, so a PR with no run here is not
+    # blocked; preview-deploy, check-site and check-equation-renders start
+    # from this workflow's runs, so they do not run either.
+    paths-ignore:
+      - '.github/**'
+      - '!.github/workflows/preview.yml'
+      - '.claude/**'
+      - '*.md'
+      - '_typos.toml'
+      - '.gitignore'
+      - '.gitattributes'
+
+permissions:
+  pull-requests: read
+  contents: read
+
+jobs:
+  render:
+    name: build
+    permissions:
+      contents: read
+    uses: Morrison-Lab/gha/.github/workflows/preview.yml@v3
+    with:
+      render-profile: website
+
+      # `default` means one bare `quarto render`, which emits all three formats
+      # this site declares and keeps every format's supporting files.
+      #
+      # It must be spelled out. `formats` means the OPPOSITE of what it means in
+      # quarto-publish.yml, where empty is the bare render: here, empty selects a
+      # legacy branch that renders `pdf` and `html` as separate invocations and
+      # skips `revealjs` unless the PR carries a `preview:revealjs` label. Each
+      # such invocation prunes the supporting files of the formats it is not
+      # producing -- even with `--no-clean` -- so the last one wins and every
+      # other format is served without its CSS and JS.
+      formats: default
+
+      # `skip-docx` cannot drop Word from a `formats: default` render, and its
+      # default (true) makes the preview emit a notice saying so, which fails
+      # annotation-gate. False renders the same formats with no notice (#1169).
+      skip-docx: false
+
+      # Pages execute R chunks through knitr and Python chunks through
+      # reticulate, so the render needs those packages. reticulate provisions
+      # each page's Python packages itself, from the page's
+      # `reticulate::py_require()` call, so no Python setup is needed here.
+      # PDF handouts need a LaTeX toolchain, and the reusable workflow installs
+      # its extra TinyTeX packages by shelling out to `Rscript -e
+      # "tinytex::tlmgr_install(...)"`, so `tinytex` is on the list too.
+      # `downlit` and `xml2` serve `code-link: true`, which warns without them.
+      # `{julia}` chunks run through knitr's julia engine, which is the R
+      # package `JuliaCall`; `setup-julia` installs Julia itself, and the
+      # reusable workflow then installs JuliaCall's Julia dependencies (RCall
+      # and Suppressor) before the render. The Julia code uses only standard
+      # libraries, so there is no Julia project to instantiate.
+      # `setup-julia` exists only at gha `@v3`, which is why this file and
+      # publish.yml pin `@v3` while preview-deploy.yml and the other
+      # preview-family callers stay on `@v2`.
+      # A package a new R chunk loads goes here and in publish.yml.
+      tinytex: true
+      setup-julia: false
+      r-packages: |
+        any::knitr
+        any::rmarkdown
+        any::reticulate
+        any::downlit
+        any::xml2
+        any::tinytex
+
+      # No renv lockfile: the package list above is the dependency manifest.
+      use-renv: false
+      install-package: false
+      setup-chrome: false
+      # Prerequisite appendices planned as of 2026-09-25 will include content
+      # from public submodules (the shared prerequisite repositories and
+      # d-morrison/macros), so the render needs them checked out; with no
+      # submodules yet, this is a no-op. This route is actions/checkout's own
+      # `submodules:` input, which forwards no token, so it can only clone
+      # public submodules; a private one would need a different route.
+      # A PR can edit .gitmodules, so a PR build clones whatever URLs that PR
+      # names; the job holds no secrets and only read access.
+      submodules: 'recursive'
+
+      # Replaces the default apt stack, which is entirely R build dependencies
+      # plus a `pandoc` that Quarto ships its own copy of. The TikZ diagrams
+      # ship as SVG, and Quarto shells out to rsvg-convert to turn them back
+      # into PDF for the handout render.
+      apt-packages: librsvg2-bin

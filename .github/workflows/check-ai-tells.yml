@@ -1,0 +1,32 @@
+# Thin caller of Morrison-Lab/gha's reusable AI-tell scanner.
+# Ported from d-morrison/rme.
+#
+# Much of the prose here is AI-assisted, so a density check on what a PR adds
+# is a useful second pair of eyes on top of review. Warn-only, as in rme: the
+# tell list includes words such as `robust` that are legitimate technical
+# terms in machine learning, and density is measured per 1,000 words, so one
+# such word in a short diff can clear the threshold on arithmetic alone.
+#
+# rme gates this job with a paths-filter job plus a bypass workflow, so that a
+# required check still reports on PRs that touch no prose. This repository
+# has no required checks, so a plain `paths:` trigger filter does the same job.
+name: Check AI Tells
+
+on:
+  pull_request:
+    paths:
+      - '**.md'
+      - '**.qmd'
+  workflow_dispatch:
+
+jobs:
+  check-ai-tells:
+    permissions:
+      contents: read
+    uses: Morrison-Lab/gha/.github/workflows/check-ai-tells.yml@v2
+    with:
+      # Scan only the lines this PR adds. The upstream default is a whole-repo
+      # scan. Empty on `workflow_dispatch`, which scans the whole tree.
+      base-ref: ${{ github.event.pull_request.base.sha }}
+      paths-ignore: '_extensions/**'
+      fail: false

@@ -1,0 +1,66 @@
+# Settings shared by every render profile. The profile itself (project type,
+# page list, navbar, and output formats) lives in `_quarto-website.yml`; adding
+# a second profile later -- a book build, say -- means adding
+# `_quarto-<name>.yml` beside it and listing the name here.
+profile:
+  default: website
+
+# Vendored from `Morrison-Lab/rme` under `_extensions/`, rather than installed
+# with `quarto add`, so a clone renders without a network fetch and the exact
+# filter version is recorded here. `div-anchors` gives theorem and proof divs
+# the hover anchor that Quarto's `anchor-sections` already gives headings;
+# `equation-anchors` does the same for numbered equations, which is what makes
+# an individual equation linkable from another chapter.
+# `code-language-labels` is vendored from `d-morrison/code-language-labels`
+# (version in its `_extension.yml`); it labels each highlighted code block with its language (R,
+# Python, Julia, ...) in the HTML and revealjs formats, and leaves PDF alone.
+filters:
+  - d-morrison/div-anchors
+  - d-morrison/equation-anchors
+  - d-morrison/code-language-labels
+  - latex-macros/citations/numeric-citations.lua
+
+# Embedded videos are cross-referenced as `@vid-...`, with their own "Video N"
+# counter, so a video never takes a number from the figures. Wrap the
+# `{{< video >}}` shortcode in a `::: {#vid-name}` div with a caption.
+crossref:
+  custom:
+    - kind: float
+      key: vid
+      latex-env: video
+      reference-prefix: Video
+      caption-prefix: Video
+      latex-list-of-description: Video
+
+editor:
+  markdown:
+    wrap: none
+
+execute:
+  freeze: auto
+
+# Sources cited from the chapters with `@citekey`. Quarto renders the formatted
+# entry at the end of whichever page cites it, so there is no separate
+# references page to keep in the render list.
+#
+# `references.bib` is shared by every chapter, so most of its entries are not
+# cited yet: each was verified against the publisher or against DOI content
+# negotiation when it was added, and they are kept together rather than
+# arriving one at a time with the chapter that first needs them. An uncited
+# entry costs nothing at render time, because Quarto only emits the entries a
+# page actually cites.
+bibliography: references.bib
+csl: latex-macros/citations/numeric-author.csl
+
+# `_quarto-website.yml` supplies the per-format options, but Quarto's
+# `readInputTargetIndex()` (`src/project/project-index.ts`) reads bare
+# `_quarto.yml` without merging the active profile and rejects the cached
+# `.quarto/idx/` entry (`missingReason: "formats"`) unless `formatKeys(_quarto.yml)`
+# matches `index.projectFormats`. Without these three keys, every cross-chapter
+# `[text](other-chapter.qmd#...)` link misses `inputTargetIndexCache` and
+# re-parses the target chapter and its includes from scratch.
+# `tools/skip-pdf-in-previews.py` strips `pdf:` here alongside `_quarto-website.yml`.
+format:
+  html: default
+  revealjs: default
+  pdf: default

@@ -1,0 +1,44 @@
+# Flags source lines that Pandoc would read as a lettered or roman list
+# marker, such as a continuation line opening with "(C) " inside a list item,
+# which renders as a renumbered list item with no warning (lds#370). Runs
+# tools/check_list_markers.py and its self-test, which pins the check against
+# a vacuous pass.
+#
+# Needs only the source files (no Quarto render), so it is a plain job, like
+# check-course-overview-numbers.yml.
+name: Check list markers
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+    paths:
+      - chapters/**
+      - tools/check_list_markers.py
+      - tools/tests/test_check_list_markers.py
+      - .github/workflows/check-list-markers.yml
+  push:
+    branches:
+      - main
+    paths:
+      - chapters/**
+      - tools/check_list_markers.py
+      - tools/tests/test_check_list_markers.py
+      - .github/workflows/check-list-markers.yml
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - name: Self-test the checker
+        run: python3 tools/tests/test_check_list_markers.py
+
+      - name: Check the chapters
+        run: python3 tools/check_list_markers.py

@@ -1,0 +1,116 @@
+<script>
+// Language dropdown: picks which tab is open in every code tabset that uses
+// group="language" (R, Python, ...). Quarto already syncs those tabs on a page
+// and keeps the last click under "quarto-persistent-tabsets-data"; this control
+// writes that same entry and clicks a matching tab, so the choice follows the
+// reader to every page and also survives a reload. "Page default" clears the
+// entry and opens the language of the first tabset's first tab everywhere
+// (Quarto syncs by label, so tabsets that open on different languages cannot
+// each be restored).
+// The control is added only to a page that has a language tabset, and its label
+// follows direct clicks on the tabs. Copied to the lab's other notes sites.
+(function () {
+  var STORE = "quarto-persistent-tabsets-data";
+  var GROUP = "language";
+  function read() {
+    try { return JSON.parse(localStorage.getItem(STORE) || "{}") || {}; } catch (e) { return {}; }
+  }
+  function write(data) {
+    try { localStorage.setItem(STORE, JSON.stringify(data)); } catch (e) {}
+  }
+  function tabs() {
+    return Array.prototype.slice.call(
+      document.querySelectorAll("div[data-group='" + GROUP + "'] a[id^='tabset-']"));
+  }
+  // Quarto keys its tab sync on a tab's innerHTML, so the stored value is the innerHTML.
+  function value(tab) { return tab.innerHTML; }
+  function text(tab) { return tab.textContent.trim(); }
+  function labels(all) {
+    var seen = [];
+    all.forEach(function (t) {
+      if (!seen.some(function (s) { return s.value === value(t); })) {
+        seen.push({ value: value(t), text: text(t) });
+      }
+    });
+    return seen;
+  }
+  // The language open now on this page, or null when the tabsets are on their defaults.
+  function current(all) {
+    var stored = read()[GROUP];
+    var onPage = all.some(function (t) { return value(t) === stored; });
+    return onPage ? stored : null;
+  }
+  function mark(wrap, all) {
+    var choice = current(all);
+    var hit = all.filter(function (t) { return value(t) === choice; })[0];
+    wrap.querySelector(".language-picker-label").textContent = hit ? text(hit) : "Default";
+    wrap.querySelectorAll("[data-language-choice]").forEach(function (b) {
+      var on = b.dataset.languageChoice === (choice === null ? "" : choice);
+      b.classList.toggle("active", on);
+      b.setAttribute("aria-checked", on ? "true" : "false");
+    });
+  }
+  function choose(wrap, all, choice) {
+    var data = read();
+    if (choice) { data[GROUP] = choice; } else { delete data[GROUP]; }
+    write(data);
+    if (choice) {
+      // A click runs Quarto's own handler, which syncs every tabset in the group.
+      var hit = all.filter(function (t) { return value(t) === choice; })[0];
+      if (hit) hit.click();
+    } else {
+      // Quarto syncs by label, so opening the first tabset's first tab opens
+      // that language everywhere.
+      var first = all[0];
+      // Click even when it is already active, so Quarto still syncs the others.
+      if (first) first.click();
+      // Clicking stored the first tab's label, so clear the entry again.
+      var d = read();
+      delete d[GROUP];
+      write(d);
+    }
+    mark(wrap, all);
+  }
+  function item(v, label) {
+    var li = document.createElement("li");
+    li.setAttribute("role", "none");
+    var b = document.createElement("button");
+    b.type = "button";
+    b.className = "dropdown-item";
+    b.setAttribute("role", "menuitemradio");
+    b.setAttribute("aria-checked", "false");
+    b.dataset.languageChoice = v;
+    b.textContent = label;
+    li.appendChild(b);
+    return li;
+  }
+  document.addEventListener("DOMContentLoaded", function () {
+    var all = tabs();
+    if (!all.length) return;
+    var anchor = document.querySelector(".theme-picker") ||
+      document.querySelector(".quarto-color-scheme-toggle");
+    if (!anchor) return;
+    var wrap = document.createElement("div");
+    wrap.className = "language-picker dropdown";
+    wrap.innerHTML =
+      '<button type="button" class="nav-link dropdown-toggle px-1 border-0 bg-transparent" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Code language"><i class="bi bi-code-slash"></i> <span class="language-picker-label"></span></button>' +
+      '<ul class="dropdown-menu dropdown-menu-end" role="menu"></ul>';
+    var menu = wrap.querySelector("ul");
+    menu.appendChild(item("", "Page default"));
+    labels(all).forEach(function (l) { menu.appendChild(item(l.value, l.text)); });
+    anchor.parentNode.insertBefore(wrap, anchor);
+    wrap.addEventListener("click", function (e) {
+      var b = e.target.closest("[data-language-choice]");
+      if (b) choose(wrap, all, b.dataset.languageChoice || null);
+    });
+    // Quarto's click handler on each tab (attached on pageshow, after this
+    // listener) updates the stored entry, so re-read the label once Quarto's
+    // handler has run. Quarto also re-applies the stored tab on every pageshow,
+    // including a restore from the back/forward cache, so re-read then too.
+    function refresh() { setTimeout(function () { mark(wrap, all); }, 0); }
+    all.forEach(function (t) { t.addEventListener("click", refresh); });
+    window.addEventListener("pageshow", refresh);
+    mark(wrap, all);
+  });
+})();
+</script>

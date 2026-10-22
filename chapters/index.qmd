@@ -1,0 +1,49 @@
+---
+title: "Deep Learning"
+subtitle: "CSCI 481"
+format:
+  html: default
+  revealjs:
+    output-file: index-slides.html
+  pdf:
+    output-file: index-handout.pdf
+---
+
+# Preface {.unnumbered}
+
+{{< slidebreak >}}
+
+This website collects the lecture notes for
+[CSCI 481](https://morrison-lab.github.io/swc/course/CSCI-481.html),
+"Deep Learning",
+as taught in Spring Quarter 2027
+at [Western Washington University](https://www.wwu.edu/)
+by [Douglas Ezra Morrison](https://d-morrison.github.io/).
+
+{{< slidebreak >}}
+
+The course follows the module sequence of
+[Brian Hutchinson](https://cs.wwu.edu/hutchib2)'s CSCI 481/581,
+which he taught from Winter 2021 to Winter 2026.
+Each chapter's collapsed **Source** note records what it draws on.
+
+{{< slidebreak >}}
+
+CSCI 481 builds on DATA 371/471, Machine Learning.
+Where these notes use an idea that course covers,
+such as generalization, gradient descent, or logistic regression,
+they link to its definition in
+[*Machine Learning for Data Science* (lds)](https://morrison-lab.github.io/lds/)
+rather than defining it again.
+
+{{< slidebreak >}}
+
+The [Calendar](calendar.qmd) lists the topics week by week,
+and the [Syllabus](syllabus.qmd) gives the course's policies.
+The main reference text is *Deep Learning* [@goodfellow2016deep],
+which can be read at no cost on [the book's webpage](https://www.deeplearningbook.org/).
+
+## References {.unnumbered}
+
+::: {#refs}
+:::

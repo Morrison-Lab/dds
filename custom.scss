@@ -1,0 +1,316 @@
+/*-- scss:rules --*/
+
+/* Fix inline code background colour in dark mode.
+Quarto's dark CSS overrides the Bootstrap default for code in p/li/td, but
+misses headings and other elements. The correct dark-mode selector is
+body.quarto-dark, not [data-bs-theme="dark"]. */
+body.quarto-dark code:not(pre > code) {
+  background-color: #404040;
+  color: #e6e6e6;
+}
+
+/* `\begin{center}` in the LaTeX sources converts to a div with this class. */
+.center {
+  text-align: center;
+}
+
+/* Highlighted phrases carried over from the notes' `\colorbox` commands.
+The background colour is written inline on each span, carried over from the
+LaTeX `colour!percent` mixes of the original notes; those mixes are all pale,
+so the text colour is pinned here rather than inherited -- otherwise the dark
+theme's light body text would sit on a light highlight and vanish. */
+.hl {
+  color: #121212;
+  padding: 0.15em 0.3em;
+  border-radius: 3px;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+/* The block-level counterpart: a boxed key equation or statement. Deprecated in
+favor of native Quarto callouts (e.g. `::: {.callout-note}`) and theorem divs
+(`::: {#thm-...}`); retained for backward compatibility.
+Most legacy instances carry an inline pale background-color; for those without an
+explicit background, provide a light fallback in light mode and adapt to the
+dark theme under body.quarto-dark (#254). */
+.keybox {
+  color: #121212;
+  padding: 0.6rem 0.9rem;
+  margin: 1rem 0;
+  border-radius: 5px;
+  overflow-x: auto;
+}
+
+.keybox:not([style*="background-color"]) {
+  background-color: #f8f9fa;
+  border-left: 4px solid #2780e3;
+}
+
+body.quarto-dark .keybox:not([style*="background-color"]) {
+  background-color: #2b3035;
+  border-left-color: #375a7f;
+  color: #f8f9fa;
+}
+
+.keybox p:last-child {
+  margin-bottom: 0;
+}
+
+/* Figures: the scanned PNG files under images/figures/ and the diagrams under
+images/tikz/. Both are dark ink on a transparent or white background, so the
+dark theme needs a light plate behind them; without one the diagrams' strokes
+disappear into the page. */
+.figure-plate {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Quarto copies the class onto the figure container as well as the image; only
+the image gets the plate, or the caption's pale dark-mode text lands on it. */
+body.quarto-dark img.figure-plate {
+  background-color: #fbfbfb;
+  border-radius: 6px;
+  padding: 0.5rem;
+}
+
+.tikz-figure {
+  display: inline-block;
+}
+
+/* In a narrow panel column the number box beside a slider shrank to 56px,
+which cut a value like -0.05 short. Keep it wide enough to read. The floor
+takes width from the slider, so it applies only on screens wide enough to
+spare it; on a phone it would leave the slider about 20px wide. */
+@media (min-width: 768px) {
+  .widget-panel input[type="number"] {
+    min-width: 4.5em;
+  }
+}
+
+/* Phone widths (lds#114). At 375px the course-overview page was 580px wide:
+long unbroken URLs in links and the reference list, a data table, and a wide
+display equation pushed past the viewport, so the whole page scrolled
+sideways. Let a URL break anywhere, and let a table or display equation scroll
+on its own instead of widening the page. The widget panels now stack their
+controls above the plot (lds#317); below the `md` breakpoint any column still
+takes the panel's full width, and a wrapped panel never pushes the page wider. */
+main a,
+.csl-entry,
+main h2,
+main h3,
+main h4 {
+  overflow-wrap: anywhere;
+}
+
+/* A heading's anchor icon follows its last word with no break opportunity,
+so a heading that fills the line pushes the icon past the viewport. A
+zero-width space gives the line a place to break before it. */
+main .anchored > .anchorjs-link::before {
+  content: "\200B";
+}
+
+/* A display equation wider than the column scrolls on its own. Two things
+otherwise stop it shrinking to the column (lds#394): MathJax gives a numbered
+equation an inline `min-width`, which only `!important` overrides, and a
+callout's body is a flex item, whose default `min-width: auto` lets a wide
+equation inside a theorem or exercise stretch the whole callout. */
+main mjx-container[display="true"] {
+  max-width: 100%;
+  min-width: 0 !important;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+main .callout-body > .callout-body-container {
+  min-width: 0;
+}
+
+/* An example's number and title sit in its folding bar
+(filters/exm-callout-title.lua), so the body repeats neither them nor the
+§ anchor: the bar's "Example N" link is the anchor (lds#635). */
+.callout-exm .callout-body :is(.theorem-title, .div-anchor) {
+  display: none;
+}
+
+/* Quarto prefixes a titled callout's bar with a screen-reader-only copy of the
+type key, "Exm". The bar's visible "Example N" already names the type. */
+.callout-exm .callout-title-container > .screen-reader-only {
+  display: none;
+}
+
+/* A table is only as wide as its content needs, up to the column, instead of
+ * stretching to the full column width. Bootstrap sets `.table { width: 100% }`,
+ * which spread a short table across the page. `fit-content` gives a table its
+ * natural width when that fits the column and the column's width when it does
+ * not, so cells wrap only when they must. A table narrower than the column is
+ * centred. A table whose narrowest layout still overflows scrolls inside its own
+ * box instead of widening the page, at every screen width.
+ *
+ * The rules apply on screen only: a block table loses its repeating header rows
+ * in print, so print keeps the real table. A `<col>` width, such as one from
+ * `tbl-colwidths`, is left alone. A block table can also lose its table role in
+ * some browsers, so `table-roles.html` restores it. The caption stays a real
+ * table caption, so `caption-side` still works and the rows fill the table when
+ * the caption is the widest part. The caption takes its natural width, up to no
+ * wider than a comfortable line, so a long caption does not stretch a narrow
+ * table across the whole column. The cap uses the viewport, not a percentage: a
+ * percentage `max-width` on the caption is cyclic while the table is being
+ * sized, and stretched the table to the full column. `100vw - 6rem` keeps the
+ * caption inside the column on a phone, callouts included. The pagedtable
+ * widget (`df-print: paged`) sizes its own table to fill its box, so the
+ * rules leave that table alone. */
+@media screen {
+  main table:not(.pagedtable table),
+  main table.table:not(.pagedtable table) {
+    display: block;
+    width: fit-content;
+    max-width: 100%;
+    margin-inline: auto;
+    overflow-x: auto;
+  }
+
+  main table:not(.pagedtable table) > caption {
+    width: max-content;
+    max-width: min(24em, calc(100vw - 6rem));
+  }
+}
+
+@media (max-width: 767.98px) {
+  .widget-panel {
+    flex-wrap: wrap;
+  }
+
+  .widget-panel > .column {
+    flex: 1 1 100%;
+    width: 100% !important;
+  }
+}
+
+/* Interactive widgets sit on a light panel (`.widget-panel`), so their text is
+dark. The dark theme gives text boxes a dark background, which hid the numbers
+beside each slider; keep the boxes light inside a panel. The reveal.js theme
+already leaves these boxes white, so the slides need no counterpart. */
+body.quarto-dark .widget-panel input[type="number"],
+body.quarto-dark .widget-panel input[type="text"],
+body.quarto-dark .widget-panel select {
+  background-color: #fff;
+  color: #222;
+  border: 1px solid #adb5bd;
+}
+
+/* The "Draw a new ..." buttons are Observable Inputs.button elements, which
+Quarto styles as `.btn-quarto` on a dark grey background (#343a40).
+The panel's dark text colour is inherited by the button, which left
+dark text on dark grey, about 1.5 to 1; give the button white text instead. */
+.widget-panel button.btn-quarto {
+  color: #fff;
+}
+
+/* Tables inside light widget panels: Quarto's dark theme sets
+`div.observablehq table thead tr th { background-color: var(--bs-body-bg); }`
+which resolves to dark (#222), hiding the table header against the light
+panel (#275). Pin table text and headers to dark ink with transparent backgrounds. */
+.widget-panel table {
+  color: #222;
+}
+
+.widget-panel table thead tr th {
+  background-color: transparent;
+  color: #222;
+  border-bottom: 2px solid #adb5bd;
+}
+
+.widget-panel table th,
+.widget-panel table td {
+  color: #222;
+  border-color: #dee2e6;
+}
+
+/* Slide decks reuse the same classes, and the reveal.js dark theme needs the
+same plate treatment as the website's dark mode. */
+/* Quarto's `.smaller` shrinks a whole slide only when it is on the slide's
+heading. On a div it shrinks just that div, so a long table can be compact
+on a slide that a `{{< slidebreak >}}` started, which takes no classes. */
+.reveal div.smaller {
+  font-size: 0.7em;
+}
+
+.reveal img.figure-plate {
+  background-color: #fbfbfb;
+  border-radius: 6px;
+  padding: 0.5rem;
+}
+
+/* Asides and parenthetical references, written as `::: notes` divs. Quarto
+renders one as `<div class="notes">` in HTML and as `<aside class="notes">` in
+the slides, where Reveal shows it in speaker view only. Without a rule the
+HTML div is indistinguishable from body text, so the aside AUTHORING.md
+describes does not happen. Scoped to the `div` so it can never match the
+slides' `aside` and unhide a speaker note. No background colour here:
+the two themes want opposite ones, which is why `.hl` above has to
+pin a dark text colour on pale mixes. A border and reduced opacity need neither. */
+div.notes {
+  border-left: 3px solid #9aa0a6;
+  padding: 0.1rem 0 0.1rem 0.9rem;
+  margin: 1rem 0;
+  font-size: 0.92em;
+  opacity: 0.85;
+}
+
+div.notes p:last-child {
+  margin-bottom: 0;
+}
+
+/* Blockquotes in dark mode: ensure high contrast text and a distinct left border (#254). */
+body.quarto-dark blockquote {
+  color: #e6e6e6;
+  border-left-color: #375a7f;
+}
+
+
+/* Quarto's secondary grey is too dim on the dark page. */
+body.quarto-dark .code-tools-button,
+body.quarto-dark details > summary,
+body.quarto-dark .breadcrumb-item.active,
+body.quarto-dark .breadcrumb-item.active a,
+body.quarto-dark .pagedtable-index-current,
+body.quarto-dark .pagedtable-index-separator-left,
+body.quarto-dark .pagedtable-index-separator-right {
+  color: #adb5bd;
+}
+
+/* Number the lines of every code block, so a line can be named in class.
+   Quarto's own `code-line-numbers: true` would do this, but downlit cannot link
+   R functions to their documentation (`code-link`) in a numbered block, so the
+   numbers are drawn here instead, from the one <span> Quarto writes per line.
+   The ::before text is not part of the code, so copying a block leaves it out.
+   Slide decks number their lines themselves (`pre.number-lines`). */
+pre.sourceCode:not(.number-lines) > code {
+  counter-reset: code-line;
+}
+
+pre.sourceCode:not(.number-lines) > code > span {
+  counter-increment: code-line;
+}
+
+pre.sourceCode:not(.number-lines) > code > span::before {
+  content: counter(code-line);
+  /* Empty alternative text: screen readers skip the number. Browsers that
+     do not know this syntax drop the line and keep the one above. */
+  content: counter(code-line) / "";
+  display: inline-block;
+  width: 2em;
+  margin-right: 1em;
+  text-align: right;
+  text-indent: 0;
+  opacity: 0.5;
+  user-select: none;
+}
+
+/* Land a link target in the upper-middle of the view, not flush against the
+   fixed navbar (60px), where it looks missed. scroll-margin-top applies to
+   every in-page jump and to the scrollIntoView() in anchor-landing.html. */
+:target,
+:is(h1, h2, h3, h4, h5, h6, div, section, figure, table, span)[id] {
+  scroll-margin-top: 30vh;
+}
