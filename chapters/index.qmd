@@ -25,7 +25,6 @@ by [Douglas Ezra Morrison](https://d-morrison.github.io/).
 The course follows the module sequence of
 [Brian Hutchinson](https://cs.wwu.edu/hutchib2)'s CSCI 481/581,
 which he taught from Winter 2021 to Winter 2026.
-Each chapter's collapsed **Source** note records what it draws on.
 
 {{< slidebreak >}}
 

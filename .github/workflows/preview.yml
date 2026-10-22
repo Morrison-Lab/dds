@@ -68,14 +68,8 @@ jobs:
       # its extra TinyTeX packages by shelling out to `Rscript -e
       # "tinytex::tlmgr_install(...)"`, so `tinytex` is on the list too.
       # `downlit` and `xml2` serve `code-link: true`, which warns without them.
-      # `{julia}` chunks run through knitr's julia engine, which is the R
-      # package `JuliaCall`; `setup-julia` installs Julia itself, and the
-      # reusable workflow then installs JuliaCall's Julia dependencies (RCall
-      # and Suppressor) before the render. The Julia code uses only standard
-      # libraries, so there is no Julia project to instantiate.
-      # `setup-julia` exists only at gha `@v3`, which is why this file and
-      # publish.yml pin `@v3` while preview-deploy.yml and the other
-      # preview-family callers stay on `@v2`.
+      # This site has no Julia, so `setup-julia` is off. lds pins `@v3` for
+      # that input; dds keeps the same pin so the two sites stay in step.
       # A package a new R chunk loads goes here and in publish.yml.
       tinytex: true
       setup-julia: false
@@ -91,10 +85,7 @@ jobs:
       use-renv: false
       install-package: false
       setup-chrome: false
-      # Prerequisite appendices planned as of 2026-09-25 will include content
-      # from public submodules (the shared prerequisite repositories and
-      # d-morrison/macros), so the render needs them checked out; with no
-      # submodules yet, this is a no-op. This route is actions/checkout's own
+      # The render needs the public latex-macros submodule checked out. This route is actions/checkout's own
       # `submodules:` input, which forwards no token, so it can only clone
       # public submodules; a private one would need a different route.
       # A PR can edit .gitmodules, so a PR build clones whatever URLs that PR

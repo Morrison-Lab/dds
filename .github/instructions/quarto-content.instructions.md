@@ -16,7 +16,7 @@ description: "Use when editing Quarto chapters, subfiles, slides, handouts, or m
   and must not contain a references section.
 - Use Quarto div wrappers for figures and tables.
 - Never type or paste output, and do not hard-code computed values in narrative text.
-  Run the code in a `{r}`, `{python}` or `{julia}` chunk on a local copy of the data in `chapters/data/`,
+  Run the code in a `{python}` chunk on a local copy of the data in `chapters/data/`,
   and cite results with inline R.
 - Read `AUTHORING.md` before adding or restructuring lecture content:
   exercises and solutions come in pairs,

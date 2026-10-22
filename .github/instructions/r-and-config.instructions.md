@@ -7,13 +7,11 @@ description: "Use when editing R or Python source, Quarto configuration, or GitH
 
 - Check [_quarto.yml](../../_quarto.yml), [_quarto-website.yml](../../_quarto-website.yml)
   and the relevant workflow file before changing render or CI behavior.
-- Pages execute R, Python and Julia code, so every render needs R
-  with `knitr`, `rmarkdown`, `reticulate` and the packages the R chunks load,
-  plus `JuliaCall` and `julia` on `PATH` for pages with `{julia}` chunks.
+- Pages execute Python (PyTorch) through R's `reticulate`, so every render needs R
+  with `knitr`, `rmarkdown` and `reticulate`.
   Python packages are declared on the page with `reticulate::py_require()`,
   and `reticulate` provisions them.
-  Julia chunks run through JuliaCall's default knitr engine;
-  a local render needs `export R_LD_LIBRARY_PATH="$(R RHOME)/lib"` first, which CI sets through gha.
+  This site has no Julia, unlike lds.
   The preview and publish workflows install the R packages;
   a new R package a chunk needs goes into both workflows in the same PR.
 - For changed `.R` files, and `.qmd` files with R code,

@@ -621,7 +621,7 @@ jobs:
 
         The dividing line is **disclosure, not audience.** "Students see it" does not
         put something here. Ask instead whether it reveals an answer to something
-        graded. If it does, it belongs in `mlg`, however student-facing it is.
+        graded. If it does, it belongs in `dlg`, however student-facing it is.
 
         When a diff moves material between the two repositories, check the
         direction: material leaving this repository is nearly always safe, and

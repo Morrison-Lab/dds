@@ -11,7 +11,7 @@ project:
     - tools/set-mtimes-from-git.py
     - tools/build_math_macros.py
     - tools/provision-python.R
-    # Writes chapters/dependency-graph.json for chapters/dependency-graph.js (#1189).
+    # Writes chapters/dependency-graph.json for chapters/dependency-graph.js (lds#1189).
     - tools/build_dependency_graph.py --site dds --out chapters/dependency-graph.json
     # Runs last because its inner `quarto render --to pdf` pass needs the
     # extensions, macros, Python environment and dependency graph built above,
@@ -19,7 +19,7 @@ project:
     # reports as modified once `pdf:` is stripped in place.
     - tools/skip-pdf-in-previews.py
   # GitHub Pages serves the root 404.html for any missing path; this one sends
-  # a closed PR preview's pages to the main site (#244).
+  # a closed PR preview's pages to the main site (lds#244).
   resources:
     - 404.html
     - chapters/dependency-graph.js

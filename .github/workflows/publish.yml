@@ -46,8 +46,7 @@ jobs:
     uses: Morrison-Lab/gha/.github/workflows/quarto-publish.yml@v3
     with:
       render-profile: website
-      # Planned prerequisite appendices will include content from public
-      # submodules; see the matching comment in preview.yml. No-op until then.
+      # The render needs the public latex-macros submodule; see preview.yml.
       checkout-submodules: true
       # No `formats:` input, deliberately.
       # Here empty means one bare `quarto render`, which keeps `html` and
@@ -59,7 +58,7 @@ jobs:
       # handouts (`_site/chapters/*-handout.pdf`) in a separate `--to pdf`
       # process during `pre-render` and then strips `pdf:` so the outer render
       # builds only `html` and `revealjs`, keeping Deno under the 16 GB runner
-      # memory limit across all 34 chapters.
+      # memory limit (lds measured this across its 34 chapters).
       #
       # Do NOT copy `formats: default` across from preview.yml: `default` is a
       # literal this workflow does not recognize, and would be passed straight
@@ -87,7 +86,7 @@ jobs:
       # saved cache also seeds each new PR's preview.
       freeze-cache: true
       # The default 12 GB V8 heap ceiling leaves too little of the 16 GB runner
-      # for Deno's native memory, R, Python, Julia and LuaLaTeX, so V8 delays
+      # for Deno's native memory, R, Python and LuaLaTeX, so V8 delays
       # full garbage collection until the Linux OOM killer stops the runner
       # (`exit code 143`).
       # Cap V8 at 10 GB so it collects before system RAM fills.

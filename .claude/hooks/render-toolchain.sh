@@ -1,12 +1,10 @@
 #!/bin/bash
 # SessionStart hook: install the render toolchain in cloud sessions.
 #
-# A fresh cloud container has R, Quarto and Julia but not what a render of
-# this site needs, and each gap fails differently (measured 2026-10-04):
+# Copied from lds, minus its Julia step: this site has no Julia.
+# A fresh cloud container has R and Quarto but not what a render of
+# this site needs, and each gap fails differently (measured 2026-10-04 in lds):
 # - no knitr or rmarkdown, so any page with a code chunk fails at once;
-# - no RCall or Suppressor for JuliaCall, and the Julia package server
-#   (pkg.julialang.org) is refused by the agent proxy, so `Pkg.add` fails
-#   until JULIA_PKG_SERVER is empty and Pkg reads the registry from GitHub;
 # - no rsvg-convert, so a PDF handout with an SVG figure fails;
 # - no TinyTeX (the installers are refused), or one that is not on PATH;
 # - no typos or lintr for the pre-commit checklist.
@@ -113,15 +111,6 @@ install() {
     if (length(still)) stop("not installed: ", paste(still, collapse = ", "))
   ' "${r_pkgs[@]}" || status=1
 
-  if command -v julia >/dev/null; then
-    echo "== Julia: RCall and Suppressor for JuliaCall"
-    # RCall's build loads R, so give it the same library path a render uses.
-    R_LD_LIBRARY_PATH="$(R RHOME)/lib" JULIA_PKG_SERVER="" julia -e '
-      import Pkg
-      need = filter(p -> Base.find_package(p) === nothing, ["RCall", "Suppressor"])
-      isempty(need) || Pkg.add(need)
-    ' || status=1
-  fi
 
   if [ ! -d "$HOME/.TinyTeX/bin/x86_64-linux" ] && ! command -v tlmgr >/dev/null; then
     echo "== TinyTeX"
@@ -152,7 +141,7 @@ install() {
 }
 
 # One install at a time: SessionStart also fires on resume, clear and compact,
-# and a second run would race the first on R's, Julia's and apt's locks.
+# and a second run would race the first on R's and apt's locks.
 # The installer holds an flock on $lock for as long as it runs; the kernel
 # drops it when the process exits or dies, so no lock is ever left stale.
 # If a firing slips in between the probe and the installer taking the lock,
@@ -175,4 +164,4 @@ else
   started="is already being installed by an earlier firing of this hook"
 fi
 
-say "The render toolchain (R packages from the CI workflows, JuliaCall's Julia packages, TinyTeX with luacolor and lua-ul, rsvg-convert, typos) $started; log: $log. Do not render until $done_marker exists: before then, a page with code fails for want of knitr, and a Julia chunk sends JuliaCall to the blocked package server. If the log ends with '== FAILED', fix that step rather than skipping a check. Before rendering, run: $exports"
+say "The render toolchain (R packages from the CI workflows, TinyTeX with luacolor and lua-ul, rsvg-convert, typos) $started; log: $log. Do not render until $done_marker exists: before then, a page with code fails for want of knitr. If the log ends with '== FAILED', fix that step rather than skipping a check. Before rendering, run: $exports"

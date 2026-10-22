@@ -211,7 +211,7 @@ Each applies to every page, not only the one that prompted it.
   "next week" or "the last week of the course".
   Point to the page that covers a topic instead,
   as in "[Gradient Descent](gradient-descent.qmd) starts on that."
-  Each reshuffle of the schedule left such references stale (#418, #424).
+  Each reshuffle of the schedule left such references stale (lds#418, lds#424).
   Citing a source's own week numbering ("the Week 6 lecture notes") is not a schedule reference.
   Reading order is fine ("the next chapter", "so far"),
   but say "these notes", not "the course", when the order is the point:
@@ -229,7 +229,8 @@ Each applies to every page, not only the one that prompted it.
   and [`Morrison-Lab/ISLP`](https://github.com/Morrison-Lab/ISLP)
   are the first place to look for ideas.
 - **The course is CSCI 481**, and Spring 2027 has no CSCI 581 section (2026-10-22).
-  Never write "481/581".
+  Never call this course "481/581";
+  Brian Hutchinson's cross-listed course keeps that name when it is his course being named.
 - **Use Quarto's own mechanism, set up the way rme does it, before writing a new one** (2026-09-24).
   The last-modified date is the example: `date: last-modified` at the project level.
 - **PDF handouts are shared on their own through Canvas**, so:

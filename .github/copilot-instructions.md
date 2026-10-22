@@ -298,7 +298,7 @@ Theorem-type divs are `#thm-`, `#lem-`, `#cor-`, `#prp-`, `#cnj-`, `#def-`, `#ex
 - Do not hide code from readers without a good reason,
   and say the reason in a comment in the chunk.
   A computation whose results the prose cites inline is not one:
-  readers should be able to see how those numbers were made (Ezra, 2026-10-05, on #401).
+  readers should be able to see how those numbers were made (Ezra, 2026-10-05, on lds#401).
   Loading packages and setting options are not reasons either:
   readers need them to run the code themselves.
   One reason that does hold is code that would give away an exercise's answer before its solution.
@@ -307,7 +307,7 @@ Theorem-type divs are `#thm-`, `#lem-`, `#cor-`, `#prp-`, `#cnj-`, `#def-`, `#ex
   hide only the lines that give the answer away, give that chunk a `label`,
   and show it in the solution with a chunk that has `#| ref.label: <label>`
   and `#| eval: false`, so both copies are the same code
-  (`chapters/backpropagation.qmd` and `_sol-relu-fix.qmd` do this, #417).
+  (lds's `chapters/backpropagation.qmd` and `_sol-relu-fix.qmd` do this, lds#417).
 
 ## Figures and Tables
 
