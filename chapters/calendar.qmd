@@ -9,26 +9,97 @@ format:
 
 The topics and dates of future lectures may change.
 
+Spring quarter runs from Tuesday, March 30 to Friday, June 11, 2027,
+with finals week from Monday, June 7 to Friday, June 11.
 Class meets on Mondays, Tuesdays, Wednesdays and Fridays, 9:00--9:50am, in CF 420.
-The quarter's dates, the homework due dates and the exam dates are still to be set (TBD).
+There is no class on Monday, May 31, for Memorial Day.
 
 Monday to Wednesday are lectures from these notes.
-Friday is a lab session, for working on the homework in class.
+Most Fridays are lab sessions, for working on the homework in class.
+
+Homework is due at 11:59 pm on its due date, always a Friday.
+Each self-grade is due one week after that homework's solutions are posted;
+the self-grade dates below assume the solutions go up at the deadline.
+
+Midterms 1, 2 and 3 are in class on Monday, April 26, Monday, May 17 and Tuesday, June 1.
+Midterm 1 covers weeks 1 to 3, from the course overview through optimization.
+Midterm 2 covers regularization and normalization, convolutional networks, sequence models and language modeling.
+Midterm 3 covers the lectures from attention through running deep learning experiments.
+Each midterm has an in-class review session on the Friday before the exam.
+
+The final exam is optional.
+Its day and time are still to be set (TBD):
+WWU's [finals schedule](https://registrar.wwu.edu/calendars/finals) sets each exam's slot
+from the class's start time and meeting days.
+The final's review session will be held during finals week, at a time TBD.
 
 ::: {.ruled-rows}
 
-| Week | Topic |
-|:-----|:------|
-| 1 | Course overview; machine learning review; tensors and automatic differentiation |
-| 2 | Feedforward networks: layers, activations, output units and losses, representational power, backpropagation |
-| 3 | Optimization: minibatch stochastic gradient descent, momentum, Adam, learning-rate schedules, initialization |
-| 4 | Regularization and normalization: weight decay, dropout, early stopping, data augmentation, batch and layer normalization, residual connections |
-| 5 | Convolutional networks: convolution arithmetic, pooling, classic architectures, transfer learning |
-| 6 | Sequence models: embeddings, recurrent networks, LSTMs and GRUs, language modeling |
-| 7 | Attention and Transformers: encoder-decoder attention, self-attention, positional encoding, pretraining |
-| 8 | Generative models: autoencoders and variational autoencoders, generative adversarial networks, diffusion |
-| 9 | Running deep learning experiments: hyperparameter types, sweeps, compute budgets, reproducibility |
-| 10 | Applications and current topics: large language models, fine-tuning, speech and vision, ethics |
-| Finals week | Optional final exam |
++--------------------------+------------------------------+------------------------------+------------------------------+------------------------------+
+|                          | Monday                       | Tuesday                      | Wednesday                    | Friday                       |
++:=========================+:=============================+:=============================+:=============================+:=============================+
+| **Week 1**               |                              | [Syllabus][syl]              | Machine learning review      | Lab session: Homework 1      |
+|                          |                              |                              | (from [lds][lds])            |                              |
+| Mar 28 -- Apr 3          |                              | Course overview              |                              |                              |
+|                          |                              |                              | Tensors (begun)              |                              |
++--------------------------+------------------------------+------------------------------+------------------------------+------------------------------+
+| **Week 2**               | Tensors and automatic        | Feedforward networks: layers | Feedforward networks: output | Lab session: Homework 1      |
+|                          | differentiation              | and activations              | units, losses,               |                              |
+| Apr 4 -- Apr 10          |                              |                              | representational power       |                              |
++--------------------------+------------------------------+------------------------------+------------------------------+------------------------------+
+| **Week 3**               | Backpropagation and          | Optimization: minibatch      | Optimization: Adam,          | Lab session: Homework 2      |
+|                          | automatic differentiation    | stochastic gradient descent, | learning-rate schedules and  |                              |
+| Apr 11 -- Apr 17         |                              | momentum                     | warmup, initialization       | **Homework 1 due**           |
++--------------------------+------------------------------+------------------------------+------------------------------+------------------------------+
+| **Week 4**               | Regularization: weight       | Regularization: dropout,     | Normalization: batch and     | **Midterm 1 review**         |
+|                          | decay, early stopping        | data augmentation            | layer normalization;         |                              |
+| Apr 18 -- Apr 24         |                              |                              | residual connections         | **Homework 1 self-grade      |
+|                          |                              |                              |                              | due**                        |
++--------------------------+------------------------------+------------------------------+------------------------------+------------------------------+
+| **Week 5**               | **Midterm 1**                | Convolutional networks:      | Convolutional networks:      | Lab session: Homework 2      |
+|                          |                              | convolution arithmetic       | pooling, classic             |                              |
+| Apr 25 -- May 1          |                              |                              | architectures                |                              |
++--------------------------+------------------------------+------------------------------+------------------------------+------------------------------+
+| **Week 6**               | Convolutional networks:      | Sequence models: embeddings, | Sequence models: LSTMs and   | Lab session: Homework 3      |
+|                          | transfer learning            | recurrent networks           | GRUs                         |                              |
+| May 2 -- May 8           |                              |                              |                              | **Homework 2 due**           |
++--------------------------+------------------------------+------------------------------+------------------------------+------------------------------+
+| **Week 7**               | Language modeling            | Attention: encoder-decoder   | Transformers:                | **Midterm 2 review**         |
+|                          |                              | attention                    | self-attention, positional   |                              |
+| May 9 -- May 15          |                              |                              | encoding                     | **Homework 2 self-grade      |
+|                          |                              |                              |                              | due**                        |
++--------------------------+------------------------------+------------------------------+------------------------------+------------------------------+
+| **Week 8**               | **Midterm 2**                | Transformers: pretraining    | Generative models:           | Lab session: Homework 4      |
+|                          |                              |                              | autoencoders and variational |                              |
+| May 16 -- May 22         |                              |                              | autoencoders                 | **Homework 3 due**           |
++--------------------------+------------------------------+------------------------------+------------------------------+------------------------------+
+| **Week 9**               | Generative models:           | Generative models: diffusion | Running deep learning        | **Midterm 3 review**         |
+|                          | generative adversarial       |                              | experiments: hyperparameter  |                              |
+| May 23 -- May 29         | networks                     |                              | types, sweeps, compute       | **Homework 4 due**           |
+|                          |                              |                              | budgets, reproducibility     |                              |
+|                          |                              |                              |                              | **Homework 3 self-grade      |
+|                          |                              |                              |                              | due**                        |
++--------------------------+------------------------------+------------------------------+------------------------------+------------------------------+
+| **Week 10**              | **No class: Memorial Day**   | **Midterm 3**                | Applications: large language | Applications: speech and     |
+|                          |                              |                              | models, fine-tuning          | vision; ethics               |
+| May 30 -- Jun 5          |                              |                              |                              |                              |
+|                          |                              |                              |                              | **Homework 5 due**           |
+|                          |                              |                              |                              |                              |
+|                          |                              |                              |                              | **Homework 4 self-grade      |
+|                          |                              |                              |                              | due**                        |
+|                          |                              |                              |                              |                              |
+|                          |                              |                              |                              | **Course evaluations**       |
++--------------------------+------------------------------+------------------------------+------------------------------+------------------------------+
+| **Finals week**          | **Optional final exam**                                                                                                   |
+|                          |                                                                                                                           |
+| Jun 7 -- Jun 11          | Day and time TBD, per the [WWU finals schedule](https://registrar.wwu.edu/calendars/finals)                               |
+|                          |                                                                                                                           |
+|                          | Review session: during finals week, time TBD                                                                              |
+|                          |                                                                                                                           |
+|                          | **Homework 5 self-grade due** (Friday, Jun 11)                                                                            |
++--------------------------+---------------------------------------------------------------------------------------------------------------------------+
 
 :::
+
+[syl]: syllabus.qmd
+[lds]: https://morrison-lab.github.io/lds/
