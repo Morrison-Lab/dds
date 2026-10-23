@@ -1,0 +1,286 @@
+[
+  {
+    "objectID": "chapters/syllabus.html",
+    "href": "chapters/syllabus.html",
+    "title": "WWU CSCI 481 (Deep Learning) Syllabus",
+    "section": "",
+    "text": "Note\n\n\n\nThis is the Spring 2027 syllabus. Items marked TBD (to be determined) have not been set yet. The syllabus is subject to change; I will announce in class any change made after the first day of class.",
+    "crumbs": [
+      "Home",
+      "WWU CSCI 481 (Deep Learning) Syllabus"
+    ]
+  },
+  {
+    "objectID": "chapters/syllabus.html#course-information",
+    "href": "chapters/syllabus.html#course-information",
+    "title": "WWU CSCI 481 (Deep Learning) Syllabus",
+    "section": "Course Information",
+    "text": "Course Information\n\nNumber\n\nCSCI 481\n\nName\n\nDeep Learning\n\nWebsite\n\nDeep Learning (dds)\n\nTerm\n\nSpring 2027\n\nCredits\n\n4\n\nTime\n\nMonday, Tuesday, Wednesday, and Friday, 9:00–9:50am\n\nPlace\n\nCF 420\n\nOffice hours\n\nTBD, in my office (CF 463) unless otherwise noted\n\nPrerequisites\n\nDATA 371 or DATA 471 (Machine Learning). The machine learning these notes assume is covered in Machine Learning for Data Science (lds), and the mathematics, probability, and statistics behind it in Math for Data Science (mds), Probability for Data Science (pds), and Statistics for Data Science (sds).\n\nCRNs (course reference numbers)\n\n23277",
+    "crumbs": [
+      "Home",
+      "WWU CSCI 481 (Deep Learning) Syllabus"
+    ]
+  },
+  {
+    "objectID": "chapters/syllabus.html#contact-information",
+    "href": "chapters/syllabus.html#contact-information",
+    "title": "WWU CSCI 481 (Deep Learning) Syllabus",
+    "section": "Contact Information",
+    "text": "Contact Information\n\nName\n\nEzra Morrison\n\nOffice\n\nCF 463\n\nEmail\n\nezra.morrison@wwu.edu, for confidential matters only\n\n\nAll other course correspondence goes through Canvas; see Communication.",
+    "crumbs": [
+      "Home",
+      "WWU CSCI 481 (Deep Learning) Syllabus"
+    ]
+  },
+  {
+    "objectID": "chapters/syllabus.html#course-description",
+    "href": "chapters/syllabus.html#course-description",
+    "title": "WWU CSCI 481 (Deep Learning) Syllabus",
+    "section": "Course Description",
+    "text": "Course Description\nCovers the fundamentals of deep learning, including important models, such as deep feedforward, recurrent, convolutional and transformer neural networks, and algorithms and considerations for training them. The application of deep learning to domains such as natural language, speech and vision will also be discussed.",
+    "crumbs": [
+      "Home",
+      "WWU CSCI 481 (Deep Learning) Syllabus"
+    ]
+  },
+  {
+    "objectID": "chapters/syllabus.html#course-outcomes",
+    "href": "chapters/syllabus.html#course-outcomes",
+    "title": "WWU CSCI 481 (Deep Learning) Syllabus",
+    "section": "Course Outcomes",
+    "text": "Course Outcomes\nOn completion of CSCI 481, students will demonstrate:\n\nAn understanding of machine learning fundamentals.\nA thorough understanding of deep feedforward neural networks.\nAn understanding of deep learning optimization and regularization.\nAn understanding of recurrent and convolutional neural networks.\nThe ability to implement deep learning models using modern toolkits.\nThe ability to conduct deep learning experiments.",
+    "crumbs": [
+      "Home",
+      "WWU CSCI 481 (Deep Learning) Syllabus"
+    ]
+  },
+  {
+    "objectID": "chapters/syllabus.html#textbooks-and-readings",
+    "href": "chapters/syllabus.html#textbooks-and-readings",
+    "title": "WWU CSCI 481 (Deep Learning) Syllabus",
+    "section": "Textbooks and readings",
+    "text": "Textbooks and readings\nThere are no required textbooks for the course, but several books and notes are recommended:\n\nDeep Learning (dds), the course notes for CSCI 481.\nDeep Learning [1], the main reference text. The book can be viewed at no cost from the book’s webpage.\nProbabilistic Machine Learning: An Introduction [2], ISBN 9780262046824. The author offers a free PDF on the book’s webpage.\nMachine Learning with PyTorch and Scikit-Learn [3], ISBN 9781801819312. Code examples and Jupyter notebooks are available from the book’s GitHub repository.\nMachine Learning for Data Science (lds), the notes for the prerequisite machine learning course.\n\nThe class will not follow one book closely; use these books and notes as references.",
+    "crumbs": [
+      "Home",
+      "WWU CSCI 481 (Deep Learning) Syllabus"
+    ]
+  },
+  {
+    "objectID": "chapters/syllabus.html#materials",
+    "href": "chapters/syllabus.html#materials",
+    "title": "WWU CSCI 481 (Deep Learning) Syllabus",
+    "section": "Materials",
+    "text": "Materials\nI will distribute handouts and homework on Canvas. The lecture notes are on this site.",
+    "crumbs": [
+      "Home",
+      "WWU CSCI 481 (Deep Learning) Syllabus"
+    ]
+  },
+  {
+    "objectID": "chapters/syllabus.html#course-agenda",
+    "href": "chapters/syllabus.html#course-agenda",
+    "title": "WWU CSCI 481 (Deep Learning) Syllabus",
+    "section": "Course Agenda",
+    "text": "Course Agenda\nThe course calendar gives the week-by-week agenda, including all deadlines.",
+    "crumbs": [
+      "Home",
+      "WWU CSCI 481 (Deep Learning) Syllabus"
+    ]
+  },
+  {
+    "objectID": "chapters/syllabus.html#communication",
+    "href": "chapters/syllabus.html#communication",
+    "title": "WWU CSCI 481 (Deep Learning) Syllabus",
+    "section": "Communication",
+    "text": "Communication\nOutbound. I will send official class announcements through Canvas Announcements. Please set Canvas to notify you of them right away, so you do not miss important information.\nInbound. All course-related correspondence goes through Canvas. Nearly all questions or comments from you to me and/or the grader should be posted on the official class discussion forum, which is Canvas Discussions. Anything that should not be posted there, such as a grading question or objection, goes in a Canvas message to me and the grader.\nThe only class-related matters that should not go through Canvas at all are those containing confidential information (e.g., information about your health). Communications containing confidential information should be sent to my WWU email address, which is the one exception to using Canvas.",
+    "crumbs": [
+      "Home",
+      "WWU CSCI 481 (Deep Learning) Syllabus"
+    ]
+  },
+  {
+    "objectID": "chapters/syllabus.html#questions-and-corrections",
+    "href": "chapters/syllabus.html#questions-and-corrections",
+    "title": "WWU CSCI 481 (Deep Learning) Syllabus",
+    "section": "Questions and Corrections",
+    "text": "Questions and Corrections\nIf something in the course materials seems wrong, ask. The course materials include the notes, handouts, assignments, and anything I say or show in class, including my slides. I will make mistakes, and so will the other authors of the materials.\nDo not assume that you are the confused one when the material might be wrong. Richard Feynman told a room of science teachers that “science is the belief in the ignorance of experts” [4], and in this course I am (supposedly) one of the experts. Ask your question first, in class or outside it, and we can talk through your reasoning together. If you are right, we all learn something and I fix the material. If you are not, we can jointly find out where the confusion started.",
+    "crumbs": [
+      "Home",
+      "WWU CSCI 481 (Deep Learning) Syllabus"
+    ]
+  },
+  {
+    "objectID": "chapters/syllabus.html#health-precautions",
+    "href": "chapters/syllabus.html#health-precautions",
+    "title": "WWU CSCI 481 (Deep Learning) Syllabus",
+    "section": "Health Precautions",
+    "text": "Health Precautions\nThe health and safety of everyone in the class is a top priority. In short: if you are sick with something that could be communicable, let me know ahead of time and I will try to arrange a remote participation option, so you can stay home and not expose others needlessly. Please contact me if you have questions, concerns or suggestions.",
+    "crumbs": [
+      "Home",
+      "WWU CSCI 481 (Deep Learning) Syllabus"
+    ]
+  },
+  {
+    "objectID": "chapters/syllabus.html#software",
+    "href": "chapters/syllabus.html#software",
+    "title": "WWU CSCI 481 (Deep Learning) Syllabus",
+    "section": "Software",
+    "text": "Software\nHomework is written in Python, using PyTorch. You will install PyTorch in a Python virtual environment. Expect to implement core methods yourself, first with NumPy and then with PyTorch’s building blocks, before reaching for higher-level libraries.",
+    "crumbs": [
+      "Home",
+      "WWU CSCI 481 (Deep Learning) Syllabus"
+    ]
+  },
+  {
+    "objectID": "chapters/syllabus.html#student-centered-teaching",
+    "href": "chapters/syllabus.html#student-centered-teaching",
+    "title": "WWU CSCI 481 (Deep Learning) Syllabus",
+    "section": "Student-Centered Teaching",
+    "text": "Student-Centered Teaching\nStudent-centered teaching methodologies, which prioritize student learning outcomes over instructor output (“more doing, less listening”), have been shown to be vastly more effective than traditional lectures. As Brian Hutchinson highlights from wearable-sensor studies of electrodermal activity [5] and his lecture presentation [6], traditional passive lectures produce low sympathetic nervous system arousal and attention—comparable to watching television and sleeping. Active problem-solving, formative assessment, and peer discussion elevate engagement and learning.\nFurthermore, cognitive science shows that “the less effort it takes to learn something, the less durable that learning is” [7]. This course is intentionally challenging for the right reasons, backed by a growth mindset: talent and mathematical ability can be developed through focused effort, challenges expand your abilities, and mistakes are essential opportunities to grow. Research confirms that an instructor’s growth-mindset beliefs predict student achievement and motivation even after accounting for other faculty characteristics [8].\nEach lecture is built from exercises: I pose a question, you work on it alone or in a small group, and then we discuss solutions together.\n\nABCD Cards\nOn the first day of class, I will give each student an ABCD card, which you will use to vote on answers to questions in class. They work like electronic clickers, but they are free and need no batteries. I use them because they allow both you and me to quickly assess how well you understand the material, so that I can adjust what I emphasize in class and you can adjust what you study out of class to improve learning outcomes. Please bring this card to class each day.",
+    "crumbs": [
+      "Home",
+      "WWU CSCI 481 (Deep Learning) Syllabus"
+    ]
+  },
+  {
+    "objectID": "chapters/syllabus.html#grading",
+    "href": "chapters/syllabus.html#grading",
+    "title": "WWU CSCI 481 (Deep Learning) Syllabus",
+    "section": "Grading",
+    "text": "Grading\nCourse grades are letter grades, based on:\n\n\n\n\n\n\n\nCategory\nWeight\n\n\n\n\nFive homework assignments (5% each)\n25%\n\n\nFive homework self-grades (1% each)\n5%\n\n\nThree midterm exams (10%, 30%, 30%)\n70%\n\n\nFinal exam (optional)\nreplaces the midterm average, if higher\n\n\n\nI will assign final letter grades based on the weighted average of assignment scores, by the standard scale:\n\n\n\nCumulative score\nLetter grade\n\n\n\n\n\\(90\\% \\le x\\)\nA range\n\n\n\\(80\\% \\le x &lt; 90\\%\\)\nB range\n\n\n\\(70\\% \\le x &lt; 80\\%\\)\nC range\n\n\n\\(60\\% \\le x &lt; 70\\%\\)\nD range\n\n\n\\(x &lt; 60\\%\\)\nF\n\n\n\n\nHomework\nThe course has five graded homework assignments, as well as additional ungraded exercises and readings. Each homework assignment is worth 5% of your final grade (25% cumulative). Due dates are on the course calendar.\n\n\nHomework Grading\nI will post solutions after each homework submission deadline. You are encouraged to self-grade your homework assignments using the posted solutions. Accurately self-grading each homework is 1% of your grade (5% cumulative). The grader and I will spot-check your self-grading, and you are encouraged to ask for help with self-grading during office hours.\nSubmit your self-graded homework solutions on Canvas one week after I post the solutions. Self-grading should include specific, detailed annotations on each sub-problem, marking:\n\nwhere you made mistakes;\nwhat your mistake was;\nwhat a correct answer would have been.\n\nIn other words, give yourself the feedback that you think an ideal grader would give.\nYou are also welcome to opt out of self-grading, in whole or in part. If you do not complete your self-grading for an assignment by the corresponding deadline, we will assume that you want us to grade it for you.\nAll questions and objections to grading must be submitted in writing, as a private Canvas message to both me and the grader (see Communication).\n\n\nExams\nThe course has three in-class midterm exams, on dates still TBD, which the course calendar will list. There is also an in-person final exam during finals week (TBD). If a midterm’s date changes, I will announce the change at least two weeks before that exam is given.\n\nI will provide a standardized note sheet for each exam.\nAny calculator allowed for the SAT is allowed for the exams.\nMidterms 1, 2 and 3 are worth 10%, 30% and 30% of the course grade.\nI hold a review session before each exam.\n\nThe final exam is entirely optional. If your grade on the final is higher than the average of your three midterm grades, weighted 10 to 30 to 30, I will use your final grade to replace all three of your midterm grades. The final exam can only improve your grade.",
+    "crumbs": [
+      "Home",
+      "WWU CSCI 481 (Deep Learning) Syllabus"
+    ]
+  },
+  {
+    "objectID": "chapters/syllabus.html#deadlines-and-late-work-policy",
+    "href": "chapters/syllabus.html#deadlines-and-late-work-policy",
+    "title": "WWU CSCI 481 (Deep Learning) Syllabus",
+    "section": "Deadlines and Late Work Policy",
+    "text": "Deadlines and Late Work Policy\nPlease refer to the course calendar for the most up-to-date deadlines. I accept no late work. If you miss a deadline or exam due to a medical emergency, please contact me as soon as possible to discuss arrangements. If you know in advance that you will be unable to take an exam at the scheduled time, let me know at least one week before the exam, and we may be able to reschedule it for an earlier day and time.",
+    "crumbs": [
+      "Home",
+      "WWU CSCI 481 (Deep Learning) Syllabus"
+    ]
+  },
+  {
+    "objectID": "chapters/syllabus.html#submitting-your-work",
+    "href": "chapters/syllabus.html#submitting-your-work",
+    "title": "WWU CSCI 481 (Deep Learning) Syllabus",
+    "section": "Submitting Your Work",
+    "text": "Submitting Your Work\nYou will develop and store homework code in Git version control repositories. Specifically, we will use private GitHub repositories under a course GitHub organization (TBD). If you do not yet have a GitHub account, please create one. Be sure to push your final version before the assignment deadline: I will pull the current default branch of the repository at the due time. For an introduction to Git and GitHub, see the Git and GitHub chapter of the Principles of Scientific Computing (psc) notes.",
+    "crumbs": [
+      "Home",
+      "WWU CSCI 481 (Deep Learning) Syllabus"
+    ]
+  },
+  {
+    "objectID": "chapters/syllabus.html#program-guidelines",
+    "href": "chapters/syllabus.html#program-guidelines",
+    "title": "WWU CSCI 481 (Deep Learning) Syllabus",
+    "section": "Program Guidelines",
+    "text": "Program Guidelines\nThe grader and I will grade your programs on three criteria, in this order:\n\ncorrectness;\nclarity;\nefficiency.\n\nCorrectness. A correct program produces the correct output for a given input, and does not produce unintended side effects. Test each component as you introduce it, and try to break your program in testing.\nClarity. The easier it is to read your code, the easier it is to find and remove bugs. Design your program thoughtfully and modularly, and replace two blocks of code that do the same thing with one function called from both places.\nEfficiency. Your programs should be asymptotically efficient. Beyond that, use vectorized tensor operations and take advantage of the optimizations built into the libraries we use.",
+    "crumbs": [
+      "Home",
+      "WWU CSCI 481 (Deep Learning) Syllabus"
+    ]
+  },
+  {
+    "objectID": "chapters/syllabus.html#academic-honesty",
+    "href": "chapters/syllabus.html#academic-honesty",
+    "title": "WWU CSCI 481 (Deep Learning) Syllabus",
+    "section": "Academic Honesty",
+    "text": "Academic Honesty\nAs a future professional, your integrity is crucial. It is your responsibility to read and be familiar with the university’s academic dishonesty policy, found in Appendix D of the Western Washington University Course Catalog.\n\nHomework: you may collaborate freely with your classmates, and you may use AI tools, such as ChatGPT or GitHub Copilot.\nExams: in-class exams are solo. Work alone, without help from anyone else and without AI tools or other devices; the only aids allowed are the provided note sheet and a calculator, as described under Exams.\n\nCheating on an exam will result in failing the course (grade of F), and I will file documentation of the incident with the university. When in doubt, ask the instructor.",
+    "crumbs": [
+      "Home",
+      "WWU CSCI 481 (Deep Learning) Syllabus"
+    ]
+  },
+  {
+    "objectID": "chapters/syllabus.html#writing-to-think",
+    "href": "chapters/syllabus.html#writing-to-think",
+    "title": "WWU CSCI 481 (Deep Learning) Syllabus",
+    "section": "Writing to Think",
+    "text": "Writing to Think\nWhen you are stuck in this course, try putting your question into words in writing. Write it in full sentences, with the numbers or code you used and what you have already tried. In an interview on the 5 Minute Mentor podcast, Leslie Lamport says:\n\nAs someone said, “Writing is nature’s way of showing you how fuzzy your thinking is.” If you think you understand something, and don’t write down your ideas, you only think you’re thinking.\n— Leslie Lamport [9]",
+    "crumbs": [
+      "Home",
+      "WWU CSCI 481 (Deep Learning) Syllabus"
+    ]
+  },
+  {
+    "objectID": "chapters/syllabus.html#student-conduct",
+    "href": "chapters/syllabus.html#student-conduct",
+    "title": "WWU CSCI 481 (Deep Learning) Syllabus",
+    "section": "Student Conduct",
+    "text": "Student Conduct\nI am committed to maintaining an inclusive, supportive, and professional environment in all academic settings, including lectures, labs, and course-related online spaces. I expect students to live up to the Association for Computing Machinery (ACM) Code of Ethics and Professional Conduct.",
+    "crumbs": [
+      "Home",
+      "WWU CSCI 481 (Deep Learning) Syllabus"
+    ]
+  },
+  {
+    "objectID": "chapters/syllabus.html#disabilities",
+    "href": "chapters/syllabus.html#disabilities",
+    "title": "WWU CSCI 481 (Deep Learning) Syllabus",
+    "section": "Disabilities",
+    "text": "Disabilities\nReasonable accommodation for persons with documented disabilities should be established within the first week of class and arranged through Disability Resources for Students: telephone 360-650-3083; email drs@wwu.edu; and on the web at Disability Resources.",
+    "crumbs": [
+      "Home",
+      "WWU CSCI 481 (Deep Learning) Syllabus"
+    ]
+  },
+  {
+    "objectID": "chapters/syllabus.html#other-policies",
+    "href": "chapters/syllabus.html#other-policies",
+    "title": "WWU CSCI 481 (Deep Learning) Syllabus",
+    "section": "Other Policies",
+    "text": "Other Policies\nPlease read Syllabi@WWU for additional, important policies.",
+    "crumbs": [
+      "Home",
+      "WWU CSCI 481 (Deep Learning) Syllabus"
+    ]
+  },
+  {
+    "objectID": "chapters/syllabus.html#references",
+    "href": "chapters/syllabus.html#references",
+    "title": "WWU CSCI 481 (Deep Learning) Syllabus",
+    "section": "References",
+    "text": "References\n\n\n[1] I. Goodfellow, Y. Bengio, and A. Courville, Deep learning. MIT Press, 2016. Available: https://www.deeplearningbook.org/\n\n\n[2] K. P. Murphy, Probabilistic machine learning: An introduction. in Adaptive computation and machine learning. MIT Press, 2022.\n\n\n[3] S. Raschka, Y. (Hayden). Liu, and V. Mirjalili, Machine learning with PyTorch and Scikit-Learn: Develop machine learning and deep learning models with Python. Birmingham–Mumbai: Packt Publishing, 2022.\n\n\n[4] R. P. Feynman, “What is science?” The Physics Teacher, vol. 7, no. 6, pp. 313–320, 1969, doi: 10.1119/1.2351388.\n\n\n[5] M.-Z. Poh, N. C. Swenson, and R. W. Picard, “A wearable sensor for unobtrusive, long-term assessment of electrodermal activity,” IEEE Transactions on Biomedical Engineering, vol. 57, no. 5, pp. 1243–1252, 2010, doi: 10.1109/TBME.2009.2038487.\n\n\n[6] B. Hutchinson, “DATA 471/571: Machine learning.” Western Washington University, 2024.\n\n\n[7] P. C. Brown, H. L. Roediger III, and M. A. McDaniel, Make it stick: The science of successful learning. Cambridge, MA: Belknap Press of Harvard University Press, 2014.\n\n\n[8] E. A. Canning, K. Muenks, D. J. Green, and M. C. Murphy, “STEM faculty who believe ability is fixed have larger racial achievement gaps and inspire less student motivation in their classes,” Science Advances, vol. 5, no. 2, p. eaau4734, 2019, doi: 10.1126/sciadv.aau4734.\n\n\n[9] L. Lamport, “Think and write, with Leslie Lamport.” Interview by Edaena Salinas, 5 Minute Mentor podcast (Mentors.fm), Aug. 2019. Available: https://mentors.fm/2019/08/13/think-and-write-with-leslie-lamport/",
+    "crumbs": [
+      "Home",
+      "WWU CSCI 481 (Deep Learning) Syllabus"
+    ]
+  },
+  {
+    "objectID": "chapters/index.html",
+    "href": "chapters/index.html",
+    "title": "Deep Learning",
+    "section": "",
+    "text": "This website collects the lecture notes for CSCI 481, “Deep Learning”, as taught in Spring Quarter 2027 at Western Washington University by Douglas Ezra Morrison.\nThe course follows the module sequence of Brian Hutchinson’s CSCI 481/581, which he taught from Winter 2021 to Winter 2026.\nCSCI 481 builds on DATA 371/471, Machine Learning. Where these notes use an idea that course covers, such as generalization, gradient descent, or logistic regression, they link to its definition in Machine Learning for Data Science (lds) rather than defining it again.\nThe Calendar lists the topics week by week, and the Syllabus gives the course’s policies. The main reference text is Deep Learning [1], which can be read at no cost on the book’s webpage.\n\n\n\n\n[1] I. Goodfellow, Y. Bengio, and A. Courville, Deep learning. MIT Press, 2016. Available: https://www.deeplearningbook.org/",
+    "crumbs": [
+      "Home"
+    ]
+  },
+  {
+    "objectID": "chapters/index.html#references",
+    "href": "chapters/index.html#references",
+    "title": "Deep Learning",
+    "section": "",
+    "text": "[1] I. Goodfellow, Y. Bengio, and A. Courville, Deep learning. MIT Press, 2016. Available: https://www.deeplearningbook.org/",
+    "crumbs": [
+      "Home"
+    ]
+  },
+  {
+    "objectID": "chapters/calendar.html",
+    "href": "chapters/calendar.html",
+    "title": "Calendar",
+    "section": "",
+    "text": "The topics and dates of future lectures may change.\nClass meets on Mondays, Tuesdays, Wednesdays and Fridays, 9:00–9:50am, in CF 420. The quarter’s dates, the homework due dates and the exam dates are still to be set (TBD).\nMonday to Wednesday are lectures from these notes. Friday is a lab session, for working on the homework in class.\n\n\n\n\n\n\n\n\nWeek\nTopic\n\n\n\n\n1\nCourse overview; machine learning review; tensors and automatic differentiation\n\n\n2\nFeedforward networks: layers, activations, output units and losses, representational power, backpropagation\n\n\n3\nOptimization: minibatch stochastic gradient descent, momentum, Adam, learning-rate schedules, initialization\n\n\n4\nRegularization and normalization: weight decay, dropout, early stopping, data augmentation, batch and layer normalization, residual connections\n\n\n5\nConvolutional networks: convolution arithmetic, pooling, classic architectures, transfer learning\n\n\n6\nSequence models: embeddings, recurrent networks, LSTMs and GRUs, language modeling\n\n\n7\nAttention and Transformers: encoder-decoder attention, self-attention, positional encoding, pretraining\n\n\n8\nGenerative models: autoencoders and variational autoencoders, generative adversarial networks, diffusion\n\n\n9\nRunning deep learning experiments: hyperparameter types, sweeps, compute budgets, reproducibility\n\n\n10\nApplications and current topics: large language models, fine-tuning, speech and vision, ethics\n\n\nFinals week\nOptional final exam\n\n\n\n\n\n\n\n\n Back to top",
+    "crumbs": [
+      "Home",
+      "Calendar"
+    ]
+  }
+]
