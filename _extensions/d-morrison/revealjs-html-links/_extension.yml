@@ -1,0 +1,13 @@
+title: RevealJS HTML Links
+author: d-morrison
+version: 1.0.0
+# The floor states the version this extension has actually been rendered
+# against, not the earliest that would work. The filter calls
+# `quarto.doc.is_format` and `quarto.doc.include_text`, whose snake_case names
+# postdate their camelCase aliases, and the release that introduced them has
+# not been established here -- so the floor is deliberately conservative
+# rather than a guess. Morrison-Lab/lds#74 tracks narrowing it.
+quarto-required: ">=1.10.0"
+contributes:
+  filters:
+    - revealjs-html-links.lua

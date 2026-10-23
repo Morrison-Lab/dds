@@ -1,0 +1,60 @@
+# Runs tools/check_site.py against the site the preview build produced, so the
+# conventions this repository documents are enforced rather than trusted to a
+# contributor remembering to run the checker by hand.
+#
+# It reuses the preview build's artifact rather than rendering again, the same
+# way check-equation-renders.yml does, so it costs seconds instead of repeating
+# a TinyTeX install and a three-format render.
+#
+# NOTE: the `workflows:` value below MUST match the `name:` of the build
+# workflow (preview.yml), and `workflow_run` only fires for workflow files
+# already on the default branch -- so this does not run on the PR that adds it.
+name: Check Rendered Site
+
+on:  # zizmor: ignore[dangerous-triggers]
+  workflow_run:
+    workflows: ["Quarto Preview Build"]
+    types: [completed]
+
+jobs:
+  check:
+    if: github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      actions: read  # needed to download the build artifact
+    steps:
+      # Checked out at the PR's head rather than the default branch, because
+      # check_site.py reads the render list out of _quarto-website.yml: against
+      # the base copy, a PR that adds or removes a page would be checked
+      # against the wrong set of pages. The job holds only read scopes and no
+      # secrets, and it neither deploys nor comments, so running the PR's copy
+      # of a stdlib-only script here does not widen what a PR can reach.
+      - name: Check out repository
+        uses: actions/checkout@v7
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
+          persist-credentials: false
+
+      - name: Download preview artifact
+        uses: actions/download-artifact@v8
+        with:
+          name: pr-preview-site
+          path: _preview_download/
+          run-id: ${{ github.event.workflow_run.id }}
+          github-token: ${{ github.token }}
+
+      # On a `closed` PR event the build uploads only `meta/`, with no `site/`,
+      # so there is nothing to check and the job should not fail over it.
+      - name: Read PR metadata
+        id: meta
+        run: |
+          set -euo pipefail
+          action=$(cat _preview_download/meta/action.txt) || {
+            echo "::error::Missing action.txt in preview artifact"; exit 1; }
+          echo "action=$action" >> "$GITHUB_OUTPUT"
+
+      - name: Check the rendered site
+        if: steps.meta.outputs.action == 'deploy'
+        run: python3 tools/check_site.py --site _preview_download/site

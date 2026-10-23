@@ -1,0 +1,45 @@
+# Warns when a definition or result div (#def-, #thm-, #lem-, #prp-, #cor-) is
+# not immediately followed by an example. Runs
+# tools/check_example_after_def.py and its self-test.
+#
+# Blocking since the count reached zero: a new definition or result
+# with no example after it fails the check.
+#
+# Needs only the source files (no Quarto render), so it is a plain job, like
+# check-list-markers.yml.
+name: Check examples after definitions
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+    paths:
+      - chapters/**
+      - tools/check_example_after_def.py
+      - tools/tests/test_check_example_after_def.py
+      - .github/workflows/check-examples-after-defs.yml
+  push:
+    branches:
+      - main
+    paths:
+      - chapters/**
+      - tools/check_example_after_def.py
+      - tools/tests/test_check_example_after_def.py
+      - .github/workflows/check-examples-after-defs.yml
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - name: Self-test the checker
+        run: python3 tools/tests/test_check_example_after_def.py
+
+      - name: Check the chapters
+        run: python3 tools/check_example_after_def.py --fail

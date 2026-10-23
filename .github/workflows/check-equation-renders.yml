@@ -1,0 +1,79 @@
+# Third leg of the PR-preview family, delegated to the reusable workflow in
+# Morrison-Lab/gha. Downloads the build artifact and crawls it with a headless
+# browser to catch equations MathJax cannot render.
+#
+# This check exists because MathJax typesets client-side: a malformed
+# expression produces a red error box in the browser and nothing at all in the
+# Quarto or pandoc build log, so a render can be green over a broken equation.
+# These chapters are converted from LaTeX, which makes that failure mode likely
+# rather than hypothetical -- the sources use constructs (`\colorbox` inside
+# math, for one) that are valid LaTeX and not valid MathJax.
+#
+# The crawl took about 4.8 minutes when it ran, on 11% of the Actions minutes
+# measured on 2026-10-12, and most PRs change prose that has no math. The
+# `needs-check` job therefore skips the crawl for a PR whose changes are all
+# under `chapters/` and whose changed lines hold nothing that could be math: no
+# `$`, backslash, `^`, `_`, `{` or `=`. Anything else runs it, as does a PR it
+# cannot read (no PR number, a file with no patch). The check stays a
+# non-required status, so a skipped run blocks nothing.
+#
+# NOTE: the `workflows:` value below MUST match the `name:` of the build
+# workflow (preview.yml).
+name: Quarto Check Equation Renders
+
+on:  # zizmor: ignore[dangerous-triggers]
+  workflow_run:
+    workflows: ["Quarto Preview Build"]
+    types: [completed]
+
+jobs:
+  needs-check:
+    # Nothing to decide when the build did not finish.
+    if: github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      pull-requests: read
+    outputs:
+      run: ${{ steps.decide.outputs.run }}
+    steps:
+      - name: Decide whether the PR can contain a new math error
+        id: decide
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          # A number or empty (a fork or a branch with no PR); never used as code.
+          PR: ${{ github.event.workflow_run.pull_requests[0].number }}
+        run: |
+          set -euo pipefail
+          if [ -z "${PR}" ]; then
+            echo "No PR number: run the check."
+            echo "run=true" >> "${GITHUB_OUTPUT}"
+            exit 0
+          fi
+          gh api --paginate "repos/${REPO}/pulls/${PR}/files?per_page=100" \
+            | jq -s 'add' > files.json
+          # `true` (skip) only if every file is under chapters/ and has a patch
+          # whose added or removed lines contain no math-like character.
+          skip=$(jq -r '
+            def changed: .patch // "" | split("\n")
+              | map(select(test("^[+-]") and (test("^(\\+\\+\\+|---)") | not)));
+            if length == 0 then "false"
+            elif all(.[]; (.filename | startswith("chapters/")) and (.patch != null)
+                     and ((changed | map(select(test("[$\\\\^_{=]"))) | length) == 0))
+            then "true" else "false" end' files.json)
+          echo "skip=${skip}"
+          if [ "${skip}" = "true" ]; then
+            echo "run=false" >> "${GITHUB_OUTPUT}"
+          else
+            echo "run=true" >> "${GITHUB_OUTPUT}"
+          fi
+
+  check:
+    needs: needs-check
+    if: needs.needs-check.outputs.run == 'true'
+    permissions:
+      contents: read
+      actions: read  # needed to download the build artifact
+    uses: Morrison-Lab/gha/.github/workflows/check-equation-renders.yml@v2

@@ -1,0 +1,29 @@
+# Thin caller of Morrison-Lab/gha's reusable typo check.
+#
+# gha's `spellcheck.yml` runs `spelling::spell_check_package()` and so needs
+# an R package with a DESCRIPTION file, which this repository is not. gha's
+# `check-typos.yml` (crate-ci/typos) covers the same need for Quarto sites: it
+# checks a list of known misspellings rather than a dictionary, so it needs no
+# curated wordlist, and it is diff-scoped, so it flags only what a PR adds.
+# No `push` trigger: with no PR base to diff against, the reusable workflow
+# skips, so a push run would report success having checked nothing.
+name: Check typos
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  check:
+    permissions:
+      contents: read
+    uses: Morrison-Lab/gha/.github/workflows/check-typos.yml@v3
+    with:
+      globs: '*.md *.qmd *.py'
+      # `**`, not `*`: gha's matcher stops a single `*` at a `/`.
+      # `chapters/outtakes/` holds text kept exactly as its author wrote it.
+      # The check is also diff-scoped, so moving existing prose into an outtake re-presents every one of its lines as newly added.
+      paths-ignore: '_extensions/**,chapters/outtakes/**'
+      # A manual run has no PR to diff against, and would otherwise skip
+      # having examined nothing; make it scan the whole tree instead.
+      base-ref: ${{ github.event_name == 'workflow_dispatch' && 'all' || '' }}

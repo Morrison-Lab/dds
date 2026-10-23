@@ -1,0 +1,49 @@
+<style>
+/* The § link of a Watch or Read callout: shown on hover or focus, as on a theorem div. */
+.watch-anchor .callout-title-container .div-anchor {
+  opacity: 0;
+  margin-left: 0.5em;
+  font-size: 0.875em;
+  font-weight: 400;
+  color: inherit;
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+.watch-anchor:is(:hover, :focus-within) .callout-title-container .div-anchor,
+.watch-anchor .callout-title-container .div-anchor:focus {
+  opacity: 1;
+}
+</style>
+<script>
+// Adds a "§" link to the title bar of each Watch and Read callout, which
+// filters/watch-callouts.lua wraps in a div that carries the callout's id.
+// The link reuses the div-anchor style of theorem divs and appears on hover.
+(function () {
+  function add() {
+    document.querySelectorAll("div.watch-anchor[id]").forEach(function (wrap) {
+      var title = wrap.querySelector(".callout-title-container");
+      if (!title || title.querySelector("a.div-anchor")) return;
+      var a = document.createElement("a");
+      a.href = "#" + wrap.id;
+      a.className = "div-anchor";
+      a.setAttribute("aria-label", "Link to this box");
+      var icon = document.createElement("span");
+      icon.setAttribute("aria-hidden", "true");
+      icon.textContent = "§";
+      a.appendChild(icon);
+      title.appendChild(a);
+    });
+  }
+  // The title bar is the fold toggle, and Bootstrap cancels a click on a link
+  // inside it in the capture phase on document. Stop the click earlier, on
+  // window, so the browser follows the link and the box does not fold.
+  window.addEventListener("click", function (e) {
+    if (e.target && e.target.closest &&
+        e.target.closest(".watch-anchor .callout-title-container a.div-anchor")) {
+      e.stopPropagation();
+    }
+  }, true);
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", add);
+  else add();
+})();
+</script>

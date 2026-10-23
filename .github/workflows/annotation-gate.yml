@@ -1,0 +1,33 @@
+# Gates every finished workflow run: any CI annotation fails it unless allowlisted (gha#1099).
+# For a repository whose checks are spread over many workflow files: this
+# gates each run that finishes and posts an `annotation-gate` check run on the
+# run's commit, so it shows on the pull request. Add that check to the
+# repository ruleset as required. Each gated run posts its own check run of
+# that name, so a commit with several workflows can carry both a passing and a
+# failing one; the failing one blocks a required check.
+name: Annotation gate
+
+on: # zizmor: ignore[dangerous-triggers] -- the gate checks out nothing and runs no code from the triggering run
+  workflow_run:
+    workflows: ["*"]
+    types: [completed]
+
+jobs:
+  gate:
+    # The gate's own run must not trigger another gate.
+    if: ${{ github.event.workflow_run.name != 'Annotation gate' }}
+    permissions:
+      actions: read
+      checks: write
+      contents: read
+    uses: Morrison-Lab/gha/.github/workflows/annotation-gate-run.yml@v3
+    with:
+      run-id: ${{ github.event.workflow_run.id }}
+      run-attempt: ${{ github.event.workflow_run.run_attempt }}
+      head-sha: ${{ github.event.workflow_run.head_sha }}
+      # Tracked exception (gha#1103): the only submodule, Morrison-Lab/macros,
+      # is public, so the review workflow's anonymous-clone notice is harmless.
+      # Remove this if a private submodule is ever added.
+      allow-patterns: |
+        SUBMODULES_TOKEN is empty; cloning submodules anonymously
+    #   levels: 'warning,failure'              # skip notices

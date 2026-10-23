@@ -1,0 +1,322 @@
+project:
+  type: website
+  output-dir: _site
+  # Page dates come from git, not the checkout time; and the shared math
+  # macros (the latex-macros submodule) become header files for every
+  # format; and uv and Python are fetched once, before Julia can load into a
+  # page's R process and break the download. A third-party extension with no
+  # license is fetched, not vendored. See each script.
+  pre-render:
+    - tools/install-extensions.py
+    - tools/set-mtimes-from-git.py
+    - tools/build_math_macros.py
+    - tools/provision-python.R
+    # Writes chapters/dependency-graph.json for chapters/dependency-graph.js.
+    - tools/build_dependency_graph.py --site dds --out chapters/dependency-graph.json
+    # Runs last because its inner `quarto render --to pdf` pass needs the
+    # extensions, macros, Python environment and dependency graph built above,
+    # and because `set-mtimes-from-git.py` skips files `git status --porcelain`
+    # reports as modified once `pdf:` is stripped in place.
+    - tools/skip-pdf-in-previews.py
+  # GitHub Pages serves the root 404.html for any missing path; this one sends
+  # a closed PR preview's pages to the main site.
+  resources:
+    - 404.html
+    - chapters/dependency-graph.js
+    - chapters/dependency-graph.json
+    # Only a preview built without the PDF handouts has this file; the glob
+    # matches nothing otherwise (tools/skip-pdf-in-previews.py).
+    - preview-no-pdf.*
+  render:
+    - chapters/index.qmd
+    - chapters/calendar.qmd
+    - chapters/syllabus.qmd
+    # The `latex-macros` git submodule provides macro definitions for include/
+    # shortcode use, not standalone site pages.
+    - "!latex-macros/"
+
+website:
+  title: "Deep Learning"
+  site-url: &site-url https://morrison-lab.github.io/dds/
+  description: "Lecture materials for CSCI 481: Deep Learning"
+  # No `repo-url` or `repo-actions` yet: this repository is meant to be
+  # public but is still private, so an "edit" or "report an issue" link
+  # would go nowhere for a student. Add them once it is public.
+  # Publishes llms.txt, a plain-text index of the site for language models.
+  # https://quarto.org/docs/websites/website-llms.html
+  llms-txt: true
+  back-to-top-navigation: true
+  page-navigation: true
+  reader-mode: true
+  page-footer:
+    left:
+      - text: "Ezra Morrison"
+    right:
+      - text: "Built on Brian Hutchinson's CSCI 481/581 course"
+  # Flat until the notes chapters arrive: a "Notes" dropdown is added with the
+  # first chapter, so that no dropdown stands alone.
+  navbar:
+    left:
+      - text: "Home"
+        href: chapters/index.qmd
+      - text: "Calendar"
+        href: chapters/calendar.qmd
+      - text: "Syllabus"
+        href: chapters/syllabus.qmd
+
+  # The docked sidebar lists every page in the navbar's order, and that order
+  # sets the previous/next links at the foot of each page. Add each new page
+  # to the navbar and here, in the same position.
+  # https://quarto.org/docs/websites/website-navigation.html#page-navigation
+  sidebar:
+    style: docked
+    search: false # the navbar already has search
+    contents:
+      - text: "Home"
+        href: chapters/index.qmd
+      - chapters/calendar.qmd
+      - chapters/syllabus.qmd
+
+# Top level rather than under format.html, so every format (the web page,
+# the slide deck and the PDF handout) shows the date.
+date: last-modified
+date-format: "[Last modified:] YYYY-MM-DD"
+
+# Theorem, exercise and solution divs render as colored callouts:
+# `callouty-theorem` wraps each `#def-`, `#exr-`, `#sol-` ... div
+# in a callout, and `coatless-quarto/custom-callout` gives each type its color.
+# Both are vendored under `_extensions/`.
+# Each type below gets a title bar (type, number, name) apart from the body,
+# and folds, open by default: the callouty-theorem defaults since 1.4.0.
+# In the PDF and Word handouts a theorem-type div keeps its own heading and no bar.
+callouty-theorem:
+  thm:
+    callout:
+      type: lem
+  lem:
+    callout:
+      type: lem
+  cor:
+    callout:
+      type: cor
+  prp:
+    callout:
+      type: prp
+  cnj:
+    callout:
+      type: cnj
+  def:
+    callout:
+      type: def
+  exm:
+    callout:
+      type: exm
+      icon: false
+  exr:
+    callout:
+      type: exr
+  proof: # also support wrapping proof-like environments
+    override-title: true # override the callout title with
+                         # the proof-type label,
+                         # appending the element name when provided
+    callout:
+      type: proof
+      appearance: default
+      collapse: true
+      icon: true
+  solution:
+    override-title: true
+    callout:
+      type: solution
+      appearance: default
+      collapse: true
+      icon: false
+  remark:
+    callout:
+      type: remark
+  # Figures and tables are wrapped whole; the caption keeps its own
+  # "Figure 1" label, so there is no title override.
+  fig:
+    callout:
+      type: fig
+      appearance: minimal
+      collapse: false
+  tbl:
+    callout:
+      type: tbl
+      appearance: minimal
+      collapse: false
+
+# Color palette for theorem/proof environments.
+# The coatless-quarto/custom-callout extension reads this block and injects
+# CSS (HTML) and LaTeX \definecolor (PDF) so each type gets a unique color.
+# Rules: no reds; thm shares lem's royal blue.
+custom-callout:
+  lem:
+    color: "#1565C0"  # royal blue (also used for thm)
+  cor:
+    color: "#00838F"  # dark cyan
+  prp:
+    color: "#827717"  # dark olive
+  cnj:
+    color: "#558B2F"  # grass green
+  def:
+    color: "#1B5E20"  # forest green (very distinct from theorem types)
+  exm:
+    color: "#6A1B9A"  # deep purple
+  exr:
+    color: "#FFA500"  # orange
+  proof:
+    color: "#37474F"  # blue-grey slate
+  solution:
+    color: "#4E342E"  # dark cocoa
+  remark:
+    color: "#AD1457"  # dark magenta
+  fig:
+    color: "#757575"  # neutral grey: a figure or table is not a result
+  tbl:
+    color: "#757575"
+  videos:
+    title: "Watch"  # each callout sits beside the content it supports (AUTHORING.md)
+    icon-symbol: "fa-circle-play"
+    color: "#283593"  # indigo
+  reading:
+    title: "Read"  # each callout sits beside the content it supports (AUTHORING.md)
+    icon-symbol: "fa-book-open"
+    color: "#00695C"  # dark teal
+
+format:
+  html:
+    df-print: paged
+    filters:
+      - Morrison-Lab/callouty-theorem
+      # Folds and anchors each Watch and Read callout; must precede custom-callout.
+      - filters/watch-callouts.lua
+      # custom-callout is listed by path, not as an extension name: Quarto looks
+      # extensions up before a `pre-render` script runs, so the copy that
+      # tools/install-extensions.py fetches would not be found by name.
+      - _extensions/coatless-quarto/custom-callout/customcallout.lua
+      - _extensions/coatless-quarto/custom-callout/fa.lua
+      # Author-facing HTML comments (outtake pointers and the like) stay out
+      # of the served page.
+      - filters/strip-html-comments.lua
+    theme:
+      light: [cosmo, offwhite.scss, custom.scss]
+      dark: [darkly, custom.scss]
+    # theme-picker.html replaces Quarto's two-way toggle with a Light /
+    # Off-white / Parchment / Dark dropdown; _math-macros.html loads the
+    # shared math macros (tools/build_math_macros.py writes it).
+    include-in-header:
+      - theme-picker.html
+      - language-picker.html
+      - _math-macros.html
+    # Floating previous/next arrows in the page margins, and navbar
+    # highlighting for the current page (needed because every navbar link is
+    # also in the sidebar).
+    include-after-body:
+      - page-navigation.html
+      - anchor-landing.html
+      - watch-anchors.html
+      - table-roles.html
+      - tabset-code-fold.html
+      - text: '<script>(function(){var s=document.querySelector("script[src*=site_libs]");var r=s?s.getAttribute("src").split("site_libs/")[0]:"";var e=document.createElement("script");e.src=r+"chapters/dependency-graph.js";document.body.appendChild(e);})();</script>'
+    toc: true
+    toc-location: right
+    toc-depth: 3
+    # Code cells show their code folded, behind a "Show code" toggle;
+    # code-tools adds a page-wide "Show All Code" / "Hide All Code" menu.
+    # Its "View Source" item is off: it embeds the page's whole .qmd source,
+    # author-facing comments and disabled outtake includes included, in every
+    # page. The source stays readable in the repository.
+    code-fold: true
+    code-summary: "Show code"
+    code-tools:
+      source: false
+      toggle: true
+    code-link: true
+    highlight-style: arrow
+    lightbox: true
+    link-external-icon: true
+    link-external-newwindow: true
+    fig-cap-location: top
+    html-math-method: mathjax
+    number-sections: true
+    number-depth: 3
+    subject: "CSCI 481"
+  revealjs:
+    df-print: paged
+    # `revealjs-html-links` puts a `Webpage version` link in each deck's
+    # top-right corner, pointing at the same section of that deck's HTML page.
+    # The filter injects its script into every deck the `revealjs` format
+    # renders.
+    # The script derives the page URL in the browser, by replacing the deck's
+    # own `-slides.html` suffix with `.html`,
+    # so a deck whose `output-file` does not end that way still carries the
+    # script, renders no link, and warns in the console instead.
+    # `tools/check_site.py` fails such a deck.
+    # The two callout filters give definitions, exercises and solutions the
+    # same colored boxes as the HTML notes, so a definition visibly ends before
+    # the commentary that follows it.
+    filters:
+      - Morrison-Lab/callouty-theorem
+      - _extensions/coatless-quarto/custom-callout/customcallout.lua
+      - _extensions/coatless-quarto/custom-callout/fa.lua
+      - d-morrison/revealjs-html-links
+      - filters/strip-html-comments.lua
+      # After Quarto's own filters, so `{{< slidebreak >}}` is already a
+      # slide break when the filter checks what follows a section header;
+      # run earlier, it adds a second break and leaves an empty slide.
+      - path: filters/section-slide-break.lua
+        at: post-quarto
+    theme: [dark, custom.scss, slides-palette.scss]
+    include-in-header:
+      - deck-theme.html
+      - _math-macros.html
+    search: false
+    lightbox: true
+    slide-level: 2
+    slide-number: true
+    progress: true
+    incremental: false
+    # Slide transitions and link previews.
+    transition: slide
+    background-transition: fade
+    preview-links: auto
+    scrollable: true
+    number-sections: true
+    # 3, as in the html and pdf formats: with 2, a cross-reference to a
+    # level-3 heading (`@sec-...` on a `###`) printed a number such as
+    # "Section 2.1" that the heading itself did not show.
+    number-depth: 3
+    fig-cap-location: top
+    html-math-method: mathjax
+    code-fold: true
+    code-summary: "Show code"
+    code-link: true
+  pdf:
+    df-print: tibble
+    # Each handout is shared on its own, so links to other pages become text.
+    # Tables in a .ruled-rows div get a rule between rows.
+    filters:
+      - Morrison-Lab/callouty-theorem
+      - _extensions/coatless-quarto/custom-callout/customcallout.lua
+      - _extensions/coatless-quarto/custom-callout/fa.lua
+      - filters/unlink-pages.lua
+      - filters/rule-table-rows.lua
+    # unlink-pages.lua points links to published files, such as data/auto.csv,
+    # at their copy on the site, under the website's own site-url.
+    handout-site-url: *site-url
+    geometry:
+      - top=20mm
+      - bottom=20mm
+      - left=25mm
+      - right=25mm
+    toc: false
+    fig-pos: "H"
+    documentclass: article
+    # The shared math macros, for the preamble (tools/build_math_macros.py).
+    include-in-header: _math-macros.tex
+    colorlinks: true
+    links-as-notes: true
+    number-sections: true
+    number-depth: 3

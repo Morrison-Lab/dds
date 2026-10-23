@@ -1,0 +1,16 @@
+# Diff-scoped, warn-only heuristic: flags a div (or a file with no div) whose first
+# sentence starts with an unlinked The, These, Those, This or That, so nothing
+# earlier in the div can be the antecedent.
+# It runs on pull requests only: a push to main has no base to diff against, so the
+# check skips itself with a warning, and the annotation gate fails the run on it.
+name: Check definite antecedents
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  check:
+    permissions:
+      contents: read
+    uses: Morrison-Lab/gha/.github/workflows/check-definite-antecedents.yml@v3

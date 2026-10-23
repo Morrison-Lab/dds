@@ -1,0 +1,42 @@
+<script>
+// One "Show code" toggle for a whole language tabset.
+// Quarto folds each code cell on its own, so a Python and an R tab would need two clicks.
+// For a tabset with two or more folded cells, put one toggle above the tabs that opens and closes
+// every cell in it, and hide the per-cell toggles. The "Show All Code" menu still works:
+// the toggle follows the cells.
+document.querySelectorAll("div.panel-tabset").forEach(function (tabset) {
+  var folds = Array.prototype.slice.call(tabset.querySelectorAll("details.code-fold"));
+  if (folds.length < 2) {
+    return;
+  }
+  var button = document.createElement("button");
+  button.type = "button";
+  button.className = "btn btn-link btn-sm tabset-code-toggle";
+  button.style.padding = "0";
+  var label = function () {
+    var open = folds.some(function (fold) {
+      return fold.open;
+    });
+    button.textContent = (open ? "▾ Hide code" : "▸ Show code");
+    button.setAttribute("aria-expanded", open ? "true" : "false");
+  };
+  button.addEventListener("click", function () {
+    var open = folds.some(function (fold) {
+      return fold.open;
+    });
+    folds.forEach(function (fold) {
+      fold.open = !open;
+    });
+    label();
+  });
+  folds.forEach(function (fold) {
+    fold.addEventListener("toggle", label);
+    var summary = fold.querySelector("summary");
+    if (summary) {
+      summary.style.display = "none";
+    }
+  });
+  label();
+  tabset.parentNode.insertBefore(button, tabset);
+});
+</script>

@@ -1,0 +1,93 @@
+# Render the Quarto site on every push to `main`, delegated to the reusable
+# workflow in Morrison-Lab/gha, which deploys it to the `gh-pages` branch.
+#
+# `setup-r` is on because pages execute Python chunks (PyTorch) through
+# reticulate, which runs inside knitr; reticulate provisions each page's
+# Python packages itself. Keep `r-packages` in step with preview.yml, which
+# also says why both files pin gha `@v3`.
+# `tinytex` is on because the per-chapter PDF handouts need a LaTeX toolchain.
+name: Quarto Publish
+
+on:
+  workflow_dispatch:
+  push:
+    branches: main
+
+# Serialize this workflow's own runs so two pushes cannot race on the gh-pages
+# branch, where the last writer wins in an undefined order.
+#
+# The group is named for this workflow and NOT `gh-pages`. The reusable
+# workflow's own `deploy` job holds `group: gh-pages`, so a caller that claims
+# the same name deadlocks against the job it is calling: the nested job can
+# never acquire a group its own parent run is holding. It then fails with no
+# runner, no steps, and no log at all -- there is nothing to read, and the site
+# simply stops publishing. This repo's predecessor shipped that bug in its first
+# publish run
+# ([#5](https://github.com/Morrison-Lab/machine_learning_lecture_materials/issues/5));
+# gha's example stub warns about it, and the warning applies to a
+# top-level block and a block on the calling job alike (gha#809, gha#811).
+#
+# `cancel-in-progress: false` follows that stub too. Cancelling would save
+# little -- a run that re-executes only changed pages is short -- and risks killing a deploy
+# part-way through, so letting a run finish is the better trade here.
+concurrency:
+  group: quarto-publish-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    permissions:
+      contents: write
+    uses: Morrison-Lab/gha/.github/workflows/quarto-publish.yml@v3
+    with:
+      render-profile: website
+      # The render needs the public latex-macros submodule; see preview.yml.
+      checkout-submodules: true
+      # No `formats:` input, deliberately.
+      # Here empty means one bare `quarto render`, which keeps `html` and
+      # `revealjs` in the same pass so neither prunes the other's
+      # `_site/site_libs/` assets.
+      # Setting `formats:` would render each format in its own process, and
+      # `html` and `revealjs` prune each other's supporting files.
+      # Instead, `tools/skip-pdf-in-previews.py` renders the self-contained PDF
+      # handouts (`_site/chapters/*-handout.pdf`) in a separate `--to pdf`
+      # process during `pre-render` and then strips `pdf:` so the outer render
+      # builds only `html` and `revealjs`, keeping Deno under the 16 GB runner
+      # memory limit.
+      #
+      # Do NOT copy `formats: default` across from preview.yml: `default` is a
+      # literal this workflow does not recognize, and would be passed straight
+      # to `quarto render --to default`.
+      # The two workflows spell the same request differently; see the comment in
+      # preview.yml.
+      setup-r: true
+      use-renv: false
+      r-packages: |
+        any::knitr
+        any::rmarkdown
+        any::reticulate
+        any::downlit
+        any::xml2
+        any::tinytex
+      setup-julia: false
+      tinytex: true
+      # The TikZ diagrams ship as SVG; Quarto shells out to rsvg-convert to
+      # turn them back into PDF for the LaTeX-based handout render.
+      apt-packages: librsvg2-bin
+      # Restore the frozen chunk results of the last publish and save this
+      # run's. Right after the restore, gha drops the frozen results of every
+      # page whose own file, included subfiles or named data files changed
+      # since that publish, so only those pages re-execute (gha#1022). The
+      # saved cache also seeds each new PR's preview.
+      freeze-cache: true
+      # The default 12 GB V8 heap ceiling leaves too little of the 16 GB runner
+      # for Deno's native memory, R, Python and LuaLaTeX, so V8 delays
+      # full garbage collection until the Linux OOM killer stops the runner
+      # (`exit code 143`).
+      # Cap V8 at 10 GB so it collects before system RAM fills.
+      deno-v8-options: --max-old-space-size=10240,--max-heap-size=10240
+      # The default 45-minute ceiling cancelled a cold render at page 25 of 34
+      # (run 39304829909, #1216), and a cancelled run saves no freeze cache, so
+      # the next run is cold too. Keep the ceiling a hang guard, above a cold
+      # render of every page in every format.
+      timeout-minutes: 120

@@ -1,0 +1,16 @@
+# Mark the binary course-material formats explicitly, so git never applies
+# line-ending normalization or attempts a textual diff on them.
+*.pptx binary
+*.docx binary
+*.xlsx binary
+*.pdf   binary
+*.png   binary
+*.jpg   binary
+*.jpeg  binary
+
+# A notebook is JSON: it merges badly, so suppress the merge driver. It is
+# deliberately NOT marked `-diff`. A notebook is the one file type in this
+# repository that has already carried a graded answer key past review, and
+# `-diff` renders it as "Binary files differ" in both `git diff` and GitHub's
+# PR view -- which would hide exactly the content a reviewer has to read.
+*.ipynb -merge

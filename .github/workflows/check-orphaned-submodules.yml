@@ -1,0 +1,44 @@
+# Fails when the tree records a gitlink (mode 160000) with no matching entry
+# in `.gitmodules`.
+#
+# This repository's one submodule is `latex-macros`, so any other gitlink is an accident.
+# The likely one is `git add -A` sweeping up a nested repository,
+# such as a worktree an agent session created inside the checkout.
+# The result is committed as an entry nobody can clone or resolve,
+# and `git diff --stat` does not warn.
+name: Check orphaned submodules
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+
+jobs:
+  check-orphans:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          # Nothing here pushes or uploads, so the credential has no use.
+          persist-credentials: false
+
+      - name: Check for orphaned submodule gitlinks
+        run: |
+          registered="$(git config --file .gitmodules --get-regexp '^submodule\..*\.path$' 2>/dev/null \
+            | sed 's/^submodule\..*\.path //' || true)"
+
+          orphans_found=0
+          while IFS= read -r path; do
+            [ -z "$path" ] && continue
+            if ! grep -Fxq -- "$path" <<< "$registered"; then
+              echo "::error file=$path::Orphaned gitlink at '$path' (no entry in .gitmodules). Fix with: git rm --cached \"$path\""
+              orphans_found=1
+            fi
+          done < <(git ls-files -s | awk '$1 == "160000" { sub(/^[^\t]*\t/, ""); print }')
+
+          if [ "$orphans_found" -eq 1 ]; then
+            exit 1
+          fi
+          echo "All gitlinks are registered in .gitmodules."
