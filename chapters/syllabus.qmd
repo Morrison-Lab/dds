@@ -12,7 +12,7 @@ format:
 
 ::: callout-note
 This is the Spring 2027 syllabus.
-Items marked **TBD** (to be determined) have not been set yet.
+Items marked TBD (to be determined) have not been set yet.
 The syllabus is subject to change;
 I will announce in class any change made after the first day of class.
 :::
@@ -41,7 +41,7 @@ Place
 : CF 420
 
 Office hours
-: **TBD**, in my office (CF 463) unless otherwise noted
+: TBD, in my office (CF 463) unless otherwise noted
 
 Prerequisites
 : [DATA 371](https://morrison-lab.github.io/swc/course/DATA-371.html)
@@ -260,8 +260,9 @@ as a private Canvas message to both me and the grader (see [Communication](#comm
 
 ### Exams {.unnumbered #exams}
 
-The course has three in-class midterm exams, on dates to be set (**TBD**; see the course calendar).
-There is also an in-person final exam during finals week (**TBD**).
+The course has three in-class midterm exams, on dates still TBD,
+which the course calendar will list.
+There is also an in-person final exam during finals week (TBD).
 If a midterm's date changes, I will announce the change
 at least two weeks before that exam is given.
 
@@ -288,7 +289,7 @@ and we may be able to reschedule it for an earlier day and time.
 ## Submitting Your Work {.unnumbered}
 
 You will develop and store homework code in Git version control repositories.
-Specifically, we will use private GitHub repositories under a course GitHub organization (**TBD**).
+Specifically, we will use private GitHub repositories under a course GitHub organization (TBD).
 If you do not yet have a GitHub account, please create one.
 Be sure to push your final version before the assignment deadline:
 I will pull the current default branch of the repository at the due time.

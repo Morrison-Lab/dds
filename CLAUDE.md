@@ -30,7 +30,8 @@ There is no Julia here, unlike lds.
 | `Morrison-Lab/dlg` | Homework, exams, solutions --- whoever wrote them |
 | `Morrison-Lab/mlr` | Copyrighted material, large files, past offerings' originals |
 
-All three are private.
+This repository is meant to be public, like the lab's other notes sites;
+`dlg` and `mlr` stay private (Ezra, 2026-10-22).
 This repository is what students read,
 so **nothing that reveals an answer to a graded item belongs in it**.
 Before writing an exercise or solution, check it against the graded material in `dlg`.
@@ -74,9 +75,13 @@ CI is not the test.
 ## Key Conventions
 
 lds's key conventions apply unchanged, apart from the language:
-never type or fake output; exercise and solution pairs; one term per definition div;
-`{{< slidebreak >}}` rather than `---`; every page names a distinct `output-file` per format,
-and a deck's ends in `-slides.html`; a new page goes in the `render:` list,
+never type or fake output;
+exercise and solution pairs;
+one term per definition div;
+`{{< slidebreak >}}` rather than `---`;
+every page names a distinct `output-file` per format,
+and a deck's ends in `-slides.html`;
+a new page goes in the `render:` list,
 the navbar and the sidebar of `_quarto-website.yml`.
 
 ## Pull Requests

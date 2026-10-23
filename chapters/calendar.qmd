@@ -10,7 +10,7 @@ format:
 The topics and dates of future lectures may change.
 
 Class meets on Mondays, Tuesdays, Wednesdays and Fridays, 9:00--9:50am, in CF 420.
-The quarter's dates, the homework due dates and the exam dates are still to be set (**TBD**).
+The quarter's dates, the homework due dates and the exam dates are still to be set (TBD).
 
 Monday to Wednesday are lectures from these notes.
 Friday is a lab session, for working on the homework in class.
