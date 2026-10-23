@@ -2,7 +2,7 @@
 --
 -- Pandoc passes an HTML comment in a chapter through to the HTML output as
 -- raw HTML, so author-facing notes, such as the pointer that marks where an
--- outtake was removed (see "Outtakes" in CLAUDE.md), are served in every
+-- outtake was removed (see `chapters/outtakes/` in CLAUDE.md), are served in every
 -- page's markup. A raw element is dropped only when its whole text
 -- is comments and whitespace, so a raw HTML block that carries real markup
 -- next to a comment is left alone.

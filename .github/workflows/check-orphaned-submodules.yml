@@ -1,7 +1,7 @@
 # Fails when the tree records a gitlink (mode 160000) with no matching entry
 # in `.gitmodules`.
 #
-# This repository has no submodules yet, so any gitlink today is an accident.
+# This repository's one submodule is `latex-macros`, so any other gitlink is an accident.
 # The likely one is `git add -A` sweeping up a nested repository,
 # such as a worktree an agent session created inside the checkout.
 # The result is committed as an entry nobody can clone or resolve,

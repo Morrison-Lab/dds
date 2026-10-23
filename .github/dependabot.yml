@@ -1,9 +1,10 @@
 # Keep pinned GitHub Actions current.
-# The `latex-macros` submodule has no `gitsubmodule` entry here.
 #
 # Dependabot scans .github/workflows/ and opens a PR when a newer release of a
 # pinned action is available. This is what makes the tag-pin policy in
-# `.github/zizmor.yml` safe.
+# `.github/zizmor.yml` safe. The `latex-macros` submodule is advanced by hand
+# on purpose, since every page renders through its macros and a new pin needs
+# a full render, so there is no `gitsubmodule` entry.
 version: 2
 updates:
   - package-ecosystem: "github-actions"
