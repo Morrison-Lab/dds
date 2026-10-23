@@ -167,7 +167,7 @@ All questions and objections to grading must be submitted in writing, as a priva
 
 ### Exams
 
-The course has three in-class midterm exams, on dates still TBD, which the course calendar will list. There is also an in-person final exam during finals week (TBD). If a midterm’s date changes, I will announce the change at least two weeks before that exam is given.
+The course has three in-class midterm exams, on the dates the course calendar lists. There is also an optional in-person final exam during finals week, at a time TBD. If a midterm’s date changes, I will announce the change at least two weeks before that exam is given.
 
 - I will provide a standardized note sheet for each exam.
 - Any calculator allowed for the SAT is allowed for the exams.
