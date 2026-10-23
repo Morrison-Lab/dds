@@ -3,30 +3,11 @@
 # Each entry is a correctly spelled term that typos' corrections list reads
 # as a misspelling. Add a term here only after checking it really is right.
 [default.extend-words]
-# Natasha Jaques, who teaches UW CSE 446/546, on the Washington Schools page.
-Jaques = "Jaques"
-# statsmodels standard errors attribute (results.bse), in the lab solutions.
-bse = "bse"
-# False positive rate, in the classification-metrics chapter.
-fpr = "fpr"
-# numpy.arange, in the Python examples.
+# numpy.arange, in a checker self-test.
 arange = "arange"
-# The product n*d in complexity bounds such as O(nd).
-nd = "nd"
 # Quarto theorem crossref prefix (#thm-, @thm-), in AUTHORING.md and chapters.
 thm = "thm"
-# The matrix product BA, in the linear-algebra refresher and in
-# chapters/outtakes/_math-prereqs-matrices.qmd, which pair it with AB to
-# show that matrix multiplication does not commute, so the two-letter form
-# is the point rather than an abbreviation.
-ba = "ba"
 # Publisher of Machine Learning with PyTorch and Scikit-Learn.
 Packt = "Packt"
-# Gilbert Strang, the MIT linear-algebra professor, in the syllabus.
-Strang = "Strang"
-# Hal Varian, the UC Berkeley / Google economist, cited for ML and econometrics terminology.
-varian = "varian"
-# NeetCode, a YouTube channel, in chapters/data/channels.csv.
-Neet = "Neet"
-# mgcv::gam(), the generalized additive model fitter, in the splines and additive-models chapters.
+# Gam and InvGam, the gamma-distribution operators in the latex-macros submodule.
 gam = "gam"

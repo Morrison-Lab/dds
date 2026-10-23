@@ -18,22 +18,10 @@ jobs:
       contents: read
     uses: Morrison-Lab/gha/.github/workflows/check-bibliography-dois.yml@v2
     with:
-      # Entries the check skips: books and older articles with no DOI in
-      # Crossref; entries whose author field the checker cannot parse
-      # (institutional or "and others" authors); and six whose publisher
-      # answers the check's request with status 202 (IEEE, Wiley and others),
-      # though the DOI is correct. Remove a key once its entry gains a DOI
-      # the check can verify.
-      # 2026-10-21: friedman2010glmnet and karatzoglou2004kernlab are skipped
-      # because www.jstatsoft.org refused connections for hours, which failed
-      # the check on every pull request. Remove both keys once the host answers.
+      # Entries the check skips: books with no DOI in Crossref, and
+      # poh2010wearable, whose publisher (IEEE) answers the check's request
+      # with status 202 though the DOI is correct. Remove a key once its
+      # entry gains a DOI the check can verify.
       exclude-keys: >-
-        abumostafa2012learning barocas2023fairness bengio1994difficult bengio2004 bergstra2012random
-        bischl2024mlr3 bishop2006prml breiman1984cart brown2014makeitstick chollet2018deep
-        daume2017ciml duda2001pattern friedman2010glmnet geron2017handson goodfellow2016deep hastie1990additive
-        hastie2009esl holmes2026gcam james2021islr james2023introduction jumper2021highly
-        karatzoglou2004kernlab kroese2019dsml lecun1998gradient mitchell1997machine murphy2012mlpp murphy2022pml
-        murphy2023pml2 pedregosa2011scikit poh2010wearable raschka2022mlpytorch rasmussen2006gp
-        rosset2004boosting samuel1959checkers samuel1967some shannon1948mathematical
-        starmer2022mlguide starmer2025nnguide starmer2026statsguide tufte1983visual
-        vapnik1964perceptrons yim2020predicting
+        brown2014makeitstick goodfellow2016deep murphy2022pml poh2010wearable
+        raschka2022mlpytorch
