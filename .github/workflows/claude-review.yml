@@ -13,9 +13,7 @@
 # replaces the PR-head workflow tree with the default branch's copy (gha#598),
 # and that restore needs only that `main` carry a `.github/workflows` tree,
 # which it has since fe082bf (2026-09-15). gha#904 is what happens when a
-# default branch carries no such tree at all; it names this repository as the
-# sibling where the restore worked, and `Morrison-Lab/mlg#5` as the one where
-# it did not. gha#914 fixed that upstream on 2026-09-23 by treating an absent
+# default branch carries no such tree at all. gha#914 fixed that upstream on 2026-09-23 by treating an absent
 # tree as an empty trusted state, so a consumer picks the fix up once `@v2`
 # slides past that merge and not before --- but neither the bug nor the fix
 # changes anything here, because the restore already succeeds. Do not re-add a
@@ -73,8 +71,7 @@ jobs:
     # session, and its subagents, act under it).
     #
     # cursor[bot] is here because the allowlist is taken verbatim from gha's
-    # `main` (`["claude[bot]","cursor[bot]"]`), which Morrison-Lab/lds#42 asks
-    # for by name; a naive port from `gha@v2` would carry cursor[bot] ALONE and
+    # `main` (`["claude[bot]","cursor[bot]"]`); a naive port from `gha@v2` would carry cursor[bot] ALONE and
     # so miss the login this repository actually needs. No Cursor integration
     # posts here today, so that arm currently admits nobody. It is not inert
     # for free, though: this arm bypasses the OWNER/MEMBER/COLLABORATOR check
@@ -575,34 +572,28 @@ jobs:
       # anonymously and needs no SUBMODULES_TOKEN. Without this input the
       # reviewer sees the pin as one opaque gitlink SHA and the checkout has an
       # empty `latex-macros/`, so it cannot confirm that a macro a PR uses is
-      # defined, and reports NOT_CLEAN on a correct diff (lds#921).
+      # defined, and reports NOT_CLEAN on a correct diff.
       checkout-submodules: true
       prompt-addendum: |
         ## What this repository is, and the one thing that must not happen
 
         These are the student-facing lecture notes for CSCI 481, Deep Learning. The repository is
-        private and is no longer planned to go public, so weigh disclosure risk
-        accordingly --- but its single governing invariant is unchanged, because it
-        never rested on publicity: **nothing revealing an answer to a graded item may
+        meant to be public, and its single governing invariant is:
+        **nothing revealing an answer to a graded item may
         enter it.** This is what students read. Assessment material and every solution
         live in `Morrison-Lab/dlg`; third-party reference material lives in
         `Morrison-Lab/mlr`. Both stay private.
 
-        A leak here is still not a bug to fix later. A solution in the git history
-        cannot be withdrawn by deleting the file, and everyone with repository access
-        can already fetch it.
+        A leak here is not a bug to fix later. A solution in the git history
+        cannot be withdrawn by deleting the file, and anyone who can read the
+        repository can already fetch it.
 
         ## Check this before anything else
 
-        Three disclosure leaks reached the sibling DATA 571 notes repository,
-        `Morrison-Lab/lds`, during its Spring 2025 import, on a pull-request branch, and each one survived the checking
-        that caught the one before it. They were corrected on that branch, so
-        `main` never held them, but the pushed commits remain reachable
-        through that pull request's refs until they are purged
-        ([#27](https://github.com/Morrison-Lab/lds/issues/27)). A push to any
-        branch here, a pull-request branch included, puts its content in this
-        repository before you review it. Catching these was sequencing rather
-        than a mechanism, which is why you exist. Check each class explicitly
+        A push to any branch here, a pull-request branch included, puts its
+        content in this repository before you review it, and a pushed commit
+        stays reachable through the pull request's refs even after the branch is
+        corrected. Check each class of leak below explicitly
         rather than assuming a diff of course material is inert:
 
         1. **A notebook's stored `outputs`, not just its source cells.** Clearing what

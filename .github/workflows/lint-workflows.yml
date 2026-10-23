@@ -1,6 +1,6 @@
 # Thin caller of Morrison-Lab/gha's reusable workflow linter: actionlint
 # (syntax, expression semantics, shellcheck over `run:` blocks) plus zizmor
-# (security). Ported from d-morrison/rme.
+# (security).
 #
 # Blocking, because both tools report zero findings against this repo's
 # workflows as of this file's introduction, so a new finding means a new

@@ -1,6 +1,5 @@
-# Keep pinned GitHub Actions current. Ported from Morrison-Lab/rme, minus its
-# `gitsubmodule` entry: this repository has no submodules yet. Add one if
-# #9's latex-macros submodule lands.
+# Keep pinned GitHub Actions current.
+# The `latex-macros` submodule has no `gitsubmodule` entry here.
 #
 # Dependabot scans .github/workflows/ and opens a PR when a newer release of a
 # pinned action is available. This is what makes the tag-pin policy in

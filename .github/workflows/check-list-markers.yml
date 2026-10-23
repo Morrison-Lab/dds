@@ -1,11 +1,10 @@
 # Flags source lines that Pandoc would read as a lettered or roman list
 # marker, such as a continuation line opening with "(C) " inside a list item,
-# which renders as a renumbered list item with no warning (lds#370). Runs
+# which renders as a renumbered list item with no warning. Runs
 # tools/check_list_markers.py and its self-test, which pins the check against
 # a vacuous pass.
 #
-# Needs only the source files (no Quarto render), so it is a plain job, like
-# check-course-overview-numbers.yml.
+# Needs only the source files (no Quarto render), so it is a plain job.
 name: Check list markers
 
 on:

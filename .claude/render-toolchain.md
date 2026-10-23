@@ -13,4 +13,4 @@ Render only once the marker exists;
 a log ending in `== FAILED` means a step needs fixing by hand, not skipping.
 
 `quarto install tinytex` fails in a cloud session with a 403, because it reads the latest release from `api.github.com`.
-The hook downloads the release asset by tag instead, as lds's copy of this file explains.
+The hook downloads the release asset by tag instead, from a URL that names the release.

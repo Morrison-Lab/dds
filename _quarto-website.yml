@@ -11,7 +11,7 @@ project:
     - tools/set-mtimes-from-git.py
     - tools/build_math_macros.py
     - tools/provision-python.R
-    # Writes chapters/dependency-graph.json for chapters/dependency-graph.js (lds#1189).
+    # Writes chapters/dependency-graph.json for chapters/dependency-graph.js.
     - tools/build_dependency_graph.py --site dds --out chapters/dependency-graph.json
     # Runs last because its inner `quarto render --to pdf` pass needs the
     # extensions, macros, Python environment and dependency graph built above,
@@ -19,7 +19,7 @@ project:
     # reports as modified once `pdf:` is stripped in place.
     - tools/skip-pdf-in-previews.py
   # GitHub Pages serves the root 404.html for any missing path; this one sends
-  # a closed PR preview's pages to the main site (lds#244).
+  # a closed PR preview's pages to the main site.
   resources:
     - 404.html
     - chapters/dependency-graph.js
@@ -39,9 +39,9 @@ website:
   title: "Deep Learning"
   site-url: &site-url https://morrison-lab.github.io/dds/
   description: "Lecture materials for CSCI 481: Deep Learning"
-  # No `repo-url` or `repo-actions`: this repository is private, so an "edit"
-  # or "report an issue" link would go nowhere for a student. lds points
-  # these at its source-free `lds-site` mirror; dds has no mirror yet.
+  # No `repo-url` or `repo-actions` while this repository is private: an
+  # "edit" or "report an issue" link would go nowhere for a student.
+  # Add them when the repository goes public.
   # Publishes llms.txt, a plain-text index of the site for language models.
   # https://quarto.org/docs/websites/website-llms.html
   llms-txt: true
@@ -82,11 +82,10 @@ website:
 date: last-modified
 date-format: "[Last modified:] YYYY-MM-DD"
 
-# Theorem, exercise and solution divs render as colored callouts, as in
-# `Morrison-Lab/rme`: `callouty-theorem` wraps each `#def-`, `#exr-`, `#sol-` ... div
+# Theorem, exercise and solution divs render as colored callouts:
+# `callouty-theorem` wraps each `#def-`, `#exr-`, `#sol-` ... div
 # in a callout, and `coatless-quarto/custom-callout` gives each type its color.
-# Both are vendored under `_extensions/`, and these two blocks follow rme's
-# `_quarto-website.yml`.
+# Both are vendored under `_extensions/`.
 # Each type below gets a title bar (type, number, name) apart from the body,
 # and folds, open by default: the callouty-theorem defaults since 1.4.0.
 # In the PDF and Word handouts a theorem-type div keeps its own heading and no bar.
@@ -199,7 +198,7 @@ format:
       - _extensions/coatless-quarto/custom-callout/customcallout.lua
       - _extensions/coatless-quarto/custom-callout/fa.lua
       # Author-facing HTML comments (outtake pointers and the like) stay out
-      # of the served page (lds#363).
+      # of the served page.
       - filters/strip-html-comments.lua
     theme:
       light: [cosmo, offwhite.scss, custom.scss]
@@ -213,7 +212,7 @@ format:
       - _math-macros.html
     # Floating previous/next arrows in the page margins, and navbar
     # highlighting for the current page (needed because every navbar link is
-    # also in the sidebar). Copied from mds.
+    # also in the sidebar).
     include-after-body:
       - page-navigation.html
       - anchor-landing.html
@@ -224,11 +223,11 @@ format:
     toc: true
     toc-location: right
     toc-depth: 3
-    # Code cells show their code folded, behind a "Show code" toggle, as in
-    # rme; code-tools adds a page-wide "Show All Code" / "Hide All Code" menu.
+    # Code cells show their code folded, behind a "Show code" toggle;
+    # code-tools adds a page-wide "Show All Code" / "Hide All Code" menu.
     # Its "View Source" item is off: it embeds the page's whole .qmd source,
     # author-facing comments and disabled outtake includes included, in every
-    # page (lds#77, lds#363). The source stays readable in the repository.
+    # page. The source stays readable in the repository.
     code-fold: true
     code-summary: "Show code"
     code-tools:
@@ -279,7 +278,7 @@ format:
     slide-number: true
     progress: true
     incremental: false
-    # Slide transitions and link previews, as in rme and qwt.
+    # Slide transitions and link previews.
     transition: slide
     background-transition: fade
     preview-links: auto

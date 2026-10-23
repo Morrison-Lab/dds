@@ -42,10 +42,10 @@ DELIMITED_DEF = re.compile(r"^\\def\\([A-Za-z]+)([^A-Za-z{\s#\\][^{#]*)\{")
 # preamble replaces LaTeX's text accent \' everywhere, so any use in math
 # fails (#495). Save the accent before the definition, then make \' a robust
 # command that transposes in math mode and is the accent in text.
-TEX_ACCENT_SAVE = "\\let\\ldsacute\\'\n"
+TEX_ACCENT_SAVE = "\\let\\ddsacute\\'\n"
 TEX_ACCENT_RESTORE = (
     "\\DeclareRobustCommand{\\'}"
-    "{\\ifmmode^{\\top}\\else\\expandafter\\ldsacute\\fi}\n"
+    "{\\ifmmode^{\\top}\\else\\expandafter\\ddsacute\\fi}\n"
 )
 
 # unicode-math's \mathbf prints nothing for Greek letters, so bold matrices such

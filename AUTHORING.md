@@ -4,14 +4,10 @@ How to write and edit the lecture pages under `chapters/`,
 for people and agents alike.
 The general rules --- divs and their titles, slide breaks, subfiles, citations, math,
 code chunks, figures and tables --- are in
-[`.github/copilot-instructions.md`](.github/copilot-instructions.md),
-which follows [`Morrison-Lab/rme`](https://github.com/Morrison-Lab/rme)'s instructions.
-This file adds what is specific to this course.
-It was copied from
-[`Morrison-Lab/lds`](https://github.com/Morrison-Lab/lds)'s `AUTHORING.md` (DATA 571),
-whose directions carry over unless a rule below says otherwise:
-Ezra's directions for DATA 571,
-and the conventions this course took from
+[`.github/copilot-instructions.md`](.github/copilot-instructions.md).
+This file adds what is specific to this course:
+Ezra's directions for his lecture notes,
+and the conventions they take from
 [`Morrison-Lab/epi204`](https://github.com/Morrison-Lab/epi204).
 `CLAUDE.md` covers the repository itself.
 
@@ -24,10 +20,7 @@ notation and synonyms, real data and computed numbers,
 accessible figures, slide structure, and crediting other courses.
 Where a section below restates one of them, it adds this course's own detail
 and links to the psw rule.
-The rme and epi204 rules were read from those repositories' `CLAUDE.md` and
-`.github/copilot-instructions.md` on 2026-09-24;
-the exercise-first rules are Ezra's, from 2026-09-25,
-and were not written down anywhere before this file.
+The exercise-first rules are Ezra's, from 2026-09-25.
 
 ## Lectures are built from exercise and solution pairs
 
@@ -116,15 +109,13 @@ But this repository is what students read:
   pick a different example, or leave the solution in `dlg`.
 - Do not copy a question from `dlg`'s question bank (`exercises/` there) into a lecture.
 - A worked general method that reduces a graded question to substitution counts as its answer.
-  In lds, the neural networks chapter's logic gates are the example:
-  the notes may say which gates one unit can compute, and why,
-  but not give the weights or the recipe that a graded handout asks for.
+  For example, the notes may say which logic gates one unit can compute, and why,
+  but not give the weights or the recipe that a graded question asks for.
 
 ## Data and code
 
 - **Give code examples in Python, with PyTorch**, as executed `{python}` chunks.
-  This differs from lds, which pairs R and Python and adds Julia:
-  deep learning is taught and practised in PyTorch, and the homework uses it.
+  Deep learning is taught and practised in PyTorch, and the homework uses it.
   Where a lecture goes under the hood and implements a method,
   implement it first in NumPy, then show the PyTorch building block that replaces it.
 - **Keep every executed chunk small enough to run in seconds on a CPU**,
@@ -136,14 +127,12 @@ But this repository is what students read:
   and a number in the prose comes from inline code.
 - **Give students the real data wherever a dataset is named** (2026-09-25).
   Keep a copy in `chapters/data/`, list it under the page's `resources:` so students can download it,
-  and put the loading and looking in exercises,
-  as `chapters/course-overview.qmd` does for Spambase.
+  and put the loading and looking in exercises.
   The prose names the original source, links where it is published, and cites it.
 - Real data and computed numbers follow psw's
   [use real data and compute every number](https://morrison-lab.github.io/psw/chapters/teaching.html#use-real-data-and-compute-every-number).
 - Show a dataset before using it:
-  print a look at it (`str()` or `dplyr::glimpse()` in R, `.head()` in Python) in a chunk,
-  as rme's logistic-regression chapter prints the `wcgs` data.
+  print a look at it in a chunk, such as its shape and a few examples.
 - Figures follow psw's
   [make figures accessible](https://morrison-lab.github.io/psw/chapters/teaching.html#make-figures-accessible).
 - An interactive figure (an `{ojs}` widget and its inputs) is a figure too (2026-09-26):
@@ -172,16 +161,6 @@ But this repository is what students read:
   ($D_1 \times D_2$ matrix or $H \times W \times C$ tensor).
   Never present these representations adjacent to each other
   for the same running example without explicitly bridging them.
-- **Predictor and design matrix dimensions** (2026-10-07).
-  Use $p$ for the number of raw predictors ($\vx \in \mathbb{R}^p$).
-  Use $p^*$ for the number of elements in the design vector $\phi(\vx) \in \mathbb{R}^{p^*}$
-  and the number of columns in the design matrix $\design(\mX) \in \mathbb{R}^{n \times p^*}$.
-  For an affine model with an intercept, $p^* = p + 1$.
-  Parameters match the design space: $\vbeta \in \mathbb{R}^{p^*}$.
-  Hat matrix projection is $H = \design(\design^\top \design)^{-1} \design^\top \in \mathbb{R}^{n \times n}$,
-  with individual leverage $h_i = H_{ii} = \phi(\vx_i)^\top (\design^\top \design)^{-1} \phi(\vx_i)$
-  and average leverage $\bar{h} = p^*/n$.
-  Polynomial feature expansions of degree $d$ produce $p^* = \binom{p+d}{d}$ terms.
 
 ## Standing directions from Ezra
 
@@ -211,34 +190,29 @@ Each applies to every page, not only the one that prompted it.
   "next week" or "the last week of the course".
   Point to the page that covers a topic instead,
   as in "[Gradient Descent](gradient-descent.qmd) starts on that."
-  Each reshuffle of the schedule left such references stale (lds#418, lds#424).
+  Each reshuffle of the schedule left such references stale.
   Citing a source's own week numbering ("the Week 6 lecture notes") is not a schedule reference.
   Reading order is fine ("the next chapter", "so far"),
   but say "these notes", not "the course", when the order is the point:
   "the rest of these notes", not "the rest of the course".
-- **Flesh the notes out beyond earlier offerings** (2026-09-18, 2026-09-24).
-  Start from past years' material,
-  then add from the collected sources:
+- **Build the notes from the collected sources** (2026-09-18, 2026-09-24):
   Brian Hutchinson's CSCI 481/581 lectures, labs and project (used with his permission),
   the book PDFs in [`Morrison-Lab/mlr`](https://github.com/Morrison-Lab/mlr),
   and *Deep Learning* [@goodfellow2016deep].
   His video lectures sit behind a login that his site asks not be shared,
   so never link them from these notes.
 - **Include interactive content** (2026-09-24).
-  [`Morrison-Lab/ISLP_labs`](https://github.com/Morrison-Lab/ISLP_labs)
-  and [`Morrison-Lab/ISLP`](https://github.com/Morrison-Lab/ISLP)
-  are the first place to look for ideas.
 - **The course is CSCI 481**, and Spring 2027 has no CSCI 581 section (2026-10-22).
   Never call this course "481/581";
   Brian Hutchinson's cross-listed course keeps that name when it is his course being named.
 - **Use Quarto's own mechanism, set up the way rme does it, before writing a new one** (2026-09-24).
   The last-modified date is the example: `date: last-modified` at the project level.
 - **PDF handouts are shared on their own through Canvas**, so:
-  no table of contents (2026-09-24, [#76](https://github.com/Morrison-Lab/lds/issues/76));
+  no table of contents (2026-09-24);
   no links to other pages, which `filters/unlink-pages.lua` removes (2026-09-23);
   a link to a data file on the site becomes its full site URL, since students cannot open the repository;
   every page shows its last-updated date, as the web page and slides do
-  (2026-09-24, [#86](https://github.com/Morrison-Lab/lds/issues/86));
+  (2026-09-24);
   and dense tables stay readable, with rules or space between rows (2026-09-24).
 - **Keep every mention of the start-of-quarter survey current** (2026-09-24):
   when the link or the questions change, update every page that mentions it,
@@ -251,9 +225,8 @@ Each applies to every page, not only the one that prompted it.
   named `_<stem>_<type>.qmd` with the div type last
   (`_def`, `_exr`, `_sol`, `_thm`, `_exm`, `_fig`, `_rem`),
   so the files of one idea sort together:
-  `_backfitting-update_def.qmd`, `_backfitting-update_exr.qmd`, `_backfitting-update_sol.qmd`.
-  New and revised content gets one div per subfile, a solution in its own `_sol` file included.
-  Existing `_def-` style prefix names stay until a separate rename sweep.
+  `_backprop-update_def.qmd`, `_backprop-update_exr.qmd`, `_backprop-update_sol.qmd`.
+  Each subfile holds one div, a solution in its own `_sol` file included.
   (Ezra, 2026-10-18; ai-config
   [`lecture-conventions`](https://github.com/Morrison-Lab/ai-config/blob/main/shared/writing/lecture-conventions.md)).
   rme's logistic-regression chapter is the bar: a 117-line spine over 95 short subfiles.
@@ -262,7 +235,7 @@ Each applies to every page, not only the one that prompted it.
 - **Credit adapted material in a `::: notes` div**, which keeps it off the slides (2026-09-25).
   psw's [credit other courses](https://morrison-lab.github.io/psw/chapters/teaching.html#credit-other-courses-without-summarizing-them) gives the general rule.
 - **Do not put a lot of body text on section or title slides**
-  (2026-09-29, [#271](https://github.com/Morrison-Lab/lds/issues/271)).
+  (2026-09-29).
   In RevealJS, section and title slides (such as level-1 headings like `# Preface`)
   are vertically centered and do not scroll,
   so excess content gets clipped off the top and bottom of the screen.
@@ -291,7 +264,6 @@ Each applies to every page, not only the one that prompted it.
   in addition to the callouts, never instead of them (Ezra, 2026-10-02).
   Ezra pointed to [the rmsc site](https://hbiostat.org/rmsc/) as an example of this placement.
   That site also embeds audio narration, which we do not have, so only external links appear here.
-- **Generalization gets its own `#def-` div** (2026-09-25).
 - **Name a book by its title where the book, not its authors, is the subject**:
   a bare `@key` renders as "Author [n]", such as "Hastie et al. [2]",
   so write "*The Elements of Statistical Learning* notes" with a bracketed citation.

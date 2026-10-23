@@ -5,7 +5,7 @@
 profile:
   default: website
 
-# Vendored from `Morrison-Lab/rme` under `_extensions/`, rather than installed
+# Vendored under `_extensions/`, rather than installed
 # with `quarto add`, so a clone renders without a network fetch and the exact
 # filter version is recorded here. `div-anchors` gives theorem and proof divs
 # the hover anchor that Quarto's `anchor-sections` already gives headings;

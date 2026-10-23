@@ -1,15 +1,13 @@
 # Thin caller of Morrison-Lab/gha's reusable AI-tell scanner.
-# Ported from d-morrison/rme.
 #
 # Much of the prose here is AI-assisted, so a density check on what a PR adds
-# is a useful second pair of eyes on top of review. Warn-only, as in rme: the
+# is a useful second pair of eyes on top of review. Warn-only: the
 # tell list includes words such as `robust` that are legitimate technical
 # terms in machine learning, and density is measured per 1,000 words, so one
 # such word in a short diff can clear the threshold on arithmetic alone.
 #
-# rme gates this job with a paths-filter job plus a bypass workflow, so that a
-# required check still reports on PRs that touch no prose. This repository
-# has no required checks, so a plain `paths:` trigger filter does the same job.
+# This repository has no required checks, so a plain `paths:` trigger filter
+# skips PRs that touch no prose.
 name: Check AI Tells
 
 on:

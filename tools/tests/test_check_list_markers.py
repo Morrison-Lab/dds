@@ -5,7 +5,7 @@ The check passes vacuously if its pattern never fires, or if ``main()`` never
 reports what the pattern finds. So the cases pinned here are the lines Pandoc
 reads as list markers (each checked with ``quarto pandoc -t html``, Pandoc
 3.10), the nearby lines it leaves as text, the contexts the check must skip,
-and a run of ``main()`` over the poll that lds#370 found, which must fail.
+and a run of ``main()`` over a real poll that rendered wrongly, which must fail.
 
 Run with ``python3 tools/tests/test_check_list_markers.py``. Needs no pytest.
 """
@@ -76,7 +76,7 @@ check(
     clm.flagged_lines("text\n\n3.  Item\n    (C) either\n") == [(4, "    (C) either")],
 )
 
-# The poll from chapters/_subfiles/metrics/_exr-r-squared.qmd before lds#366.
+# A real in-class poll whose (C) line Pandoc read as a list marker.
 POLL = (
     "3.  Could a negative $R^2$ be caused by\n"
     "    (A) an underfit model, (B) an overfit model,\n"
@@ -92,7 +92,7 @@ with tempfile.TemporaryDirectory() as tmp:
     with contextlib.redirect_stdout(out):
         rc = clm.main(["--root", str(root)])
     report = out.getvalue()
-    check("main() fails on the lds#370 poll", rc == 1, f"rc={rc}")
+    check("main() fails on the poll", rc == 1, f"rc={rc}")
     check("main() reports the (C) line", ":3:" in report and "(C) either" in report, report)
     check("main() skips chapters/outtakes/", "outtakes" not in report, report)
 

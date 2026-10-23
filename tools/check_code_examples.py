@@ -462,7 +462,7 @@ def redefinitions(blocks: list[tuple[int, str, str]]) -> list[tuple[int, str]]:
     alone deliberately rather than overlooked -- blocks legitimately set
     different sample sizes and seeds, so requiring every module-level name to
     agree would report a difference the chapter intends. The rest are a real
-    gap; see https://github.com/Morrison-Lab/lds/issues/33.
+    gap.
 
     Only Python is checked, because `ast` settles what a top-level definition
     is and a regular expression over R or Julia does not. No R or Julia
@@ -470,8 +470,7 @@ def redefinitions(blocks: list[tuple[int, str, str]]) -> list[tuple[int, str]]:
     2026-09-23), so that gap too is unexercised rather than tolerated; it is
     a separate question from the one above, because it is about the languages
     this function never examines rather than the definitions it examines and
-    does not see, and it is
-    https://github.com/Morrison-Lab/lds/issues/32.
+    does not see.
     """
     seen: dict[str, tuple[int, str]] = {}
     problems: list[tuple[int, str]] = []

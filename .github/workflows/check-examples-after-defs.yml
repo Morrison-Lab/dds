@@ -1,8 +1,8 @@
 # Warns when a definition or result div (#def-, #thm-, #lem-, #prp-, #cor-) is
-# not immediately followed by an example (lds#279). Runs
+# not immediately followed by an example. Runs
 # tools/check_example_after_def.py and its self-test.
 #
-# Blocking since the count reached zero (lds#279): a new definition or result
+# Blocking since the count reached zero: a new definition or result
 # with no example after it fails the check.
 #
 # Needs only the source files (no Quarto render), so it is a plain job, like

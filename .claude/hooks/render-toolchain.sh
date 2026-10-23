@@ -1,9 +1,9 @@
 #!/bin/bash
 # SessionStart hook: install the render toolchain in cloud sessions.
 #
-# Copied from lds, minus its Julia step: this site has no Julia.
+# This site has no Julia, so there is no Julia step.
 # A fresh cloud container has R and Quarto but not what a render of
-# this site needs, and each gap fails differently (measured 2026-10-04 in lds):
+# this site needs, and each gap fails differently (measured 2026-10-04):
 # - no knitr or rmarkdown, so any page with a code chunk fails at once;
 # - no rsvg-convert, so a PDF handout with an SVG figure fails;
 # - no TinyTeX (the installers are refused), or one that is not on PATH;

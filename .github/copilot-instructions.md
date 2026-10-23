@@ -2,9 +2,6 @@
 
 These are the repo-wide instructions for every agent working here
 (Claude Code reads them through `CLAUDE.md`).
-They follow [`Morrison-Lab/rme`](https://github.com/Morrison-Lab/rme)'s
-`.github/copilot-instructions.md` as the baseline,
-adapted to this repository.
 `AUTHORING.md` adds the conventions specific to this course's lectures.
 
 > [!IMPORTANT]
@@ -73,8 +70,7 @@ always test it yourself.
   in an R setup chunk before the first of them,
   `reticulate::py_require("pandas")`;
   `reticulate` then provisions that Python environment itself, locally and in CI.
-- Code examples are Python, with PyTorch (`AUTHORING.md`);
-  this site has no Julia, unlike lds.
+- Code examples are Python, with PyTorch (`AUTHORING.md`).
 - Every code example on the site is an executed chunk as of 2026-09-28.
   `tools/check_code_examples.py` runs any plain fence a page adds,
   and over `chapters/` with none it reports nothing to check and exits 0.
@@ -298,7 +294,7 @@ Theorem-type divs are `#thm-`, `#lem-`, `#cor-`, `#prp-`, `#cnj-`, `#def-`, `#ex
 - Do not hide code from readers without a good reason,
   and say the reason in a comment in the chunk.
   A computation whose results the prose cites inline is not one:
-  readers should be able to see how those numbers were made (Ezra, 2026-10-05, on lds#401).
+  readers should be able to see how those numbers were made (Ezra, 2026-10-05).
   Loading packages and setting options are not reasons either:
   readers need them to run the code themselves.
   One reason that does hold is code that would give away an exercise's answer before its solution.
@@ -306,8 +302,7 @@ Theorem-type divs are `#thm-`, `#lem-`, `#cor-`, `#prp-`, `#cnj-`, `#def-`, `#ex
   When the exercise itself quotes the code's results, so it has to run first,
   hide only the lines that give the answer away, give that chunk a `label`,
   and show it in the solution with a chunk that has `#| ref.label: <label>`
-  and `#| eval: false`, so both copies are the same code
-  (lds's `chapters/backpropagation.qmd` and `_sol-relu-fix.qmd` do this, lds#417).
+  and `#| eval: false`, so both copies are the same code.
 
 ## Figures and Tables
 

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Self-test for the PDF accent fix in tools/build_math_macros.py (lds#495).
+"""Self-test for the PDF accent fix in tools/build_math_macros.py.
 
 The macros file defines the transpose as ``\\def\\'{^{\\top}}``, which replaces
 LaTeX's text accent. The generated preamble must save the accent before that
@@ -25,14 +25,14 @@ def check(name: str, condition: bool) -> None:
 
 subprocess.run([sys.executable, str(ROOT / "tools" / "build_math_macros.py")], check=True)
 tex = (ROOT / "_math-macros.tex").read_text(encoding="utf-8")
-save = tex.find("\\let\\ldsacute\\'")
+save = tex.find("\\let\\ddsacute\\'")
 define = tex.find("\\def\\'{^{\\top}}")
 restore = tex.find("\\DeclareRobustCommand{\\'}")
 check("accent is saved", save >= 0)
 check("transpose definition present", define >= 0)
 check("mode-aware \\' is declared", restore >= 0)
 check("save precedes the macros, which precede the restore", 0 <= save < define < restore)
-check("restore falls back to the saved accent", "\\expandafter\\ldsacute\\fi" in tex[restore:])
+check("restore falls back to the saved accent", "\\expandafter\\ddsacute\\fi" in tex[restore:])
 
 if FAILURES:
     sys.exit(f"{len(FAILURES)} failure(s)")

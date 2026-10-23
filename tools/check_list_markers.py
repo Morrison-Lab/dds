@@ -11,7 +11,7 @@ list, and Pandoc renumbers it, so a poll written as
         (C) either, or (D) neither?
 
 renders "(B) either": the third line became the second item of a list that
-started at (A). Nothing in the build warns (lds#370). An upper-case letter or
+started at (A). Nothing in the build warns. An upper-case letter or
 roman numeral followed by a period counts only before two or more spaces,
 since "C. Smith" is left alone.
 

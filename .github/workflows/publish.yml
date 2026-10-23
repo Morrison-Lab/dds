@@ -1,11 +1,6 @@
 # Render the Quarto site on every push to `main`, delegated to the reusable
 # workflow in Morrison-Lab/gha, which deploys it to the `gh-pages` branch.
 #
-# lds mirrors its gh-pages branch to a separate `lds-site` repository, so that
-# students can read the site without read access to the source. dds does not
-# do that yet: whether it needs a `dds-site` mirror depends on the Pages
-# visibility chosen for this repository.
-#
 # `setup-r` is on because pages execute Python chunks (PyTorch) through
 # reticulate, which runs inside knitr; reticulate provisions each page's
 # Python packages itself. Keep `r-packages` in step with preview.yml, which
@@ -58,7 +53,7 @@ jobs:
       # handouts (`_site/chapters/*-handout.pdf`) in a separate `--to pdf`
       # process during `pre-render` and then strips `pdf:` so the outer render
       # builds only `html` and `revealjs`, keeping Deno under the 16 GB runner
-      # memory limit (lds measured this across its 34 chapters).
+      # memory limit.
       #
       # Do NOT copy `formats: default` across from preview.yml: `default` is a
       # literal this workflow does not recognize, and would be passed straight

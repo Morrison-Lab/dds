@@ -1,5 +1,4 @@
 # Thin caller of Morrison-Lab/gha's reusable semantic-line-break check.
-# Ported from d-morrison/rme.
 #
 # Flags newly added prose lines that pack more than one sentence onto one
 # source line. It is diff-scoped (it reads only the lines a PR adds), so the

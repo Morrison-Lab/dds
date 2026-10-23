@@ -8,7 +8,7 @@ Expands each chapter's includes, then walks its top-level blocks.  A `#def-`,
 figures, whether a div or a code chunk labelled `fig-`) is an
 `#exm-` div, or an `#exr-` exercise that applies it.  `--strict` accepts only
 `#exm-`.  A run of adjacent `#def-` divs shares the example after the run.
-Warns only (exit 0) unless `--fail` is given (lds#279).
+Warns only (exit 0) unless `--fail` is given.
 """
 import argparse
 import os

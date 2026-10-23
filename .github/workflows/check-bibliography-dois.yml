@@ -1,4 +1,4 @@
-# Thin caller of Morrison-Lab/gha's reusable bibliography DOI check, as in qwt.
+# Thin caller of Morrison-Lab/gha's reusable bibliography DOI check.
 #
 # Checks that each book and article in references.bib has a DOI that resolves
 # and whose Crossref record matches the entry's title, authors and year.

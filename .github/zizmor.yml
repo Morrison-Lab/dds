@@ -1,4 +1,4 @@
-# zizmor configuration, read by `lint-workflows.yml`. Ported from Morrison-Lab/rme.
+# zizmor configuration, read by `lint-workflows.yml`.
 #
 # See https://docs.zizmor.sh/configuration/.
 rules:
@@ -13,8 +13,7 @@ rules:
         # current.
         #
         # `ref-pin` does NOT tell a tag from a branch: `actions/checkout@main`
-        # passes it too (checked with zizmor 1.28.0, offline). rme's copy of
-        # this file says otherwise, and is wrong. So a branch pin such as
+        # passes it too (checked with zizmor 1.28.0, offline). So a branch pin such as
         # `@main`, which moves with no review and no dependabot PR, is left
         # to code review to catch.
         "*": ref-pin

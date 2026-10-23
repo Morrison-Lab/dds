@@ -13,7 +13,7 @@ on:
   pull_request:
     types: [opened, reopened, synchronize, labeled, closed]
     # Skip the render, about 20 minutes, on a PR that changes nothing the
-    # site is built from, as rme's preview does with a path filter. The site
+    # site is built from. The site
     # renders from chapters/, images/, the Quarto config, styles, filters,
     # extensions and tools/ (the pre-render scripts and check_site.py); the
     # files below are none of those.
@@ -68,8 +68,7 @@ jobs:
       # its extra TinyTeX packages by shelling out to `Rscript -e
       # "tinytex::tlmgr_install(...)"`, so `tinytex` is on the list too.
       # `downlit` and `xml2` serve `code-link: true`, which warns without them.
-      # This site has no Julia, so `setup-julia` is off. lds pins `@v3` for
-      # that input; dds keeps the same pin so the two sites stay in step.
+      # This site has no Julia, so `setup-julia` is off; that input needs gha `@v3`.
       # A package a new R chunk loads goes here and in publish.yml.
       tinytex: true
       setup-julia: false

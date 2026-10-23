@@ -1,5 +1,5 @@
 # Fails when the tree records a gitlink (mode 160000) with no matching entry
-# in `.gitmodules`. Ported from d-morrison/rme.
+# in `.gitmodules`.
 #
 # This repository has no submodules yet, so any gitlink today is an accident.
 # The likely one is `git add -A` sweeping up a nested repository,

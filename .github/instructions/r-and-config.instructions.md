@@ -11,7 +11,6 @@ description: "Use when editing R or Python source, Quarto configuration, or GitH
   with `knitr`, `rmarkdown` and `reticulate`.
   Python packages are declared on the page with `reticulate::py_require()`,
   and `reticulate` provisions them.
-  This site has no Julia, unlike lds.
   The preview and publish workflows install the R packages;
   a new R package a chunk needs goes into both workflows in the same PR.
 - For changed `.R` files, and `.qmd` files with R code,
