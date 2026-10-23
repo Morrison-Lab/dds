@@ -1,0 +1,8 @@
+{
+ "site": "dds",
+ "meaning": "edge [A, B] means A uses B: B is a prerequisite of A, A a postrequisite of B",
+ "nodes": [],
+ "edges": [],
+ "cycles": [],
+ "forwardReferences": []
+}
