@@ -6,9 +6,7 @@ The general rules --- divs and their titles, slide breaks, subfiles, citations, 
 code chunks, figures and tables --- are in
 [`.github/copilot-instructions.md`](.github/copilot-instructions.md).
 This file adds what is specific to this course:
-Ezra's directions for his lecture notes,
-and the conventions they take from
-[`Morrison-Lab/epi204`](https://github.com/Morrison-Lab/epi204).
+Ezra's directions for his lecture notes.
 `CLAUDE.md` covers the repository itself.
 
 The general rules for writing teaching materials are in psw's
@@ -58,8 +56,7 @@ to keep students working rather than watching.
 - **Derive a theorem in a solution, then state and prove it separately.**
   The exercise asks for the result, and its solution derives it.
   A separate `#thm-` div after that solution states the result,
-  and a `proof` div right after the theorem links back to the solution,
-  as rme's `_subfiles/logistic-regression/_sec_odds_fn.qmd` does:
+  and a `proof` div right after the theorem links back to the solution:
 
   ````markdown
   ::: {#exr-prob-to-odds}
@@ -87,15 +84,14 @@ to keep students working rather than watching.
 - **Break a complex task into subtasks.**
   Each bottom-level prompt gets its own `#exr-` div and its own solution,
   in order,
-  rather than one exercise with parts (a) through (e)
-  (epi204: "Use `#exr` divs for each bottom-level prompt instead of Markdown headers").
+  rather than one exercise with parts (a) through (e) or Markdown headers.
   Later subtasks may use earlier results;
   cross-reference them with `@exr-...`.
 - **Put a slide break between an exercise and its solution,**
   so the prompt is on screen alone while students work.
 - Give the solution the exercise's slug with `sol-` in place of `exr-`.
 - Put a hint in a `::: {.callout-tip}` div titled `#### Hint`, inside the exercise div,
-  not as `*Hint:*` text (epi204).
+  not as `*Hint:*` text.
 
 ### Solutions here must not answer graded work
 
@@ -201,11 +197,12 @@ Each applies to every page, not only the one that prompted it.
   and *Deep Learning* [@goodfellow2016deep].
   His video lectures sit behind a login that his site asks not be shared,
   so never link them from these notes.
-- **Include interactive content** (2026-09-24).
+- **Include interactive content** (2026-09-24),
+  such as a widget that lets a reader change a parameter and see the result.
 - **The course is CSCI 481**, and Spring 2027 has no CSCI 581 section (2026-10-22).
   Never call this course "481/581";
   Brian Hutchinson's cross-listed course keeps that name when it is his course being named.
-- **Use Quarto's own mechanism, set up the way rme does it, before writing a new one** (2026-09-24).
+- **Use Quarto's own mechanism before writing a new one** (2026-09-24).
   The last-modified date is the example: `date: last-modified` at the project level.
 - **PDF handouts are shared on their own through Canvas**, so:
   no table of contents (2026-09-24);
@@ -229,7 +226,7 @@ Each applies to every page, not only the one that prompted it.
   Each subfile holds one div, a solution in its own `_sol` file included.
   (Ezra, 2026-10-18; ai-config
   [`lecture-conventions`](https://github.com/Morrison-Lab/ai-config/blob/main/shared/writing/lecture-conventions.md)).
-  rme's logistic-regression chapter is the bar: a 117-line spine over 95 short subfiles.
+  A chapter is a short spine of includes over many short subfiles.
 - **Check the rendered slides, not only the web page,** for boxed and coloured divs (2026-09-25;
   psw: [structure slides for the reader](https://morrison-lab.github.io/psw/chapters/teaching.html#structure-slides-for-the-reader)).
 - **Credit adapted material in a `::: notes` div**, which keeps it off the slides (2026-09-25).

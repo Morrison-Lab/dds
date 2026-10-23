@@ -39,9 +39,9 @@ website:
   title: "Deep Learning"
   site-url: &site-url https://morrison-lab.github.io/dds/
   description: "Lecture materials for CSCI 481: Deep Learning"
-  # No `repo-url` or `repo-actions` while this repository is private: an
-  # "edit" or "report an issue" link would go nowhere for a student.
-  # Add them when the repository goes public.
+  # No `repo-url` or `repo-actions` yet: this repository is meant to be
+  # public but is still private, so an "edit" or "report an issue" link
+  # would go nowhere for a student. Add them once it is public.
   # Publishes llms.txt, a plain-text index of the site for language models.
   # https://quarto.org/docs/websites/website-llms.html
   llms-txt: true
