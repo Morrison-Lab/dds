@@ -14,18 +14,22 @@ with finals week from Monday, June 7 to Friday, June 11.
 Class meets on Mondays, Tuesdays, Wednesdays and Fridays, 9:00--9:50am, in CF 420.
 There is no class on Monday, May 31, for Memorial Day.
 
-Monday to Wednesday are lectures from these notes.
-Most Fridays are lab sessions, for working on the homework in class.
+Mondays, Tuesdays and Wednesdays are lectures from these notes, apart from exam days and Memorial Day.
+Fridays are lab sessions, for working on the homework in class,
+except on the three Fridays that hold a midterm review.
 
 Homework is due at 11:59 pm on its due date, always a Friday.
-Each self-grade is due one week after that homework's solutions are posted;
-the self-grade dates below assume the solutions go up at the deadline.
+Each self-grade is due one week after that homework's solutions are posted.
+The self-grade dates below assume the solutions go up at the deadline.
 
-Midterms 1, 2 and 3 are in class on Monday, April 26, Monday, May 17 and Tuesday, June 1.
-Midterm 1 covers weeks 1 to 3, from the course overview through optimization.
-Midterm 2 covers regularization and normalization, convolutional networks, sequence models and language modeling.
-Midterm 3 covers the lectures from attention through running deep learning experiments.
-Each midterm has an in-class review session on the Friday before the exam.
+The three midterms are in class:
+
+- Midterm 1, Monday, April 26: weeks 1 to 4, from the course overview through normalization and residual connections.
+- Midterm 2, Monday, May 17: convolutional networks, sequence models, language modeling, attention, and Transformers' self-attention and positional encoding.
+- Midterm 3, Tuesday, June 1: the lectures from Transformer pretraining through running deep learning experiments.
+
+Each midterm covers the lectures since the one before it,
+and has an in-class review session on the Friday before the exam.
 
 The final exam is optional.
 Its day and time are still to be set (TBD):
@@ -47,8 +51,8 @@ The final's review session will be held during finals week, at a time TBD.
 |                          | differentiation              | and activations              | units, losses,               |                              |
 | Apr 4 -- Apr 10          |                              |                              | representational power       |                              |
 +--------------------------+------------------------------+------------------------------+------------------------------+------------------------------+
-| **Week 3**               | Backpropagation and          | Optimization: minibatch      | Optimization: Adam,          | Lab session: Homework 2      |
-|                          | automatic differentiation    | stochastic gradient descent, | learning-rate schedules and  |                              |
+| **Week 3**               | Backpropagation              | Optimization: minibatch      | Optimization: Adam,          | Lab session: Homework 2      |
+|                          |                              | stochastic gradient descent, | learning-rate schedules and  |                              |
 | Apr 11 -- Apr 17         |                              | momentum                     | warmup, initialization       | **Homework 1 due**           |
 +--------------------------+------------------------------+------------------------------+------------------------------+------------------------------+
 | **Week 4**               | Regularization: weight       | Regularization: dropout,     | Normalization: batch and     | **Midterm 1 review**         |
@@ -69,9 +73,10 @@ The final's review session will be held during finals week, at a time TBD.
 | May 9 -- May 15          |                              |                              | encoding                     | **Homework 2 self-grade      |
 |                          |                              |                              |                              | due**                        |
 +--------------------------+------------------------------+------------------------------+------------------------------+------------------------------+
-| **Week 8**               | **Midterm 2**                | Transformers: pretraining    | Generative models:           | Lab session: Homework 4      |
-|                          |                              |                              | autoencoders and variational |                              |
-| May 16 -- May 22         |                              |                              | autoencoders                 | **Homework 3 due**           |
+| **Week 8**               | **Midterm 2**                | Transformers: pretraining    | Generative models:           | Lab session: Homework 3 and  |
+|                          |                              |                              | autoencoders and variational | Homework 4                   |
+| May 16 -- May 22         |                              |                              | autoencoders                 |                              |
+|                          |                              |                              |                              | **Homework 3 due**           |
 +--------------------------+------------------------------+------------------------------+------------------------------+------------------------------+
 | **Week 9**               | Generative models:           | Generative models: diffusion | Running deep learning        | **Midterm 3 review**         |
 |                          | generative adversarial       |                              | experiments: hyperparameter  |                              |
@@ -80,11 +85,10 @@ The final's review session will be held during finals week, at a time TBD.
 |                          |                              |                              |                              | **Homework 3 self-grade      |
 |                          |                              |                              |                              | due**                        |
 +--------------------------+------------------------------+------------------------------+------------------------------+------------------------------+
-| **Week 10**              | **No class: Memorial Day**   | **Midterm 3**                | Applications: large language | Applications: speech and     |
-|                          |                              |                              | models, fine-tuning          | vision; ethics               |
-| May 30 -- Jun 5          |                              |                              |                              |                              |
-|                          |                              |                              |                              | **Homework 5 due**           |
-|                          |                              |                              |                              |                              |
+| **Week 10**              | **No class: Memorial Day**   | **Midterm 3**                | Applications and current     | Lab session: Homework 5      |
+|                          |                              |                              | topics: large language       |                              |
+| May 30 -- Jun 5          |                              |                              | models, fine-tuning, speech  | **Homework 5 due**           |
+|                          |                              |                              | and vision; ethics           |                              |
 |                          |                              |                              |                              | **Homework 4 self-grade      |
 |                          |                              |                              |                              | due**                        |
 |                          |                              |                              |                              |                              |
