@@ -1,8 +1,7 @@
 # Set up a page whose Python chunks use PyTorch.
 #
 # A page sources this file from its first R chunk, after attaching reticulate,
-# then calls use_torch() with its other Python packages,
-# as chapters/pytorch-basics.qmd does.
+# then calls use_torch() with its other Python packages.
 # use_torch() declares torch along with those packages,
 # then applies tools/reticulate_logging_patch.py,
 # without which every Python chunk after `import torch`
