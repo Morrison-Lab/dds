@@ -1,14 +1,18 @@
 #!/usr/bin/env python3
 """Self-test for tools/reticulate_logging_patch.py.
 
-The patch replaces reticulate's `rpytools.output._setStream`. The cases
-pinned here: a handler whose `stream` is a read-only property (torch's
-_StderrHandler) is left alone instead of raising, an ordinary StreamHandler
-is still redirected, and running the patch twice does not wrap it twice.
-A stand-in `rpytools.output` copies reticulate 1.47.0's `_setStream`, so the
-test needs neither R nor torch.
+Runs reticulate's own output-capture context, from the installed R package,
+with a handler shaped like torch's _StderrHandler (a logging.Handler whose
+`stream` is a read-only property returning sys.stderr) registered on a
+logger. The cases pinned here: unpatched, the capture raises, as it does
+in a render; patched, it captures and restores without raising; an
+ordinary StreamHandler is still redirected; a read-only handler that does
+not follow sys.stderr still raises, rather than escaping the capture; and
+running the patch twice does not wrap it twice.
 
-Run with ``python3 tools/tests/test_reticulate_logging_patch.py``. Needs no pytest.
+Needs R with reticulate installed (the render needs both anyway); it stops
+with an error if it cannot find them. Run with
+``python3 tools/tests/test_reticulate_logging_patch.py``. Needs no pytest.
 """
 
 from __future__ import annotations
@@ -16,11 +20,18 @@ from __future__ import annotations
 import io
 import logging
 import runpy
+import subprocess
 import sys
-import types
 from pathlib import Path
 
 PATCH = Path(__file__).resolve().parent.parent / "reticulate_logging_patch.py"
+
+rpytools_dir = subprocess.run(
+    ["Rscript", "-e", 'cat(system.file("python", package = "reticulate", mustWork = TRUE))'],
+    capture_output=True, text=True, check=True,
+).stdout.strip()
+sys.path.insert(0, rpytools_dir)
+import rpytools.output as output  # noqa: E402
 
 FAILURES: list[str] = []
 
@@ -33,56 +44,67 @@ def check(name: str, condition: bool, detail: str = "") -> None:
         FAILURES.append(name)
 
 
-def _set_stream_1_47(handler, stream):
-    """reticulate 1.47.0's rpytools.output._setStream, verbatim."""
-    setStream = getattr(handler, "setStream", None)
-    if setStream is not None:
-        return setStream(stream)
-    old_stream = handler.stream
-    handler.stream = stream
-    return old_stream
-
-
-output = types.ModuleType("rpytools.output")
-output._setStream = _set_stream_1_47
-package = types.ModuleType("rpytools")
-package.output = output
-sys.modules["rpytools"] = package
-sys.modules["rpytools.output"] = output
-
-
-class ReadOnlyStderrHandler(logging.StreamHandler):
-    """Shaped like torch._logging._internal._StderrHandler."""
-
-    def __init__(self):
-        logging.Handler.__init__(self)
+class FollowsStderr(logging.Handler):
+    """Shaped like torch._logging._internal._StderrHandler in torch 2.14."""
 
     @property
     def stream(self):
         return sys.stderr
 
 
-read_only = ReadOnlyStderrHandler()
-try:
-    output._setStream(read_only, io.StringIO())
-    unpatched_raises = False
-except AttributeError:
-    unpatched_raises = True
-check("unpatched, a read-only stream raises (the bug is reproduced)", unpatched_raises)
+class FixedReadOnly(logging.Handler):
+    """A read-only stream that does not follow sys.stderr."""
+
+    def __init__(self, target):
+        super().__init__()
+        self._target = target
+
+    @property
+    def stream(self):
+        return self._target
+
+
+def capture(handler):
+    """Run one chunk's capture with `handler` registered; return (error, inside)."""
+    logger = logging.getLogger("test_reticulate_logging_patch")
+    logger.handlers = [handler]
+    inside = None
+    try:
+        with output.OutputCaptureContext(capture_stdout=True, capture_stderr=True):
+            inside = handler.stream
+        return None, inside
+    except AttributeError as err:
+        return err, inside
+    finally:
+        logger.handlers = []
+        sys.stdout, sys.stderr = real_stdout, real_stderr
+
+
+real_stdout, real_stderr = sys.stdout, sys.stderr
+
+err, _ = capture(FollowsStderr())
+check("unpatched, the capture raises (the bug is reproduced)", err is not None)
 
 runpy.run_path(str(PATCH))
 patched = output._setStream
 
-try:
-    returned = output._setStream(read_only, io.StringIO())
-    check("patched, a read-only stream is left alone", returned is sys.stderr, repr(returned))
-except AttributeError as err:
-    check("patched, a read-only stream is left alone", False, str(err))
+handler = FollowsStderr()
+err, inside = capture(handler)
+check("patched, the capture runs without raising", err is None, str(err))
+check("patched, the handler writes to the capture buffer inside", inside is not real_stderr)
+check("patched, the handler writes to the real stderr after", handler.stream is real_stderr)
 
-old, new = io.StringIO(), io.StringIO()
-ordinary = logging.StreamHandler(old)
-returned = output._setStream(ordinary, new)
-check("patched, an ordinary handler is still redirected", ordinary.stream is new and returned is old)
+ordinary = logging.StreamHandler(sys.stderr)
+err, inside = capture(ordinary)
+# reticulate 1.47.0 does not point an ordinary handler back afterwards,
+# patched or not, so only the redirection inside is pinned here.
+check(
+    "patched, an ordinary handler is still redirected",
+    err is None and inside is not real_stderr,
+)
+
+err, _ = capture(FixedReadOnly(sys.stderr))
+check("patched, a read-only handler that does not follow sys.stderr still raises", err is not None)
 
 runpy.run_path(str(PATCH))
 check("running the patch twice does not wrap it twice", output._setStream is patched)
