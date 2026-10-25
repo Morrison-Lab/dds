@@ -69,6 +69,7 @@ jobs:
         any::downlit
         any::xml2
         any::tinytex
+        any::tibble
       setup-julia: false
       tinytex: true
       # The TikZ diagrams ship as SVG; Quarto shells out to rsvg-convert to

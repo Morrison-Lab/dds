@@ -8,7 +8,7 @@ read it before editing that workflow.
   `preview.yml` renders a pull request's site, `preview-deploy.yml` publishes it under `pr-preview/pr-<N>/`,
   and `cleanup-pr-previews.yml` removes the previews of closed PRs.
   `publish.yml` renders `main` and deploys it to this repository's `gh-pages` branch.
-  `preview.yml` and `publish.yml` install only `knitr`, `rmarkdown`, `reticulate`, `downlit`, `xml2` and `tinytex`,
+  `preview.yml` and `publish.yml` install only `knitr`, `rmarkdown`, `reticulate`, `downlit`, `xml2`, `tinytex` and `tibble`,
   and set `setup-julia: false`: pages run Python (PyTorch) through reticulate.
   Keep their two `r-packages` lists identical.
 - **Checks on the rendered site.**
