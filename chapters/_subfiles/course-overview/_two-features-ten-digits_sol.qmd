@@ -15,10 +15,10 @@ acc_guess = np.bincount(labels).max() / len(labels)
 print(round(acc_hand, 3), round(acc_guess, 3))
 ```
 
-The two [features](https://morrison-lab.github.io/lds/chapters/course-overview.html#def-feature) get `r sprintf("%.1f", 100 * py$acc_hand)`% of the images right.
-Guessing the most common digit gets `r sprintf("%.1f", 100 * py$acc_guess)`% right,
-`r sprintf("%.1f", 100 * (py$acc_hand - py$acc_guess))` percentage points fewer,
-so the features carry real information,
+The two [features](https://morrison-lab.github.io/lds/chapters/course-overview.html#def-feature) get `r sprintf("%.1f", 100 * py$acc_hand)`% of the images right,
+and guessing the most common digit gets `r sprintf("%.1f", 100 * py$acc_guess)`% right.
+The features beat guessing by `r sprintf("%.1f", 100 * (py$acc_hand - py$acc_guess))` percentage points,
+so they carry real information,
 but more than half of the images are still misread.
 These shares are measured on the same images the digit averages were computed from,
 so they are training accuracies, and new images would likely do a little worse.
