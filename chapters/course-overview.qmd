@@ -151,13 +151,13 @@ The handwritten-digit exercises, the history and the road ahead are new.
 
 ::: {.videos}
 3Blue1Brown builds a network with two hidden layers for handwritten digits,
-and asks what features its layers might learn, in
+and asks what [features](https://morrison-lab.github.io/lds/chapters/course-overview.html#def-feature) its layers might learn, in
 [But what is a neural network?](https://www.youtube.com/watch?v=aircAruvnKk) [@sanderson2017neuralnetwork].
 :::
 
 ::: {.reading}
-The introduction to *Deep Learning*, [Chapter 1](https://www.deeplearningbook.org/contents/intro.html),
-explains representation learning and deep learning at more length [@goodfellow2016deep, Ch. 1].
+The introduction to *Deep Learning*, [Chapter 1](https://www.deeplearningbook.org/contents/intro.html), <!-- check-term-links: allow -->
+explains [representation learning](#def-representation-learning) and deep learning at more length [@goodfellow2016deep, Ch. 1].
 :::
 
 ## Where deep learning fits

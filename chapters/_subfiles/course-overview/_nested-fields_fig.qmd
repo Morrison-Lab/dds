@@ -33,9 +33,9 @@ ax.set_axis_off()
 plt.show()
 ```
 
-Deep learning is a kind of representation learning,
-which is a kind of machine learning,
-which is one approach to artificial intelligence.
+[Deep learning](#def-deep-learning) is a kind of [representation learning](#def-representation-learning),
+which is a kind of [machine learning](https://morrison-lab.github.io/lds/chapters/course-overview.html#def-machine-learning),
+which is one approach to [artificial intelligence](https://morrison-lab.github.io/lds/chapters/course-overview.html#def-artificial-intelligence).
 After the Venn diagram in *Deep Learning* [@goodfellow2016deep, Ch. 1],
 with this chapter's examples.
 

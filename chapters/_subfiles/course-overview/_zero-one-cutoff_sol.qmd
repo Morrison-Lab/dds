@@ -20,7 +20,7 @@ print(cut_01, wrong_01, is_01.sum())
 With a cutoff of `r py$cut_01`,
 the rule gets `r py$wrong_01` of the `r sum(py$is_01)` images of 0s and 1s wrong,
 `r sprintf("%.1f", 100 * py$wrong_01 / sum(py$is_01))`%.
-One feature, chosen by looking at a few images,
+One [feature](https://morrison-lab.github.io/lds/chapters/course-overview.html#def-feature), chosen by looking at a few images,
 is enough to tell these two digits apart.
 
 :::

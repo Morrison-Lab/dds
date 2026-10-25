@@ -1,7 +1,7 @@
 ::: {#sol-three-or-eight}
 
 An 8 closes its loops on the left, and a 3 leaves the left open.
-One feature is the average ink on the left of the middle rows:
+One [feature](https://morrison-lab.github.io/lds/chapters/course-overview.html#def-feature) is the average ink on the left of the middle rows:
 rows 2 to 5 and columns 0 to 2.
 Search its cutoffs as @sol-zero-one-cutoff did, to see how well it works.
 

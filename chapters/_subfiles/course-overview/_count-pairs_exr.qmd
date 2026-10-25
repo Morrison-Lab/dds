@@ -4,7 +4,7 @@
 
 Telling all ten digits apart one pair at a time,
 as @exr-zero-or-one and @exr-three-or-eight did,
-takes a feature for every pair of digits.
+takes a [feature](https://morrison-lab.github.io/lds/chapters/course-overview.html#def-feature) for every pair of digits.
 How many pairs of digits are there?
 
 :::

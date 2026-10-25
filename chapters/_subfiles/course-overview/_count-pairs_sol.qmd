@@ -14,7 +14,7 @@ $$
 \end{aligned}
 $$
 
-That is 45 features to design and test by hand,
+That is 45 [features](https://morrison-lab.github.io/lds/chapters/course-overview.html#def-feature) to design and test by hand,
 and @sol-three-or-eight shows that some pairs need more than one.
 
 :::

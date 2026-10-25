@@ -3,7 +3,7 @@
 #### A feature for 3 or 8
 
 Using the 3s and 8s in @fig-digits-grid,
-write a feature that tends to be small for a 3 and large for an 8.
+write a [feature](https://morrison-lab.github.io/lds/chapters/course-overview.html#def-feature) that tends to be small for a 3 and large for an 8.
 
 ::: {.callout-tip}
 #### Hint

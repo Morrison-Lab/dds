@@ -2,8 +2,8 @@
 
 #### Counting depth, and other names
 
-These notes count a network's depth as lds does,
-by its [layers of weights](https://morrison-lab.github.io/lds/chapters/neural-nets.html#def-depth),
+These notes count a network's [depth](https://morrison-lab.github.io/lds/chapters/neural-nets.html#def-depth) as lds does,
+by its layers of weights,
 so AlexNet (@exm-deep-learning) has depth 8.
 Other sources count only the hidden layers,
 or every layer including the input,
@@ -12,7 +12,7 @@ noting that there is no single correct way to count it
 [@goodfellow2016deep, Ch. 1].
 "How deep is deep" has no agreed cutoff either.
 
-Deep learning models are almost all
+[Deep learning](#def-deep-learning) models are almost all
 [neural networks](https://morrison-lab.github.io/lds/chapters/neural-nets.html),
 also called artificial neural networks,
 and a neural network with many layers is called a deep neural network.

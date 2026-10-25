@@ -2,7 +2,7 @@
 
 A 0 is a loop around an empty middle,
 and a 1 is a stroke down the middle.
-One feature is the average ink in the middle of the grid:
+One [feature](https://morrison-lab.github.io/lds/chapters/course-overview.html#def-feature) is the average ink in the middle of the grid:
 rows 2 to 5 and columns 3 and 4, counting from 0,
 eight pixels in all.
 

@@ -2,7 +2,7 @@
 
 #### Two features for ten digits
 
-Describe each image by the two features so far,
+Describe each image by the two [features](https://morrison-lab.github.io/lds/chapters/course-overview.html#def-feature) so far,
 its center ink and its left ink.
 Classify each image as the digit whose average pair of features,
 over all the images of that digit,

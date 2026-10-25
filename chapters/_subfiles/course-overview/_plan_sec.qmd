@@ -3,7 +3,7 @@ This lecture is about what the course is for:
 
 1.  why hand-designed [features](https://morrison-lab.github.io/lds/chapters/course-overview.html#def-feature) run out,
     shown on a dataset of handwritten digits;
-2.  what representation learning and deep learning are;
-3.  where deep learning sits within machine learning and artificial intelligence;
+2.  what [representation learning](#def-representation-learning) and [deep learning](#def-deep-learning) are;
+3.  where deep learning sits within [machine learning](https://morrison-lab.github.io/lds/chapters/course-overview.html#def-machine-learning) and [artificial intelligence](https://morrison-lab.github.io/lds/chapters/course-overview.html#def-artificial-intelligence);
 4.  a short history of neural networks;
 5.  the topics and tools of these notes.

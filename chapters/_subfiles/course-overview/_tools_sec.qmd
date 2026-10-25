@@ -3,7 +3,7 @@ plus NumPy where a lecture builds a method from scratch.
 Every example here runs in seconds on a laptop's CPU;
 the homework trains larger models.
 
-These notes build on [lds](https://morrison-lab.github.io/lds/), the machine learning notes for this course's prerequisite,
+These notes build on [lds](https://morrison-lab.github.io/lds/), the [machine learning](https://morrison-lab.github.io/lds/chapters/course-overview.html#def-machine-learning) notes for this course's prerequisite,
 and link to its definitions rather than repeating them.
 Its chapters on
 [gradient descent](https://morrison-lab.github.io/lds/chapters/gradient-descent.html),

@@ -2,7 +2,7 @@
 
 #### Who chooses the features?
 
-In @exr-two-features-ten-digits a person chose the features,
+In @exr-two-features-ten-digits a person chose the [features](https://morrison-lab.github.io/lds/chapters/course-overview.html#def-feature),
 and the data chose only the digit averages.
 What else could choose the features?
 

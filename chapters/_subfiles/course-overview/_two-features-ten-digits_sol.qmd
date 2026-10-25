@@ -15,7 +15,7 @@ acc_guess = np.bincount(labels).max() / len(labels)
 print(round(acc_hand, 3), round(acc_guess, 3))
 ```
 
-The two features get `r sprintf("%.1f", 100 * py$acc_hand)`% of the images right.
+The two [features](https://morrison-lab.github.io/lds/chapters/course-overview.html#def-feature) get `r sprintf("%.1f", 100 * py$acc_hand)`% of the images right.
 Guessing the most common digit gets `r sprintf("%.1f", 100 * py$acc_guess)`% right,
 so the features carry real information,
 but more than half of the images are still misread.

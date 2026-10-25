@@ -5,12 +5,12 @@ Three things changed:
 - **Data.**
   AlexNet learned from 1.2 million labelled images [@krizhevsky2012imagenet];
   the zip-code network of 1989 learned from 7,291 digits [@lecun1989backpropagation].
-  Datasets grew this way across the field [@goodfellow2016deep, sec. 1.2.2].
+  Datasets grew this way across the field [@goodfellow2016deep, section 1.2.2].
 - **Computing power.**
   AlexNet was trained on two graphics processing units (GPUs),
   chips built for the arithmetic of drawing images,
   which do many multiplications at once [@krizhevsky2012imagenet].
-  Faster hardware let networks grow larger [@goodfellow2016deep, sec. 1.2.3].
+  Faster hardware let networks grow larger [@goodfellow2016deep, section 1.2.3].
 - **Techniques.**
   AlexNet used rectified linear units and dropout,
   which made a large network faster to train and less prone to overfitting [@krizhevsky2012imagenet].

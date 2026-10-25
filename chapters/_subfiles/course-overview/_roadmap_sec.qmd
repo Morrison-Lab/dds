@@ -9,5 +9,5 @@ the [calendar](calendar.qmd) says when each is taught.
 - Sequence models and language modeling
 - Attention and Transformers
 - Generative models: autoencoders, generative adversarial networks and diffusion
-- Running deep learning experiments
+- Running [deep learning](#def-deep-learning) experiments
 - Applications, large language models, and ethics

@@ -2,10 +2,10 @@
 
 #### Features of features
 
-lds calls a neural network
-[deep](https://morrison-lab.github.io/lds/chapters/neural-nets.html#def-depth)
-when it has more than one hidden layer.
-Each hidden layer computes its features from the layer before it.
+lds calls a neural network deep when its
+[depth](https://morrison-lab.github.io/lds/chapters/neural-nets.html#def-depth)
+gives it more than one hidden layer.
+Each hidden layer computes its [features](https://morrison-lab.github.io/lds/chapters/course-overview.html#def-feature) from the layer before it.
 What could a second layer of features describe in a digit
 that a first layer, computed straight from the pixels, could not?
 
