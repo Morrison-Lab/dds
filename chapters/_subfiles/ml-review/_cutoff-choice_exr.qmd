@@ -1,0 +1,10 @@
+::: {#exr-cutoff-choice}
+
+#### What the 0-or-1 rule chose among
+
+The course overview's [rule for 0 or 1](course-overview.qmd#exr-zero-one-cutoff)
+calls an image a 1 when its center ink is above a cutoff,
+and found its cutoff by trying every value from 0 to 16 in steps of 0.5.
+What set of rules did that search choose among?
+
+:::

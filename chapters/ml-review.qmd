@@ -36,15 +36,25 @@ The exercises are new.
 
 # The parts of a learning problem
 
-## Model family, parameter, loss
+## Candidate rules and their parameter
 
 <!-- heading shares the slide; do not re-flag -->
 
-{{< include _subfiles/ml-review/_cutoff-parts_exr.qmd >}}
+{{< include _subfiles/ml-review/_cutoff-choice_exr.qmd >}}
 
 {{< slidebreak >}}
 
-{{< include _subfiles/ml-review/_cutoff-parts_sol.qmd >}}
+{{< include _subfiles/ml-review/_cutoff-choice_sol.qmd >}}
+
+## The loss
+
+<!-- heading shares the slide; do not re-flag -->
+
+{{< include _subfiles/ml-review/_cutoff-criterion_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/ml-review/_cutoff-criterion_sol.qmd >}}
 
 # Losses to train on
 
@@ -52,11 +62,15 @@ The exercises are new.
 
 <!-- heading shares the slide; do not re-flag -->
 
-{{< include _subfiles/ml-review/_train-on-errors_exr.qmd >}}
+{{< include _subfiles/ml-review/_error-rate-curve_exr.qmd >}}
 
 {{< slidebreak >}}
 
-{{< include _subfiles/ml-review/_error-rate-curve_fig.qmd >}}
+{{< include _subfiles/ml-review/_error-rate-curve_sol.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/ml-review/_train-on-errors_exr.qmd >}}
 
 {{< slidebreak >}}
 
@@ -66,11 +80,15 @@ The exercises are new.
 
 <!-- heading shares the slide; do not re-flag -->
 
-{{< include _subfiles/ml-review/_smooth-loss_exr.qmd >}}
+{{< include _subfiles/ml-review/_log-loss-curve_exr.qmd >}}
 
 {{< slidebreak >}}
 
-{{< include _subfiles/ml-review/_log-loss-curve_fig.qmd >}}
+{{< include _subfiles/ml-review/_log-loss-curve_sol.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/ml-review/_smooth-loss_exr.qmd >}}
 
 {{< slidebreak >}}
 
@@ -102,10 +120,7 @@ The exercises are new.
 
 {{< include _subfiles/ml-review/_carry-over_sec.qmd >}}
 
-::: {.reading}
-Chapter 5 of *Deep Learning*, [Machine Learning Basics](https://www.deeplearningbook.org/contents/ml.html), <!-- check-term-links: allow -->
-reviews these pieces at more length [@goodfellow2016deep, Ch. 5].
-:::
+{{< include _subfiles/ml-review/_ml-basics_read.qmd >}}
 
 # References {#references .unnumbered}
 

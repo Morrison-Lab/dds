@@ -2,10 +2,7 @@
 
 #### Fitting by following the error rate
 
-Among the 0s and 1s,
-plot the [error rate](https://morrison-lab.github.io/lds/chapters/metrics.html#def-error-rate) of the 0-or-1 rule against its cutoff $c$,
-for every $c$ from 0 to 16 in steps of 0.01.
 Could [gradient descent](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#the-algorithm) find the best cutoff
-by following this curve's slope?
+by following the slope of the curve in @fig-error-rate-curve?
 
 :::

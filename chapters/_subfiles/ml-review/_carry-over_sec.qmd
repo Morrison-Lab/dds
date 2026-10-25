@@ -1,12 +1,16 @@
-Each piece of the 0-or-1 rule has a counterpart in a deep network:
+::: {#tbl-carry-over}
 
-| Piece | The 0-or-1 rule | A deep network |
+| Piece | On this page | In a deep network |
 | --- | --- | --- |
-| [Model family](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-model-family) | Cutoff rules on one [feature](https://morrison-lab.github.io/lds/chapters/course-overview.html#def-feature) | Networks of one architecture |
-| [Parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter) | The cutoff $c$ | The weights of every layer |
-| Training loss | [Log loss](https://morrison-lab.github.io/lds/chapters/logistic-regression.html#def-log-loss) of the soft rule | Cross-entropy, the log loss of a [softmax](https://morrison-lab.github.io/lds/chapters/logistic-regression.html#sec-multiclass) output |
-| Fitting | Gradient descent on the mean log loss | [Stochastic gradient descent](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#sec-sgd) on minibatches |
-| Judging | Accuracy on a held-out [test set](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-test-set) | The same |
+| Candidate rules | Cutoff rules on one [feature](https://morrison-lab.github.io/lds/chapters/course-overview.html#def-feature) | Networks of one architecture |
+| [Parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter) | The cutoff $\param$ | The weights of every layer |
+| Training loss | [Log loss](https://morrison-lab.github.io/lds/chapters/logistic-regression.html#def-log-loss) of the soft rule | [Cross-entropy](https://morrison-lab.github.io/lds/chapters/logistic-regression.html#def-log-loss), the log loss of a [softmax](https://morrison-lab.github.io/lds/chapters/logistic-regression.html#sec-multiclass) output |
+| Fitting | A search over a grid of cutoffs | [Stochastic gradient descent](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#sec-sgd) on minibatches of the loss |
+| Judging | [Accuracy](https://morrison-lab.github.io/lds/chapters/metrics.html#def-accuracy) of the digit-average and nearest-neighbor rules on a held-out [test set](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-test-set) | Accuracy on held-out images |
+
+Each piece of a learning problem on this page, and its counterpart in a deep network.
+
+:::
 
 The math these pieces rest on,
 derivatives and gradients, matrices, and probability,

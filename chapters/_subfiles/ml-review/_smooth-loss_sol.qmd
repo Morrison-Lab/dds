@@ -1,25 +1,26 @@
 ::: {#sol-smooth-loss}
 
 ```{python}
-#| code-fold: false
+#| code-fold: show
 c_log = cutoffs[log_loss.argmin()]
 error_at_c_log = np.mean((ink_01 > c_log) != is_one)
 print(c_log, log_loss.min(), error_at_c_log)
 ```
 
 Yes.
-The curve in @fig-log-loss-curve is smooth, with one lowest point,
-and its slope points downhill from every other cutoff,
-so gradient descent has a direction to follow.
+The curve in @fig-log-loss-curve is smooth, with one lowest point.
+Its slope is nonzero at every other cutoff,
+so a step against the slope always goes downhill,
+and gradient descent has a direction to follow.
 
-The lowest [log loss](https://morrison-lab.github.io/lds/chapters/logistic-regression.html#def-log-loss) is at $c$ = `r sprintf("%.2f", py$c_log)`.
-The hard rule with that cutoff gets `r sprintf("%.1f", 100 * py$error_at_c_log)`% of the 0s and 1s wrong,
-against the lowest possible `r sprintf("%.1f", 100 * min(py$error_rate))`% from @sol-train-on-errors.
-Minimizing the log loss does not minimize the [error rate](https://morrison-lab.github.io/lds/chapters/metrics.html#def-error-rate) exactly,
-but it comes close, and it can be done by gradient descent.
+The lowest [log loss](https://morrison-lab.github.io/lds/chapters/logistic-regression.html#def-log-loss) is at $\param$ = `r sprintf("%.2f", py$c_log)`.
+The hard rule with that cutoff gets `r round(sum(py$is_01) * py$error_at_c_log)` of the `r sum(py$is_01)` images of 0s and 1s wrong,
+against `r round(sum(py$is_01) * min(py$error_rate))` for the best cutoffs in @sol-train-on-errors.
+Minimizing the log loss does not minimize the [error rate](https://morrison-lab.github.io/lds/chapters/metrics.html#def-error-rate),
+but, unlike the error rate, it can be minimized by gradient descent.
 
 Deep networks are trained the same way:
-on a smooth loss such as the log loss, which is also called cross-entropy,
-while their error rate or accuracy is what gets reported.
+on a smooth loss such as the log loss, which is also called [cross-entropy](https://morrison-lab.github.io/lds/chapters/logistic-regression.html#def-log-loss),
+while their error rate or [accuracy](https://morrison-lab.github.io/lds/chapters/metrics.html#def-accuracy) is what gets reported.
 
 :::

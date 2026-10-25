@@ -1,7 +1,7 @@
 ::: {#sol-nearest-image}
 
 ```{python}
-#| code-fold: false
+#| code-fold: show
 train_features = hand_features[train]
 acc_nn_train = accuracy(
     labels[train][nearest(train_features, train_features)], labels[train]
@@ -20,8 +20,10 @@ so the rule mostly recalls labels it has already seen.
 It falls short of 100% only where images of different digits
 share both [feature](https://morrison-lab.github.io/lds/chapters/course-overview.html#def-feature) values.
 
-A rule that fits its training set this much better than new data is [overfitting](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-overfitting).
+This rule has learned the training images themselves rather than what the digits look like,
+which lds calls [overfitting](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-overfitting).
 Deep networks are flexible enough to memorize their training sets too,
+even when the labels are assigned at random [@zhang2017rethinking],
 so these notes judge every network on images it was not trained on.
 
 :::

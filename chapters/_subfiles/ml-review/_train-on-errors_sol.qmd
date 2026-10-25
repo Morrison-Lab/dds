@@ -1,25 +1,31 @@
 ::: {#sol-train-on-errors}
 
 ```{python}
-#| code-fold: false
-best_cutoffs = cutoffs[error_rate == error_rate.min()]
-print(error_rate.min(), best_cutoffs.min(), best_cutoffs.max())
+#| code-fold: show
+lowest = error_rate == error_rate.min()
+best_cutoffs = cutoffs[lowest]
+# A new stretch of lowest error starts wherever `lowest` turns from False to True.
+n_stretches = np.sum(np.diff(lowest.astype(int)) == 1) + int(lowest[0])
+print(error_rate.min(), best_cutoffs.min(), best_cutoffs.max(), n_stretches)
 print(len(np.unique(ink_01)))
 ```
 
 No.
 The curve in @fig-error-rate-curve is a staircase.
-The [error rate](https://morrison-lab.github.io/lds/chapters/metrics.html#def-error-rate) changes only where $c$ crosses one of the
+The [error rate](https://morrison-lab.github.io/lds/chapters/metrics.html#def-error-rate) changes only where $\param$ crosses one of the
 `r length(unique(py$ink_01))` values that the center ink takes,
 and it is flat everywhere in between,
 so its slope is 0 wherever the slope exists.
 Gradient descent would never move.
 
-The search found the lowest error rate,
-`r sprintf("%.1f", 100 * min(py$error_rate))`%,
-for every cutoff tried from `r sprintf("%.2f", min(py$best_cutoffs))` to `r sprintf("%.2f", max(py$best_cutoffs))`,
-by trying each value in turn.
+The grid of cutoffs in steps of 0.01 reaches the lowest error rate,
+`r sprintf("%.1f", 100 * min(py$error_rate))`%
+(`r round(sum(py$is_01) * min(py$error_rate))` of the `r sum(py$is_01)` images),
+on `r py$n_stretches` separate stretches
+between `r sprintf("%.2f", min(py$best_cutoffs))` and `r sprintf("%.2f", max(py$best_cutoffs))`,
+and it found them by trying each cutoff in turn.
 That works for one [parameter](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter),
-but trying every combination of values for a network with thousands of them is out of reach.
+but a network has thousands of weights,
+and trying every combination of their values is out of reach.
 
 :::

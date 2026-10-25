@@ -1,10 +1,15 @@
-The exercises here use the 1,797 handwritten digits [@alpaydin1998optdigits]
-and the center-ink [feature](https://morrison-lab.github.io/lds/chapters/course-overview.html#def-feature) from the [course overview](course-overview.qmd#sol-zero-or-one):
-the average ink in rows 2 to 5 and columns 3 and 4 of each 8 by 8 image.
-This chunk loads them again, with the left-ink feature from the same page.
+The exercises here use the 1,797 handwritten digits that the course overview loads
+from the [UCI Machine Learning Repository](https://archive.ics.uci.edu/dataset/80) [@alpaydin1998optdigits],
+from the same local copy, [`data/optdigits-test.csv`](data/optdigits-test.csv).
+They also use two of its [features](https://morrison-lab.github.io/lds/chapters/course-overview.html#def-feature),
+each an average of an 8 by 8 image's pixels,
+with rows and columns counted from 0:
+
+- [center ink](course-overview.qmd#sol-zero-or-one), over rows 2 to 5 and columns 3 and 4;
+- [left ink](course-overview.qmd#sol-three-or-eight), over rows 2 to 5 and columns 0 to 2.
 
 ```{python}
-#| code-fold: false
+#| code-fold: true
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt

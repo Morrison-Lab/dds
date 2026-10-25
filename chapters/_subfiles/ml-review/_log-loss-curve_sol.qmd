@@ -1,6 +1,9 @@
+::: {#sol-log-loss-curve}
+
 ::: {#fig-log-loss-curve}
 
 ```{python}
+#| code-fold: show
 #| fig-alt: >-
 #|   A smooth U-shaped curve of mean log loss against cutoff, from 0 to 16.
 #|   It is high at both ends, falls steadily to a single lowest point
@@ -14,12 +17,14 @@ log_loss = np.array([mean_log_loss(c) for c in cutoffs])
 
 fig, ax = plt.subplots(figsize=(6, 3), layout="constrained")
 ax.plot(cutoffs, log_loss)
-ax.set_xlabel("cutoff $c$ on center ink")
+ax.set_xlabel(r"cutoff $\theta$ on center ink")
 ax.set_ylabel("mean log loss")
 plt.show()
 ```
 
 The mean [log loss](https://morrison-lab.github.io/lds/chapters/logistic-regression.html#def-log-loss) of the soft 0-or-1 rule among the images of 0s and 1s,
-against the cutoff $c$.
+against the cutoff.
+
+:::
 
 :::

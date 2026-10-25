@@ -1,0 +1,11 @@
+::: {#sol-cutoff-criterion}
+
+It kept the cutoff that got the fewest images wrong.
+Counting mistakes uses the 0-1 [loss function](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-loss-function):
+1 for a wrong label and 0 for a right one.
+Its average over the images is the rule's [error rate](https://morrison-lab.github.io/lds/chapters/metrics.html#def-error-rate),
+which is the rule's [empirical risk](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-empirical-risk) under that loss.
+Choosing the [parameter](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter) with the lowest empirical risk is [empirical risk minimization](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-empirical-risk-minimization),
+and deep networks are fit the same way.
+
+:::
