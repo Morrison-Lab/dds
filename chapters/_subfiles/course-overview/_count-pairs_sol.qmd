@@ -1,12 +1,13 @@
 ::: {#sol-count-pairs}
 
-A pair is a choice of 2 of the 10 digits, where order does not matter:
+A pair can start with any of the 10 digits and end with any of the other 9,
+and that counts each pair twice, once in each order:
 
 $$
 \begin{aligned}
-\binom{10}{2}
-&= \frac{10 \times 9}{2 \times 1}
-&& \text{(choose 2 of 10, divided by the 2 orders of a pair)} \\
+\text{number of pairs}
+&= \frac{10 \times 9}{2}
+&& \text{(first digit, second digit, divided by the 2 orders of a pair)} \\
 &= \frac{90}{2}
 && \text{(multiply)} \\
 &= 45

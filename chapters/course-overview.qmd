@@ -101,6 +101,14 @@ The handwritten-digit exercises, the history and the road ahead are new.
 
 {{< slidebreak >}}
 
+{{< include _subfiles/course-overview/_beat-guessing_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/course-overview/_beat-guessing_sol.qmd >}}
+
+{{< slidebreak >}}
+
 {{< include _subfiles/course-overview/_feature-engineering_def.qmd >}}
 
 {{< slidebreak >}}

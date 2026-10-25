@@ -1,0 +1,8 @@
+::: {#exr-beat-guessing}
+
+#### Better than guessing?
+
+How does the share of images that the classifier of @exr-two-features-ten-digits gets right
+compare with the share that always guessing the most common digit gets right?
+
+:::

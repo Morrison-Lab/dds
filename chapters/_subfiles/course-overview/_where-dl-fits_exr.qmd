@@ -1,12 +1,8 @@
 ::: {#exr-where-dl-fits}
 
-#### Where does each program fit?
+#### Which programs are deep learning?
 
-Name every field each of these programs belongs to, among
-[artificial intelligence](https://morrison-lab.github.io/lds/chapters/course-overview.html#def-artificial-intelligence),
-[machine learning](https://morrison-lab.github.io/lds/chapters/course-overview.html#def-machine-learning),
-representation learning (@def-representation-learning)
-and deep learning (@def-deep-learning).
+Which of these programs are deep learning (@def-deep-learning)?
 
 - A spam filter whose rules a person wrote.
 - The classifier of @exr-two-features-ten-digits, on center ink and left ink.
