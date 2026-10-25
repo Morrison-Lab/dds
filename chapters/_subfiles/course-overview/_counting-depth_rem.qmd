@@ -12,8 +12,10 @@ noting that there is no single correct way to count it
 [@goodfellow2016deep, Ch. 1].
 "How deep is deep" has no agreed cutoff either.
 
-Deep learning models are almost all neural networks,
-also called artificial neural networks or deep neural networks.
+Deep learning models are almost all
+[neural networks](https://morrison-lab.github.io/lds/chapters/neural-nets.html),
+also called artificial neural networks,
+and a neural network with many layers is called a deep neural network.
 The name comes from early models of neurons,
 but the networks in these notes are not models of the brain.
 

@@ -1,7 +1,7 @@
 The [syllabus](syllabus.qmd) covers how the course runs.
 This lecture is about what the course is for:
 
-1.  why hand-designed features run out,
+1.  why hand-designed [features](https://morrison-lab.github.io/lds/chapters/course-overview.html#def-feature) run out,
     shown on a dataset of handwritten digits;
 2.  what representation learning and deep learning are;
 3.  where deep learning sits within machine learning and artificial intelligence;

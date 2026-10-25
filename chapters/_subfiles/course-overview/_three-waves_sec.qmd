@@ -7,7 +7,7 @@ under three names [@goodfellow2016deep, sec. 1.2.1]:
 |-------|------|------------|
 | 1940s to 1960s | Cybernetics | A logical model of a neuron [@mcculloch1943logical]; the perceptron, which learned its weights from examples [@rosenblatt1958perceptron] |
 | 1980s to 1990s | Connectionism | Backpropagation for networks with hidden layers [@rumelhart1986learning]; convolutional networks reading handwritten zip codes [@lecun1989backpropagation] |
-| 2006 on | Deep learning | Deep belief networks, trained one layer at a time [@hinton2006fast]; AlexNet [@krizhevsky2017imagenet]; the Transformer [@vaswani2017attention] |
+| 2006 on | Deep learning | Deep belief networks, trained one layer at a time [@hinton2006fast]; AlexNet [@krizhevsky2012imagenet]; the Transformer [@vaswani2017attention] |
 
 : The three waves of neural network research.
 
@@ -18,5 +18,5 @@ which has no hidden layer,
 cannot compute some simple functions of its inputs,
 such as the exclusive or of two binary inputs.
 Networks with hidden layers can,
-and backpropagation made them trainable,
-which started the second wave.
+and backpropagation, one result of the second wave, trained them
+[@rumelhart1986learning; @goodfellow2016deep, sec. 1.2.1].

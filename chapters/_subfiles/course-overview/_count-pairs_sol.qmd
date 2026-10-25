@@ -1,6 +1,6 @@
 ::: {#sol-count-pairs}
 
-A pair is a choice of 2 of the 10 digits, in either order:
+A pair is a choice of 2 of the 10 digits, where order does not matter:
 
 $$
 \begin{aligned}

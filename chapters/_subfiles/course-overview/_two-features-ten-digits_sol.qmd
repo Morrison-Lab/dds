@@ -19,6 +19,8 @@ The two features get `r sprintf("%.1f", 100 * py$acc_hand)`% of the images right
 Guessing the most common digit gets `r sprintf("%.1f", 100 * py$acc_guess)`% right,
 so the features carry real information,
 but more than half of the images are still misread.
+These shares are measured on the same images the digit averages were computed from,
+so they are training accuracies, and new images would likely do a little worse.
 Doing better this way means designing more features,
 and features designed for digits do not carry over to faces, speech or text.
 

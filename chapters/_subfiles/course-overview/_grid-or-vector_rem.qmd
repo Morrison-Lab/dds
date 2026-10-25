@@ -4,7 +4,9 @@
 
 The file stores each image as a row of 64 numbers,
 a [feature vector](https://morrison-lab.github.io/lds/chapters/course-overview.html#def-feature-vector) in $\reals^{64}$,
-the form that models such as logistic regression take as input.
+the form that models such as
+[logistic regression](https://morrison-lab.github.io/lds/chapters/logistic-regression.html)
+take as input.
 @fig-digits-grid draws the same 64 numbers as an 8 by 8 grid:
 with rows and columns counted from 0,
 the pixel in row $i$ and column $j$ is entry $8i + j$ of the vector.

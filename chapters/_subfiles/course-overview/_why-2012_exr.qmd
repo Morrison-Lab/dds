@@ -3,7 +3,7 @@
 #### Why did it take until 2012?
 
 Backpropagation for networks with hidden layers was published in 1986 [@rumelhart1986learning],
-but deep networks only took over image recognition with AlexNet in 2012 [@krizhevsky2017imagenet].
+but deep networks only took over image recognition with AlexNet in 2012 [@krizhevsky2012imagenet].
 What could have changed in those years?
 
 :::
