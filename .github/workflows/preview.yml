@@ -70,6 +70,8 @@ jobs:
       # `downlit` and `xml2` serve `code-link: true`, which warns without them.
       # This site has no Julia, so `setup-julia` is off; that input needs gha `@v3`.
       # A package a new R chunk loads goes here and in publish.yml.
+      # `tibble` serves the PDF format's `df-print: tibble`, without which a
+      # page with code fails its handout render (#4).
       tinytex: true
       setup-julia: false
       r-packages: |
@@ -79,6 +81,7 @@ jobs:
         any::downlit
         any::xml2
         any::tinytex
+        any::tibble
 
       # No renv lockfile: the package list above is the dependency manifest.
       use-renv: false
