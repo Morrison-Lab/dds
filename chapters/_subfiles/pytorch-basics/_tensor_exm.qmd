@@ -1,0 +1,19 @@
+::: {#exm-tensor}
+
+#### The digits at three sizes
+
+```{python}
+#| code-fold: show
+print(images.ndim, images[0].ndim, images[0, 3].ndim, images[0, 3, 4].ndim)
+print(images[0, 3])
+print(images[0, 3, 4])
+```
+
+`images` from @sol-load-tensor has three dimensions:
+image, row and column.
+Indexing it once, as `images[0]`, gives the first image, a matrix;
+indexing twice, as `images[0, 3]`, gives that image's row 3, a vector of 8 pixels;
+and indexing three times, as `images[0, 3, 4]`, gives one pixel, a scalar,
+with rows and columns counted from 0.
+
+:::

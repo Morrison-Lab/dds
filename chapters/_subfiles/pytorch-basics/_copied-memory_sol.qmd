@@ -1,0 +1,17 @@
+::: {#sol-copied-memory}
+
+```{python}
+#| code-fold: show
+copied_array = pixels.copy()
+copied = torch.tensor(copied_array)
+copied[0, 0] = 99
+copied_entry = copied[0, 0].item()
+print(copied_array[0, 0], copied_entry)
+```
+
+`torch.tensor` copies the numbers,
+so the array kept `r py$copied_array[1, 1]` while the [tensor](#def-tensor) changed to `r py$copied_entry`.
+Sharing, as in @sol-shared-memory, saves time and memory on large data,
+at the cost of a change in one place showing up in the other.
+
+:::

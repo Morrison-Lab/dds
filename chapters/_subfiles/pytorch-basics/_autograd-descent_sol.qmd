@@ -1,0 +1,25 @@
+::: {#sol-autograd-descent}
+
+```{python}
+#| code-fold: show
+learning_rate = 4.0
+theta = torch.tensor(0.0, dtype=torch.float64, requires_grad=True)
+for step in range(100):
+    (slope,) = torch.autograd.grad(mean_log_loss(theta), theta)
+    with torch.no_grad():
+        theta -= learning_rate * slope
+theta_descent = theta.item()
+(final_slope,) = torch.autograd.grad(mean_log_loss(theta), theta)
+print(theta_descent, final_slope.item())
+```
+
+[Gradient descent](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#the-algorithm) ends at $\param$ = `r sprintf("%.4f", py$theta_descent)`,
+where the slope is `r format(py$final_slope$item(), digits = 2)`.
+
+The update runs inside `torch.no_grad()`,
+which tells PyTorch not to record it:
+the step is a change to $\param$, not part of the loss.
+Without it, PyTorch would record the in-place subtraction on `theta`,
+and it raises an error for a recorded in-place change to a [tensor](#def-tensor) that was created with `requires_grad=True`.
+
+:::

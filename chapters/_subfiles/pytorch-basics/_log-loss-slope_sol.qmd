@@ -1,0 +1,42 @@
+::: {#sol-log-loss-slope}
+
+Write $\obsloss{i}$ for image $i$'s [log loss](https://morrison-lab.github.io/lds/chapters/logistic-regression.html#def-log-loss),
+$\obsloss{i} = -\outvar_i \log \hprob_i - (1 - \outvar_i) \log (1 - \hprob_i)$.
+Its derivative with respect to $\hprob_i$ is
+
+$$
+\dif{\obsloss{i}}{\hprob_i} = -\frac{\outvar_i}{\hprob_i} + \frac{1 - \outvar_i}{1 - \hprob_i}.
+$$
+
+Since $\hprob_i = \sigmoidf{\predvar_i - \param}$,
+the chain rule and the derivative of the logistic function give
+
+$$
+\begin{aligned}
+\dif{\hprob_i}{\param}
+&= \sigmoid'(\predvar_i - \param) \cdot \dif{}{\param} (\predvar_i - \param) \\
+&= \hprob_i (1 - \hprob_i) \cdot (-1) \\
+&= -\hprob_i (1 - \hprob_i).
+\end{aligned}
+$$
+
+Multiplying the two,
+
+$$
+\begin{aligned}
+\dif{\obsloss{i}}{\param}
+&= \dif{\obsloss{i}}{\hprob_i} \cdot \dif{\hprob_i}{\param} \\
+&= \paren{-\frac{\outvar_i}{\hprob_i} + \frac{1 - \outvar_i}{1 - \hprob_i}} \cdot \paren{-\hprob_i (1 - \hprob_i)} \\
+&= \outvar_i (1 - \hprob_i) - (1 - \outvar_i) \hprob_i \\
+&= \outvar_i - \outvar_i \hprob_i - \hprob_i + \outvar_i \hprob_i \\
+&= \outvar_i - \hprob_i.
+\end{aligned}
+$$
+
+$\emprisk$ is the mean of the $\obsloss{i}$, so its derivative is the mean of theirs:
+
+$$
+\dif{\emprisk}{\param} = \avgin (\outvar_i - \hprob_i).
+$$
+
+:::

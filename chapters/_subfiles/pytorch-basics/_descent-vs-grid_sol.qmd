@@ -1,0 +1,19 @@
+::: {#sol-descent-vs-grid}
+
+```{python}
+#| code-fold: show
+cutoffs = np.arange(0, 16.005, 0.01)
+grid_step = cutoffs[1] - cutoffs[0]
+with torch.no_grad():
+    grid_loss = [mean_log_loss(torch.tensor(c)).item() for c in cutoffs]
+theta_grid = cutoffs[np.argmin(grid_loss)]
+gap = abs(theta_descent - theta_grid)
+print(theta_grid, gap)
+```
+
+The grid's lowest point is at `r sprintf("%.2f", py$theta_grid)`,
+the cutoff found in [the review's solution](ml-review.qmd#sol-smooth-loss).
+It differs from the cutoff found by [gradient descent](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#the-algorithm) by `r sprintf("%.4f", py$gap)`,
+`r if (py$gap < py$grid_step) "less" else "more"` than the grid's spacing of `r py$grid_step`.
+
+:::

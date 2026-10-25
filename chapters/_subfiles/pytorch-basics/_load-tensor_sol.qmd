@@ -1,0 +1,23 @@
+::: {#sol-load-tensor}
+
+```{python}
+#| code-fold: show
+import numpy as np
+import pandas as pd
+import torch
+import matplotlib.pyplot as plt
+
+digits = pd.read_csv("data/optdigits-test.csv", header=None)
+pixels = digits.iloc[:, :64].to_numpy()
+images = torch.tensor(pixels.reshape(-1, 8, 8))
+labels = torch.tensor(digits[64].to_numpy())
+n_images = len(images)
+print(images[0])
+print(labels[:10])
+```
+
+`torch.tensor` copies a NumPy array into a PyTorch array.
+`images` stacks `r py$n_images` grids, each with 8 rows and 8 columns,
+and `labels` holds one number per image.
+
+:::

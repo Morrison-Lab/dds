@@ -1,0 +1,17 @@
+::: {#exm-device}
+
+#### Where the digits live
+
+```{python}
+#| code-fold: show
+has_gpu = torch.cuda.is_available()
+print(images.device, has_gpu)
+```
+
+`images` was made without naming a [device](#def-device),
+so it lives on the `r toupper(py$images$device$type)`.
+`torch.cuda.is_available()` says whether this computer has an NVIDIA GPU that PyTorch can use;
+it returned `` `r if (py$has_gpu) "True" else "False"` `` on the computer that built this page.
+Where it returns `True`, `images.to("cuda")` makes a copy of `images` on the GPU.
+
+:::

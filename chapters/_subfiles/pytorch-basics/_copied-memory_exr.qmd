@@ -1,0 +1,7 @@
+::: {#exr-copied-memory}
+
+#### A tensor that copies its array
+
+Repeat @exr-shared-memory with `torch.tensor` in place of `torch.from_numpy`.
+
+:::

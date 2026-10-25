@@ -1,0 +1,17 @@
+::: {#def-automatic-differentiation}
+
+#### Automatic differentiation (autodiff)
+
+**Automatic differentiation**, also called **autodiff**, computes the derivatives of a function that is given as code,
+by applying the chain rule to the elementary operations the code performs as it runs
+[@goodfellow2016deep, section 6.5; @paszke2019pytorch].
+
+PyTorch implements it in its `torch.autograd` module.
+The result is the exact derivative of the operations the code performs, up to floating-point rounding.
+Automatic differentiation is neither symbolic differentiation,
+which manipulates a formula for the function,
+nor numerical differentiation,
+which approximates a derivative from the function's values at nearby points.
+lds's [backpropagation](https://morrison-lab.github.io/lds/chapters/backpropagation.html) chapter derives by hand the derivatives that autodiff computes for a neural network.
+
+:::

@@ -1,0 +1,22 @@
+::: {#exm-log-loss-slope}
+
+#### The slope at a cutoff of 5
+
+```{python}
+#| code-fold: show
+x_np, y_np = ink_01.numpy(), is_one.numpy()
+p_np = 1 / (1 + np.exp(-(x_np - 5)))
+share_of_ones = np.mean(y_np)
+mean_prob_at_5 = np.mean(p_np)
+slope_by_hand = share_of_ones - mean_prob_at_5
+print(share_of_ones, mean_prob_at_5, slope_by_hand)
+```
+
+By @thm-log-loss-slope, the slope is the share of 1s among the images minus the average probability the rule gives them.
+The 1s make up a share of `r sprintf("%.3f", py$share_of_ones)` of the `r py$n_01` images,
+and at $\param = 5$ the rule's average probability of a 1 is `r sprintf("%.3f", py$mean_prob_at_5)`.
+So the slope at $\param = 5$ is `r sprintf("%.4f", py$slope_by_hand)`.
+It is negative, so raising the cutoff from 5 lowers the [log loss](https://morrison-lab.github.io/lds/chapters/logistic-regression.html#def-log-loss).
+The slope is 0 at the cutoff where the average probability equals the share of 1s.
+
+:::

@@ -1,0 +1,12 @@
+::: {#exm-automatic-differentiation}
+
+#### The cutoff's slope by autodiff
+
+@sol-autograd-slope is [automatic differentiation](#def-automatic-differentiation):
+PyTorch was given only the code for $\emprisk$,
+and returned its derivative at $\param = 5$,
+which matches the formula of @thm-log-loss-slope
+`r if (py$slope_gap == 0) "exactly" else paste("to within", format(py$slope_gap, digits = 2))`,
+as @sol-autograd-vs-hand found.
+
+:::

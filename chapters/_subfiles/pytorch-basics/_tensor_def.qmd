@@ -1,0 +1,19 @@
+::: {#def-tensor}
+
+#### Tensor
+
+A **tensor** is an array of numbers arranged on a regular grid with any number of dimensions [@goodfellow2016deep, section 2.1].
+Every entry is picked out by one index per dimension.
+
+A tensor with no dimensions is a scalar,
+one with one dimension is a vector,
+and one with two is a matrix.
+PyTorch says "dimensions" (`ndim`, and `dim=` in its functions),
+where NumPy, which also says `ndim`, calls them "axes" (`axis=`);
+other sources say "modes", or call the number of dimensions the tensor's "order" or "rank".
+That "rank" is not the rank of a matrix.
+Physics and mathematics use "tensor" for a multilinear map,
+which an array of numbers represents once a basis is chosen;
+[deep learning](course-overview.qmd#def-deep-learning) means only the array.
+
+:::

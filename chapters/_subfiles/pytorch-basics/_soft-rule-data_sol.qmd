@@ -1,0 +1,21 @@
+::: {#sol-soft-rule-data}
+
+```{python}
+#| code-fold: show
+center_ink = images[:, 2:6, 3:5].double().mean(dim=(1, 2))
+is_01 = (labels == 0) | (labels == 1)
+ink_01 = center_ink[is_01]
+is_one = (labels[is_01] == 1).double()
+n_01 = len(ink_01)
+print(n_01)
+print(ink_01[:5])
+print(is_one[:5])
+```
+
+`images[:, 2:6, 3:5]` keeps rows 2 to 5 and columns 3 and 4 of every image,
+and `.mean(dim=(1, 2))` averages over those rows and columns, leaving one number per image.
+`.double()` converts to 64-bit floats, `torch.float64`,
+so that later comparisons of derivatives are not limited by 32-bit rounding.
+There are $\nobs$ = `r py$n_01` images of 0s and 1s.
+
+:::

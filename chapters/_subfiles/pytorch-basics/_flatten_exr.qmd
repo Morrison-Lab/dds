@@ -1,0 +1,8 @@
+::: {#exr-flatten}
+
+#### Back to rows of 64
+
+Turn `images` into a [tensor](#def-tensor) with one row of 64 pixels per image,
+the arrangement the file stores.
+
+:::

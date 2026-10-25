@@ -1,0 +1,17 @@
+::: {#sol-average-digit}
+
+```{python}
+#| code-fold: show
+averages = torch.stack(
+    [images[labels == k].float().mean(dim=0) for k in range(10)]
+)
+print(averages.shape)
+```
+
+`labels == k` is a [tensor](#def-tensor) of `True` and `False`, one per image,
+and indexing `images` with it keeps the images of digit `k`.
+`.mean(dim=0)` averages over dimension 0, the images,
+and leaves one average for each row and column.
+`torch.stack` puts the ten 8 by 8 averages along a new first dimension.
+
+:::

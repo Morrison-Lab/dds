@@ -1,0 +1,215 @@
+---
+title: "Tensors and Automatic Differentiation"
+format:
+  html: default
+  revealjs:
+    output-file: pytorch-basics-slides.html
+  pdf:
+    output-file: pytorch-basics-handout.pdf
+resources:
+  - data/optdigits-test.csv
+---
+
+```{r}
+# The Python chunks on this page import these; reticulate provisions them.
+# Attaching reticulate gives the inline R its `py` object.
+library(reticulate)
+source("../tools/use-torch.R")
+use_torch(c("numpy", "pandas", "matplotlib"))
+```
+
+::: notes
+Brian Hutchinson's CSCI 481/581 sets the order of topics in these notes,
+which follow it with his permission;
+his module on the course's tools is the starting point for this page.
+The exercises are new.
+:::
+
+# Welcome
+
+## Plan for this lecture
+
+{{< include _subfiles/pytorch-basics/_plan_sec.qmd >}}
+
+# Tensors
+
+## The digits in PyTorch
+
+<!-- heading shares the slide; do not re-flag -->
+
+{{< include _subfiles/pytorch-basics/_load-tensor_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/pytorch-basics/_load-tensor_sol.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/pytorch-basics/_tensor_def.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/pytorch-basics/_tensor_exm.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/pytorch-basics/_shape_def.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/pytorch-basics/_shape_exm.qmd >}}
+
+## The average pixel
+
+<!-- heading shares the slide; do not re-flag -->
+
+{{< include _subfiles/pytorch-basics/_mean-pixel_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/pytorch-basics/_mean-pixel_sol.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/pytorch-basics/_dtype_def.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/pytorch-basics/_dtype_exm.qmd >}}
+
+## Reshaping and averaging
+
+<!-- heading shares the slide; do not re-flag -->
+
+{{< include _subfiles/pytorch-basics/_flatten_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/pytorch-basics/_flatten_sol.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/pytorch-basics/_average-digit_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/pytorch-basics/_average-digit_sol.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/pytorch-basics/_draw-averages_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/pytorch-basics/_draw-averages_sol.qmd >}}
+
+## Tensors and NumPy arrays
+
+<!-- heading shares the slide; do not re-flag -->
+
+{{< include _subfiles/pytorch-basics/_shared-memory_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/pytorch-basics/_shared-memory_sol.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/pytorch-basics/_copied-memory_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/pytorch-basics/_copied-memory_sol.qmd >}}
+
+## Devices
+
+<!-- heading shares the slide; do not re-flag -->
+
+{{< include _subfiles/pytorch-basics/_device_def.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/pytorch-basics/_device_exm.qmd >}}
+
+{{< include _subfiles/pytorch-basics/_tensors_read.qmd >}}
+
+# Automatic differentiation
+
+## The soft 0-or-1 rule
+
+{{< include _subfiles/pytorch-basics/_soft-rule_sec.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/pytorch-basics/_soft-rule-data_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/pytorch-basics/_soft-rule-data_sol.qmd >}}
+
+## The slope by hand
+
+<!-- heading shares the slide; do not re-flag -->
+
+{{< include _subfiles/pytorch-basics/_log-loss-slope_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/pytorch-basics/_log-loss-slope_sol.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/pytorch-basics/_log-loss-slope_thm.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/pytorch-basics/_log-loss-slope_exm.qmd >}}
+
+## The slope by autograd
+
+<!-- heading shares the slide; do not re-flag -->
+
+{{< include _subfiles/pytorch-basics/_autograd-slope_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/pytorch-basics/_autograd-slope_sol.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/pytorch-basics/_autograd-vs-hand_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/pytorch-basics/_autograd-vs-hand_sol.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/pytorch-basics/_automatic-differentiation_def.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/pytorch-basics/_automatic-differentiation_exm.qmd >}}
+
+## Gradient descent with autograd
+
+<!-- heading shares the slide; do not re-flag -->
+
+{{< include _subfiles/pytorch-basics/_autograd-descent_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/pytorch-basics/_autograd-descent_sol.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/pytorch-basics/_descent-vs-grid_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/pytorch-basics/_descent-vs-grid_sol.qmd >}}
+
+# References {#references .unnumbered}
+
+::: {#refs}
+:::

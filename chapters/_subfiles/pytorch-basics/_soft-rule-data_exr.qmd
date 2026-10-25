@@ -1,0 +1,10 @@
+::: {#exr-soft-rule-data}
+
+#### The data for the soft rule
+
+From `images` and `labels`,
+make a [tensor](#def-tensor) of the center ink $\predvar_i$ of each image of a 0 or a 1,
+stored as 64-bit floating-point numbers,
+and a tensor of the matching $\outvar_i$.
+
+:::

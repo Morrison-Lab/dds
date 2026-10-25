@@ -1,0 +1,7 @@
+::: {#exr-draw-averages}
+
+#### Drawing the averages
+
+Draw the ten averages from @exr-average-digit side by side.
+
+:::

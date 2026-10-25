@@ -1,0 +1,25 @@
+::: {#sol-autograd-slope}
+
+```{python}
+#| code-fold: show
+def mean_log_loss(theta):
+    """Mean log loss of the soft 0-or-1 rule with cutoff `theta`."""
+    p = torch.sigmoid(ink_01 - theta)
+    return -torch.mean(is_one * torch.log(p) + (1 - is_one) * torch.log(1 - p))
+
+theta = torch.tensor(5.0, dtype=torch.float64, requires_grad=True)
+loss = mean_log_loss(theta)
+(slope_by_autograd,) = torch.autograd.grad(loss, theta)
+print(loss)
+print(slope_by_autograd)
+```
+
+`torch.autograd.grad` returns `r sprintf("%.4f", py$slope_by_autograd$item())`.
+The code for $\emprisk$ says nothing about its derivative.
+Because `theta` was made with `requires_grad=True`,
+PyTorch recorded each operation that turned it into `loss`
+(the subtraction `ink_01 - theta`, the logistic function, and each operation after them, down to the mean and its change of sign),
+and `torch.autograd.grad` applied the chain rule to those operations, one at a time.
+The `grad_fn` that `loss` prints is the record of its last operation.
+
+:::

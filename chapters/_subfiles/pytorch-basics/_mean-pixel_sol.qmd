@@ -1,0 +1,22 @@
+::: {#sol-mean-pixel}
+
+```{python}
+#| code-fold: show
+import textwrap
+
+print(images.dtype)
+try:
+    images[0].mean()
+except RuntimeError as err:
+    print(textwrap.fill(str(err), 60))
+first_mean = images[0].float().mean().item()
+print(images[0].float().dtype, first_mean)
+```
+
+The pixels were read as whole numbers, so the [tensor](#def-tensor) stores 64-bit integers,
+`torch.int64`, which PyTorch also calls `Long`.
+`.mean()` refuses them, since an average of integers is not in general an integer.
+Converting the tensor with `.float()` to 32-bit floating-point numbers fixes it:
+the first image's average pixel is `r sprintf("%.2f", py$first_mean)`, on the file's scale of 0 to 16.
+
+:::

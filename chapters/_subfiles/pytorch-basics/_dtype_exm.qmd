@@ -1,0 +1,20 @@
+::: {#exm-dtype}
+
+#### Two data types for one image
+
+```{python}
+#| code-fold: show
+pixel_int = images[0, 3, 4]
+pixel_float = pixel_int.float()
+print(pixel_int, pixel_int.dtype)
+print(pixel_float, pixel_float.dtype)
+print(pixel_int == pixel_float)
+```
+
+In @sol-mean-pixel, the first image is `torch.int64` as loaded and `torch.float32` after `.float()`.
+One of its pixels, printed both ways, shows the difference:
+the float prints with a decimal point,
+the two compare as equal,
+and only the [data type](#def-dtype) that stores the value differs.
+
+:::

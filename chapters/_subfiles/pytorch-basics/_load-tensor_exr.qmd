@@ -1,0 +1,10 @@
+::: {#exr-load-tensor}
+
+#### The digits in PyTorch
+
+Load the digits from [`data/optdigits-test.csv`](data/optdigits-test.csv),
+the local copy of the [UCI data](https://archive.ics.uci.edu/dataset/80) [@alpaydin1998optdigits] that the course overview uses.
+Put their pixels into one PyTorch array that holds each image as an 8 by 8 grid,
+and their labels into another.
+
+:::
