@@ -26,10 +26,15 @@ from pathlib import Path
 
 PATCH = Path(__file__).resolve().parent.parent / "reticulate_logging_patch.py"
 
-rpytools_dir = subprocess.run(
-    ["Rscript", "-e", 'cat(system.file("python", package = "reticulate", mustWork = TRUE))'],
-    capture_output=True, text=True, check=True,
-).stdout.strip()
+try:
+    rpytools_dir = subprocess.run(
+        ["Rscript", "-e", 'cat(system.file("python", package = "reticulate", mustWork = TRUE))'],
+        capture_output=True, text=True, check=True,
+    ).stdout.strip()
+except FileNotFoundError:
+    sys.exit("This test needs R: Rscript is not on PATH.")
+except subprocess.CalledProcessError as err:
+    sys.exit("This test needs the R package reticulate:\n" + err.stderr)
 sys.path.insert(0, rpytools_dir)
 import rpytools.output as output  # noqa: E402
 
