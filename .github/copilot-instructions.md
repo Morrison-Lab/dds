@@ -70,6 +70,11 @@ always test it yourself.
   in an R setup chunk before the first of them,
   `reticulate::py_require("pandas")`;
   `reticulate` then provisions that Python environment itself, locally and in CI.
+  A page that uses PyTorch declares its packages with `use_torch()` instead,
+  after `source("../tools/use-torch.R")`:
+  it adds `torch` and patches reticulate's output capture,
+  which otherwise fails on every chunk after `import torch`
+  (`tools/reticulate_logging_patch.py` says why).
 - Code examples are Python, with PyTorch (`AUTHORING.md`).
 - Every code example on the site is an executed chunk as of 2026-09-28.
   `tools/check_code_examples.py` runs any plain fence a page adds,
