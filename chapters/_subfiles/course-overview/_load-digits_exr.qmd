@@ -1,0 +1,9 @@
+::: {#exr-load-digits}
+
+#### Loading the digits
+
+Load [`data/optdigits-test.csv`](data/optdigits-test.csv) into Python.
+How many images does it hold,
+and how many of each digit?
+
+:::

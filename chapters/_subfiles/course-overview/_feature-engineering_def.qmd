@@ -1,0 +1,11 @@
+::: {#def-feature-engineering}
+
+#### Feature engineering
+
+**Feature engineering** is designing by hand
+the [features](https://morrison-lab.github.io/lds/chapters/course-overview.html#def-feature) that a model takes as input,
+using what a person knows about the problem
+[@goodfellow2016deep, Ch. 1].
+Features made this way are also called hand-designed or hand-crafted features.
+
+:::

@@ -1,0 +1,14 @@
+::: {#exm-deep-learning}
+
+#### AlexNet
+
+AlexNet, a network for sorting photographs into 1000 classes,
+has eight layers with weights:
+five convolutional layers, then three fully connected ones.
+Its 60 million parameters were learned from 1.2 million labelled images,
+and the 96 filters of its first layer learned on their own
+to respond to edges at different angles and to patches of colour
+[@krizhevsky2017imagenet].
+Nobody designed those features; training found them.
+
+:::

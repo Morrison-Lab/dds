@@ -1,0 +1,20 @@
+::: {#sol-count-pairs}
+
+A pair is a choice of 2 of the 10 digits, in either order:
+
+$$
+\begin{aligned}
+\binom{10}{2}
+&= \frac{10 \times 9}{2 \times 1}
+&& \text{(choose 2 of 10, divided by the 2 orders of a pair)} \\
+&= \frac{90}{2}
+&& \text{(multiply)} \\
+&= 45
+&& \text{(divide)}
+\end{aligned}
+$$
+
+That is 45 features to design and test by hand,
+and @sol-three-or-eight shows that some pairs need more than one.
+
+:::

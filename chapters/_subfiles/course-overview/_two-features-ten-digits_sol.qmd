@@ -1,0 +1,25 @@
+::: {#sol-two-features-ten-digits}
+
+```{python}
+#| code-fold: false
+def nearest_mean_accuracy(features, labels):
+    """Share of images whose nearest digit average is their own digit."""
+    means = np.array([features[labels == k].mean(axis=0) for k in range(10)])
+    # Squared distance from every image (rows) to every digit's average (columns).
+    distances = ((features[:, None, :] - means[None, :, :]) ** 2).sum(axis=2)
+    return np.mean(distances.argmin(axis=1) == labels)
+
+hand_features = np.column_stack([center_ink, left_ink])
+acc_hand = nearest_mean_accuracy(hand_features, labels)
+acc_guess = np.bincount(labels).max() / len(labels)
+print(round(acc_hand, 3), round(acc_guess, 3))
+```
+
+The two features get `r sprintf("%.1f", 100 * py$acc_hand)`% of the images right.
+Guessing the most common digit gets `r sprintf("%.1f", 100 * py$acc_guess)`% right,
+so the features carry real information,
+but more than half of the images are still misread.
+Doing better this way means designing more features,
+and features designed for digits do not carry over to faces, speech or text.
+
+:::

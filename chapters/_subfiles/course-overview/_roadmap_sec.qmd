@@ -1,0 +1,13 @@
+These notes cover these topics, in this order;
+the [calendar](calendar.qmd) says when each is taught.
+
+- Tensors and automatic differentiation in PyTorch
+- Feedforward networks, and backpropagation
+- Optimization for deep networks
+- Regularization, normalization and residual connections
+- Convolutional networks
+- Sequence models and language modeling
+- Attention and Transformers
+- Generative models: autoencoders, generative adversarial networks and diffusion
+- Running deep learning experiments
+- Applications, large language models, and ethics

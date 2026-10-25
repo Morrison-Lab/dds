@@ -1,0 +1,17 @@
+::: {#exr-where-dl-fits}
+
+#### Where does each program fit?
+
+Which of these programs are
+[artificial intelligence](https://morrison-lab.github.io/lds/chapters/course-overview.html#def-artificial-intelligence),
+machine learning,
+representation learning (@def-representation-learning)
+and deep learning (@def-deep-learning)?
+A program can be more than one.
+
+- A spam filter whose rules a person wrote.
+- The classifier of @exr-two-features-ten-digits, on center ink and left ink.
+- The same classifier on the two PCA features of @exm-representation-learning.
+- AlexNet (@exm-deep-learning).
+
+:::

@@ -1,0 +1,14 @@
+The Optical Recognition of Handwritten Digits data [@alpaydin1998optdigits]
+are scans of digits written by hand on forms.
+Each scan was cut down to an 8 by 8 grid of pixels,
+and each pixel counts how many of the 16 dots in its 4 by 4 block of the original 32 by 32 scan were inked,
+so it holds a whole number from 0 to 16.
+The [UCI Machine Learning Repository](https://archive.ics.uci.edu/dataset/80) publishes the data
+under a Creative Commons Attribution 4.0 license.
+
+[`data/optdigits-test.csv`](data/optdigits-test.csv) is a copy of its test file, `optdigits.tes`,
+byte for byte, under a new name.
+Each row is one image:
+64 pixel values, read across the rows of the grid from top left to bottom right,
+then the digit the writer meant, 0 to 9.
+The file has no header row.

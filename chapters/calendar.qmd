@@ -44,7 +44,7 @@ The final's review session will be held during finals week, at a time TBD.
 +:=========================+:=============================+:=============================+:=============================+:=============================+
 | **Week 1**               |                              | [Syllabus][syl]              | Machine learning review      | Lab session: Homework 1      |
 |                          |                              |                              | (from [lds][lds])            |                              |
-| Mar 28 -- Apr 3          |                              | Course overview              |                              |                              |
+| Mar 28 -- Apr 3          |                              | [Course overview][co]        |                              |                              |
 |                          |                              |                              | Tensors (begun)              |                              |
 +--------------------------+------------------------------+------------------------------+------------------------------+------------------------------+
 | **Week 2**               | Tensors and automatic        | Feedforward networks: layers | Feedforward networks: output | Lab session: Homework 1      |
@@ -106,4 +106,5 @@ The final's review session will be held during finals week, at a time TBD.
 :::
 
 [syl]: syllabus.qmd
+[co]: course-overview.qmd
 [lds]: https://morrison-lab.github.io/lds/

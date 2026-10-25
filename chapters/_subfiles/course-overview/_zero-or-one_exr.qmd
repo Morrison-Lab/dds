@@ -1,0 +1,16 @@
+::: {#exr-zero-or-one}
+
+#### A feature for 0 or 1
+
+Look at the 0s and 1s in @fig-digits-grid.
+Which pixels look different between them?
+Write a feature:
+one number, computed from an image's 64 pixels,
+that tends to be small for a 0 and large for a 1.
+
+::: {.callout-tip}
+#### Hint
+Where does a 0 have no ink?
+:::
+
+:::

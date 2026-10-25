@@ -31,6 +31,7 @@ project:
     - chapters/index.qmd
     - chapters/calendar.qmd
     - chapters/syllabus.qmd
+    - chapters/course-overview.qmd
     # The `latex-macros` git submodule provides macro definitions for include/
     # shortcode use, not standalone site pages.
     - "!latex-macros/"
@@ -53,8 +54,8 @@ website:
       - text: "Ezra Morrison"
     right:
       - text: "Built on Brian Hutchinson's CSCI 481/581 course"
-  # Flat until the notes chapters arrive: a "Notes" dropdown is added with the
-  # first chapter, so that no dropdown stands alone.
+  # The notes chapters go in the "Notes" dropdown, in reading order, beside the
+  # flat course pages.
   navbar:
     left:
       - text: "Home"
@@ -63,6 +64,9 @@ website:
         href: chapters/calendar.qmd
       - text: "Syllabus"
         href: chapters/syllabus.qmd
+      - text: "Notes"
+        menu:
+          - chapters/course-overview.qmd
 
   # The docked sidebar lists every page in the navbar's order, and that order
   # sets the previous/next links at the foot of each page. Add each new page
@@ -76,6 +80,9 @@ website:
         href: chapters/index.qmd
       - chapters/calendar.qmd
       - chapters/syllabus.qmd
+      - section: "Notes"
+        contents:
+          - chapters/course-overview.qmd
 
 # Top level rather than under format.html, so every format (the web page,
 # the slide deck and the PDF handout) shows the date.

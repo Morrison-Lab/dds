@@ -1,0 +1,11 @@
+::: {#exr-zero-one-cutoff}
+
+#### A rule for 0 or 1
+
+Call an image a 1 when its center ink, from @sol-zero-or-one, is above a cutoff,
+and a 0 otherwise.
+Choose a cutoff for the 0s and 1s,
+with the interactive plot on the course website or with code.
+How many of those images does your rule get wrong?
+
+:::

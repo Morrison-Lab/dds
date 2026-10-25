@@ -1,0 +1,10 @@
+::: {#exr-count-pairs}
+
+#### How many pairs?
+
+Telling all ten digits apart one pair at a time,
+as @exr-zero-or-one and @exr-three-or-eight did,
+takes a feature for every pair of digits.
+How many pairs of digits are there?
+
+:::

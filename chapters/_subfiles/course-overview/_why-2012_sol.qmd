@@ -1,0 +1,18 @@
+::: {#sol-why-2012}
+
+Three things grew [@goodfellow2016deep, secs. 1.2.2--1.2.3]:
+
+- **Data.**
+  AlexNet learned from 1.2 million labelled images [@krizhevsky2017imagenet];
+  the zip-code network of 1989 learned from a few thousand digits [@lecun1989backpropagation].
+- **Computing power.**
+  AlexNet was trained on two graphics processing units (GPUs),
+  chips built for the arithmetic of drawing images,
+  which do many multiplications at once [@krizhevsky2017imagenet].
+- **Techniques.**
+  AlexNet used rectified linear units and dropout,
+  which made a large network faster to train and less prone to overfitting [@krizhevsky2017imagenet].
+
+The algorithm itself, gradient descent with backpropagation, changed little.
+
+:::

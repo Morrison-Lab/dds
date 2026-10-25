@@ -1,0 +1,23 @@
+::: {#sol-three-or-eight}
+
+An 8 closes its loops on the left, and a 3 leaves the left open.
+One feature is the average ink on the left of the middle rows:
+rows 2 to 5 and columns 0 to 2.
+
+```{python}
+#| code-fold: false
+left_ink = images[:, 2:6, 0:3].mean(axis=(1, 2))
+
+is_38 = (labels == 3) | (labels == 8)
+cut_38, wrong_38 = best_cutoff(left_ink[is_38], labels[is_38] == 8)
+print(cut_38, wrong_38, is_38.sum())
+```
+
+With a cutoff of `r py$cut_38`,
+the rule gets `r py$wrong_38` of the `r sum(py$is_38)` images of 3s and 8s wrong,
+`r sprintf("%.1f", 100 * py$wrong_38 / sum(py$is_38))`%,
+against `r sprintf("%.1f", 100 * py$wrong_01 / sum(py$is_01))`% for the 0s and 1s.
+The left ink of the 3s and 8s overlaps more than the center ink of the 0s and 1s,
+so this pair needs a better feature, or more than one.
+
+:::

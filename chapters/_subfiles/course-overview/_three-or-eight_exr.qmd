@@ -1,0 +1,14 @@
+::: {#exr-three-or-eight}
+
+#### A feature for 3 or 8
+
+Now look at the 3s and 8s in @fig-digits-grid.
+Write a feature that tends to be small for a 3 and large for an 8,
+and find the cutoff on it that makes the fewest mistakes.
+
+::: {.callout-tip}
+#### Hint
+Which side of a 3 is open?
+:::
+
+:::

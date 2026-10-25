@@ -11,3 +11,6 @@ thm = "thm"
 Packt = "Packt"
 # Gam and InvGam, the gamma-distribution operators in the latex-macros submodule.
 gam = "gam"
+# Surnames of Yee-Whye Teh and Martin Raison, authors cited in references.bib.
+Teh = "Teh"
+Raison = "Raison"

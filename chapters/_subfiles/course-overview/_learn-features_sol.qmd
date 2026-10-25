@@ -1,0 +1,9 @@
+::: {#sol-learn-features}
+
+The data could.
+A learning algorithm already chooses a model's weights to fit the data,
+and it can choose the features the same way,
+as the hidden layer of a neural network does in
+[lds's neural networks chapter](https://morrison-lab.github.io/lds/chapters/neural-nets.html#sec-learning-the-features).
+
+:::
