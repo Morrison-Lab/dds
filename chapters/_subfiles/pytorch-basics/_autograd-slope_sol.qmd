@@ -10,14 +10,11 @@ def mean_log_loss(theta):
 theta = torch.tensor(5.0, dtype=torch.float64, requires_grad=True)
 loss = mean_log_loss(theta)
 (slope_by_autograd,) = torch.autograd.grad(loss, theta)
-slope_gap = abs(slope_by_autograd.item() - slope_by_hand)
 print(loss)
-print(slope_by_autograd, slope_gap)
+print(slope_by_autograd)
 ```
 
-`torch.autograd.grad` returns `r sprintf("%.4f", py$slope_by_autograd$item())`,
-the slope computed by hand in @exm-log-loss-slope,
-and the two differ by `r format(py$slope_gap, digits = 2)`.
+`torch.autograd.grad` returns `r sprintf("%.4f", py$slope_by_autograd$item())`.
 The code for $\emprisk$ says nothing about its derivative.
 Because `theta` was made with `requires_grad=True`,
 PyTorch recorded each operation that turned it into `loss`

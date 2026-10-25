@@ -95,6 +95,14 @@ The exercises are new.
 
 {{< include _subfiles/pytorch-basics/_average-digit_sol.qmd >}}
 
+{{< slidebreak >}}
+
+{{< include _subfiles/pytorch-basics/_draw-averages_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/pytorch-basics/_draw-averages_sol.qmd >}}
+
 ## Tensors and NumPy arrays
 
 <!-- heading shares the slide; do not re-flag -->
@@ -166,6 +174,14 @@ The exercises are new.
 {{< slidebreak >}}
 
 {{< include _subfiles/pytorch-basics/_autograd-slope_sol.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/pytorch-basics/_autograd-vs-hand_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/pytorch-basics/_autograd-vs-hand_sol.qmd >}}
 
 {{< slidebreak >}}
 

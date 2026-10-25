@@ -1,0 +1,13 @@
+::: {#sol-autograd-vs-hand}
+
+```{python}
+#| code-fold: show
+slope_gap = abs(slope_by_autograd.item() - slope_by_hand)
+print(slope_by_autograd.item(), slope_by_hand, slope_gap)
+```
+
+The two slopes differ by `r format(py$slope_gap, digits = 2)`,
+`r if (py$slope_gap == 0) "so they are equal" else "a floating-point rounding error"`:
+both are `r sprintf("%.4f", py$slope_by_hand)` to four decimal places.
+
+:::

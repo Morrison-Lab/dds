@@ -1,0 +1,7 @@
+::: {#exr-autograd-vs-hand}
+
+#### Checking PyTorch's slope
+
+How far is the slope from @exr-autograd-slope from the slope computed by hand in @exm-log-loss-slope?
+
+:::

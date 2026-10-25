@@ -15,7 +15,7 @@ print(is_one[:5])
 `images[:, 2:6, 3:5]` keeps rows 2 to 5 and columns 3 and 4 of every image,
 and `.mean(dim=(1, 2))` averages over those rows and columns, leaving one number per image.
 `.double()` converts to 64-bit floats, `torch.float64`,
-so that the comparison with PyTorch in @sol-autograd-slope is not limited by 32-bit rounding.
+so that later comparisons of derivatives are not limited by 32-bit rounding.
 There are $\nobs$ = `r py$n_01` images of 0s and 1s.
 
 :::

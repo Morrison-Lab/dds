@@ -15,6 +15,6 @@ In @sol-mean-pixel, the first image is `torch.int64` as loaded and `torch.float3
 One of its pixels, printed both ways, shows the difference:
 the float prints with a decimal point,
 the two compare as equal,
-and only the kind of number storing the value differs.
+and only the [data type](#def-dtype) that stores the value differs.
 
 :::

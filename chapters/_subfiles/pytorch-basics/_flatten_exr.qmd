@@ -4,6 +4,5 @@
 
 Turn `images` into a [tensor](#def-tensor) with one row of 64 pixels per image,
 the arrangement the file stores.
-Check that the result holds the same numbers as the file, in the same order.
 
 :::

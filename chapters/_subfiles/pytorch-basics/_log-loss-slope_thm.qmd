@@ -15,6 +15,6 @@ with respect to its cutoff $\param$.
 ::: proof
 By @sol-log-loss-slope.
 The rule is a [logistic regression](https://morrison-lab.github.io/lds/chapters/logistic-regression.html#def-logistic-regression) whose coefficient on $\predvar$ is fixed at 1 and whose intercept is $-\param$,
-so the formula is also minus the intercept component of [lds's gradient of the log loss](https://morrison-lab.github.io/lds/chapters/logistic-regression.html#thm-logistic-gradient),
+so the formula is also the negative of the intercept component of [lds's gradient of the log loss](https://morrison-lab.github.io/lds/chapters/logistic-regression.html#thm-logistic-gradient),
 divided by $\nobs$ to give the mean.
 :::

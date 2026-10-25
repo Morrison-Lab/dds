@@ -11,7 +11,7 @@ digits = pd.read_csv("data/optdigits-test.csv", header=None)
 pixels = digits.iloc[:, :64].to_numpy()
 images = torch.tensor(pixels.reshape(-1, 8, 8))
 labels = torch.tensor(digits[64].to_numpy())
-n_images = images.shape[0]
+n_images = len(images)
 print(images[0])
 print(labels[:10])
 ```
