@@ -4,8 +4,9 @@
 
 ## Pages
 
-- [Machine Learning Review](https://morrison-lab.github.io/dds/chapters/ml-review.llms.md)
-- [WWU CSCI 481 (Deep Learning) Syllabus](https://morrison-lab.github.io/dds/chapters/syllabus.llms.md)
-- [Deep Learning](https://morrison-lab.github.io/dds/chapters/index.llms.md)
-- [Calendar](https://morrison-lab.github.io/dds/chapters/calendar.llms.md)
+- [Tensors and Automatic Differentiation](https://morrison-lab.github.io/dds/chapters/pytorch-basics.llms.md)
 - [Course Overview: What Is Deep Learning?](https://morrison-lab.github.io/dds/chapters/course-overview.llms.md)
+- [Calendar](https://morrison-lab.github.io/dds/chapters/calendar.llms.md)
+- [Deep Learning](https://morrison-lab.github.io/dds/chapters/index.llms.md)
+- [WWU CSCI 481 (Deep Learning) Syllabus](https://morrison-lab.github.io/dds/chapters/syllabus.llms.md)
+- [Machine Learning Review](https://morrison-lab.github.io/dds/chapters/ml-review.llms.md)

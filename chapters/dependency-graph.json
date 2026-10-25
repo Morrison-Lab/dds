@@ -28,12 +28,82 @@
    "kind": "def",
    "title": "Representation learning (feature learning)",
    "external": false
+  },
+  {
+   "id": "dds/pytorch-basics#def-automatic-differentiation",
+   "site": "dds",
+   "page": "pytorch-basics",
+   "div": "def-automatic-differentiation",
+   "kind": "def",
+   "title": "Automatic differentiation (autodiff)",
+   "external": false
+  },
+  {
+   "id": "dds/pytorch-basics#def-device",
+   "site": "dds",
+   "page": "pytorch-basics",
+   "div": "def-device",
+   "kind": "def",
+   "title": "Device",
+   "external": false
+  },
+  {
+   "id": "dds/pytorch-basics#def-dtype",
+   "site": "dds",
+   "page": "pytorch-basics",
+   "div": "def-dtype",
+   "kind": "def",
+   "title": "Data type",
+   "external": false
+  },
+  {
+   "id": "dds/pytorch-basics#def-shape",
+   "site": "dds",
+   "page": "pytorch-basics",
+   "div": "def-shape",
+   "kind": "def",
+   "title": "Shape",
+   "external": false
+  },
+  {
+   "id": "dds/pytorch-basics#def-tensor",
+   "site": "dds",
+   "page": "pytorch-basics",
+   "div": "def-tensor",
+   "kind": "def",
+   "title": "Tensor",
+   "external": false
+  },
+  {
+   "id": "dds/pytorch-basics#thm-log-loss-slope",
+   "site": "dds",
+   "page": "pytorch-basics",
+   "div": "thm-log-loss-slope",
+   "kind": "thm",
+   "title": "The slope of the soft rule's log loss",
+   "external": false
   }
  ],
  "edges": [
   [
    "dds/course-overview#def-deep-learning",
    "dds/course-overview#def-representation-learning"
+  ],
+  [
+   "dds/pytorch-basics#def-device",
+   "dds/pytorch-basics#def-tensor"
+  ],
+  [
+   "dds/pytorch-basics#def-dtype",
+   "dds/pytorch-basics#def-tensor"
+  ],
+  [
+   "dds/pytorch-basics#def-shape",
+   "dds/pytorch-basics#def-tensor"
+  ],
+  [
+   "dds/pytorch-basics#def-tensor",
+   "dds/course-overview#def-deep-learning"
   ]
  ],
  "cycles": [],
