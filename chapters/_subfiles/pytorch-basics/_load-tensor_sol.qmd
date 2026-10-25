@@ -17,7 +17,7 @@ print(images[0])
 ```
 
 `torch.tensor` copies a NumPy array into a [tensor](#def-tensor).
-The images make a tensor of shape (`r py$n_images`, 8, 8):
+The images make a tensor of [shape](#def-shape) (`r py$n_images`, 8, 8):
 a stack of `r py$n_images` grids, each with 8 rows and 8 columns.
 The labels make a tensor of shape (`r py$n_images`,), one number per image.
 

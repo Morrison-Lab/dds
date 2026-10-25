@@ -51,6 +51,14 @@ The exercises are new.
 
 {{< include _subfiles/pytorch-basics/_tensor_exm.qmd >}}
 
+{{< slidebreak >}}
+
+{{< include _subfiles/pytorch-basics/_shape_def.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/pytorch-basics/_shape_exm.qmd >}}
+
 ## Data types
 
 <!-- heading shares the slide; do not re-flag -->
@@ -97,9 +105,15 @@ The exercises are new.
 
 {{< include _subfiles/pytorch-basics/_shared-memory_sol.qmd >}}
 
+## Devices
+
+<!-- heading shares the slide; do not re-flag -->
+
+{{< include _subfiles/pytorch-basics/_device_def.qmd >}}
+
 {{< slidebreak >}}
 
-{{< include _subfiles/pytorch-basics/_devices_rem.qmd >}}
+{{< include _subfiles/pytorch-basics/_device_exm.qmd >}}
 
 {{< include _subfiles/pytorch-basics/_tensors_read.qmd >}}
 
@@ -108,6 +122,14 @@ The exercises are new.
 ## The soft 0-or-1 rule
 
 {{< include _subfiles/pytorch-basics/_soft-rule_sec.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/pytorch-basics/_soft-rule-data_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/pytorch-basics/_soft-rule-data_sol.qmd >}}
 
 ## The slope by hand
 

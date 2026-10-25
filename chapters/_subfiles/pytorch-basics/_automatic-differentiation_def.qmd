@@ -7,7 +7,7 @@ by applying the chain rule to the elementary operations the code performs as it 
 [@goodfellow2016deep, section 6.5; @paszke2019pytorch].
 
 PyTorch's automatic differentiation is called autograd.
-The result is exact up to floating-point rounding.
+The result is the exact derivative of the operations the code performs, up to floating-point rounding.
 Automatic differentiation is neither symbolic differentiation,
 which manipulates a formula for the function,
 nor numerical differentiation,

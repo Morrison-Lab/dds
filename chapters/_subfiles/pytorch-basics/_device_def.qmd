@@ -1,0 +1,12 @@
+::: {#def-device}
+
+#### Device
+
+A [tensor](#def-tensor)'s **device** is the processor whose memory holds its entries,
+and on which operations on the tensor run:
+the CPU, or a GPU (in PyTorch, `"cuda"` for an NVIDIA GPU).
+PyTorch makes a tensor on the CPU unless told otherwise,
+`.to()` copies a tensor to another device,
+and an operation on two [tensors](#def-tensor) needs both on the same device.
+
+:::

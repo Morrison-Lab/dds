@@ -9,22 +9,28 @@ for step in range(100):
     with torch.no_grad():
         theta -= learning_rate * slope
 theta_descent = theta.item()
+(final_slope,) = torch.autograd.grad(mean_log_loss(theta), theta)
 
 cutoffs = np.arange(0, 16.005, 0.01)
+grid_step = cutoffs[1] - cutoffs[0]
 with torch.no_grad():
     grid_loss = [mean_log_loss(torch.tensor(c)).item() for c in cutoffs]
 theta_grid = cutoffs[np.argmin(grid_loss)]
-print(theta_descent, slope.item(), theta_grid)
+gap = abs(theta_descent - theta_grid)
+print(theta_descent, final_slope.item(), theta_grid, gap)
 ```
 
-Gradient descent ends at $\param$ = `r sprintf("%.4f", py$theta_descent)`,
-where the slope is `r format(py$slope$item(), digits = 2)`,
+[Gradient descent](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#the-algorithm) ends at $\param$ = `r sprintf("%.4f", py$theta_descent)`,
+where the slope is `r format(py$final_slope$item(), digits = 2)`,
 and the grid's lowest point is at `r sprintf("%.2f", py$theta_grid)`,
 the cutoff found in [the review's solution](ml-review.qmd#sol-smooth-loss).
-The two differ by `r sprintf("%.4f", abs(py$theta_descent - py$theta_grid))`, less than the grid's spacing of 0.01.
+The two differ by `r sprintf("%.4f", py$gap)`,
+`r if (py$gap < py$grid_step) "less" else "more"` than the grid's spacing of `r py$grid_step`.
+
 The update runs inside `torch.no_grad()`,
 which tells PyTorch not to record it:
-the step is a change to $\param$, not part of the loss,
-and PyTorch refuses an untracked in-place change to a [tensor](#def-tensor) made with `requires_grad=True`.
+the step is a change to $\param$, not part of the loss.
+Without it, PyTorch would record the in-place subtraction on `theta`,
+and it raises an error for a recorded in-place change to a [tensor](#def-tensor) that was created with `requires_grad=True`.
 
 :::

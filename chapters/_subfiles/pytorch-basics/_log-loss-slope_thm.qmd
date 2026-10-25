@@ -2,10 +2,10 @@
 
 #### The slope of the soft rule's log loss
 
-The mean [log loss](https://morrison-lab.github.io/lds/chapters/logistic-regression.html#def-log-loss) $\hR$ of the soft 0-or-1 rule has derivative
+The mean [log loss](https://morrison-lab.github.io/lds/chapters/logistic-regression.html#def-log-loss) $\hR$ of the [soft 0-or-1 rule](ml-review.qmd#exr-log-loss-curve) has derivative
 
 $$
-\derivf{\hR}{\param} = \frac{1}{\nobs} \sumin (\outvar_i - \hprob_i)
+\dif{\hR}{\param} = \frac{1}{\nobs} \sumin (\outvar_i - \hprob_i)
 $$
 
 with respect to its cutoff $\param$.
@@ -14,7 +14,7 @@ with respect to its cutoff $\param$.
 
 ::: proof
 By @sol-log-loss-slope.
-The rule is a logistic regression whose coefficient on $\predvar$ is fixed at 1 and whose intercept is $-\param$,
+The rule is a [logistic regression](https://morrison-lab.github.io/lds/chapters/logistic-regression.html#def-logistic-regression) whose coefficient on $\predvar$ is fixed at 1 and whose intercept is $-\param$,
 so the formula is also minus the intercept component of [lds's gradient of the log loss](https://morrison-lab.github.io/lds/chapters/logistic-regression.html#thm-logistic-gradient),
 divided by $\nobs$ to give the mean.
 :::

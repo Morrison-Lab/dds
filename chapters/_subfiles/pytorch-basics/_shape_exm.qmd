@@ -1,0 +1,16 @@
+::: {#exm-shape}
+
+#### The shapes of the digits
+
+```{python}
+#| code-fold: show
+print(images.shape, images[0].shape, images[0, 3].shape, images[0, 3, 4].shape)
+```
+
+`images` has [shape](#def-shape) (`r py$n_images`, 8, 8):
+`r py$n_images` images, each with 8 rows and 8 columns.
+Indexing it drops the dimensions that the index fixes:
+one image has shape (8, 8), one of its rows has shape (8,),
+and one pixel has the empty shape ().
+
+:::

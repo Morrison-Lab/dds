@@ -2,8 +2,7 @@
 
 #### The slope of the log loss
 
-Find the derivative $\derivf{\hR}{\param}$ of the mean [log loss](https://morrison-lab.github.io/lds/chapters/logistic-regression.html#def-log-loss) with respect to the cutoff,
-and compute it at $\param = 5$ with NumPy.
+Find the derivative $\dif{\hR}{\param}$ of the mean [log loss](https://morrison-lab.github.io/lds/chapters/logistic-regression.html#def-log-loss) with respect to the cutoff.
 
 ::: {.callout-tip}
 #### Hint

@@ -1,0 +1,9 @@
+::: {#def-shape}
+
+#### Shape
+
+A [tensor](#def-tensor)'s **shape** lists the size of each of its dimensions, in order.
+PyTorch reports it as `.shape`, or `.size()`;
+NumPy also calls it `.shape`.
+
+:::
