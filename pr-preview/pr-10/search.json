@@ -16,7 +16,7 @@
     "href": "chapters/pytorch-basics.html#plan-for-this-lecture",
     "title": "Tensors and Automatic Differentiation",
     "section": "\n1.1 Plan for this lecture",
-    "text": "1.1 Plan for this lecture\nThe code in these notes, and in the homework, uses PyTorch [1]. This lecture covers the two parts of PyTorch that everything else is built on, on the handwritten digits from the course overview:\n\n\ntensors, the arrays that hold a network’s inputs, parameters and outputs;\n\nautomatic differentiation, which computes the derivative of a loss from the code that computes the loss.",
+    "text": "1.1 Plan for this lecture\nAll code in these notes, and in the homework, uses PyTorch [1]. This lecture covers the two parts of PyTorch that everything else is built on, on the handwritten digits from the course overview:\n\n\ntensors, the arrays that hold a network’s inputs, parameters and outputs;\n\nautomatic differentiation, which computes the derivative of a loss from the code that computes the loss.",
     "crumbs": [
       "Home",
       "Notes",

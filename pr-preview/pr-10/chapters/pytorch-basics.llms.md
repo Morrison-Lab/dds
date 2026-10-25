@@ -19,13 +19,13 @@ source("../tools/use-torch.R")
 use_torch(c("numpy", "pandas", "matplotlib"))
 ```
 
-The order of topics in these notes follows Brian Hutchinson’s CSCI 481/581, used with his permission; his module on the course’s tools is the starting point for this page. The exercises are new.
+These notes follow the order of topics in Brian Hutchinson’s CSCI 481/581, used with his permission; his module on the course’s tools is the starting point for this page. The exercises are new.
 
 # 1 Welcome
 
 ## 1.1 Plan for this lecture
 
-The code in these notes, and in the homework, uses PyTorch [\[1\]](#ref-paszke2019pytorch). This lecture covers the two parts of PyTorch that everything else is built on, on the handwritten digits from the [course overview](../chapters/course-overview.llms.md):
+All code in these notes, and in the homework, uses PyTorch [\[1\]](#ref-paszke2019pytorch). This lecture covers the two parts of PyTorch that everything else is built on, on the handwritten digits from the [course overview](../chapters/course-overview.llms.md):
 
 1.  [tensors](#def-tensor), the arrays that hold a network’s inputs, [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter) and outputs;
 2.  [automatic differentiation](#def-automatic-differentiation), which computes the derivative of a loss from the code that computes the loss.
