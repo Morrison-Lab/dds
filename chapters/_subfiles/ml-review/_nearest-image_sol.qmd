@@ -1,0 +1,27 @@
+::: {#sol-nearest-image}
+
+```{python}
+#| code-fold: false
+train_features = hand_features[train]
+acc_nn_train = accuracy(
+    labels[train][nearest(train_features, train_features)], labels[train]
+)
+acc_nn_test = accuracy(
+    labels[train][nearest(hand_features[test], train_features)], labels[test]
+)
+print(round(acc_nn_train, 3), round(acc_nn_test, 3))
+```
+
+The rule gets `r sprintf("%.1f", 100 * py$acc_nn_train)`% of the [training set](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-training-set) right,
+but only `r sprintf("%.1f", 100 * py$acc_nn_test)`% of the [test set](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-test-set),
+worse than the `r sprintf("%.1f", 100 * py$acc_mean_test)`% of the digit-average rule in @sol-held-out-averages.
+On the training set, each image's nearest neighbor is usually itself,
+so the rule mostly recalls labels it has already seen.
+It falls short of 100% only where images of different digits
+share both [feature](https://morrison-lab.github.io/lds/chapters/course-overview.html#def-feature) values.
+
+A rule that fits its training set this much better than new data is [overfitting](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-overfitting).
+Deep networks are flexible enough to memorize their training sets too,
+so these notes judge every network on images it was not trained on.
+
+:::

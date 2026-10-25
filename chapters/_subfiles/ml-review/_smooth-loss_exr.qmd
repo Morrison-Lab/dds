@@ -1,0 +1,22 @@
+::: {#exr-smooth-loss}
+
+#### A rule with a smooth loss
+
+Swap the 0-or-1 rule for a soft version,
+which gives each image a probability of being a 1:
+
+$$p = \sigmoidf{x - c},$$
+
+where
+
+- $x$ is the image's center ink,
+- $c$ is the cutoff, the rule's one [parameter](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter),
+- $\sigmoid$ is the [logistic function](https://morrison-lab.github.io/lds/chapters/logistic-regression.html#exm-logistic-function), $\sigmoidf{z} = 1 / (1 + \expf{-z})$,
+- and $p$ is the probability the rule gives that the image is a 1.
+
+Among the 0s and 1s,
+plot the mean [log loss](https://morrison-lab.github.io/lds/chapters/logistic-regression.html#def-log-loss) of this rule against $c$,
+over the cutoffs of @exr-train-on-errors.
+Could gradient descent find the best cutoff on this curve?
+
+:::

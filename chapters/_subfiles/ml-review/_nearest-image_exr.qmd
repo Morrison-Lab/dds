@@ -1,0 +1,11 @@
+::: {#exr-nearest-image}
+
+#### A rule that memorizes
+
+Now make the rule far more flexible:
+label each image with the digit of the training image nearest to it in (center ink, left ink).
+This is [one-nearest-neighbor](https://morrison-lab.github.io/lds/chapters/non-parametric-models.html#k-nearest-neighbors) classification.
+Using the split from @sol-held-out-averages,
+what share of the [training set](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-training-set) and of the [test set](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-test-set) does it get right?
+
+:::

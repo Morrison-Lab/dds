@@ -1,0 +1,17 @@
+::: {#sol-cutoff-parts}
+
+- The [model family](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-model-family) is every rule of the form
+  "a 1 when the center ink is above $c$, and a 0 otherwise",
+  one rule for each number $c$.
+- The [parameter](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter) is the cutoff $c$.
+- The [loss function](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-loss-function) is the 0-1 loss:
+  1 for a wrong label and 0 for a right one.
+  Its average over the images is the rule's [error rate](https://morrison-lab.github.io/lds/chapters/metrics.html#def-error-rate).
+- The rule was fit by [empirical risk minimization](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-empirical-risk-minimization):
+  the search kept the cutoff with the lowest [empirical risk](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-empirical-risk),
+  here the lowest error rate on the images.
+
+A deep network has the same four parts,
+with many [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter) in place of one.
+
+:::

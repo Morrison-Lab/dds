@@ -1,0 +1,25 @@
+::: {#sol-train-on-errors}
+
+```{python}
+#| code-fold: false
+best_cutoffs = cutoffs[error_rate == error_rate.min()]
+print(error_rate.min(), best_cutoffs.min(), best_cutoffs.max())
+print(len(np.unique(ink_01)))
+```
+
+No.
+The curve in @fig-error-rate-curve is a staircase.
+The [error rate](https://morrison-lab.github.io/lds/chapters/metrics.html#def-error-rate) changes only where $c$ crosses one of the
+`r length(unique(py$ink_01))` values that the center ink takes,
+and it is flat everywhere in between,
+so its slope is 0 wherever the slope exists.
+Gradient descent would never move.
+
+The search found the lowest error rate,
+`r sprintf("%.1f", 100 * min(py$error_rate))`%,
+for every cutoff tried from `r sprintf("%.2f", min(py$best_cutoffs))` to `r sprintf("%.2f", max(py$best_cutoffs))`,
+by trying each value in turn.
+That works for one [parameter](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter),
+but trying every combination of values for a network with thousands of them is out of reach.
+
+:::

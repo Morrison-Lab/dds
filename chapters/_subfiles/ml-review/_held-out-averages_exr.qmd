@@ -1,0 +1,14 @@
+::: {#exr-held-out-averages}
+
+#### The digit-average rule on new images
+
+The course overview's [digit-average rule](course-overview.qmd#sol-two-features-ten-digits)
+labels an image with the digit whose average (center ink, left ink) is nearest,
+and it was scored on the same images the averages came from.
+Split the 1,797 images at random into two halves,
+a [training set](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-training-set)
+and a [test set](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-test-set).
+Compute the digit averages from the training set only.
+What share of each set does the rule get right?
+
+:::

@@ -1,0 +1,20 @@
+The exercises here use the 1,797 handwritten digits [@alpaydin1998optdigits]
+and the center-ink [feature](https://morrison-lab.github.io/lds/chapters/course-overview.html#def-feature) from the [course overview](course-overview.qmd#sol-zero-or-one):
+the average ink in rows 2 to 5 and columns 3 and 4 of each 8 by 8 image.
+This chunk loads them again, with the left-ink feature from the same page.
+
+```{python}
+#| code-fold: false
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+
+digits = pd.read_csv("data/optdigits-test.csv", header=None)
+pixels = digits.iloc[:, :64].to_numpy()
+labels = digits[64].to_numpy()
+images = pixels.reshape(-1, 8, 8)
+
+center_ink = images[:, 2:6, 3:5].mean(axis=(1, 2))
+left_ink = images[:, 2:6, 0:3].mean(axis=(1, 2))
+print(images.shape, center_ink[:5], left_ink[:5])
+```
