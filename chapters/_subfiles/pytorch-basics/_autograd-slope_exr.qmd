@@ -2,9 +2,9 @@
 
 #### Asking PyTorch for the slope
 
-Write a function that computes $\hR(\param)$ with PyTorch operations.
+Write a function that computes $\empriskf{\param}$ with PyTorch operations.
 Make $\param = 5$ a [tensor](#def-tensor) created with `requires_grad=True`,
-compute $\hR(5)$,
+compute $\empriskf{5}$,
 and pass both to [`torch.autograd.grad`](https://docs.pytorch.org/docs/stable/generated/torch.autograd.grad.html).
 Compare what it returns with the slope computed by hand in @exm-log-loss-slope.
 

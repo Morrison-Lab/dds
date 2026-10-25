@@ -33,7 +33,7 @@ The exercises are new.
 
 # Tensors
 
-## The digits as a tensor
+## The digits in PyTorch
 
 <!-- heading shares the slide; do not re-flag -->
 
@@ -59,7 +59,7 @@ The exercises are new.
 
 {{< include _subfiles/pytorch-basics/_shape_exm.qmd >}}
 
-## Data types
+## The average pixel
 
 <!-- heading shares the slide; do not re-flag -->
 
@@ -104,6 +104,14 @@ The exercises are new.
 {{< slidebreak >}}
 
 {{< include _subfiles/pytorch-basics/_shared-memory_sol.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/pytorch-basics/_copied-memory_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/pytorch-basics/_copied-memory_sol.qmd >}}
 
 ## Devices
 
@@ -176,6 +184,14 @@ The exercises are new.
 {{< slidebreak >}}
 
 {{< include _subfiles/pytorch-basics/_autograd-descent_sol.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/pytorch-basics/_descent-vs-grid_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/pytorch-basics/_descent-vs-grid_sol.qmd >}}
 
 # References {#references .unnumbered}
 

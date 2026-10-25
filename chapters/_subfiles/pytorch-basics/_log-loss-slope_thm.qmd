@@ -2,10 +2,10 @@
 
 #### The slope of the soft rule's log loss
 
-The mean [log loss](https://morrison-lab.github.io/lds/chapters/logistic-regression.html#def-log-loss) $\hR$ of the [soft 0-or-1 rule](ml-review.qmd#exr-log-loss-curve) has derivative
+The mean [log loss](https://morrison-lab.github.io/lds/chapters/logistic-regression.html#def-log-loss) $\emprisk$ of the [soft 0-or-1 rule](ml-review.qmd#exr-log-loss-curve) has derivative
 
 $$
-\dif{\hR}{\param} = \frac{1}{\nobs} \sumin (\outvar_i - \hprob_i)
+\dif{\emprisk}{\param} = \avgin (\outvar_i - \hprob_i)
 $$
 
 with respect to its cutoff $\param$.

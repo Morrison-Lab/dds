@@ -2,10 +2,9 @@
 
 #### Finding the cutoff by gradient descent
 
-Run 100 steps of [gradient descent](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#the-algorithm) on $\hR$,
+Run 100 steps of [gradient descent](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#the-algorithm) on $\emprisk$,
 starting from $\param = 0$ with learning rate $\learnrate = 4$,
 with each step's derivative from `torch.autograd.grad`.
-Where does $\param$ end up,
-compared with the lowest point on the grid of cutoffs in the [machine learning review](ml-review.qmd#sol-smooth-loss)?
+Where does $\param$ end up?
 
 :::

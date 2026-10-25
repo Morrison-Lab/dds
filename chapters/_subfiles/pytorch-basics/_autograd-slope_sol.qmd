@@ -18,7 +18,7 @@ print(slope_by_autograd, slope_gap)
 `torch.autograd.grad` returns `r sprintf("%.4f", py$slope_by_autograd$item())`,
 the slope computed by hand in @exm-log-loss-slope,
 and the two differ by `r format(py$slope_gap, digits = 2)`.
-The code for $\hR$ says nothing about its derivative.
+The code for $\emprisk$ says nothing about its derivative.
 Because `theta` was made with `requires_grad=True`,
 PyTorch recorded each operation that turned it into `loss`
 (the subtraction `ink_01 - theta`, the logistic function, and each operation after them, down to the mean and its change of sign),

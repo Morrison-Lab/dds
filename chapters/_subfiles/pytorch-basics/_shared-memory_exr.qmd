@@ -1,10 +1,10 @@
 ::: {#exr-shared-memory}
 
-#### A tensor and its array
+#### A tensor that shares its array
 
 [`torch.from_numpy`](https://docs.pytorch.org/docs/stable/generated/torch.from_numpy.html) also makes a [tensor](#def-tensor) from a NumPy array.
-Make one from a copy of `pixels` this way, and another with `torch.tensor`.
-Change an entry of each tensor.
-What happens to the arrays?
+Make one this way from a copy of `pixels`,
+change an entry of the tensor,
+and look at the same entry of the array.
 
 :::

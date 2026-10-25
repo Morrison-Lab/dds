@@ -4,10 +4,11 @@ it gives each image the probability $\hprob = \sigmoidf{\predvar - \param}$ of b
 where $\predvar$ is the image's [center ink](course-overview.qmd#sol-zero-or-one),
 its average pixel over rows 2 to 5 and columns 3 and 4,
 and $\param$ is the rule's cutoff.
-Its mean [log loss](https://morrison-lab.github.io/lds/chapters/logistic-regression.html#def-log-loss) over those $\nobs$ images is
+Its mean [log loss](https://morrison-lab.github.io/lds/chapters/logistic-regression.html#def-log-loss) over those $\nobs$ images,
+its [empirical risk](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-empirical-risk) under that loss, is
 
 $$
-\hR(\param) = -\frac{1}{\nobs} \sumin \sb{\outvar_i \log \hprob_i + (1 - \outvar_i) \log (1 - \hprob_i)},
+\empriskf{\param} = -\avgin \sb{\outvar_i \log \hprob_i + (1 - \outvar_i) \log (1 - \hprob_i)},
 $$
 
 where $\outvar_i$ is 1 if image $i$ is a 1 and 0 if it is a 0.

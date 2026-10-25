@@ -33,10 +33,10 @@ $$
 \end{aligned}
 $$
 
-$\hR$ is the mean of the $\obsloss{i}$, so its derivative is the mean of theirs:
+$\emprisk$ is the mean of the $\obsloss{i}$, so its derivative is the mean of theirs:
 
 $$
-\dif{\hR}{\param} = \frac{1}{\nobs} \sumin (\outvar_i - \hprob_i).
+\dif{\emprisk}{\param} = \avgin (\outvar_i - \hprob_i).
 $$
 
 :::

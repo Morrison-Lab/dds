@@ -10,22 +10,11 @@ for step in range(100):
         theta -= learning_rate * slope
 theta_descent = theta.item()
 (final_slope,) = torch.autograd.grad(mean_log_loss(theta), theta)
-
-cutoffs = np.arange(0, 16.005, 0.01)
-grid_step = cutoffs[1] - cutoffs[0]
-with torch.no_grad():
-    grid_loss = [mean_log_loss(torch.tensor(c)).item() for c in cutoffs]
-theta_grid = cutoffs[np.argmin(grid_loss)]
-gap = abs(theta_descent - theta_grid)
-print(theta_descent, final_slope.item(), theta_grid, gap)
+print(theta_descent, final_slope.item())
 ```
 
 [Gradient descent](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#the-algorithm) ends at $\param$ = `r sprintf("%.4f", py$theta_descent)`,
-where the slope is `r format(py$final_slope$item(), digits = 2)`,
-and the grid's lowest point is at `r sprintf("%.2f", py$theta_grid)`,
-the cutoff found in [the review's solution](ml-review.qmd#sol-smooth-loss).
-The two differ by `r sprintf("%.4f", py$gap)`,
-`r if (py$gap < py$grid_step) "less" else "more"` than the grid's spacing of `r py$grid_step`.
+where the slope is `r format(py$final_slope$item(), digits = 2)`.
 
 The update runs inside `torch.no_grad()`,
 which tells PyTorch not to record it:

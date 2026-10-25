@@ -1,0 +1,7 @@
+::: {#exr-descent-vs-grid}
+
+#### Gradient descent and the grid
+
+How far is the cutoff from @exr-autograd-descent from the lowest point on the grid of cutoffs in the [machine learning review](ml-review.qmd#sol-smooth-loss)?
+
+:::
