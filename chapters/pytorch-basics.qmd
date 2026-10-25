@@ -19,7 +19,7 @@ use_torch(c("numpy", "pandas", "matplotlib"))
 ```
 
 ::: notes
-The order of topics in these notes follows Brian Hutchinson's CSCI 481/581,
+These notes follow the order of topics in Brian Hutchinson's CSCI 481/581,
 used with his permission;
 his module on the course's tools is the starting point for this page.
 The exercises are new.

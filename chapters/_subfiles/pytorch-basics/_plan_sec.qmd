@@ -1,4 +1,4 @@
-The code in these notes, and in the homework, uses PyTorch [@paszke2019pytorch].
+All code in these notes, and in the homework, uses PyTorch [@paszke2019pytorch].
 This lecture covers the two parts of PyTorch that everything else is built on,
 on the handwritten digits from the [course overview](course-overview.qmd):
 
