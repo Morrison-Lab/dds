@@ -1,5 +1,6 @@
 The code in these notes, and in the homework, is Python with PyTorch [@paszke2019pytorch],
-plus NumPy where a lecture builds a method from scratch.
+plus NumPy where a lecture builds a method from scratch,
+and pandas and matplotlib for reading data and drawing plots.
 Every example here runs in seconds on a laptop's CPU;
 the homework trains larger models.
 

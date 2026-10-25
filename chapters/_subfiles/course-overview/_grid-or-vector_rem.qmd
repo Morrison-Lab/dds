@@ -12,7 +12,7 @@ with rows and columns counted from 0,
 the pixel in row $i$ and column $j$ is entry $8i + j$ of the vector.
 `pixels.reshape(-1, 8, 8)` turns the rows of the file into grids,
 and nothing about the numbers changes.
-Models that look at pixels' neighbours,
+Models that look at pixels' neighbors,
 such as convolutional networks,
 keep the grid.
 

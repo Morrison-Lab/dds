@@ -13,19 +13,19 @@ fields = [
     ("Representation learning", "PCA features"),
     ("Deep learning", "AlexNet"),
 ]
-colours = ["#dbe9f6", "#a6cbe6", "#6aa6d6", "#2f7bbf"]
+colors = ["#dbe9f6", "#a6cbe6", "#6aa6d6", "#2f7bbf"]
 
 fig, ax = plt.subplots(figsize=(7, 4.5))
-for depth, ((name, example), colour) in enumerate(zip(fields, colours)):
+for depth, ((name, example), color) in enumerate(zip(fields, colors)):
     # Each ellipse sits inside the last, sharing its bottom edge.
     width, height = 10 - 2.2 * depth, 6.4 - 1.5 * depth
     ax.add_patch(Ellipse((5, height / 2), width, height,
-                         facecolor=colour, edgecolor="black"))
-    text_colour = "white" if depth == 3 else "black"
+                         facecolor=color, edgecolor="black"))
+    text_color = "white" if depth == 3 else "black"
     ax.text(5, height - 0.6, name, ha="center", va="center",
-            fontsize=11, fontweight="bold", color=text_colour)
+            fontsize=11, fontweight="bold", color=text_color)
     ax.text(5, height - 1.0, example, ha="center", va="center",
-            fontsize=9, style="italic", color=text_colour)
+            fontsize=9, style="italic", color=text_color)
 ax.set_xlim(-0.1, 10.1)
 ax.set_ylim(-0.1, 6.5)
 ax.set_aspect("equal")

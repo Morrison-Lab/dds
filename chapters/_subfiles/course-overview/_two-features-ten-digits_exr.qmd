@@ -7,7 +7,7 @@ its center ink and its left ink.
 Classify each image as the digit whose average pair of features,
 over all the images of that digit,
 is nearest to the image's own pair.
-How does the share of images this classifier gets right
-compare with the share that always guessing the most common digit gets right?
+How much larger is the share of images this classifier gets right
+than the share that always guessing the most common digit gets right?
 
 :::

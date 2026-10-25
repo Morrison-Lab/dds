@@ -2,7 +2,7 @@
 
 #### Loading the digits
 
-Load [`data/optdigits-test.csv`](data/optdigits-test.csv) into Python,
-and count the images of each digit.
+How many images of each digit does
+[`data/optdigits-test.csv`](data/optdigits-test.csv) hold?
 
 :::

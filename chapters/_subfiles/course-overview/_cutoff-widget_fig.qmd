@@ -6,7 +6,7 @@
 digitRows = FileAttachment("data/optdigits-test.csv").text()
   .then(text => d3.csvParseRows(text, row => row.map(Number)))
 
-// The center ink of @sol-zero-or-one: the mean of rows 2 to 5 and columns 3
+// The center ink of the 0-or-1 solution: the mean of rows 2 to 5 and columns 3
 // and 4 of the 8 by 8 grid, so pixels 8 * i + j for those i and j.
 centerPixels = [2, 3, 4, 5].flatMap(i => [3, 4].map(j => 8 * i + j))
 zerosOnes = digitRows
@@ -20,7 +20,9 @@ zerosOnes = digitRows
 ::: {#fig-cutoff-widget}
 
 <!-- A light panel, so the inputs and the plot's text stay readable under the
-dark theme and on the dark slides. -->
+dark theme and on the dark slides. custom.scss styles the inputs, buttons and
+tables inside a .widget-panel but not the panel's own background, so it is set
+here. -->
 ::: {.widget-panel style="background-color:#fbfbfb;
 color:#222;
 color-scheme:light;

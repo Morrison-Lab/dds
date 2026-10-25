@@ -1,6 +1,6 @@
 ::: {#rem-counting-depth}
 
-#### Counting depth, and other names
+#### Counting depth
 
 These notes count a network's [depth](https://morrison-lab.github.io/lds/chapters/neural-nets.html#def-depth) as lds does,
 by its layers of weights,
@@ -13,10 +13,8 @@ noting that there is no single correct way to count it
 "How deep is deep" has no agreed cutoff either.
 
 [Deep learning](#def-deep-learning) models are almost all
-[neural networks](https://morrison-lab.github.io/lds/chapters/neural-nets.html),
-also called artificial neural networks,
-and a neural network with many layers is called a deep neural network.
-The name comes from early models of neurons,
+[neural networks](https://morrison-lab.github.io/lds/chapters/neural-nets.html).
+Their name comes from early models of neurons,
 but the networks in these notes are not models of the brain.
 
 :::

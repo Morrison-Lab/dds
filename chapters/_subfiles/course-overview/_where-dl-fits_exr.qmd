@@ -2,12 +2,11 @@
 
 #### Where does each program fit?
 
-Which of these programs are
+Name every field each of these programs belongs to, among
 [artificial intelligence](https://morrison-lab.github.io/lds/chapters/course-overview.html#def-artificial-intelligence),
 [machine learning](https://morrison-lab.github.io/lds/chapters/course-overview.html#def-machine-learning),
 representation learning (@def-representation-learning)
-and deep learning (@def-deep-learning)?
-A program can be more than one.
+and deep learning (@def-deep-learning).
 
 - A spam filter whose rules a person wrote.
 - The classifier of @exr-two-features-ten-digits, on center ink and left ink.

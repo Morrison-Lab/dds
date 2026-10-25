@@ -5,9 +5,9 @@
 AlexNet, a network for sorting photographs into 1000 classes,
 has eight layers with weights:
 five convolutional layers, then three fully connected ones.
-Its 60 million parameters were learned from 1.2 million labelled images,
+Its 60 million parameters were learned from 1.2 million labeled images,
 and the 96 filters of its first layer learned on their own
-to respond to edges at different angles and to patches of colour
+to respond to edges at different angles and to patches of color
 [@krizhevsky2012imagenet].
 Nobody designed those [features](https://morrison-lab.github.io/lds/chapters/course-overview.html#def-feature); training found them.
 

@@ -1,4 +1,5 @@
-Neural networks have risen and fallen in popularity three times,
+Neural networks have risen in popularity three times,
+and fallen twice,
 under three names [@goodfellow2016deep, section 1.2.1]:
 
 ::: {.ruled-rows}
