@@ -1,0 +1,6 @@
+The code in these notes, and in the homework, uses PyTorch [@paszke2019pytorch].
+This lecture covers the two parts of PyTorch that everything else is built on,
+on the handwritten digits from the [course overview](course-overview.qmd):
+
+1.  [tensors](#def-tensor), the arrays that hold a network's inputs, [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter) and outputs;
+2.  [automatic differentiation](#def-automatic-differentiation), which computes the derivative of a loss from the code that computes the loss.

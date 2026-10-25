@@ -1,0 +1,16 @@
+::: {#sol-flatten}
+
+```{python}
+#| code-fold: show
+rows = images.reshape(-1, 64)
+print(rows.shape, torch.equal(rows, torch.tensor(pixels)))
+```
+
+`reshape(-1, 64)` asks for rows of 64 and lets PyTorch work out the number of rows, the `-1`.
+It reads the entries in order, last dimension fastest,
+so each image's row 0 comes first, then its row 1, and so on,
+which undoes the `reshape(-1, 8, 8)` of @sol-load-tensor.
+`torch.equal` confirms that the shapes and every entry match.
+The course overview's [remark on the two arrangements](course-overview.qmd#rem-grid-or-vector) says which models take which.
+
+:::

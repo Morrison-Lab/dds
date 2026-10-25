@@ -1,0 +1,11 @@
+::: {#exr-load-tensor}
+
+#### The digits as a tensor
+
+Load the 1,797 digits from [`data/optdigits-test.csv`](data/optdigits-test.csv),
+the local copy of the [UCI data](https://archive.ics.uci.edu/dataset/80) [@alpaydin1998optdigits] that the course overview uses.
+Put their pixels into one PyTorch [tensor](#def-tensor) that holds each image as an 8 by 8 grid,
+and their labels into another.
+What is the first tensor's shape?
+
+:::

@@ -1,0 +1,9 @@
+::: {#exr-average-digit}
+
+#### The average image of each digit
+
+Compute the average image of each digit, 0 to 9,
+as one [tensor](#def-tensor) of shape (10, 8, 8),
+and draw the ten averages.
+
+:::

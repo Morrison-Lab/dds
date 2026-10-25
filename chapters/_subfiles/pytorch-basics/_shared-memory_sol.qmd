@@ -1,0 +1,23 @@
+::: {#sol-shared-memory}
+
+```{python}
+#| code-fold: show
+shared_array = pixels.copy()
+shared = torch.from_numpy(shared_array)
+shared[0, 0] = 99
+
+copied_array = pixels.copy()
+copied = torch.tensor(copied_array)
+copied[0, 0] = 99
+
+print(pixels[0, 0], shared_array[0, 0], copied_array[0, 0])
+```
+
+The [tensor](#def-tensor) from `torch.from_numpy` uses the array's own memory,
+so changing the tensor changed the array, from `r py$pixels[1, 1]` to `r py$shared_array[1, 1]`.
+`torch.tensor` copies the numbers, so its array kept `r py$copied_array[1, 1]`.
+Sharing saves time and memory on large data,
+at the cost of a change in one place showing up in the other.
+The tensor method `.numpy()` shares memory the same way, in the other direction.
+
+:::

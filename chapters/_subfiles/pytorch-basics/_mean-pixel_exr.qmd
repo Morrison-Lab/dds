@@ -1,0 +1,8 @@
+::: {#exr-mean-pixel}
+
+#### The average pixel
+
+Find the average of the 64 pixels of the first image with the [tensor](#def-tensor) method `.mean()`.
+What goes wrong, and how can it be fixed?
+
+:::

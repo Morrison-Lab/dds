@@ -1,0 +1,4 @@
+::: {.reading}
+PyTorch's [tensors tutorial](https://docs.pytorch.org/tutorials/beginner/basics/tensorqs_tutorial.html) shows more ways to make, index and combine tensors.
+Its notes on [broadcasting](https://docs.pytorch.org/docs/stable/notes/broadcasting.html) give the rules for an operation on two tensors of different shapes.
+:::

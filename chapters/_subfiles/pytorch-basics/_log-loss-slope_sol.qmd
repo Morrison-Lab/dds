@@ -1,0 +1,53 @@
+::: {#sol-log-loss-slope}
+
+Write $\obsloss{i}$ for image $i$'s [log loss](https://morrison-lab.github.io/lds/chapters/logistic-regression.html#def-log-loss),
+$\obsloss{i} = -\outvar_i \log \hprob_i - (1 - \outvar_i) \log (1 - \hprob_i)$.
+Its derivative with respect to $\hprob_i$ is
+
+$$
+\derivf{\obsloss{i}}{\hprob_i} = -\frac{\outvar_i}{\hprob_i} + \frac{1 - \outvar_i}{1 - \hprob_i}.
+$$
+
+Since $\hprob_i = \sigmoidf{\predvar_i - \param}$,
+the chain rule and the derivative of the logistic function give
+
+$$
+\begin{aligned}
+\derivf{\hprob_i}{\param}
+&= \sigmoid'(\predvar_i - \param) \cdot \derivf{}{\param} (\predvar_i - \param) \\
+&= \hprob_i (1 - \hprob_i) \cdot (-1) \\
+&= -\hprob_i (1 - \hprob_i).
+\end{aligned}
+$$
+
+Multiplying the two,
+
+$$
+\begin{aligned}
+\derivf{\obsloss{i}}{\param}
+&= \derivf{\obsloss{i}}{\hprob_i} \cdot \derivf{\hprob_i}{\param} \\
+&= \paren{-\frac{\outvar_i}{\hprob_i} + \frac{1 - \outvar_i}{1 - \hprob_i}} \cdot \paren{-\hprob_i (1 - \hprob_i)} \\
+&= \outvar_i (1 - \hprob_i) - (1 - \outvar_i) \hprob_i \\
+&= \outvar_i - \outvar_i \hprob_i - \hprob_i + \outvar_i \hprob_i \\
+&= \outvar_i - \hprob_i.
+\end{aligned}
+$$
+
+$\hR$ is the mean of the $\obsloss{i}$, so its derivative is the mean of theirs:
+
+$$
+\derivf{\hR}{\param} = \frac{1}{\nobs} \sumin (\outvar_i - \hprob_i).
+$$
+
+```{python}
+#| code-fold: show
+x_np, y_np = ink_01.numpy(), is_one.numpy()
+p_np = 1 / (1 + np.exp(-(x_np - 5)))
+slope_by_hand = np.mean(y_np - p_np)
+print(slope_by_hand)
+```
+
+At $\param = 5$ the slope is `r sprintf("%.4f", py$slope_by_hand)`.
+It is negative, so raising the cutoff from 5 lowers the log loss.
+
+:::

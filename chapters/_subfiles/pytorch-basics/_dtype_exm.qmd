@@ -1,0 +1,14 @@
+::: {#exm-dtype}
+
+#### Two data types for one image
+
+```{python}
+#| code-fold: show
+print(images[0, 3, 4], images[0, 3, 4].float())
+```
+
+In @sol-mean-pixel, the first image is `torch.int64` as loaded and `torch.float32` after `.float()`.
+The same pixel prints as `0` in the first and `0.` in the second:
+the values are equal, and only the kind of number storing them differs.
+
+:::

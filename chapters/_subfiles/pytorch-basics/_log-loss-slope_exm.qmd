@@ -1,0 +1,18 @@
+::: {#exm-log-loss-slope}
+
+#### The share of 1s against the average probability
+
+```{python}
+#| code-fold: show
+share_of_ones = np.mean(y_np)
+mean_prob_at_5 = np.mean(p_np)
+print(share_of_ones, mean_prob_at_5, share_of_ones - mean_prob_at_5)
+```
+
+By @thm-log-loss-slope, the slope is the share of 1s among the images minus the average probability the rule gives them.
+The 1s make up a share of `r sprintf("%.3f", py$share_of_ones)` of the `r py$n_01` images,
+and at $\param = 5$ the rule's average probability of a 1 is `r sprintf("%.3f", py$mean_prob_at_5)`.
+The difference, `r sprintf("%.4f", py$share_of_ones - py$mean_prob_at_5)`, is the slope of @sol-log-loss-slope.
+The slope is 0 at the cutoff where the average probability equals the share of 1s.
+
+:::

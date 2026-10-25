@@ -1,0 +1,13 @@
+::: {#exr-log-loss-slope}
+
+#### The slope of the log loss
+
+Find the derivative $\derivf{\hR}{\param}$ of the mean [log loss](https://morrison-lab.github.io/lds/chapters/logistic-regression.html#def-log-loss) with respect to the cutoff,
+and compute it at $\param = 5$ with NumPy.
+
+::: {.callout-tip}
+#### Hint
+The [logistic function](https://morrison-lab.github.io/lds/chapters/logistic-regression.html#exm-logistic-function) has derivative $\sigmoid'(z) = \sigmoidf{z}\paren{1 - \sigmoidf{z}}$ ([lds](https://morrison-lab.github.io/lds/chapters/logistic-regression.html#thm-logistic-derivative)).
+:::
+
+:::

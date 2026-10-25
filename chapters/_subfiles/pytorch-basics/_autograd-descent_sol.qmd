@@ -1,0 +1,30 @@
+::: {#sol-autograd-descent}
+
+```{python}
+#| code-fold: show
+learning_rate = 4.0
+theta = torch.tensor(0.0, dtype=torch.float64, requires_grad=True)
+for step in range(100):
+    (slope,) = torch.autograd.grad(mean_log_loss(theta), theta)
+    with torch.no_grad():
+        theta -= learning_rate * slope
+theta_descent = theta.item()
+
+cutoffs = np.arange(0, 16.005, 0.01)
+with torch.no_grad():
+    grid_loss = [mean_log_loss(torch.tensor(c)).item() for c in cutoffs]
+theta_grid = cutoffs[np.argmin(grid_loss)]
+print(theta_descent, slope.item(), theta_grid)
+```
+
+Gradient descent ends at $\param$ = `r sprintf("%.4f", py$theta_descent)`,
+where the slope is `r format(py$slope$item(), digits = 2)`,
+and the grid's lowest point is at `r sprintf("%.2f", py$theta_grid)`,
+the cutoff found in [the review's solution](ml-review.qmd#sol-smooth-loss).
+The two differ by `r sprintf("%.4f", abs(py$theta_descent - py$theta_grid))`, less than the grid's spacing of 0.01.
+The update runs inside `torch.no_grad()`,
+which tells PyTorch not to record it:
+the step is a change to $\param$, not part of the loss,
+and PyTorch refuses an untracked in-place change to a [tensor](#def-tensor) made with `requires_grad=True`.
+
+:::
