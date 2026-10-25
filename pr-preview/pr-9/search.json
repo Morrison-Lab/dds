@@ -1,0 +1,526 @@
+[
+  {
+    "objectID": "chapters/ml-review.html",
+    "href": "chapters/ml-review.html",
+    "title": "Machine Learning Review",
+    "section": "",
+    "text": "Show code# The Python chunks on this page import these; reticulate provisions them.\n# Attaching reticulate gives the inline R its `py` object.\nlibrary(reticulate)\npy_require(c(\"numpy\", \"pandas\", \"matplotlib\"))",
+    "crumbs": [
+      "Home",
+      "Notes",
+      "Machine Learning Review"
+    ]
+  },
+  {
+    "objectID": "chapters/ml-review.html#plan-for-this-lecture",
+    "href": "chapters/ml-review.html#plan-for-this-lecture",
+    "title": "Machine Learning Review",
+    "section": "\n1.1 Plan for this lecture",
+    "text": "1.1 Plan for this lecture\nDeep learning reuses the pieces of supervised learning from DATA 371 and DATA 471, which lds covers in full. This lecture reviews three of them on the handwritten digits from the course overview, then shows where each one reappears in deep learning:\n\nthe parts of a learning problem: a set of candidate rules, the parameters that pick one out, and a loss function;\nwhy models are trained on a smooth loss rather than on their error rate;\nwhy a model is judged on data it was not fit to.",
+    "crumbs": [
+      "Home",
+      "Notes",
+      "Machine Learning Review"
+    ]
+  },
+  {
+    "objectID": "chapters/ml-review.html#the-digits-again",
+    "href": "chapters/ml-review.html#the-digits-again",
+    "title": "Machine Learning Review",
+    "section": "\n1.2 The digits again",
+    "text": "1.2 The digits again\nThe exercises here use the 1,797 handwritten digits that the course overview loads from the UCI Machine Learning Repository [1], from the same local copy, data/optdigits-test.csv. They also use two of its features, each an average of an 8 by 8 image’s pixels, with rows and columns counted from 0:\n\n\ncenter ink, over rows 2 to 5 and columns 3 and 4;\n\nleft ink, over rows 2 to 5 and columns 0 to 2.\n\n\nShow codeimport numpy as np\nimport pandas as pd\nimport matplotlib.pyplot as plt\n\ndigits = pd.read_csv(\"data/optdigits-test.csv\", header=None)\npixels = digits.iloc[:, :64].to_numpy()\nlabels = digits[64].to_numpy()\nimages = pixels.reshape(-1, 8, 8)\n\ncenter_ink = images[:, 2:6, 3:5].mean(axis=(1, 2))\nleft_ink = images[:, 2:6, 0:3].mean(axis=(1, 2))\nprint(images.shape, center_ink[:5], left_ink[:5])\n\n(1797, 8, 8) [ 0.375 15.875 11.375  8.25   9.125] [5.16666667 2.25       3.58333333 0.41666667 4.        ]",
+    "crumbs": [
+      "Home",
+      "Notes",
+      "Machine Learning Review"
+    ]
+  },
+  {
+    "objectID": "chapters/ml-review.html#candidate-rules-and-their-parameter",
+    "href": "chapters/ml-review.html#candidate-rules-and-their-parameter",
+    "title": "Machine Learning Review",
+    "section": "\n2.1 Candidate rules and their parameter",
+    "text": "2.1 Candidate rules and their parameter\n\n\n\n\n\n\nExrExercise 1 (What the 0-or-1 rule chose among)\n\n\n\n\n\n\nExercise 1 (What the 0-or-1 rule chose among) The course overview’s rule for 0 or 1 calls an image a 1 when its center ink is above a cutoff, and found its cutoff by trying every value from 0 to 16 in steps of 0.5. What set of rules did that search choose among?\n\n\n\n\n\n\n\n\n\n\nSolutionSolution 1\n\n\n\n\n\n\nSolution 1. Every rule of the form “a 1 when the center ink is above \\(\\param\\), and a 0 otherwise”, one rule for each number \\(\\param\\). The number \\(\\param\\) that picks one rule out of this set is the rule’s one parameter. A deep network picks one function out of a much larger set, with many parameters instead of one.",
+    "crumbs": [
+      "Home",
+      "Notes",
+      "Machine Learning Review"
+    ]
+  },
+  {
+    "objectID": "chapters/ml-review.html#the-loss",
+    "href": "chapters/ml-review.html#the-loss",
+    "title": "Machine Learning Review",
+    "section": "\n2.2 The loss",
+    "text": "2.2 The loss\n\n\n\n\n\n\nExrExercise 2 (How the 0-or-1 rule chose)\n\n\n\n\n\n\nExercise 2 (How the 0-or-1 rule chose) By what criterion did the search of Exercise 1 pick one cutoff over another?\n\n\n\n\n\n\n\n\n\n\nSolutionSolution 2\n\n\n\n\n\n\nSolution 2. It kept the cutoff that got the fewest images wrong. Counting mistakes uses the 0-1 loss function: 1 for a wrong label and 0 for a right one. Its average over the images is the rule’s error rate, which is the rule’s empirical risk under that loss. Choosing the parameter with the lowest empirical risk is empirical risk minimization, and deep networks are fit the same way.",
+    "crumbs": [
+      "Home",
+      "Notes",
+      "Machine Learning Review"
+    ]
+  },
+  {
+    "objectID": "chapters/ml-review.html#the-error-rate",
+    "href": "chapters/ml-review.html#the-error-rate",
+    "title": "Machine Learning Review",
+    "section": "\n3.1 The error rate",
+    "text": "3.1 The error rate\n\n\n\n\n\n\nExrExercise 3 (The error rate against the cutoff)\n\n\n\n\n\n\nExercise 3 (The error rate against the cutoff) Among the 0s and 1s, plot the error rate of the 0-or-1 rule against its cutoff \\(\\param\\), for every \\(\\param\\) from 0 to 16 in steps of 0.01.\n\n\n\n\n\n\n\n\n\n\nSolutionSolution 3\n\n\n\n\n\n\nSolution 3. \n\n\n\n\n\n\nShow codeis_01 = (labels == 0) | (labels == 1)\nink_01 = center_ink[is_01]\nis_one = labels[is_01] == 1\n\ncutoffs = np.arange(0, 16.005, 0.01)\nerror_rate = np.array([np.mean((ink_01 &gt; c) != is_one) for c in cutoffs])\n\nfig, ax = plt.subplots(figsize=(6, 3), layout=\"constrained\")\nax.plot(cutoffs, error_rate)\nax.set_xlabel(r\"cutoff $\\theta$ on center ink\")\nax.set_ylabel(\"error rate\")\nplt.show()\n\n\nFigure 1: The error rate of the 0-or-1 rule among the 360 images of 0s and 1s, against the cutoff.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nExrExercise 4 (Fitting by following the error rate)\n\n\n\n\n\n\nExercise 4 (Fitting by following the error rate) Could gradient descent find the best cutoff by following the slope of the curve in Figure 1?\n\n\n\n\n\n\n\n\n\n\nSolutionSolution 4\n\n\n\n\n\n\nSolution 4. \n\nShow codelowest = error_rate == error_rate.min()\nbest_cutoffs = cutoffs[lowest]\n# A new stretch of lowest error starts wherever `lowest` turns from False to True.\nn_stretches = np.sum(np.diff(lowest.astype(int)) == 1) + int(lowest[0])\nprint(error_rate.min(), best_cutoffs.min(), best_cutoffs.max(), n_stretches)\n\n0.022222222222222223 5.63 6.49 3\n\nShow codeprint(len(np.unique(ink_01)))\n\n99\n\n\nNo. The curve in Figure 1 is a staircase. The error rate changes only where \\(\\param\\) crosses one of the 99 values that the center ink takes, and it is flat everywhere in between, so its slope is 0 wherever the slope exists. Gradient descent would never move.\nThe grid of cutoffs in steps of 0.01 reaches the lowest error rate, 2.2% (8 of the 360 images), on 3 separate stretches between 5.63 and 6.49, and it found them by trying each cutoff in turn. That works for one parameter, but a network has thousands of weights, and trying every combination of their values is out of reach.",
+    "crumbs": [
+      "Home",
+      "Notes",
+      "Machine Learning Review"
+    ]
+  },
+  {
+    "objectID": "chapters/ml-review.html#a-smooth-loss",
+    "href": "chapters/ml-review.html#a-smooth-loss",
+    "title": "Machine Learning Review",
+    "section": "\n3.2 A smooth loss",
+    "text": "3.2 A smooth loss\n\n\n\n\n\n\nExrExercise 5 (The log loss against the cutoff)\n\n\n\n\n\n\nExercise 5 (The log loss against the cutoff) Swap the 0-or-1 rule for a soft version, which gives each image a probability of being a 1:\n\\[\\hprob = \\sigmoidf{\\predvar - \\param},\\]\nwhere\n\n\n\\(\\predvar\\) is the image’s center ink,\n\n\\(\\param\\) is the cutoff, the rule’s one parameter,\n\n\\(\\sigmoid\\) is the logistic function, \\(\\sigmoidf{z} = 1 / (1 + \\expf{-z})\\),\nand \\(\\hprob\\) is the probability the rule gives that the image is a 1.\n\nAmong the 0s and 1s, plot the mean log loss of this rule against \\(\\param\\), over the cutoffs of Exercise 3.\n\n\n\n\n\n\n\n\n\n\nSolutionSolution 5\n\n\n\n\n\n\nSolution 5. \n\n\n\n\n\n\nShow codedef mean_log_loss(c):\n    \"\"\"Mean log loss of the soft 0-or-1 rule with cutoff `c`.\"\"\"\n    p = 1 / (1 + np.exp(-(ink_01 - c)))\n    return -np.mean(np.where(is_one, np.log(p), np.log(1 - p)))\n\nlog_loss = np.array([mean_log_loss(c) for c in cutoffs])\n\nfig, ax = plt.subplots(figsize=(6, 3), layout=\"constrained\")\nax.plot(cutoffs, log_loss)\nax.set_xlabel(r\"cutoff $\\theta$ on center ink\")\nax.set_ylabel(\"mean log loss\")\nplt.show()\n\n\nFigure 2: The mean log loss of the soft 0-or-1 rule among the images of 0s and 1s, against the cutoff.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nExrExercise 6 (Fitting by following the log loss)\n\n\n\n\n\n\nExercise 6 (Fitting by following the log loss) Could gradient descent find the best cutoff by following the slope of the curve in Figure 2?\n\n\n\n\n\n\n\n\n\n\nSolutionSolution 6\n\n\n\n\n\n\nSolution 6. \n\nShow codec_log = cutoffs[log_loss.argmin()]\nerror_at_c_log = np.mean((ink_01 &gt; c_log) != is_one)\nprint(c_log, log_loss.min(), error_at_c_log)\n\n6.6000000000000005 0.053815807670509946 0.030555555555555555\n\n\nYes. The curve in Figure 2 is smooth, with one lowest point. Its slope is nonzero at every other cutoff, so a step against the slope always goes downhill, and gradient descent has a direction to follow.\nThe lowest log loss is at \\(\\param\\) = 6.60. The hard rule with that cutoff gets 11 of the 360 images of 0s and 1s wrong, against 8 for the best cutoffs in Solution 4. Minimizing the log loss does not minimize the error rate, but, unlike the error rate, it can be minimized by gradient descent.\nDeep networks are trained the same way: on a smooth loss such as the log loss, which is also called cross-entropy, while their error rate or accuracy is what gets reported.",
+    "crumbs": [
+      "Home",
+      "Notes",
+      "Machine Learning Review"
+    ]
+  },
+  {
+    "objectID": "chapters/ml-review.html#held-out-data",
+    "href": "chapters/ml-review.html#held-out-data",
+    "title": "Machine Learning Review",
+    "section": "\n4.1 Held-out data",
+    "text": "4.1 Held-out data\n\n\n\n\n\n\nExrExercise 7 (The digit-average rule on new images)\n\n\n\n\n\n\nExercise 7 (The digit-average rule on new images) The course overview’s digit-average rule labels an image with the digit whose average (center ink, left ink) is nearest, and it was scored on the same images the averages came from. Split the 1,797 images at random into two halves, a training set and a test set. Compute the digit averages from the training set only. What share of each set does the rule get right?\n\n\n\n\n\n\n\n\n\n\nSolutionSolution 7\n\n\n\n\n\n\nSolution 7. \n\nShow coderng = np.random.default_rng(481)\norder = rng.permutation(len(labels))\ntrain, test = order[: len(labels) // 2], order[len(labels) // 2 :]\nhand_features = np.column_stack([center_ink, left_ink])\n\ndef accuracy(predicted, actual):\n    return np.mean(predicted == actual)\n\ndef nearest(points, references):\n    \"\"\"Index of the nearest row of `references` to each row of `points`.\"\"\"\n    distances = ((points[:, None, :] - references[None, :, :]) ** 2).sum(axis=2)\n    return distances.argmin(axis=1)\n\nmeans = np.array(\n    [hand_features[train][labels[train] == k].mean(axis=0) for k in range(10)]\n)\nacc_mean_train = accuracy(nearest(hand_features[train], means), labels[train])\nacc_mean_test = accuracy(nearest(hand_features[test], means), labels[test])\nprint(len(train), len(test), round(acc_mean_train, 3), round(acc_mean_test, 3))\n\n898 899 0.468 0.485\n\n\nThe rule gets 46.8% of the training set right and 48.5% of the test set. The two shares are close: ten digit averages, twenty numbers in all, leave the rule little room to fit the training set’s quirks, so its training error says roughly what its test error will be. The test share came out a little higher only by the luck of this split; another random split could put it a little lower.\n\n\n\n\n\n\n\n\n\n\nExrExercise 8 (A rule that memorizes)\n\n\n\n\n\n\nExercise 8 (A rule that memorizes) Now make the rule far more flexible: label each image with the digit of the training image nearest to it in (center ink, left ink). This is one-nearest-neighbor classification. Using the split from Solution 7, what share of the training set and of the test set does it get right?\n\n\n\n\n\n\n\n\n\n\nSolutionSolution 8\n\n\n\n\n\n\nSolution 8. \n\nShow codetrain_features = hand_features[train]\nacc_nn_train = accuracy(\n    labels[train][nearest(train_features, train_features)], labels[train]\n)\nacc_nn_test = accuracy(\n    labels[train][nearest(hand_features[test], train_features)], labels[test]\n)\nprint(round(acc_nn_train, 3), round(acc_nn_test, 3))\n\n0.964 0.415\n\n\nThe rule gets 96.4% of the training set right, but only 41.5% of the test set, worse than the 48.5% of the digit-average rule in Solution 7. On the training set, each image’s nearest neighbor is usually itself, so the rule mostly recalls labels it has already seen. It falls short of 100% only where images of different digits share both feature values.\nThis rule has learned the training images themselves rather than what the digits look like, which lds calls overfitting. Deep networks are flexible enough to memorize their training sets too, even when the labels are assigned at random [2], so these notes judge every network on images it was not trained on.",
+    "crumbs": [
+      "Home",
+      "Notes",
+      "Machine Learning Review"
+    ]
+  },
+  {
+    "objectID": "chapters/ml-review.html#from-one-cutoff-to-a-deep-network",
+    "href": "chapters/ml-review.html#from-one-cutoff-to-a-deep-network",
+    "title": "Machine Learning Review",
+    "section": "\n5.1 From one cutoff to a deep network",
+    "text": "5.1 From one cutoff to a deep network\n\n\n\n\n\n\n\n\nTable 1: Each piece of a learning problem on this page, and its counterpart in a deep network.\n\n\n\nPiece\nOn this page\nIn a deep network\n\n\n\nCandidate rules\nCutoff rules on one feature\n\nNetworks of one architecture\n\n\nParameters\nThe cutoff \\(\\param\\)\n\nThe weights of every layer\n\n\nTraining loss\n\nLog loss of the soft rule\n\nCross-entropy, the log loss of a softmax output\n\n\nFitting\nA search over a grid of cutoffs\n\nStochastic gradient descent on minibatches of the loss\n\n\nJudging\n\nAccuracy of the digit-average and nearest-neighbor rules on a held-out test set\n\nAccuracy on held-out images\n\n\n\n\n\n\n\n\n\nThe math these pieces rest on, derivatives and gradients, matrices, and probability, is reviewed in lds’s math prerequisites and probability chapters.\n\n\n\n\n\n\n\nReadingRead\n\n\n\n\n\nChapter 5 of Deep Learning, Machine Learning Basics, reviews these pieces at more length [3, Ch. 5].",
+    "crumbs": [
+      "Home",
+      "Notes",
+      "Machine Learning Review"
+    ]
+  },
+  {
+    "objectID": "chapters/syllabus.html",
+    "href": "chapters/syllabus.html",
+    "title": "WWU CSCI 481 (Deep Learning) Syllabus",
+    "section": "",
+    "text": "Note\n\n\n\nThis is the Spring 2027 syllabus. Items marked TBD (to be determined) have not been set yet. The syllabus is subject to change; I will announce in class any change made after the first day of class.",
+    "crumbs": [
+      "Home",
+      "WWU CSCI 481 (Deep Learning) Syllabus"
+    ]
+  },
+  {
+    "objectID": "chapters/syllabus.html#course-information",
+    "href": "chapters/syllabus.html#course-information",
+    "title": "WWU CSCI 481 (Deep Learning) Syllabus",
+    "section": "Course Information",
+    "text": "Course Information\n\nNumber\n\nCSCI 481\n\nName\n\nDeep Learning\n\nWebsite\n\nDeep Learning (dds)\n\nTerm\n\nSpring 2027\n\nCredits\n\n4\n\nTime\n\nMonday, Tuesday, Wednesday, and Friday, 9:00–9:50am\n\nPlace\n\nCF 420\n\nOffice hours\n\nTBD, in my office (CF 463) unless otherwise noted\n\nPrerequisites\n\nDATA 371 or DATA 471 (Machine Learning). The machine learning these notes assume is covered in Machine Learning for Data Science (lds), and the mathematics, probability, and statistics behind it in Math for Data Science (mds), Probability for Data Science (pds), and Statistics for Data Science (sds).\n\nCRNs (course reference numbers)\n\n23277",
+    "crumbs": [
+      "Home",
+      "WWU CSCI 481 (Deep Learning) Syllabus"
+    ]
+  },
+  {
+    "objectID": "chapters/syllabus.html#contact-information",
+    "href": "chapters/syllabus.html#contact-information",
+    "title": "WWU CSCI 481 (Deep Learning) Syllabus",
+    "section": "Contact Information",
+    "text": "Contact Information\n\nName\n\nEzra Morrison\n\nOffice\n\nCF 463\n\nEmail\n\nezra.morrison@wwu.edu, for confidential matters only\n\n\nAll other course correspondence goes through Canvas; see Communication.",
+    "crumbs": [
+      "Home",
+      "WWU CSCI 481 (Deep Learning) Syllabus"
+    ]
+  },
+  {
+    "objectID": "chapters/syllabus.html#course-description",
+    "href": "chapters/syllabus.html#course-description",
+    "title": "WWU CSCI 481 (Deep Learning) Syllabus",
+    "section": "Course Description",
+    "text": "Course Description\nCovers the fundamentals of deep learning, including important models, such as deep feedforward, recurrent, convolutional and transformer neural networks, and algorithms and considerations for training them. The application of deep learning to domains such as natural language, speech and vision will also be discussed.",
+    "crumbs": [
+      "Home",
+      "WWU CSCI 481 (Deep Learning) Syllabus"
+    ]
+  },
+  {
+    "objectID": "chapters/syllabus.html#course-outcomes",
+    "href": "chapters/syllabus.html#course-outcomes",
+    "title": "WWU CSCI 481 (Deep Learning) Syllabus",
+    "section": "Course Outcomes",
+    "text": "Course Outcomes\nOn completion of CSCI 481, students will demonstrate:\n\nAn understanding of machine learning fundamentals.\nA thorough understanding of deep feedforward neural networks.\nAn understanding of deep learning optimization and regularization.\nAn understanding of recurrent and convolutional neural networks.\nThe ability to implement deep learning models using modern toolkits.\nThe ability to conduct deep learning experiments.",
+    "crumbs": [
+      "Home",
+      "WWU CSCI 481 (Deep Learning) Syllabus"
+    ]
+  },
+  {
+    "objectID": "chapters/syllabus.html#textbooks-and-readings",
+    "href": "chapters/syllabus.html#textbooks-and-readings",
+    "title": "WWU CSCI 481 (Deep Learning) Syllabus",
+    "section": "Textbooks and readings",
+    "text": "Textbooks and readings\nThere are no required textbooks for the course, but several books and notes are recommended:\n\nDeep Learning (dds), the course notes for CSCI 481.\nDeep Learning [1], the main reference text. The book can be viewed at no cost from the book’s webpage.\nProbabilistic Machine Learning: An Introduction [2], ISBN 9780262046824. The author offers a free PDF on the book’s webpage.\nMachine Learning with PyTorch and Scikit-Learn [3], ISBN 9781801819312. Code examples and Jupyter notebooks are available from the book’s GitHub repository.\nMachine Learning for Data Science (lds), the notes for the prerequisite machine learning course.\n\nThe class will not follow one book closely; use these books and notes as references.",
+    "crumbs": [
+      "Home",
+      "WWU CSCI 481 (Deep Learning) Syllabus"
+    ]
+  },
+  {
+    "objectID": "chapters/syllabus.html#materials",
+    "href": "chapters/syllabus.html#materials",
+    "title": "WWU CSCI 481 (Deep Learning) Syllabus",
+    "section": "Materials",
+    "text": "Materials\nI will distribute handouts and homework on Canvas. The lecture notes are on this site.",
+    "crumbs": [
+      "Home",
+      "WWU CSCI 481 (Deep Learning) Syllabus"
+    ]
+  },
+  {
+    "objectID": "chapters/syllabus.html#course-agenda",
+    "href": "chapters/syllabus.html#course-agenda",
+    "title": "WWU CSCI 481 (Deep Learning) Syllabus",
+    "section": "Course Agenda",
+    "text": "Course Agenda\nThe course calendar gives the week-by-week agenda, including all deadlines.",
+    "crumbs": [
+      "Home",
+      "WWU CSCI 481 (Deep Learning) Syllabus"
+    ]
+  },
+  {
+    "objectID": "chapters/syllabus.html#communication",
+    "href": "chapters/syllabus.html#communication",
+    "title": "WWU CSCI 481 (Deep Learning) Syllabus",
+    "section": "Communication",
+    "text": "Communication\nOutbound. I will send official class announcements through Canvas Announcements. Please set Canvas to notify you of them right away, so you do not miss important information.\nInbound. All course-related correspondence goes through Canvas. Nearly all questions or comments from you to me and/or the grader should be posted on the official class discussion forum, which is Canvas Discussions. Anything that should not be posted there, such as a grading question or objection, goes in a Canvas message to me and the grader.\nThe only class-related matters that should not go through Canvas at all are those containing confidential information (e.g., information about your health). Communications containing confidential information should be sent to my WWU email address, which is the one exception to using Canvas.",
+    "crumbs": [
+      "Home",
+      "WWU CSCI 481 (Deep Learning) Syllabus"
+    ]
+  },
+  {
+    "objectID": "chapters/syllabus.html#questions-and-corrections",
+    "href": "chapters/syllabus.html#questions-and-corrections",
+    "title": "WWU CSCI 481 (Deep Learning) Syllabus",
+    "section": "Questions and Corrections",
+    "text": "Questions and Corrections\nIf something in the course materials seems wrong, ask. The course materials include the notes, handouts, assignments, and anything I say or show in class, including my slides. I will make mistakes, and so will the other authors of the materials.\nDo not assume that you are the confused one when the material might be wrong. Richard Feynman told a room of science teachers that “science is the belief in the ignorance of experts” [4], and in this course I am (supposedly) one of the experts. Ask your question first, in class or outside it, and we can talk through your reasoning together. If you are right, we all learn something and I fix the material. If you are not, we can jointly find out where the confusion started.",
+    "crumbs": [
+      "Home",
+      "WWU CSCI 481 (Deep Learning) Syllabus"
+    ]
+  },
+  {
+    "objectID": "chapters/syllabus.html#health-precautions",
+    "href": "chapters/syllabus.html#health-precautions",
+    "title": "WWU CSCI 481 (Deep Learning) Syllabus",
+    "section": "Health Precautions",
+    "text": "Health Precautions\nThe health and safety of everyone in the class is a top priority. In short: if you are sick with something that could be communicable, let me know ahead of time and I will try to arrange a remote participation option, so you can stay home and not expose others needlessly. Please contact me if you have questions, concerns or suggestions.",
+    "crumbs": [
+      "Home",
+      "WWU CSCI 481 (Deep Learning) Syllabus"
+    ]
+  },
+  {
+    "objectID": "chapters/syllabus.html#software",
+    "href": "chapters/syllabus.html#software",
+    "title": "WWU CSCI 481 (Deep Learning) Syllabus",
+    "section": "Software",
+    "text": "Software\nHomework is written in Python, using PyTorch. You will install PyTorch in a Python virtual environment. Expect to implement core methods yourself, first with NumPy and then with PyTorch’s building blocks, before reaching for higher-level libraries.",
+    "crumbs": [
+      "Home",
+      "WWU CSCI 481 (Deep Learning) Syllabus"
+    ]
+  },
+  {
+    "objectID": "chapters/syllabus.html#student-centered-teaching",
+    "href": "chapters/syllabus.html#student-centered-teaching",
+    "title": "WWU CSCI 481 (Deep Learning) Syllabus",
+    "section": "Student-Centered Teaching",
+    "text": "Student-Centered Teaching\nStudent-centered teaching methodologies, which prioritize student learning outcomes over instructor output (“more doing, less listening”), have been shown to be vastly more effective than traditional lectures. As Brian Hutchinson highlights from wearable-sensor studies of electrodermal activity [5] and his lecture presentation [6], traditional passive lectures produce low sympathetic nervous system arousal and attention—comparable to watching television and sleeping. Active problem-solving, formative assessment, and peer discussion elevate engagement and learning.\nFurthermore, cognitive science shows that “the less effort it takes to learn something, the less durable that learning is” [7]. This course is intentionally challenging for the right reasons, backed by a growth mindset: talent and mathematical ability can be developed through focused effort, challenges expand your abilities, and mistakes are essential opportunities to grow. Research confirms that an instructor’s growth-mindset beliefs predict student achievement and motivation even after accounting for other faculty characteristics [8].\nEach lecture is built from exercises: I pose a question, you work on it alone or in a small group, and then we discuss solutions together.\n\nABCD Cards\nOn the first day of class, I will give each student an ABCD card, which you will use to vote on answers to questions in class. They work like electronic clickers, but they are free and need no batteries. I use them because they allow both you and me to quickly assess how well you understand the material, so that I can adjust what I emphasize in class and you can adjust what you study out of class to improve learning outcomes. Please bring this card to class each day.",
+    "crumbs": [
+      "Home",
+      "WWU CSCI 481 (Deep Learning) Syllabus"
+    ]
+  },
+  {
+    "objectID": "chapters/syllabus.html#grading",
+    "href": "chapters/syllabus.html#grading",
+    "title": "WWU CSCI 481 (Deep Learning) Syllabus",
+    "section": "Grading",
+    "text": "Grading\nCourse grades are letter grades, based on:\n\n\n\n\n\n\n\nCategory\nWeight\n\n\n\n\nFive homework assignments (5% each)\n25%\n\n\nFive homework self-grades (1% each)\n5%\n\n\nThree midterm exams (10%, 30%, 30%)\n70%\n\n\nFinal exam (optional)\nreplaces the midterm average, if higher\n\n\n\nI will assign final letter grades based on the weighted average of assignment scores, by the standard scale:\n\n\n\nCumulative score\nLetter grade\n\n\n\n\n\\(90\\% \\le x\\)\nA range\n\n\n\\(80\\% \\le x &lt; 90\\%\\)\nB range\n\n\n\\(70\\% \\le x &lt; 80\\%\\)\nC range\n\n\n\\(60\\% \\le x &lt; 70\\%\\)\nD range\n\n\n\\(x &lt; 60\\%\\)\nF\n\n\n\n\nHomework\nThe course has five graded homework assignments, as well as additional ungraded exercises and readings. Each homework assignment is worth 5% of your final grade (25% cumulative). Due dates are on the course calendar.\n\n\nHomework Grading\nI will post solutions after each homework submission deadline. You are encouraged to self-grade your homework assignments using the posted solutions. Accurately self-grading each homework is 1% of your grade (5% cumulative). The grader and I will spot-check your self-grading, and you are encouraged to ask for help with self-grading during office hours.\nSubmit your self-graded homework solutions on Canvas one week after I post the solutions. Self-grading should include specific, detailed annotations on each sub-problem, marking:\n\nwhere you made mistakes;\nwhat your mistake was;\nwhat a correct answer would have been.\n\nIn other words, give yourself the feedback that you think an ideal grader would give.\nYou are also welcome to opt out of self-grading, in whole or in part. If you do not complete your self-grading for an assignment by the corresponding deadline, we will assume that you want us to grade it for you.\nAll questions and objections to grading must be submitted in writing, as a private Canvas message to both me and the grader (see Communication).\n\n\nExams\nThe course has three in-class midterm exams, on the dates the course calendar lists. There is also an optional in-person final exam during finals week, at a time TBD. If a midterm’s date changes, I will announce the change at least two weeks before that exam is given.\n\nI will provide a standardized note sheet for each exam.\nAny calculator allowed for the SAT is allowed for the exams.\nMidterms 1, 2 and 3 are worth 10%, 30% and 30% of the course grade.\nI hold a review session before each exam.\n\nThe final exam is entirely optional. If your grade on the final is higher than the average of your three midterm grades, weighted 10 to 30 to 30, I will use your final grade to replace all three of your midterm grades. The final exam can only improve your grade.",
+    "crumbs": [
+      "Home",
+      "WWU CSCI 481 (Deep Learning) Syllabus"
+    ]
+  },
+  {
+    "objectID": "chapters/syllabus.html#deadlines-and-late-work-policy",
+    "href": "chapters/syllabus.html#deadlines-and-late-work-policy",
+    "title": "WWU CSCI 481 (Deep Learning) Syllabus",
+    "section": "Deadlines and Late Work Policy",
+    "text": "Deadlines and Late Work Policy\nPlease refer to the course calendar for the most up-to-date deadlines. I accept no late work. If you miss a deadline or exam due to a medical emergency, please contact me as soon as possible to discuss arrangements. If you know in advance that you will be unable to take an exam at the scheduled time, let me know at least one week before the exam, and we may be able to reschedule it for an earlier day and time.",
+    "crumbs": [
+      "Home",
+      "WWU CSCI 481 (Deep Learning) Syllabus"
+    ]
+  },
+  {
+    "objectID": "chapters/syllabus.html#submitting-your-work",
+    "href": "chapters/syllabus.html#submitting-your-work",
+    "title": "WWU CSCI 481 (Deep Learning) Syllabus",
+    "section": "Submitting Your Work",
+    "text": "Submitting Your Work\nYou will develop and store homework code in Git version control repositories. Specifically, we will use private GitHub repositories under a course GitHub organization (TBD). If you do not yet have a GitHub account, please create one. Be sure to push your final version before the assignment deadline: I will pull the current default branch of the repository at the due time. For an introduction to Git and GitHub, see the Git and GitHub chapter of the Principles of Scientific Computing (psc) notes.",
+    "crumbs": [
+      "Home",
+      "WWU CSCI 481 (Deep Learning) Syllabus"
+    ]
+  },
+  {
+    "objectID": "chapters/syllabus.html#program-guidelines",
+    "href": "chapters/syllabus.html#program-guidelines",
+    "title": "WWU CSCI 481 (Deep Learning) Syllabus",
+    "section": "Program Guidelines",
+    "text": "Program Guidelines\nThe grader and I will grade your programs on three criteria, in this order:\n\ncorrectness;\nclarity;\nefficiency.\n\nCorrectness. A correct program produces the correct output for a given input, and does not produce unintended side effects. Test each component as you introduce it, and try to break your program in testing.\nClarity. The easier it is to read your code, the easier it is to find and remove bugs. Design your program thoughtfully and modularly, and replace two blocks of code that do the same thing with one function called from both places.\nEfficiency. Your programs should be asymptotically efficient. Beyond that, use vectorized tensor operations and take advantage of the optimizations built into the libraries we use.",
+    "crumbs": [
+      "Home",
+      "WWU CSCI 481 (Deep Learning) Syllabus"
+    ]
+  },
+  {
+    "objectID": "chapters/syllabus.html#academic-honesty",
+    "href": "chapters/syllabus.html#academic-honesty",
+    "title": "WWU CSCI 481 (Deep Learning) Syllabus",
+    "section": "Academic Honesty",
+    "text": "Academic Honesty\nAs a future professional, your integrity is crucial. It is your responsibility to read and be familiar with the university’s academic dishonesty policy, found in Appendix D of the Western Washington University Course Catalog.\n\nHomework: you may collaborate freely with your classmates, and you may use AI tools, such as ChatGPT or GitHub Copilot.\nExams: in-class exams are solo. Work alone, without help from anyone else and without AI tools or other devices; the only aids allowed are the provided note sheet and a calculator, as described under Exams.\n\nCheating on an exam will result in failing the course (grade of F), and I will file documentation of the incident with the university. When in doubt, ask the instructor.",
+    "crumbs": [
+      "Home",
+      "WWU CSCI 481 (Deep Learning) Syllabus"
+    ]
+  },
+  {
+    "objectID": "chapters/syllabus.html#writing-to-think",
+    "href": "chapters/syllabus.html#writing-to-think",
+    "title": "WWU CSCI 481 (Deep Learning) Syllabus",
+    "section": "Writing to Think",
+    "text": "Writing to Think\nWhen you are stuck in this course, try putting your question into words in writing. Write it in full sentences, with the numbers or code you used and what you have already tried. In an interview on the 5 Minute Mentor podcast, Leslie Lamport says:\n\nAs someone said, “Writing is nature’s way of showing you how fuzzy your thinking is.” If you think you understand something, and don’t write down your ideas, you only think you’re thinking.\n— Leslie Lamport [9]",
+    "crumbs": [
+      "Home",
+      "WWU CSCI 481 (Deep Learning) Syllabus"
+    ]
+  },
+  {
+    "objectID": "chapters/syllabus.html#student-conduct",
+    "href": "chapters/syllabus.html#student-conduct",
+    "title": "WWU CSCI 481 (Deep Learning) Syllabus",
+    "section": "Student Conduct",
+    "text": "Student Conduct\nI am committed to maintaining an inclusive, supportive, and professional environment in all academic settings, including lectures, labs, and course-related online spaces. I expect students to live up to the Association for Computing Machinery (ACM) Code of Ethics and Professional Conduct.",
+    "crumbs": [
+      "Home",
+      "WWU CSCI 481 (Deep Learning) Syllabus"
+    ]
+  },
+  {
+    "objectID": "chapters/syllabus.html#disabilities",
+    "href": "chapters/syllabus.html#disabilities",
+    "title": "WWU CSCI 481 (Deep Learning) Syllabus",
+    "section": "Disabilities",
+    "text": "Disabilities\nReasonable accommodation for persons with documented disabilities should be established within the first week of class and arranged through Disability Resources for Students: telephone 360-650-3083; email drs@wwu.edu; and on the web at Disability Resources.",
+    "crumbs": [
+      "Home",
+      "WWU CSCI 481 (Deep Learning) Syllabus"
+    ]
+  },
+  {
+    "objectID": "chapters/syllabus.html#other-policies",
+    "href": "chapters/syllabus.html#other-policies",
+    "title": "WWU CSCI 481 (Deep Learning) Syllabus",
+    "section": "Other Policies",
+    "text": "Other Policies\nPlease read Syllabi@WWU for additional, important policies.",
+    "crumbs": [
+      "Home",
+      "WWU CSCI 481 (Deep Learning) Syllabus"
+    ]
+  },
+  {
+    "objectID": "chapters/syllabus.html#references",
+    "href": "chapters/syllabus.html#references",
+    "title": "WWU CSCI 481 (Deep Learning) Syllabus",
+    "section": "References",
+    "text": "References\n\n\n[1] I. Goodfellow, Y. Bengio, and A. Courville, Deep learning. MIT Press, 2016. Available: https://www.deeplearningbook.org/\n\n\n[2] K. P. Murphy, Probabilistic machine learning: An introduction. in Adaptive computation and machine learning. MIT Press, 2022.\n\n\n[3] S. Raschka, Y. (Hayden). Liu, and V. Mirjalili, Machine learning with PyTorch and Scikit-Learn: Develop machine learning and deep learning models with Python. Birmingham–Mumbai: Packt Publishing, 2022.\n\n\n[4] R. P. Feynman, “What is science?” The Physics Teacher, vol. 7, no. 6, pp. 313–320, 1969, doi: 10.1119/1.2351388.\n\n\n[5] M.-Z. Poh, N. C. Swenson, and R. W. Picard, “A wearable sensor for unobtrusive, long-term assessment of electrodermal activity,” IEEE Transactions on Biomedical Engineering, vol. 57, no. 5, pp. 1243–1252, 2010, doi: 10.1109/TBME.2009.2038487.\n\n\n[6] B. Hutchinson, “DATA 471/571: Machine learning.” Western Washington University, 2024.\n\n\n[7] P. C. Brown, H. L. Roediger III, and M. A. McDaniel, Make it stick: The science of successful learning. Cambridge, MA: Belknap Press of Harvard University Press, 2014.\n\n\n[8] E. A. Canning, K. Muenks, D. J. Green, and M. C. Murphy, “STEM faculty who believe ability is fixed have larger racial achievement gaps and inspire less student motivation in their classes,” Science Advances, vol. 5, no. 2, p. eaau4734, 2019, doi: 10.1126/sciadv.aau4734.\n\n\n[9] L. Lamport, “Think and write, with Leslie Lamport.” Interview by Edaena Salinas, 5 Minute Mentor podcast (Mentors.fm), Aug. 2019. Available: https://mentors.fm/2019/08/13/think-and-write-with-leslie-lamport/",
+    "crumbs": [
+      "Home",
+      "WWU CSCI 481 (Deep Learning) Syllabus"
+    ]
+  },
+  {
+    "objectID": "chapters/index.html",
+    "href": "chapters/index.html",
+    "title": "Deep Learning",
+    "section": "",
+    "text": "This website collects the lecture notes for CSCI 481, “Deep Learning”, as taught in Spring Quarter 2027 at Western Washington University by Douglas Ezra Morrison.\nThe course follows the module sequence of Brian Hutchinson’s CSCI 481/581, which he taught from Winter 2021 to Winter 2026.\nCSCI 481 builds on DATA 371/471, Machine Learning. Where these notes use an idea that course covers, such as generalization, gradient descent, or logistic regression, they link to its definition in Machine Learning for Data Science (lds) rather than defining it again.\nThe Calendar lists the topics week by week, and the Syllabus gives the course’s policies. The main reference text is Deep Learning [1], which can be read at no cost on the book’s webpage.\n\n\n\n\n[1] I. Goodfellow, Y. Bengio, and A. Courville, Deep learning. MIT Press, 2016. Available: https://www.deeplearningbook.org/",
+    "crumbs": [
+      "Home"
+    ]
+  },
+  {
+    "objectID": "chapters/index.html#references",
+    "href": "chapters/index.html#references",
+    "title": "Deep Learning",
+    "section": "",
+    "text": "[1] I. Goodfellow, Y. Bengio, and A. Courville, Deep learning. MIT Press, 2016. Available: https://www.deeplearningbook.org/",
+    "crumbs": [
+      "Home"
+    ]
+  },
+  {
+    "objectID": "chapters/calendar.html",
+    "href": "chapters/calendar.html",
+    "title": "Calendar",
+    "section": "",
+    "text": "The topics and dates of future lectures may change.\nSpring quarter runs from Tuesday, March 30 to Friday, June 11, 2027, with finals week from Monday, June 7 to Friday, June 11. Class meets on Mondays, Tuesdays, Wednesdays and Fridays, 9:00–9:50am, in CF 420. There is no class on Monday, May 31, for Memorial Day.\nMondays, Tuesdays and Wednesdays are lectures from these notes, apart from exam days and Memorial Day. Fridays are lab sessions, for working on the homework in class, except on the three Fridays that hold a midterm review.\nHomework is due at 11:59 pm on its due date, always a Friday. Each self-grade is due one week after that homework’s solutions are posted. The self-grade dates below assume the solutions go up at the deadline.\nThe three midterms are in class:\n\nMidterm 1, Monday, April 26: weeks 1 to 4, from the course overview through normalization and residual connections.\nMidterm 2, Monday, May 17: convolutional networks, sequence models, language modeling, attention, and Transformers’ self-attention and positional encoding.\nMidterm 3, Tuesday, June 1: the lectures from Transformer pretraining through running deep learning experiments.\n\nEach midterm covers the lectures since the one before it, and has an in-class review session on the Friday before the exam.\nThe final exam is optional. Its day and time are still to be set (TBD): WWU’s finals schedule sets each exam’s slot from the class’s start time and meeting days. The final’s review session will be held during finals week, at a time TBD.\n\n\n\n\n\n\n\n\n\n\n\n\nMonday\nTuesday\nWednesday\nFriday\n\n\n\n\nWeek 1\nMar 28 – Apr 3\n\nSyllabus\nCourse overview\nMachine learning review (from lds)\nTensors (begun)\nLab session: Homework 1\n\n\nWeek 2\nApr 4 – Apr 10\nTensors and automatic differentiation\nFeedforward networks: layers and activations\nFeedforward networks: output units, losses, representational power\nLab session: Homework 1\n\n\nWeek 3\nApr 11 – Apr 17\nBackpropagation\nOptimization: minibatch stochastic gradient descent, momentum\nOptimization: Adam, learning-rate schedules and warmup, initialization\nLab session: Homework 2\nHomework 1 due\n\n\nWeek 4\nApr 18 – Apr 24\nRegularization: weight decay, early stopping\nRegularization: dropout, data augmentation\nNormalization: batch and layer normalization; residual connections\nMidterm 1 review\nHomework 1 self-grade due\n\n\nWeek 5\nApr 25 – May 1\nMidterm 1\nConvolutional networks: convolution arithmetic\nConvolutional networks: pooling, classic architectures\nLab session: Homework 2\n\n\nWeek 6\nMay 2 – May 8\nConvolutional networks: transfer learning\nSequence models: embeddings, recurrent networks\nSequence models: LSTMs and GRUs\nLab session: Homework 3\nHomework 2 due\n\n\nWeek 7\nMay 9 – May 15\nLanguage modeling\nAttention: encoder-decoder attention\nTransformers: self-attention, positional encoding\nMidterm 2 review\nHomework 2 self-grade due\n\n\nWeek 8\nMay 16 – May 22\nMidterm 2\nTransformers: pretraining\nGenerative models: autoencoders and variational autoencoders\nLab session: Homework 3 and Homework 4\nHomework 3 due\n\n\nWeek 9\nMay 23 – May 29\nGenerative models: generative adversarial networks\nGenerative models: diffusion\nRunning deep learning experiments: hyperparameter types, sweeps, compute budgets, reproducibility\nMidterm 3 review\nHomework 4 due\nHomework 3 self-grade due\n\n\nWeek 10\nMay 30 – Jun 5\nNo class: Memorial Day\nMidterm 3\nApplications and current topics: large language models, fine-tuning, speech and vision; ethics\nLab session: Homework 5\nHomework 5 due\nHomework 4 self-grade due\nCourse evaluations\n\n\nFinals week\nJun 7 – Jun 11\nOptional final exam\nDay and time TBD, per the WWU finals schedule\nReview session: during finals week, time TBD\nHomework 5 self-grade due (Friday, Jun 11)\n\n\n\n\n\n\n\n\n Back to top",
+    "crumbs": [
+      "Home",
+      "Calendar"
+    ]
+  },
+  {
+    "objectID": "chapters/course-overview.html",
+    "href": "chapters/course-overview.html",
+    "title": "Course Overview: What Is Deep Learning?",
+    "section": "",
+    "text": "Show code# The Python chunks on this page import these; reticulate provisions them.\n# Attaching reticulate gives the inline R its `py` object.\nlibrary(reticulate)\npy_require(c(\"numpy\", \"pandas\", \"matplotlib\"))",
+    "crumbs": [
+      "Home",
+      "Notes",
+      "Course Overview: What Is Deep Learning?"
+    ]
+  },
+  {
+    "objectID": "chapters/course-overview.html#plan-for-this-lecture",
+    "href": "chapters/course-overview.html#plan-for-this-lecture",
+    "title": "Course Overview: What Is Deep Learning?",
+    "section": "\n1.1 Plan for this lecture",
+    "text": "1.1 Plan for this lecture\nThe syllabus covers how the course runs. This lecture is about what the course is for:\n\nwhy hand-designed features run out, shown on a dataset of handwritten digits;\nwhat representation learning and deep learning are;\nwhere deep learning sits within machine learning and artificial intelligence;\na short history of neural networks;\nthe topics and tools of these notes.",
+    "crumbs": [
+      "Home",
+      "Notes",
+      "Course Overview: What Is Deep Learning?"
+    ]
+  },
+  {
+    "objectID": "chapters/course-overview.html#a-first-dataset-handwritten-digits",
+    "href": "chapters/course-overview.html#a-first-dataset-handwritten-digits",
+    "title": "Course Overview: What Is Deep Learning?",
+    "section": "\n2.1 A first dataset: handwritten digits",
+    "text": "2.1 A first dataset: handwritten digits\nThe Optical Recognition of Handwritten Digits data [1] are scans of digits written by hand on forms. Each scan was reduced to an 8 by 8 grid of pixels, and each pixel counts how many of the 16 dots in its 4 by 4 block of a 32 by 32 bitmap of the scan were inked, so it holds a whole number from 0 to 16. The UCI Machine Learning Repository publishes the data under a Creative Commons Attribution 4.0 license.\ndata/optdigits-test.csv is a copy of its test file, optdigits.tes, byte for byte, under a new name. Each row is one image: 64 pixel values, read across the rows of the grid from top left to bottom right, then the digit the writer meant, 0 to 9. The file has no header row.\n\n\n\n\n\n\nExrExercise 1 (Loading the digits)\n\n\n\n\n\n\nExercise 1 (Loading the digits) How many images of each digit does data/optdigits-test.csv hold?\n\n\n\n\n\n\n\n\n\n\nSolutionSolution 1\n\n\n\n\n\n\nSolution 1. \n\nimport numpy as np\nimport pandas as pd\n\ndigits = pd.read_csv(\"data/optdigits-test.csv\", header=None)\nprint(digits.shape)\n\n(1797, 65)\n\n# Columns 0 to 63 are the pixels; column 64 is the digit.\npixels = digits.iloc[:, :64].to_numpy()\nlabels = digits[64].to_numpy()\ndigit_counts = np.bincount(labels)\nprint(digit_counts)\n\n[178 182 177 183 181 182 181 179 174 180]\n\n\nThe file holds 1797 images, between 174 and 183 of each digit.\n\n\n\n\n\n\n\n\n\n\nShow codeimport matplotlib.pyplot as plt\n\n# Row r of the file, read as an 8 by 8 grid, is image r.\nimages = pixels.reshape(-1, 8, 8)\n\nfig, axes = plt.subplots(2, 10, figsize=(8, 2))\nfor k in range(10):\n    for row in range(2):\n        ax = axes[row, k]\n        ax.imshow(images[labels == k][row], cmap=\"gray_r\", vmin=0, vmax=16)\n        ax.set_xticks([])\n        ax.set_yticks([])\n    axes[0, k].set_title(str(k))\nplt.show()\n\n\nFigure 1: The first two images of each digit in the data.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nRemarkRemark 1 (One image, two arrangements)\n\n\n\n\n\n\nRemark 1 (One image, two arrangements). The file stores each image as a row of 64 numbers, a feature vector in \\(\\reals^{64}\\), the form that models such as logistic regression take as input. Figure 1 draws the same 64 numbers as an 8 by 8 grid: with rows and columns counted from 0, the pixel in row \\(i\\) and column \\(j\\) is entry \\(8i + j\\) of the vector. pixels.reshape(-1, 8, 8) turns the rows of the file into grids, and nothing about the numbers changes. Models that look at pixels’ neighbors, such as convolutional networks, keep the grid.",
+    "crumbs": [
+      "Home",
+      "Notes",
+      "Course Overview: What Is Deep Learning?"
+    ]
+  },
+  {
+    "objectID": "chapters/course-overview.html#writing-a-feature-by-hand",
+    "href": "chapters/course-overview.html#writing-a-feature-by-hand",
+    "title": "Course Overview: What Is Deep Learning?",
+    "section": "\n2.2 Writing a feature by hand",
+    "text": "2.2 Writing a feature by hand\n\n\n\n\n\n\nExrExercise 2 (A feature for 0 or 1)\n\n\n\n\n\n\nExercise 2 (A feature for 0 or 1) Using the 0s and 1s in Figure 1, write a feature: one number, computed from an image’s 64 pixels, that tends to be small for a 0 and large for a 1.\n\n\n\n\n\n\nTipHint\n\n\n\nWhere does a 0 have no ink?\n\n\n\n\n\n\n\n\n\n\n\n\nSolutionSolution 2\n\n\n\n\n\n\nSolution 2. A 0 is a loop around an empty middle, and a 1 is a stroke down the middle. One feature is the average ink in the middle of the grid: rows 2 to 5 and columns 3 and 4, counting from 0, eight pixels in all.\n\ncenter_ink = images[:, 2:6, 3:5].mean(axis=(1, 2))\n# The average center ink of each digit, 0 to 9.\nprint(pd.Series(center_ink).groupby(labels).mean().round(1))\n\n0     1.7\n1    13.3\n2     8.9\n3     7.7\n4    10.0\n5     7.1\n6     8.0\n7     9.8\n8    10.8\n9     6.6\ndtype: float64\n\n\nThe 0s average 1.7 and the 1s 13.3, on the 0 to 16 scale of a pixel.\n\n\n\n\n\n\n\n\n\n\nExrExercise 3 (A rule for 0 or 1)\n\n\n\n\n\n\nExercise 3 (A rule for 0 or 1) Call an image a 1 when its center ink, from Solution 2, is above a cutoff, and a 0 otherwise. Find the cutoff that gets the fewest images of 0s and 1s wrong, with code or, on the web page, with the interactive plot after this exercise.\n\n\n\n\n\nShow codedigitRows = FileAttachment(\"data/optdigits-test.csv\").text()\n  .then(text =&gt; d3.csvParseRows(text, row =&gt; row.map(Number)))\n\n// The center ink of the 0-or-1 solution: the mean of rows 2 to 5 and columns 3\n// and 4 of the 8 by 8 grid, so pixels 8 * i + j for those i and j.\ncenterPixels = [2, 3, 4, 5].flatMap(i =&gt; [3, 4].map(j =&gt; 8 * i + j))\nzerosOnes = digitRows\n  .filter(row =&gt; row[64] === 0 || row[64] === 1)\n  .map(row =&gt; ({\n    ink: d3.mean(centerPixels, p =&gt; row[p]),\n    digit: String(row[64])\n  }))\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nShow codeviewof cutoff = Inputs.range([0, 16], {step: 0.5, value: 8, label: \"Cutoff\"})\n\nmistakes = zerosOnes.filter(d =&gt; (d.ink &gt; cutoff) !== (d.digit === \"1\")).length\n\nmd`The rule \"a 1 when the center ink is above ${cutoff}\" gets **${mistakes}** of the ${zerosOnes.length} images of 0s and 1s wrong.`\nShow codePlot.plot({\n  ariaLabel: \"Stacked histogram of center ink, from 0 to 16, for the images of 0s in blue and of 1s in orange, with a vertical line at the chosen cutoff. The 0s pile up at low center ink and the 1s at high center ink, with a little overlap between them.\",\n  height: 260, width: 640,\n  x: {label: \"center ink\", domain: [0, 16]},\n  y: {label: \"images\", grid: true},\n  color: {legend: true, domain: [\"0\", \"1\"], range: [\"#1f77b4\", \"#ff7f0e\"]},\n  marks: [\n    Plot.rectY(zerosOnes, Plot.binX({y: \"count\"},\n      {x: \"ink\", fill: \"digit\", thresholds: d3.range(0, 16.5, 0.5)})),\n    Plot.ruleX([cutoff], {stroke: \"black\", strokeWidth: 2}),\n    Plot.ruleY([0])\n  ]\n})\n\n\nFigure 2: The center ink of each image of a 0 or a 1, and the mistakes made by a cutoff.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nSolutionSolution 3\n\n\n\n\n\n\nSolution 3. Try every cutoff from 0 to 16 in steps of 0.5, count each one’s mistakes, and keep the cutoff with the fewest.\n\ndef best_cutoff(feature, is_high):\n    \"\"\"The cutoff on `feature` that best predicts `is_high`, and its mistakes.\"\"\"\n    cutoffs = np.arange(0, 16.5, 0.5)\n    mistakes = np.array([np.sum((feature &gt; c) != is_high) for c in cutoffs])\n    return cutoffs[mistakes.argmin()], mistakes.min()\n\nis_01 = (labels == 0) | (labels == 1)\ncut_01, wrong_01 = best_cutoff(center_ink[is_01], labels[is_01] == 1)\nprint(cut_01, wrong_01, is_01.sum())\n\n6.0 8 360\n\n\nWith a cutoff of 6, the rule gets 8 of the 360 images of 0s and 1s wrong, 2.2%. One feature, chosen by looking at a few images, is enough to tell these two digits apart.\n\n\n\n\n\n\n\n\n\n\nExrExercise 4 (A feature for 3 or 8)\n\n\n\n\n\n\nExercise 4 (A feature for 3 or 8) Using the 3s and 8s in Figure 1, write a feature that tends to be small for a 3 and large for an 8.\n\n\n\n\n\n\nTipHint\n\n\n\nWhich side of a 3 is open?\n\n\n\n\n\n\n\n\n\n\n\n\nSolutionSolution 4\n\n\n\n\n\n\nSolution 4. An 8 closes its loops on the left, and a 3 leaves the left open. One feature is the average ink on the left of the middle rows: rows 2 to 5 and columns 0 to 2. Search its cutoffs as Solution 3 did, to see how well it works.\n\nleft_ink = images[:, 2:6, 0:3].mean(axis=(1, 2))\n\nis_38 = (labels == 3) | (labels == 8)\ncut_38, wrong_38 = best_cutoff(left_ink[is_38], labels[is_38] == 8)\nprint(cut_38, wrong_38, is_38.sum())\n\n2.0 40 357\n\n\nWith a cutoff of 2, the rule gets 40 of the 357 images of 3s and 8s wrong, 11.2%, against 2.2% for the 0s and 1s. The left ink of the 3s and 8s overlaps more than the center ink of the 0s and 1s, so this pair needs a better feature, or more than one.",
+    "crumbs": [
+      "Home",
+      "Notes",
+      "Course Overview: What Is Deep Learning?"
+    ]
+  },
+  {
+    "objectID": "chapters/course-overview.html#all-ten-digits",
+    "href": "chapters/course-overview.html#all-ten-digits",
+    "title": "Course Overview: What Is Deep Learning?",
+    "section": "\n2.3 All ten digits",
+    "text": "2.3 All ten digits\n\n\n\n\n\n\nExrExercise 5 (How many pairs?)\n\n\n\n\n\n\nExercise 5 (How many pairs?) Telling all ten digits apart one pair at a time, as Exercise 2 and Exercise 4 did, takes a feature for every pair of digits. How many pairs of digits are there?\n\n\n\n\n\n\n\n\n\n\nSolutionSolution 5\n\n\n\n\n\n\nSolution 5. A pair can start with any of the 10 digits and end with any of the other 9, and that counts each pair twice, once in each order:\n\\[\n\\begin{aligned}\n\\text{number of pairs}\n&= \\frac{10 \\times 9}{2}\n&& \\text{(first digit, second digit, divided by the 2 orders of a pair)} \\\\\n&= \\frac{90}{2}\n&& \\text{(multiply)} \\\\\n&= 45\n&& \\text{(divide)}\n\\end{aligned}\n\\]\nThat is 45 features to design and test by hand, and Solution 4 shows that some pairs need more than one.\n\n\n\n\n\n\n\n\n\n\nExrExercise 6 (Two features for ten digits)\n\n\n\n\n\n\nExercise 6 (Two features for ten digits) Describe each image by the two features so far, its center ink and its left ink. Classify each image as the digit whose average pair of features, over all the images of that digit, is nearest to the image’s own pair. What share of the images does this classifier get right?\n\n\n\n\n\n\n\n\n\n\nSolutionSolution 6\n\n\n\n\n\n\nSolution 6. \n\ndef nearest_mean_accuracy(features, labels):\n    \"\"\"Share of images whose nearest digit average is their own digit.\"\"\"\n    means = np.array([features[labels == k].mean(axis=0) for k in range(10)])\n    # Squared distance from every image (rows) to every digit's average (columns).\n    distances = ((features[:, None, :] - means[None, :, :]) ** 2).sum(axis=2)\n    return np.mean(distances.argmin(axis=1) == labels)\n\nhand_features = np.column_stack([center_ink, left_ink])\nacc_hand = nearest_mean_accuracy(hand_features, labels)\nprint(round(acc_hand, 3))\n\n0.467\n\n\nThe two features get 46.7% of the images right, so more than half of the images are still misread. This share is measured on the same images the digit averages were computed from, so it is a training accuracy, and new images would likely do a little worse.\n\n\n\n\n\n\n\n\n\n\nExrExercise 7 (Better than guessing?)\n\n\n\n\n\n\nExercise 7 (Better than guessing?) How does the share of images that the classifier of Exercise 6 gets right compare with the share that always guessing the most common digit gets right?\n\n\n\n\n\n\n\n\n\n\nSolutionSolution 7\n\n\n\n\n\n\nSolution 7. \n\nacc_guess = np.bincount(labels).max() / len(labels)\nprint(round(acc_guess, 3))\n\n0.102\n\n\nGuessing the most common digit gets 10.2% right, against 46.7% for the two features (Solution 6), so the features carry real information. Doing better this way means designing more features, and features designed for digits do not carry over to faces, speech or text.\n\n\n\n\n\n\n\n\n\n\nDefDefinition 1 (Feature engineering)\n\n\n\n\n\n\nDefinition 1 (Feature engineering) Feature engineering is designing by hand the features that a model takes as input, using what a person knows about the problem [2, Ch. 1].\n\n\n\n\n\n\n\n\n\n\nExmExample 1 (Center ink and left ink)\n\n\n\n\n\n\nExample 1 (Center ink and left ink) Center ink (Solution 2) and left ink (Solution 4) are engineered features, which other sources also call hand-designed or hand-crafted features. Each one encodes a fact a person noticed about the shapes of digits: a 0 is empty in the middle, so its center ink averages 1.7 against 13.3 for a 1, and a 3 is open on the left, so its left ink averages 0.9 against 3.6 for an 8.",
+    "crumbs": [
+      "Home",
+      "Notes",
+      "Course Overview: What Is Deep Learning?"
+    ]
+  },
+  {
+    "objectID": "chapters/course-overview.html#representation-learning",
+    "href": "chapters/course-overview.html#representation-learning",
+    "title": "Course Overview: What Is Deep Learning?",
+    "section": "\n3.1 Representation learning",
+    "text": "3.1 Representation learning\n\n\n\n\n\n\nExrExercise 8 (Who chooses the features?)\n\n\n\n\n\n\nExercise 8 (Who chooses the features?) In Exercise 6 a person chose the features, and the data chose only the digit averages. What else could choose the features?\n\n\n\n\n\n\n\n\n\n\nSolutionSolution 8\n\n\n\n\n\n\nSolution 8. The data could. A learning algorithm already chooses a model’s weights to fit the data, and it can choose the features the same way, as the hidden layer of a neural network does in lds’s neural networks chapter.\n\n\n\n\n\n\n\n\n\n\nDefDefinition 2 (Representation learning (feature learning))\n\n\n\n\n\n\nDefinition 2 (Representation learning (feature learning)) Representation learning, or feature learning, is machine learning in which the algorithm learns from data the features a model computes from its raw input, as well as how the model maps those features to its output [2, Ch. 1].\n\n\n\n\n\n\n\n\n\n\nExmExample 2 (Two learned features for the digits)\n\n\n\n\n\n\nExample 2 (Two learned features for the digits) Principal component analysis (PCA) learns features from data with no labels: it finds the directions in the 64-dimensional space of pixel vectors along which the images vary most, and an image’s features are its coordinates along those directions [2, Sec. 2.12]. Give the classifier of Exercise 6 the first two of these coordinates in place of center ink and left ink:\n\ncentered = pixels - pixels.mean(axis=0)\n# The rows of vt are the directions of greatest variance, largest first.\n_, _, vt = np.linalg.svd(centered, full_matrices=False)\nlearned_features = centered @ vt[:2].T\nacc_learned = nearest_mean_accuracy(learned_features, labels)\nprint(round(acc_learned, 3), round(acc_hand, 3))\n\n0.618 0.467\n\n\nThe two learned features get 61.8% of the images right, against 46.7% for the two engineered ones, both measured on the images they were learned from, and nobody told PCA what a digit looks like.",
+    "crumbs": [
+      "Home",
+      "Notes",
+      "Course Overview: What Is Deep Learning?"
+    ]
+  },
+  {
+    "objectID": "chapters/course-overview.html#deep-learning",
+    "href": "chapters/course-overview.html#deep-learning",
+    "title": "Course Overview: What Is Deep Learning?",
+    "section": "\n3.2 Deep learning",
+    "text": "3.2 Deep learning\n\n\n\n\n\n\nExrExercise 9 (Features of features)\n\n\n\n\n\n\nExercise 9 (Features of features) lds calls a neural network deep when its depth gives it more than one hidden layer. Each hidden layer computes its features from the layer before it. What could a second layer of features describe in a digit more easily than a first layer, computed straight from the pixels?\n\n\n\n\n\n\n\n\n\n\nSolutionSolution 9\n\n\n\n\n\n\nSolution 9. A second layer can build features out of features. A first layer might respond to short strokes in particular places; a second can combine strokes into loops, corners and lines; and the output layer can combine those into digits. Each layer describes the image in larger parts than the layer before it [2, Ch. 1].\n\n\n\n\n\n\n\n\n\n\nDefDefinition 3 (Deep learning)\n\n\n\n\n\n\nDefinition 3 (Deep learning) Deep learning is representation learning with models that compose many layers of learned features, each layer computed from the one before it [2, Ch. 1].\n\n\n\n\n\n\n\n\n\n\nExmExample 3 (AlexNet)\n\n\n\n\n\n\nExample 3 (AlexNet) AlexNet, a network for sorting photographs into 1000 classes, has eight layers with weights: five convolutional layers, then three fully connected ones. Its 60 million parameters were learned from 1.2 million labeled images, and the 96 filters of its first layer learned on their own to respond to edges at different angles and to patches of color [3]. Nobody designed those features; training found them.\n\n\n\n\n\n\n\n\n\n\nRemarkRemark 2 (Counting depth)\n\n\n\n\n\n\nRemark 2 (Counting depth). These notes count a network’s depth as lds does, by its layers of weights, so AlexNet (Example 3) has depth 8. Other sources count only the hidden layers, or every layer including the input, and Goodfellow, Bengio and Courville measure depth as the longest path through the model’s computational graph, noting that there is no single correct way to count it [2, Ch. 1]. “How deep is deep” has no agreed cutoff either.\nDeep learning models are almost all neural networks. Their name comes from early models of neurons, but the networks in these notes are not models of the brain.\n\n\n\n\n\n\n\n\n\n\n\nVideosWatch\n\n\n\n\n\n3Blue1Brown builds a network with two hidden layers for handwritten digits, and asks what features its layers might learn, in But what is a neural network? [4].\n\n\n\n\n\n\n\n\n\n\n\nReadingRead\n\n\n\n\n\nThe introduction to Deep Learning, Chapter 1, explains representation learning and deep learning at more length [2, Ch. 1].",
+    "crumbs": [
+      "Home",
+      "Notes",
+      "Course Overview: What Is Deep Learning?"
+    ]
+  },
+  {
+    "objectID": "chapters/course-overview.html#where-deep-learning-fits",
+    "href": "chapters/course-overview.html#where-deep-learning-fits",
+    "title": "Course Overview: What Is Deep Learning?",
+    "section": "\n3.3 Where deep learning fits",
+    "text": "3.3 Where deep learning fits\n\n\n\n\n\n\nExrExercise 10 (Which programs are deep learning?)\n\n\n\n\n\n\nExercise 10 (Which programs are deep learning?) Which of these programs are deep learning (Definition 3)?\n\nA spam filter whose rules a person wrote.\nThe classifier of Exercise 6, on center ink and left ink.\nThe same classifier on the two PCA features of Example 2.\nAlexNet (Example 3).\n\n\n\n\n\n\n\n\n\n\n\nSolutionSolution 10\n\n\n\n\n\n\nSolution 10. Only AlexNet. The four fields of Figure 3 each contain the next, so all four programs are artificial intelligence, the last three are machine learning, the last two are representation learning, and the last is also deep learning:\n\nThe hand-written spam filter follows rules and learns nothing from data.\nThe classifier on center ink and left ink learns the digit averages from data, but a person chose its features.\nThe classifier on PCA features learns its features too, but only one layer of them.\nAlexNet learns eight layers, each computed from the one before.\n\n\n\n\n\n\n\n\n\n\n\nShow codefrom matplotlib.patches import Ellipse\n\nfields = [\n    (\"Artificial intelligence\", \"spam filter with hand-written rules\"),\n    (\"Machine learning\", \"classifier on hand-designed features\"),\n    (\"Representation learning\", \"PCA features\"),\n    (\"Deep learning\", \"AlexNet\"),\n]\ncolors = [\"#dbe9f6\", \"#a6cbe6\", \"#6aa6d6\", \"#2f7bbf\"]\n\nfig, ax = plt.subplots(figsize=(7, 4.5))\nfor depth, ((name, example), color) in enumerate(zip(fields, colors)):\n    # Each ellipse sits inside the last, sharing its bottom edge.\n    width, height = 10 - 2.2 * depth, 6.4 - 1.5 * depth\n    ax.add_patch(Ellipse((5, height / 2), width, height,\n                         facecolor=color, edgecolor=\"black\"))\n    text_color = \"white\" if depth == 3 else \"black\"\n    ax.text(5, height - 0.6, name, ha=\"center\", va=\"center\",\n            fontsize=11, fontweight=\"bold\", color=text_color)\n    ax.text(5, height - 1.0, example, ha=\"center\", va=\"center\",\n            fontsize=9, style=\"italic\", color=text_color)\nax.set_xlim(-0.1, 10.1)\nax.set_ylim(-0.1, 6.5)\nax.set_aspect(\"equal\")\nax.set_axis_off()\nplt.show()\n\n\nFigure 3: Deep learning is a kind of representation learning, which is a kind of machine learning, which is one approach to artificial intelligence. After the Venn diagram in Deep Learning [2, Ch. 1], with this chapter’s examples.",
+    "crumbs": [
+      "Home",
+      "Notes",
+      "Course Overview: What Is Deep Learning?"
+    ]
+  },
+  {
+    "objectID": "chapters/course-overview.html#three-waves",
+    "href": "chapters/course-overview.html#three-waves",
+    "title": "Course Overview: What Is Deep Learning?",
+    "section": "\n4.1 Three waves",
+    "text": "4.1 Three waves\nNeural networks have risen in popularity three times, and fallen twice, under three names [2, Sec. 1.2.1]:\n\n\nThe three waves of neural network research.\n\nYears\nName\nMilestones\n\n\n\n1940s to 1960s\nCybernetics\nA logical model of a neuron [5]; the perceptron, which learned its weights from examples [6]\n\n\n\n1980s to 1990s\nConnectionism\nBackpropagation for networks with hidden layers [7]; convolutional networks reading handwritten zip codes [8]\n\n\n\n2006 on\nDeep learning\nDeep belief networks, trained one layer at a time [9]; AlexNet [3]; the Transformer [10]\n\n\n\n\n\nThe first wave faded after Minsky and Papert [11] showed that a perceptron, which has no hidden layer, cannot compute some simple functions of its inputs, such as the exclusive or of two binary inputs. Networks with hidden layers can, and backpropagation, one result of the second wave, trained them [2, Sec. 1.2.1], [7].\n\n\n\n\n\n\nExrExercise 11 (Why did it take until 2012?)\n\n\n\n\n\n\nExercise 11 (Why did it take until 2012?) Backpropagation for networks with hidden layers was published in 1986 [7], but deep networks only took over image recognition with AlexNet in 2012 [3]. What could have changed in those years?\n\n\n\n\n\n\n\n\n\n\nSolutionSolution 11\n\n\n\n\n\n\nSolution 11. Three things changed:\n\n\nData. AlexNet learned from 1.2 million labeled images [3]; the zip-code network of 1989 learned from 7,291 digits [8]. Datasets grew this way across the field [2, Sec. 1.2.2].\n\nComputing power. AlexNet was trained on two graphics processing units (GPUs), chips built for the arithmetic of drawing images, which do many multiplications at once [3]. Faster hardware let networks grow larger [2, Sec. 1.2.3].\n\nTechniques. AlexNet used rectified linear units and dropout, which made a large network faster to train and less prone to overfitting [3].\n\nThe algorithm itself, gradient descent with backpropagation, changed little.",
+    "crumbs": [
+      "Home",
+      "Notes",
+      "Course Overview: What Is Deep Learning?"
+    ]
+  },
+  {
+    "objectID": "chapters/course-overview.html#topics",
+    "href": "chapters/course-overview.html#topics",
+    "title": "Course Overview: What Is Deep Learning?",
+    "section": "\n5.1 Topics",
+    "text": "5.1 Topics\nThese notes cover these topics, in this order; the calendar says when each is taught.\n\nTensors and automatic differentiation in PyTorch\nFeedforward networks, and backpropagation\nOptimization for deep networks\nRegularization, normalization and residual connections\nConvolutional networks\nSequence models and language modeling\nAttention and Transformers\nGenerative models: autoencoders, generative adversarial networks and diffusion\nRunning deep learning experiments\nApplications, large language models, and ethics",
+    "crumbs": [
+      "Home",
+      "Notes",
+      "Course Overview: What Is Deep Learning?"
+    ]
+  },
+  {
+    "objectID": "chapters/course-overview.html#tools-and-prerequisites",
+    "href": "chapters/course-overview.html#tools-and-prerequisites",
+    "title": "Course Overview: What Is Deep Learning?",
+    "section": "\n5.2 Tools and prerequisites",
+    "text": "5.2 Tools and prerequisites\nThe code in these notes, and in the homework, is Python with PyTorch [12], plus NumPy where a lecture builds a method from scratch, and pandas and matplotlib for reading data and drawing plots. Every example here runs in seconds on a laptop’s CPU; the homework trains larger models.\nThese notes build on lds, the machine learning notes for this course’s prerequisite, and link to its definitions rather than repeating them. Its chapters on gradient descent, logistic regression, neural networks and backpropagation are the ones these notes lean on most.",
+    "crumbs": [
+      "Home",
+      "Notes",
+      "Course Overview: What Is Deep Learning?"
+    ]
+  }
+]
