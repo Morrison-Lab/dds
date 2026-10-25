@@ -1,0 +1,26 @@
+::: {#fig-digits-grid}
+
+```{python}
+#| code-fold: true
+#| results: false
+#| collapse: true
+#| fig-alt: "Twenty small grayscale images of handwritten digits, in two rows and ten columns. Each column shows two examples of one digit, 0 to 9 from left to right, drawn as dark ink on a white background at 8 by 8 pixel resolution. The 0s are hollow ovals, the 1s are vertical strokes, the 3s are open on the left, and the 8s are closed on both sides."
+import matplotlib.pyplot as plt
+
+# Row r of the file, read as an 8 by 8 grid, is image r.
+images = pixels.reshape(-1, 8, 8)
+
+fig, axes = plt.subplots(2, 10, figsize=(8, 2))
+for k in range(10):
+    for row in range(2):
+        ax = axes[row, k]
+        ax.imshow(images[labels == k][row], cmap="gray_r", vmin=0, vmax=16)
+        ax.set_xticks([])
+        ax.set_yticks([])
+    axes[0, k].set_title(str(k))
+plt.show()
+```
+
+The first two images of each digit in the data.
+
+:::

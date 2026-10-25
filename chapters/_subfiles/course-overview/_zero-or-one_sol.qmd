@@ -1,0 +1,19 @@
+::: {#sol-zero-or-one}
+
+A 0 is a loop around an empty middle,
+and a 1 is a stroke down the middle.
+One [feature](https://morrison-lab.github.io/lds/chapters/course-overview.html#def-feature) is the average ink in the middle of the grid:
+rows 2 to 5 and columns 3 and 4, counting from 0,
+eight pixels in all.
+
+```{python}
+#| code-fold: false
+center_ink = images[:, 2:6, 3:5].mean(axis=(1, 2))
+# The average center ink of each digit, 0 to 9.
+print(pd.Series(center_ink).groupby(labels).mean().round(1))
+```
+
+The 0s average `r round(mean(py$center_ink[py$labels == 0]), 1)` and the 1s `r round(mean(py$center_ink[py$labels == 1]), 1)`,
+on the 0 to 16 scale of a pixel.
+
+:::

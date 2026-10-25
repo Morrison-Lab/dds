@@ -1,0 +1,10 @@
+::: {#sol-why-layers}
+
+A second layer can build [features](https://morrison-lab.github.io/lds/chapters/course-overview.html#def-feature) out of features.
+A first layer might respond to short strokes in particular places;
+a second can combine strokes into loops, corners and lines;
+and the output layer can combine those into digits.
+Each layer describes the image in larger parts than the layer before it
+[@goodfellow2016deep, Ch. 1].
+
+:::

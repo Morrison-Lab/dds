@@ -1,0 +1,212 @@
+---
+title: "Course Overview: What Is Deep Learning?"
+format:
+  html: default
+  revealjs:
+    output-file: course-overview-slides.html
+  pdf:
+    output-file: course-overview-handout.pdf
+resources:
+  - data/optdigits-test.csv
+---
+
+```{r}
+# The Python chunks on this page import these; reticulate provisions them.
+# Attaching reticulate gives the inline R its `py` object.
+library(reticulate)
+py_require(c("numpy", "pandas", "matplotlib"))
+```
+
+::: notes
+The order of topics in these notes follows Brian Hutchinson's CSCI 481/581,
+used with his permission.
+The handwritten-digit exercises, the history and the road ahead are new.
+:::
+
+# Welcome
+
+## Plan for this lecture
+
+{{< include _subfiles/course-overview/_plan_sec.qmd >}}
+
+# Features by hand
+
+## A first dataset: handwritten digits
+
+{{< include _subfiles/course-overview/_digits-data_sec.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/course-overview/_load-digits_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/course-overview/_load-digits_sol.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/course-overview/_digits-grid_fig.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/course-overview/_grid-or-vector_rem.qmd >}}
+
+## Writing a feature by hand
+
+<!-- heading shares the slide; do not re-flag -->
+
+{{< include _subfiles/course-overview/_zero-or-one_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/course-overview/_zero-or-one_sol.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/course-overview/_zero-one-cutoff_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/course-overview/_cutoff-widget_fig.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/course-overview/_zero-one-cutoff_sol.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/course-overview/_three-or-eight_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/course-overview/_three-or-eight_sol.qmd >}}
+
+## All ten digits
+
+<!-- heading shares the slide; do not re-flag -->
+
+{{< include _subfiles/course-overview/_count-pairs_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/course-overview/_count-pairs_sol.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/course-overview/_two-features-ten-digits_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/course-overview/_two-features-ten-digits_sol.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/course-overview/_beat-guessing_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/course-overview/_beat-guessing_sol.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/course-overview/_feature-engineering_def.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/course-overview/_feature-engineering_exm.qmd >}}
+
+# Learning the features
+
+## Representation learning
+
+<!-- heading shares the slide; do not re-flag -->
+
+{{< include _subfiles/course-overview/_learn-features_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/course-overview/_learn-features_sol.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/course-overview/_representation-learning_def.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/course-overview/_representation-learning_exm.qmd >}}
+
+## Deep learning
+
+<!-- heading shares the slide; do not re-flag -->
+
+{{< include _subfiles/course-overview/_why-layers_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/course-overview/_why-layers_sol.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/course-overview/_deep-learning_def.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/course-overview/_deep-learning_exm.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/course-overview/_counting-depth_rem.qmd >}}
+
+::: {.videos}
+3Blue1Brown builds a network with two hidden layers for handwritten digits,
+and asks what [features](https://morrison-lab.github.io/lds/chapters/course-overview.html#def-feature) its layers might learn, in
+[But what is a neural network?](https://www.youtube.com/watch?v=aircAruvnKk) [@sanderson2017neuralnetwork].
+:::
+
+::: {.reading}
+The introduction to *Deep Learning*, [Chapter 1](https://www.deeplearningbook.org/contents/intro.html), <!-- check-term-links: allow -->
+explains [representation learning](#def-representation-learning) and deep learning at more length [@goodfellow2016deep, Ch. 1].
+:::
+
+## Where deep learning fits
+
+<!-- heading shares the slide; do not re-flag -->
+
+{{< include _subfiles/course-overview/_where-dl-fits_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/course-overview/_where-dl-fits_sol.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/course-overview/_nested-fields_fig.qmd >}}
+
+# A short history
+
+## Three waves
+
+{{< include _subfiles/course-overview/_three-waves_sec.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/course-overview/_why-2012_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/course-overview/_why-2012_sol.qmd >}}
+
+# The road ahead
+
+## Topics
+
+{{< include _subfiles/course-overview/_roadmap_sec.qmd >}}
+
+## Tools and prerequisites
+
+{{< include _subfiles/course-overview/_tools_sec.qmd >}}
+
+# References {#references .unnumbered}
+
+::: {#refs}
+:::

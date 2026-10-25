@@ -1,0 +1,17 @@
+::: {#sol-where-dl-fits}
+
+Only AlexNet.
+The four fields of @fig-nested-fields each contain the next,
+so all four programs are [artificial intelligence](https://morrison-lab.github.io/lds/chapters/course-overview.html#def-artificial-intelligence),
+the last three are [machine learning](https://morrison-lab.github.io/lds/chapters/course-overview.html#def-machine-learning),
+the last two are [representation learning](#def-representation-learning),
+and the last is also [deep learning](#def-deep-learning):
+
+- The hand-written spam filter follows rules and learns nothing from data.
+- The classifier on center ink and left ink learns the digit averages from data,
+  but a person chose its [features](https://morrison-lab.github.io/lds/chapters/course-overview.html#def-feature).
+- The classifier on PCA features learns its features too,
+  but only one layer of them.
+- AlexNet learns eight layers, each computed from the one before.
+
+:::

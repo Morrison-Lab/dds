@@ -1,0 +1,22 @@
+::: {#sol-two-features-ten-digits}
+
+```{python}
+#| code-fold: false
+def nearest_mean_accuracy(features, labels):
+    """Share of images whose nearest digit average is their own digit."""
+    means = np.array([features[labels == k].mean(axis=0) for k in range(10)])
+    # Squared distance from every image (rows) to every digit's average (columns).
+    distances = ((features[:, None, :] - means[None, :, :]) ** 2).sum(axis=2)
+    return np.mean(distances.argmin(axis=1) == labels)
+
+hand_features = np.column_stack([center_ink, left_ink])
+acc_hand = nearest_mean_accuracy(hand_features, labels)
+print(round(acc_hand, 3))
+```
+
+The two [features](https://morrison-lab.github.io/lds/chapters/course-overview.html#def-feature) get `r sprintf("%.1f", 100 * py$acc_hand)`% of the images right,
+so more than half of the images are still misread.
+This share is measured on the same images the digit averages were computed from,
+so it is a training accuracy, and new images would likely do a little worse.
+
+:::

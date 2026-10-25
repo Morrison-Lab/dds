@@ -1,0 +1,12 @@
+::: {#def-representation-learning}
+
+#### Representation learning (feature learning)
+
+**Representation learning**, or **feature learning**,
+is [machine learning](https://morrison-lab.github.io/lds/chapters/course-overview.html#def-machine-learning)
+in which the algorithm learns from data
+the [features](https://morrison-lab.github.io/lds/chapters/course-overview.html#def-feature) a model computes from its raw input,
+as well as how the model maps those features to its output
+[@goodfellow2016deep, Ch. 1].
+
+:::

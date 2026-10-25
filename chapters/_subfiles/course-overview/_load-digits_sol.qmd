@@ -1,0 +1,21 @@
+::: {#sol-load-digits}
+
+```{python}
+#| code-fold: false
+import numpy as np
+import pandas as pd
+
+digits = pd.read_csv("data/optdigits-test.csv", header=None)
+print(digits.shape)
+
+# Columns 0 to 63 are the pixels; column 64 is the digit.
+pixels = digits.iloc[:, :64].to_numpy()
+labels = digits[64].to_numpy()
+digit_counts = np.bincount(labels)
+print(digit_counts)
+```
+
+The file holds `r nrow(py$digits)` images,
+between `r min(py$digit_counts)` and `r max(py$digit_counts)` of each digit.
+
+:::

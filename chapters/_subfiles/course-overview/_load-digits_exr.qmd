@@ -1,0 +1,8 @@
+::: {#exr-load-digits}
+
+#### Loading the digits
+
+How many images of each digit does
+[`data/optdigits-test.csv`](data/optdigits-test.csv) hold?
+
+:::

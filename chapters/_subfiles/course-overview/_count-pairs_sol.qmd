@@ -1,0 +1,21 @@
+::: {#sol-count-pairs}
+
+A pair can start with any of the 10 digits and end with any of the other 9,
+and that counts each pair twice, once in each order:
+
+$$
+\begin{aligned}
+\text{number of pairs}
+&= \frac{10 \times 9}{2}
+&& \text{(first digit, second digit, divided by the 2 orders of a pair)} \\
+&= \frac{90}{2}
+&& \text{(multiply)} \\
+&= 45
+&& \text{(divide)}
+\end{aligned}
+$$
+
+That is 45 [features](https://morrison-lab.github.io/lds/chapters/course-overview.html#def-feature) to design and test by hand,
+and @sol-three-or-eight shows that some pairs need more than one.
+
+:::

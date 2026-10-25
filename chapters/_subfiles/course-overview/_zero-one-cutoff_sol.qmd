@@ -1,0 +1,26 @@
+::: {#sol-zero-one-cutoff}
+
+Try every cutoff from 0 to 16 in steps of 0.5,
+count each one's mistakes,
+and keep the cutoff with the fewest.
+
+```{python}
+#| code-fold: false
+def best_cutoff(feature, is_high):
+    """The cutoff on `feature` that best predicts `is_high`, and its mistakes."""
+    cutoffs = np.arange(0, 16.5, 0.5)
+    mistakes = np.array([np.sum((feature > c) != is_high) for c in cutoffs])
+    return cutoffs[mistakes.argmin()], mistakes.min()
+
+is_01 = (labels == 0) | (labels == 1)
+cut_01, wrong_01 = best_cutoff(center_ink[is_01], labels[is_01] == 1)
+print(cut_01, wrong_01, is_01.sum())
+```
+
+With a cutoff of `r py$cut_01`,
+the rule gets `r py$wrong_01` of the `r sum(py$is_01)` images of 0s and 1s wrong,
+`r sprintf("%.1f", 100 * py$wrong_01 / sum(py$is_01))`%.
+One [feature](https://morrison-lab.github.io/lds/chapters/course-overview.html#def-feature), chosen by looking at a few images,
+is enough to tell these two digits apart.
+
+:::

@@ -1,0 +1,13 @@
+::: {#exm-feature-engineering}
+
+#### Center ink and left ink
+
+Center ink (@sol-zero-or-one) and left ink (@sol-three-or-eight) are engineered [features](https://morrison-lab.github.io/lds/chapters/course-overview.html#def-feature),
+which other sources also call hand-designed or hand-crafted features.
+Each one encodes a fact a person noticed about the shapes of digits:
+a 0 is empty in the middle, so its center ink averages `r round(mean(py$center_ink[py$labels == 0]), 1)`
+against `r round(mean(py$center_ink[py$labels == 1]), 1)` for a 1,
+and a 3 is open on the left, so its left ink averages `r round(mean(py$left_ink[py$labels == 3]), 1)`
+against `r round(mean(py$left_ink[py$labels == 8]), 1)` for an 8.
+
+:::

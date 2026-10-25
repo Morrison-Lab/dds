@@ -1,0 +1,28 @@
+::: {#exm-representation-learning}
+
+#### Two learned features for the digits
+
+[Principal component analysis](https://morrison-lab.github.io/lds/chapters/unsupervised-learning.html#sec-pca) (PCA) learns [features](https://morrison-lab.github.io/lds/chapters/course-overview.html#def-feature) from data with no labels:
+it finds the directions in the 64-dimensional space of pixel vectors
+along which the images vary most,
+and an image's features are its coordinates along those directions
+[@goodfellow2016deep, section 2.12].
+Give the classifier of @exr-two-features-ten-digits
+the first two of these coordinates in place of center ink and left ink:
+
+```{python}
+#| code-fold: false
+centered = pixels - pixels.mean(axis=0)
+# The rows of vt are the directions of greatest variance, largest first.
+_, _, vt = np.linalg.svd(centered, full_matrices=False)
+learned_features = centered @ vt[:2].T
+acc_learned = nearest_mean_accuracy(learned_features, labels)
+print(round(acc_learned, 3), round(acc_hand, 3))
+```
+
+The two learned features get `r sprintf("%.1f", 100 * py$acc_learned)`% of the images right,
+against `r sprintf("%.1f", 100 * py$acc_hand)`% for the two engineered ones,
+both measured on the images they were learned from,
+and nobody told PCA what a digit looks like.
+
+:::

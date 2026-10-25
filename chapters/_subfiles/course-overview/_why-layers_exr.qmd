@@ -1,0 +1,12 @@
+::: {#exr-why-layers}
+
+#### Features of features
+
+lds calls a neural network deep when its
+[depth](https://morrison-lab.github.io/lds/chapters/neural-nets.html#def-depth)
+gives it more than one hidden layer.
+Each hidden layer computes its [features](https://morrison-lab.github.io/lds/chapters/course-overview.html#def-feature) from the layer before it.
+What could a second layer of features describe in a digit
+more easily than a first layer, computed straight from the pixels?
+
+:::

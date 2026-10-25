@@ -1,0 +1,65 @@
+::: {.content-visible when-format="html"}
+
+```{ojs}
+//| output: false
+// The digits data has no header row: 64 pixels, then the digit.
+digitRows = FileAttachment("data/optdigits-test.csv").text()
+  .then(text => d3.csvParseRows(text, row => row.map(Number)))
+
+// The center ink of the 0-or-1 solution: the mean of rows 2 to 5 and columns 3
+// and 4 of the 8 by 8 grid, so pixels 8 * i + j for those i and j.
+centerPixels = [2, 3, 4, 5].flatMap(i => [3, 4].map(j => 8 * i + j))
+zerosOnes = digitRows
+  .filter(row => row[64] === 0 || row[64] === 1)
+  .map(row => ({
+    ink: d3.mean(centerPixels, p => row[p]),
+    digit: String(row[64])
+  }))
+```
+
+::: {#fig-cutoff-widget}
+
+<!-- A light panel, so the inputs and the plot's text stay readable under the
+dark theme and on the dark slides. custom.scss styles the inputs, buttons and
+tables inside a .widget-panel but not the panel's own background, so it is set
+here. -->
+::: {.widget-panel style="background-color:#fbfbfb;
+color:#222;
+color-scheme:light;
+padding:0.5rem;
+border-radius:6px"}
+
+```{ojs}
+viewof cutoff = Inputs.range([0, 16], {step: 0.5, value: 8, label: "Cutoff"})
+
+mistakes = zerosOnes.filter(d => (d.ink > cutoff) !== (d.digit === "1")).length
+
+md`The rule "a 1 when the center ink is above ${cutoff}" gets **${mistakes}** of the ${zerosOnes.length} images of 0s and 1s wrong.`
+
+Plot.plot({
+  ariaLabel: "Stacked histogram of center ink, from 0 to 16, for the images of 0s in blue and of 1s in orange, with a vertical line at the chosen cutoff. The 0s pile up at low center ink and the 1s at high center ink, with a little overlap between them.",
+  height: 260, width: 640,
+  x: {label: "center ink", domain: [0, 16]},
+  y: {label: "images", grid: true},
+  color: {legend: true, domain: ["0", "1"], range: ["#1f77b4", "#ff7f0e"]},
+  marks: [
+    Plot.rectY(zerosOnes, Plot.binX({y: "count"},
+      {x: "ink", fill: "digit", thresholds: d3.range(0, 16.5, 0.5)})),
+    Plot.ruleX([cutoff], {stroke: "black", strokeWidth: 2}),
+    Plot.ruleY([0])
+  ]
+})
+```
+
+:::
+
+The center ink of each image of a 0 or a 1, and the mistakes made by a cutoff.
+
+:::
+
+:::
+
+::: {.content-visible when-format="pdf"}
+The course website's version of this page has an interactive plot here,
+for choosing a cutoff on the center ink of the 0s and 1s.
+:::

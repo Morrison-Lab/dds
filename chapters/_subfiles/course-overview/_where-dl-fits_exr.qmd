@@ -1,0 +1,12 @@
+::: {#exr-where-dl-fits}
+
+#### Which programs are deep learning?
+
+Which of these programs are deep learning (@def-deep-learning)?
+
+- A spam filter whose rules a person wrote.
+- The classifier of @exr-two-features-ten-digits, on center ink and left ink.
+- The same classifier on the two PCA [features](https://morrison-lab.github.io/lds/chapters/course-overview.html#def-feature) of @exm-representation-learning.
+- AlexNet (@exm-deep-learning).
+
+:::

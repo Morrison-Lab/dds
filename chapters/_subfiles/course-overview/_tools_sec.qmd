@@ -1,0 +1,14 @@
+The code in these notes, and in the homework, is Python with PyTorch [@paszke2019pytorch],
+plus NumPy where a lecture builds a method from scratch,
+and pandas and matplotlib for reading data and drawing plots.
+Every example here runs in seconds on a laptop's CPU;
+the homework trains larger models.
+
+These notes build on [lds](https://morrison-lab.github.io/lds/), the [machine learning](https://morrison-lab.github.io/lds/chapters/course-overview.html#def-machine-learning) notes for this course's prerequisite,
+and link to its definitions rather than repeating them.
+Its chapters on
+[gradient descent](https://morrison-lab.github.io/lds/chapters/gradient-descent.html),
+[logistic regression](https://morrison-lab.github.io/lds/chapters/logistic-regression.html),
+[neural networks](https://morrison-lab.github.io/lds/chapters/neural-nets.html)
+and [backpropagation](https://morrison-lab.github.io/lds/chapters/backpropagation.html)
+are the ones these notes lean on most.

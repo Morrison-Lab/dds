@@ -1,0 +1,10 @@
+::: {#def-deep-learning}
+
+#### Deep learning
+
+**Deep learning** is [representation learning](#def-representation-learning)
+with models that compose many layers of learned [features](https://morrison-lab.github.io/lds/chapters/course-overview.html#def-feature),
+each layer computed from the one before it
+[@goodfellow2016deep, Ch. 1].
+
+:::

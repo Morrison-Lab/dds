@@ -1,0 +1,15 @@
+::: {#sol-beat-guessing}
+
+```{python}
+#| code-fold: false
+acc_guess = np.bincount(labels).max() / len(labels)
+print(round(acc_guess, 3))
+```
+
+Guessing the most common digit gets `r sprintf("%.1f", 100 * py$acc_guess)`% right,
+against `r sprintf("%.1f", 100 * py$acc_hand)`% for the two [features](https://morrison-lab.github.io/lds/chapters/course-overview.html#def-feature) (@sol-two-features-ten-digits),
+so the features carry real information.
+Doing better this way means designing more features,
+and features designed for digits do not carry over to faces, speech or text.
+
+:::
