@@ -1,0 +1,32 @@
+::: {#sol-error-rate-curve}
+
+::: {#fig-error-rate-curve}
+
+```{python}
+#| code-fold: show
+#| fig-alt: >-
+#|   A staircase line of error rate against cutoff, from 0 to 16.
+#|   Between its steps the line is flat.
+#|   It falls in steps from the low cutoffs to a low, bumpy stretch at middle cutoffs,
+#|   where it touches its lowest level on several short separate pieces,
+#|   then climbs in steps toward the high cutoffs.
+is_01 = (labels == 0) | (labels == 1)
+ink_01 = center_ink[is_01]
+is_one = labels[is_01] == 1
+
+cutoffs = np.arange(0, 16.005, 0.01)
+error_rate = np.array([np.mean((ink_01 > c) != is_one) for c in cutoffs])
+
+fig, ax = plt.subplots(figsize=(6, 3), layout="constrained")
+ax.plot(cutoffs, error_rate)
+ax.set_xlabel(r"cutoff $\theta$ on center ink")
+ax.set_ylabel("error rate")
+plt.show()
+```
+
+The [error rate](https://morrison-lab.github.io/lds/chapters/metrics.html#def-error-rate) of the 0-or-1 rule among the `r sum(py$is_01)` images of 0s and 1s,
+against the cutoff.
+
+:::
+
+:::

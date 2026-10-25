@@ -1,0 +1,4 @@
+::: {.reading}
+Chapter 5 of *Deep Learning*, [Machine Learning Basics](https://www.deeplearningbook.org/contents/ml.html), <!-- check-term-links: allow -->
+reviews these pieces at more length [@goodfellow2016deep, Ch. 5].
+:::

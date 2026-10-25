@@ -1,0 +1,9 @@
+::: {#sol-cutoff-choice}
+
+Every rule of the form
+"a 1 when the center ink is above $\param$, and a 0 otherwise",
+one rule for each number $\param$.
+The number $\param$ that picks one rule out of this set is the rule's one [parameter](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter).
+A deep network picks one function out of a much larger set, with many [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter) instead of one.
+
+:::

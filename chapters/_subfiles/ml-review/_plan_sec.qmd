@@ -1,0 +1,8 @@
+[Deep learning](course-overview.qmd#def-deep-learning) reuses the pieces of supervised learning from DATA 371 and DATA 471,
+which [lds](https://morrison-lab.github.io/lds/) covers in full.
+This lecture reviews three of them on the handwritten digits from the [course overview](course-overview.qmd),
+then shows where each one reappears in deep learning:
+
+1.  the parts of a learning problem: a set of candidate rules, the [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter) that pick one out, and a [loss function](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-loss-function);
+2.  why models are trained on a smooth loss rather than on their [error rate](https://morrison-lab.github.io/lds/chapters/metrics.html#def-error-rate);
+3.  why a model is judged on data it was not fit to.

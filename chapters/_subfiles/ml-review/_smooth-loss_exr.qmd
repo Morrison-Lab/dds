@@ -1,0 +1,8 @@
+::: {#exr-smooth-loss}
+
+#### Fitting by following the log loss
+
+Could [gradient descent](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#the-algorithm) find the best cutoff
+by following the slope of the curve in @fig-log-loss-curve?
+
+:::

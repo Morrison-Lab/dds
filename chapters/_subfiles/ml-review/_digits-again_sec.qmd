@@ -1,0 +1,25 @@
+The exercises here use the 1,797 handwritten digits that the course overview loads
+from the [UCI Machine Learning Repository](https://archive.ics.uci.edu/dataset/80) [@alpaydin1998optdigits],
+from the same local copy, [`data/optdigits-test.csv`](data/optdigits-test.csv).
+They also use two of its [features](https://morrison-lab.github.io/lds/chapters/course-overview.html#def-feature),
+each an average of an 8 by 8 image's pixels,
+with rows and columns counted from 0:
+
+- [center ink](course-overview.qmd#sol-zero-or-one), over rows 2 to 5 and columns 3 and 4;
+- [left ink](course-overview.qmd#sol-three-or-eight), over rows 2 to 5 and columns 0 to 2.
+
+```{python}
+#| code-fold: true
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+
+digits = pd.read_csv("data/optdigits-test.csv", header=None)
+pixels = digits.iloc[:, :64].to_numpy()
+labels = digits[64].to_numpy()
+images = pixels.reshape(-1, 8, 8)
+
+center_ink = images[:, 2:6, 3:5].mean(axis=(1, 2))
+left_ink = images[:, 2:6, 0:3].mean(axis=(1, 2))
+print(images.shape, center_ink[:5], left_ink[:5])
+```

@@ -1,0 +1,36 @@
+::: {#sol-held-out-averages}
+
+```{python}
+#| code-fold: show
+rng = np.random.default_rng(481)
+order = rng.permutation(len(labels))
+train, test = order[: len(labels) // 2], order[len(labels) // 2 :]
+hand_features = np.column_stack([center_ink, left_ink])
+
+def accuracy(predicted, actual):
+    return np.mean(predicted == actual)
+
+def nearest(points, references):
+    """Index of the nearest row of `references` to each row of `points`."""
+    distances = ((points[:, None, :] - references[None, :, :]) ** 2).sum(axis=2)
+    return distances.argmin(axis=1)
+
+means = np.array(
+    [hand_features[train][labels[train] == k].mean(axis=0) for k in range(10)]
+)
+acc_mean_train = accuracy(nearest(hand_features[train], means), labels[train])
+acc_mean_test = accuracy(nearest(hand_features[test], means), labels[test])
+print(len(train), len(test), round(acc_mean_train, 3), round(acc_mean_test, 3))
+```
+
+The rule gets `r sprintf("%.1f", 100 * py$acc_mean_train)`% of the [training set](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-training-set) right
+and `r sprintf("%.1f", 100 * py$acc_mean_test)`% of the [test set](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-test-set).
+The two shares are close:
+ten digit averages, twenty numbers in all,
+leave the rule little room to fit the training set's quirks,
+so its [training error](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-training-error)
+says roughly what its [test error](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-test-error) will be.
+The test share came out a little higher only by the luck of this split;
+another random split could put it a little lower.
+
+:::

@@ -1,0 +1,7 @@
+::: {#exr-cutoff-criterion}
+
+#### How the 0-or-1 rule chose
+
+By what criterion did the search of @exr-cutoff-choice pick one cutoff over another?
+
+:::

@@ -1,0 +1,21 @@
+::: {#exr-log-loss-curve}
+
+#### The log loss against the cutoff
+
+Swap the 0-or-1 rule for a soft version,
+which gives each image a probability of being a 1:
+
+$$\hprob = \sigmoidf{\predvar - \param},$$
+
+where
+
+- $\predvar$ is the image's center ink,
+- $\param$ is the cutoff, the rule's one [parameter](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter),
+- $\sigmoid$ is the [logistic function](https://morrison-lab.github.io/lds/chapters/logistic-regression.html#exm-logistic-function), $\sigmoidf{z} = 1 / (1 + \expf{-z})$,
+- and $\hprob$ is the probability the rule gives that the image is a 1.
+
+Among the 0s and 1s,
+plot the mean [log loss](https://morrison-lab.github.io/lds/chapters/logistic-regression.html#def-log-loss) of this rule against $\param$,
+over the cutoffs of @exr-error-rate-curve.
+
+:::

@@ -1,0 +1,128 @@
+---
+title: "Machine Learning Review"
+format:
+  html: default
+  revealjs:
+    output-file: ml-review-slides.html
+  pdf:
+    output-file: ml-review-handout.pdf
+resources:
+  - data/optdigits-test.csv
+---
+
+```{r}
+# The Python chunks on this page import these; reticulate provisions them.
+# Attaching reticulate gives the inline R its `py` object.
+library(reticulate)
+py_require(c("numpy", "pandas", "matplotlib"))
+```
+
+::: notes
+The order of topics in these notes follows Brian Hutchinson's CSCI 481/581,
+used with his permission;
+his [machine learning](https://morrison-lab.github.io/lds/chapters/course-overview.html#def-machine-learning) review module is condensed here into a page that links to lds.
+The exercises are new.
+:::
+
+# Welcome
+
+## Plan for this lecture
+
+{{< include _subfiles/ml-review/_plan_sec.qmd >}}
+
+## The digits again
+
+{{< include _subfiles/ml-review/_digits-again_sec.qmd >}}
+
+# The parts of a learning problem
+
+## Candidate rules and their parameter
+
+<!-- heading shares the slide; do not re-flag -->
+
+{{< include _subfiles/ml-review/_cutoff-choice_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/ml-review/_cutoff-choice_sol.qmd >}}
+
+## The loss
+
+<!-- heading shares the slide; do not re-flag -->
+
+{{< include _subfiles/ml-review/_cutoff-criterion_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/ml-review/_cutoff-criterion_sol.qmd >}}
+
+# Losses to train on
+
+## The error rate
+
+<!-- heading shares the slide; do not re-flag -->
+
+{{< include _subfiles/ml-review/_error-rate-curve_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/ml-review/_error-rate-curve_sol.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/ml-review/_train-on-errors_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/ml-review/_train-on-errors_sol.qmd >}}
+
+## A smooth loss
+
+<!-- heading shares the slide; do not re-flag -->
+
+{{< include _subfiles/ml-review/_log-loss-curve_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/ml-review/_log-loss-curve_sol.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/ml-review/_smooth-loss_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/ml-review/_smooth-loss_sol.qmd >}}
+
+# Judging a model
+
+## Held-out data
+
+<!-- heading shares the slide; do not re-flag -->
+
+{{< include _subfiles/ml-review/_held-out-averages_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/ml-review/_held-out-averages_sol.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/ml-review/_nearest-image_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/ml-review/_nearest-image_sol.qmd >}}
+
+# What carries over
+
+## From one cutoff to a deep network
+
+{{< include _subfiles/ml-review/_carry-over_sec.qmd >}}
+
+{{< include _subfiles/ml-review/_ml-basics_read.qmd >}}
+
+# References {#references .unnumbered}
+
+::: {#refs}
+:::
