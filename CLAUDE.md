@@ -56,6 +56,8 @@ so never link the videos or name the login here.
   `set-mtimes-from-git.py` makes `date: last-modified` show a page's last commit,
   `build_math_macros.py` turns the shared math macros into header files,
   and `provision-python.R` has reticulate fetch Python before any page loads.
+  `use-torch.R` is sourced by each page that uses PyTorch, from its setup chunk,
+  and applies `reticulate_logging_patch.py`.
 - `filters/` --- Lua filters:
   `unlink-pages.lua` (PDF only) turns links to other pages into text, since each handout is shared on its own;
   `rule-table-rows.lua` (PDF only) rules the rows of a `.ruled-rows` table;
