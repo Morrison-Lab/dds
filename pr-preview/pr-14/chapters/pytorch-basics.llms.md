@@ -19,7 +19,7 @@ source("../tools/use-torch.R")
 use_torch(c("numpy", "pandas", "matplotlib"))
 ```
 
-Brian Hutchinson’s CSCI 481/581 sets the order of topics in these notes, which follow it with his permission; his module on the course’s tools is the starting point for this page. The exercises are new, except that the two exercises on the soft rule as a PyTorch model and on leaving out `zero_grad` adapt questions L.4 to L.8 of his Lab 2 (Winter 2025).
+Brian Hutchinson’s CSCI 481/581 sets the order of topics in these notes, which follow it with his permission; his module on the course’s tools is the starting point for this page. The exercises are new, except that the three exercises of the section on training a model adapt questions L.4 to L.8 of his Lab 2 (Winter 2025).
 
 # 1 Welcome
 
@@ -313,11 +313,11 @@ All code in these notes, and in the homework, uses PyTorch [\[1\]](#ref-paszke20
 >
 >     5.816511361445009e-07
 >
-> `mean_image` has [shape](#def-shape) (8, 8) and `images` has shape (1797, 8, 8), yet PyTorch subtracts one from the other. It uses the one average image for every image, as if `mean_image` had been copied 1797 times along a new first dimension, without making the copies. Each pixel of `centered` now averages to 0 over the images, to within 5.8e-07, a floating-point rounding error.
+> `mean_image` has [shape](#def-shape) (8, 8), and `images` has shape (1797, 8, 8), yet PyTorch subtracts one from the other. It uses the one average image for every image, as if `mean_image` had been copied 1797 times along a new first dimension, without making the copies. Each pixel of `centered` now averages to 0 over the images, to within 5.8e-07, a floating-point rounding error.
 
 > **NOTE:**
 >
-> **Definition 4 (Broadcasting)** **Broadcasting** is how an elementwise operation such as `+`, `-`, `*` or `/` combines two [tensors](#def-tensor) of different [shapes](#def-shape) [\[3, Sec. 2.1\]](#ref-goodfellow2016deep). Line the two shapes up from their last dimension backwards, and treat a dimension that one [tensor](#def-tensor) lacks at the front as having size 1. The shapes are compatible when, in every dimension, the two sizes are equal or one of them is 1. In each dimension the result takes the size that is not 1, or the common size when the two are equal, and a tensor with size 1 in a dimension uses its one entry along the whole of it. When the shapes are not compatible, PyTorch raises an error. PyTorch’s [broadcasting semantics](https://docs.pytorch.org/docs/stable/notes/broadcasting.html) page states the same rule, which PyTorch takes from NumPy.
+> **Definition 4 (Broadcasting)** **Broadcasting** is how an elementwise operation such as `+`, `-`, `*` or `/` combines two [tensors](#def-tensor) of different [shapes](#def-shape) [\[3, Sec. 2.1\]](#ref-goodfellow2016deep). Line the two shapes up from their last dimension backwards, and treat a dimension that one [tensor](#def-tensor) lacks at the front as having size 1. The shapes are compatible when, in every dimension, the two sizes are equal or one of them is 1. In each dimension, the result takes the size that is not 1, or the common size when the two are equal. A tensor with size 1 in a dimension uses its one entry along the whole of it. When the shapes are not compatible, PyTorch raises an error. PyTorch’s [broadcasting semantics](https://docs.pytorch.org/docs/stable/notes/broadcasting.html) page states the same rule, which PyTorch takes from NumPy.
 
 > **NOTE:**
 >
@@ -347,7 +347,7 @@ All code in these notes, and in the homework, uses PyTorch [\[1\]](#ref-paszke20
 >
 >     torch.Size([1797, 8, 8])
 >
-> In [Solution 6](#sol-center-images), the [shapes](#def-shape) (1797, 8, 8) and (8, 8) line up as 8 with 8, 8 with 8, and 1797 with a missing dimension, which counts as 1, so the result has [shape](#def-shape) (1797, 8, 8). A single row of the average image, of shape (8,), is also compatible: it is used for every row of every image. So is a shape of (1797, 1, 1), one number per image, which is used for every pixel of its image. `torch.broadcast_shapes` applies the rule to shapes alone, without any data.
+> In [Solution 6](#sol-center-images), the [shapes](#def-shape) (1797, 8, 8) and (8, 8) line up as 8 with 8, 8 with 8, and 1797 with a missing dimension, which counts as 1. So the result has [shape](#def-shape) (1797, 8, 8). A single row of the average image, of shape (8,), is also compatible: it is used for every row of every image. So is a shape of (1797, 1, 1), one number per image, which is used for every pixel of its image. `torch.broadcast_shapes` applies the rule to shapes alone, without any data.
 
 > **NOTE:**
 >
@@ -381,7 +381,7 @@ All code in these notes, and in the homework, uses PyTorch [\[1\]](#ref-paszke20
 >
 >     torch.Size([1797, 1, 1]) torch.Size([1797, 8, 8]) True
 >
-> `.amax(dim=(1, 2))` takes the largest pixel over each image’s rows and columns, giving one number per image, a [tensor](#def-tensor) of [shape](#def-shape) (1797,). Dividing by it fails. By [Definition 4](#def-broadcasting), the last dimensions line up first, and they are 8 and 1797, which differ with neither equal to 1. `keepdim=True` makes `.amax` keep the two dimensions it reduced, with size 1, so the largest pixels have shape (1797, 1, 1), which broadcasts against (1797, 8, 8) as in [Example 4](#exm-broadcasting). Every scaled image has 1 as its largest pixel.
+> `.amax(dim=(1, 2))` takes the largest pixel over each image’s rows and columns, giving one number per image, a [tensor](#def-tensor) of [shape](#def-shape) (1797,). Dividing by it fails. By [Definition 4](#def-broadcasting), the last dimensions line up first, and they are 8 and 1797. These sizes differ, and neither is 1. `keepdim=True` makes `.amax` keep the two dimensions it reduced, with size 1. So the largest pixels have shape (1797, 1, 1), and that shape broadcasts against (1797, 8, 8) as in [Example 4](#exm-broadcasting). Every scaled image has 1 as its largest pixel.
 
 ## 2.5 Tensors and NumPy arrays
 
@@ -686,7 +686,7 @@ where \\\outvar_i\\ is 1 if image \\i\\ is a 1 and 0 if it is a 0.
 
 > **NOTE:**
 >
-> **Exercise 16 (The soft rule as a PyTorch model)** Write the [soft 0-or-1 rule](../chapters/ml-review.llms.md#exr-log-loss-curve) as a subclass of PyTorch’s `nn.Module` whose cutoff is an `nn.Parameter`, and train it with `torch.optim.SGD`, from the start, learning rate and number of steps of [Exercise 14](#exr-autograd-descent).
+> **Exercise 16 (The soft rule as a PyTorch model)** Write the [soft 0-or-1 rule](../chapters/ml-review.llms.md#exr-log-loss-curve) as a subclass of PyTorch’s `nn.Module` whose cutoff is an `nn.Parameter` that starts at 0.
 
 > **NOTE:**
 >
@@ -710,6 +710,27 @@ where \\\outvar_i\\ is 1 if image \\i\\ is a 1 and 0 if it is a 0.
 >
 >
 > rule = SoftRule()
+> print(list(rule.parameters()))
+> ```
+>
+>     [Parameter containing:
+>     tensor(0., dtype=torch.float64, requires_grad=True)]
+>
+> - `__init__` runs `nn.Module`’s own setup, then creates the cutoff. Assigning an `nn.Parameter`, a wrapped [tensor](#def-tensor), to an attribute of the module registers it, so `rule.parameters()` returns it, as the printout shows. An `nn.Parameter` is created with `requires_grad=True`.
+> - `forward` computes the probability of a 1 for each image’s center ink. Calling the module, as `rule(ink_01)`, runs `forward`.
+
+> **NOTE:**
+>
+> **Exercise 17 (Training the soft rule with an optimizer)** Train a `SoftRule` from [Solution 16](#sol-soft-rule-module) with `torch.optim.SGD`, using the start, learning rate and number of steps of [Exercise 14](#exr-autograd-descent).
+
+> **NOTE:**
+>
+> *Solution 17*.
+>
+> Show code
+>
+> ``` python
+> rule = SoftRule()
 > optimizer = torch.optim.SGD(rule.parameters(), lr=learning_rate)
 > for step in range(100):
 >     optimizer.zero_grad()
@@ -718,17 +739,14 @@ where \\\outvar_i\\ is 1 if image \\i\\ is a 1 and 0 if it is a 0.
 >     optimizer.step()
 > theta_module = rule.cutoff.item()
 > module_gap = abs(theta_module - theta_descent)
-> print(list(rule.parameters()), theta_module, module_gap)
+> print(theta_module, module_gap)
 > ```
 >
->     [Parameter containing:
->     tensor(6.5996, dtype=torch.float64, requires_grad=True)] 6.59960743783184 0.0
+>     6.59960743783184 0.0
 >
-> The cutoff ends at 6.5996, where the loop of [Solution 14](#sol-autograd-descent) ended, exactly. The code splits that loop into the parts that `nn.Module` and `torch.optim` expect:
+> The trained `SoftRule` has its cutoff at 6.5996, where the loop of [Solution 14](#sol-autograd-descent) ended, exactly. The code splits that loop into the parts that `torch.optim` expects:
 >
-> - `__init__` runs `nn.Module`’s own setup, then creates the cutoff. Assigning an `nn.Parameter`, a wrapped [tensor](#def-tensor), to an attribute of the module registers it, so `rule.parameters()` returns it, as the printout shows, and the optimizer updates it. An `nn.Parameter` is created with `requires_grad=True`.
-> - `forward` computes the probability of a 1 for each image’s center ink. Calling the module, as `rule(ink_01)`, runs `forward`.
-> - `nn.functional.binary_cross_entropy` computes the mean [log loss](https://morrison-lab.github.io/lds/chapters/logistic-regression.html#def-log-loss), \\\emprisk\\, from the probabilities and the 0-or-1 labels.
+> - [`nn.functional.binary_cross_entropy`](https://docs.pytorch.org/docs/stable/generated/torch.nn.functional.binary_cross_entropy.html) computes the mean [log loss](https://morrison-lab.github.io/lds/chapters/logistic-regression.html#def-log-loss), \\\emprisk\\, from the probabilities and the 0-or-1 labels.
 > - `optimizer.zero_grad()` clears the gradient stored from the previous step.
 > - `loss.backward()` computes the derivative of the loss with respect to the cutoff, as `torch.autograd.grad` did, but stores it in the cutoff’s `.grad` instead of returning it.
 > - `optimizer.step()` moves the cutoff by minus the learning rate times its `.grad`, the update that [Solution 14](#sol-autograd-descent) ran inside `torch.no_grad()`.
@@ -765,17 +783,17 @@ where \\\outvar_i\\ is 1 if image \\i\\ is a 1 and 0 if it is a 0.
 >
 >     None -0.3759104821764343 1.5036419287057372
 >
-> The code runs the first [training step](#def-training-step) of [Solution 16](#sol-soft-rule-module) one call at a time. A new [parameter](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter) has no stored gradient, so its `.grad` is `None`. After `loss.backward()`, the cutoff’s `.grad` holds the slope of \\\emprisk\\ at \\\param = 0\\, -0.3759, and `optimizer.step()` moves the cutoff from 0 to \\0 - 4 \times (-0.3759) = 1.5036\\.
+> The code runs the first [training step](#def-training-step) of [Solution 17](#sol-train-soft-rule) one call at a time. A new [parameter](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter) has no stored gradient, so its `.grad` is `None`. After `loss.backward()`, the cutoff’s `.grad` holds the slope of \\\emprisk\\ at \\\param = 0\\, -0.3759. Then `optimizer.step()` moves the cutoff from 0 to \\0 - 4 \times (-0.3759) = 1.5036\\.
 
 ## 4.2 Leaving out `zero_grad`
 
 > **NOTE:**
 >
-> **Exercise 17 (Leaving out `zero_grad`)** Train a new `SoftRule` as in [Solution 16](#sol-soft-rule-module), but without the call to `optimizer.zero_grad()`. Why does the cutoff end up where it does?
+> **Exercise 18 (Leaving out `zero_grad`)** What happens to the cutoff of a new `SoftRule` trained as in [Solution 17](#sol-train-soft-rule), but without the call to `optimizer.zero_grad()`?
 
 > **NOTE:**
 >
-> *Solution 17*.
+> *Solution 18*.
 >
 > Show code
 >
@@ -792,12 +810,24 @@ where \\\outvar_i\\ is 1 if image \\i\\ is a 1 and 0 if it is a 0.
 > theta_stale = stale_cutoffs[-1]
 > sides = np.sign(np.array(stale_cutoffs) - theta_module)
 > n_crossings = int(np.sum(sides[1:] != sides[:-1]))
-> print(theta_stale, stale_grads[:2], min(stale_cutoffs), max(stale_cutoffs), n_crossings)
+> # Steps taken from a cutoff already past theta_module with a summed gradient
+> # that is still negative, so the step moves the cutoff further past it.
+> cutoffs_before = np.array([0.0] + stale_cutoffs[:-1])
+> n_overshoot = int(np.sum((cutoffs_before > theta_module) & (np.array(stale_grads) < 0)))
+> print(theta_stale, stale_grads[:2], min(stale_cutoffs), max(stale_cutoffs))
 > ```
 >
->     13.715047620391509 [-0.3759104821764343, -0.619865330559432] -0.20192185662741569 14.864360430182934 13
+>     13.715047620391509 [-0.3759104821764343, -0.619865330559432] -0.20192185662741569 14.864360430182934
 >
-> The cutoff ends at 13.7150, not at 6.5996. `loss.backward()` adds each new gradient to the one already in `.grad`, so without `optimizer.zero_grad()` the gradient used at each step is the sum of the gradients of every step so far. The first step is the same as in [Example 8](#exm-training-step), with `.grad` at -0.3759, but at the second step `.grad` is -0.6199, the first step’s gradient plus the second’s. The sum stays negative after the cutoff passes the lowest point of \\\emprisk\\, until enough positive slopes beyond it have been added, so the cutoff overshoots and swings back: over the 100 steps it ranges from -0.20 to 14.86, and crosses 6.5996 13 times. PyTorch adds rather than replaces so that a gradient can be built up over several backward passes, for example over pieces of a batch too large to fit in memory at once.
+> Show code
+>
+> ``` python
+> print(n_crossings, n_overshoot)
+> ```
+>
+>     13 26
+>
+> The cutoff ends at 13.7150, not at 6.5996. `loss.backward()` adds each new gradient to the one already in `.grad`. So without `optimizer.zero_grad()`, the gradient used at each step is the sum of the gradients of every step so far. The first step is the same as in [Example 8](#exm-training-step), with `.grad` at -0.3759. At the second step, `.grad` is -0.6199, the first step’s gradient plus the second’s. At 26 of the 100 steps, the cutoff was already past 6.5996, the lowest point of \\\emprisk\\, and the summed gradient was still negative, so the step moved the cutoff further past it. The cutoff overshoots and swings back. Over the 100 steps, it ranges from -0.20 to 14.86 and crosses 6.5996 13 times. PyTorch adds rather than replaces so that a gradient can be built up over several backward passes, for example over pieces of a batch too large to fit in memory at once.
 
 # References
 
