@@ -51,6 +51,10 @@ website:
   back-to-top-navigation: true
   page-navigation: true
   reader-mode: true
+  # Quarto opens search on a bare "f" or "s" keyup, which also fires after
+  # Ctrl/Cmd-F (find in page) and Ctrl/Cmd-S (save). Keep only "/".
+  search:
+    keyboard-shortcut: ["/"]
   page-footer:
     left:
       - text: "Ezra Morrison"
