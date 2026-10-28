@@ -1,0 +1,20 @@
+::: {#sol-center-images}
+
+```{python}
+#| code-fold: show
+mean_image = images.float().mean(dim=0)
+centered = images.float() - mean_image
+largest_mean = centered.mean(dim=0).abs().max().item()
+print(images.shape, mean_image.shape, centered.shape)
+print(largest_mean)
+```
+
+`mean_image` has [shape](#def-shape) (8, 8) and `images` has shape (`r py$n_images`, 8, 8),
+yet PyTorch subtracts one from the other.
+It uses the one average image for every image,
+as if `mean_image` had been copied `r py$n_images` times along a new first dimension,
+without making the copies.
+Each pixel of `centered` now averages to 0 over the images,
+to within `r format(py$largest_mean, digits = 2)`, a floating-point rounding error.
+
+:::

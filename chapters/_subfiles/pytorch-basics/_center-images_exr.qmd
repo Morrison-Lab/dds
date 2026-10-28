@@ -1,0 +1,7 @@
+::: {#exr-center-images}
+
+#### Centering the images
+
+Subtract the average of all the images from each image, without a loop.
+
+:::

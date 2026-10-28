@@ -1,0 +1,16 @@
+::: {#def-broadcasting}
+
+#### Broadcasting
+
+**Broadcasting** is how an elementwise operation such as `+`, `-`, `*` or `/` combines two [tensors](#def-tensor) of different [shapes](#def-shape)
+[@goodfellow2016deep, section 2.1].
+Line the two shapes up from their last dimension backwards,
+and treat a dimension that one [tensor](#def-tensor) lacks at the front as having size 1.
+The shapes are compatible when, in every dimension, the two sizes are equal or one of them is 1.
+The result takes the larger size in each dimension,
+and a tensor with size 1 in a dimension uses its one entry along the whole of it.
+When the shapes are not compatible, PyTorch raises an error.
+PyTorch's [broadcasting semantics](https://docs.pytorch.org/docs/stable/notes/broadcasting.html) page states the same rule,
+which PyTorch takes from NumPy.
+
+:::

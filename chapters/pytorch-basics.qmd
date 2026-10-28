@@ -22,7 +22,8 @@ use_torch(c("numpy", "pandas", "matplotlib"))
 Brian Hutchinson's CSCI 481/581 sets the order of topics in these notes,
 which follow it with his permission;
 his module on the course's tools is the starting point for this page.
-The exercises are new.
+The exercises are new,
+except that the exercises on PyTorch's optimizers adapt questions from his Lab 2.
 :::
 
 # Welcome
@@ -102,6 +103,32 @@ The exercises are new.
 {{< slidebreak >}}
 
 {{< include _subfiles/pytorch-basics/_draw-averages_sol.qmd >}}
+
+## Tensors of different shapes
+
+<!-- heading shares the slide; do not re-flag -->
+
+{{< include _subfiles/pytorch-basics/_center-images_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/pytorch-basics/_center-images_sol.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/pytorch-basics/_broadcasting_def.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/pytorch-basics/_broadcasting_exm.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/pytorch-basics/_scale-images_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/pytorch-basics/_scale-images_sol.qmd >}}
 
 ## Tensors and NumPy arrays
 
@@ -208,6 +235,32 @@ The exercises are new.
 {{< slidebreak >}}
 
 {{< include _subfiles/pytorch-basics/_descent-vs-grid_sol.qmd >}}
+
+## Training with an optimizer
+
+<!-- heading shares the slide; do not re-flag -->
+
+{{< include _subfiles/pytorch-basics/_soft-rule-module_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/pytorch-basics/_soft-rule-module_sol.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/pytorch-basics/_training-step_def.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/pytorch-basics/_training-step_exm.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/pytorch-basics/_skip-zero-grad_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/pytorch-basics/_skip-zero-grad_sol.qmd >}}
 
 # References {#references .unnumbered}
 

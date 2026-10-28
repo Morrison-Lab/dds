@@ -1,0 +1,27 @@
+::: {#sol-scale-images}
+
+```{python}
+#| code-fold: show
+largest = images.float().amax(dim=(1, 2))
+try:
+    images.float() / largest
+except RuntimeError as err:
+    print(textwrap.fill(str(err), 60))
+
+largest = images.float().amax(dim=(1, 2), keepdim=True)
+scaled = images.float() / largest
+all_ones = bool((scaled.amax(dim=(1, 2)) == 1).all())
+print(largest.shape, scaled.shape, all_ones)
+```
+
+`.amax(dim=(1, 2))` takes the largest pixel over each image's rows and columns,
+giving one number per image, a [tensor](#def-tensor) of [shape](#def-shape) (`r py$n_images`,).
+Dividing by it fails.
+By @def-broadcasting, the last dimensions line up first,
+and they are 8 and `r py$n_images`, which differ with neither equal to 1.
+`keepdim=True` keeps the two dimensions it reduced, with size 1,
+so the largest pixels have shape (`r py$n_images`, 1, 1),
+which broadcasts against (`r py$n_images`, 8, 8) as in @exm-broadcasting.
+`r if (py$all_ones) "Every" else "Not every"` scaled image has 1 as its largest pixel.
+
+:::

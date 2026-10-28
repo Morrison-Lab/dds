@@ -1,0 +1,21 @@
+::: {#exm-broadcasting}
+
+#### Broadcasting the average image
+
+```{python}
+#| code-fold: show
+print(torch.broadcast_shapes(images.shape, mean_image.shape))
+print(torch.broadcast_shapes(images.shape, mean_image[0].shape))
+print(torch.broadcast_shapes(images.shape, (len(images), 1, 1)))
+```
+
+In @sol-center-images, the [shapes](#def-shape) (`r py$n_images`, 8, 8) and (8, 8) line up as 8 with 8, 8 with 8,
+and `r py$n_images` with a missing dimension, which counts as 1,
+so the result has [shape](#def-shape) (`r py$n_images`, 8, 8).
+A single row of the average image, of shape (8,), is also compatible:
+it is used for every row of every image.
+So is a shape of (`r py$n_images`, 1, 1), one number per image,
+which is used for every pixel of its image.
+`torch.broadcast_shapes` applies the rule to shapes alone, without any data.
+
+:::

@@ -1,0 +1,49 @@
+::: {#sol-soft-rule-module}
+
+```{python}
+#| code-fold: show
+from torch import nn
+
+
+class SoftRule(nn.Module):
+    """The soft 0-or-1 rule, with its cutoff as a parameter."""
+
+    def __init__(self):
+        super().__init__()
+        self.cutoff = nn.Parameter(torch.tensor(0.0, dtype=torch.float64))
+
+    def forward(self, ink):
+        return torch.sigmoid(ink - self.cutoff)
+
+
+rule = SoftRule()
+optimizer = torch.optim.SGD(rule.parameters(), lr=learning_rate)
+for step in range(100):
+    optimizer.zero_grad()
+    loss = nn.functional.binary_cross_entropy(rule(ink_01), is_one)
+    loss.backward()
+    optimizer.step()
+theta_module = rule.cutoff.item()
+module_gap = abs(theta_module - theta_descent)
+print(list(rule.parameters()), theta_module, module_gap)
+```
+
+The cutoff ends at `r sprintf("%.4f", py$theta_module)`,
+where the loop of @sol-autograd-descent ended,
+`r if (py$module_gap == 0) "exactly" else paste("to within", format(py$module_gap, digits = 2))`.
+The code splits that loop into parts that PyTorch provides:
+
+- `__init__` runs `nn.Module`'s own setup, then creates the cutoff.
+  Wrapping a [tensor](#def-tensor) in `nn.Parameter` registers it with the module,
+  so `rule.parameters()` returns it, as the printout shows, and the optimizer updates it.
+  An `nn.Parameter` is created with `requires_grad=True`.
+- `forward` computes the probability of a 1 for each image's center ink.
+  Calling the module, as `rule(ink_01)`, runs `forward`.
+- `nn.functional.binary_cross_entropy` computes the mean [log loss](https://morrison-lab.github.io/lds/chapters/logistic-regression.html#def-log-loss), $\emprisk$, from the probabilities and the 0-or-1 labels.
+- `optimizer.zero_grad()` clears the gradient stored from the previous step.
+- `loss.backward()` computes the derivative of the loss with respect to the cutoff, as `torch.autograd.grad` did,
+  but stores it in the cutoff's `.grad` instead of returning it.
+- `optimizer.step()` moves the cutoff by minus the learning rate times its `.grad`,
+  the update that @sol-autograd-descent ran inside `torch.no_grad()`.
+
+:::
