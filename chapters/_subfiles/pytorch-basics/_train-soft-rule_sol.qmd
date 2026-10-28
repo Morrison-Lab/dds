@@ -1,0 +1,31 @@
+::: {#sol-train-soft-rule}
+
+```{python}
+#| code-fold: show
+rule = SoftRule()
+optimizer = torch.optim.SGD(rule.parameters(), lr=learning_rate)
+for step in range(100):
+    optimizer.zero_grad()
+    loss = nn.functional.binary_cross_entropy(rule(ink_01), is_one)
+    loss.backward()
+    optimizer.step()
+theta_module = rule.cutoff.item()
+module_gap = abs(theta_module - theta_descent)
+print(theta_module, module_gap)
+```
+
+The trained `SoftRule` has its cutoff at `r sprintf("%.4f", py$theta_module)`,
+where the loop of @sol-autograd-descent ended,
+`r if (py$module_gap == 0) "exactly" else paste("to within", format(py$module_gap, digits = 2))`.
+The code splits that loop into the parts that `torch.optim` expects:
+
+- [`nn.functional.binary_cross_entropy`](https://docs.pytorch.org/docs/stable/generated/torch.nn.functional.binary_cross_entropy.html) computes the mean [log loss](https://morrison-lab.github.io/lds/chapters/logistic-regression.html#def-log-loss), $\emprisk$,
+  from the probabilities and the 0-or-1 labels.
+- `optimizer.zero_grad()` clears the gradient stored from the previous step.
+- `loss.backward()` computes the derivative of the loss with respect to the cutoff,
+  as `torch.autograd.grad` did,
+  but stores it in the cutoff's `.grad` instead of returning it.
+- `optimizer.step()` moves the cutoff by minus the learning rate times its `.grad`,
+  the update that @sol-autograd-descent ran inside `torch.no_grad()`.
+
+:::

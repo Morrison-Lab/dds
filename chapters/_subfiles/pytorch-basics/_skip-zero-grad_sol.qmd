@@ -14,23 +14,34 @@ for step in range(100):
 theta_stale = stale_cutoffs[-1]
 sides = np.sign(np.array(stale_cutoffs) - theta_module)
 n_crossings = int(np.sum(sides[1:] != sides[:-1]))
-print(theta_stale, stale_grads[:2], min(stale_cutoffs), max(stale_cutoffs), n_crossings)
+# Steps taken from a cutoff already past theta_module with a summed gradient
+# that is still negative, so the step moves the cutoff further past it.
+cutoffs_before = np.array([0.0] + stale_cutoffs[:-1])
+n_overshoot = int(np.sum((cutoffs_before > theta_module) & (np.array(stale_grads) < 0)))
+print(theta_stale, stale_grads[:2], min(stale_cutoffs), max(stale_cutoffs))
+print(n_crossings, n_overshoot)
 ```
 
 The cutoff ends at `r sprintf("%.4f", py$theta_stale)`,
 not at `r sprintf("%.4f", py$theta_module)`.
-`loss.backward()` adds each new gradient to the one already in `.grad`,
-so without `optimizer.zero_grad()` the gradient used at each step is the sum of the gradients of every step so far.
+`loss.backward()` adds each new gradient to the one already in `.grad`.
+So without `optimizer.zero_grad()`,
+the gradient used at each step is the sum of the gradients of every step so far.
 The first step is the same as in @exm-training-step,
-with `.grad` at `r sprintf("%.4f", py$stale_grads[[1]])`,
-but at the second step `.grad` is `r sprintf("%.4f", py$stale_grads[[2]])`,
+with `.grad` at `r sprintf("%.4f", py$stale_grads[[1]])`.
+At the second step,
+`.grad` is `r sprintf("%.4f", py$stale_grads[[2]])`,
 the first step's gradient plus the second's.
-The sum stays negative after the cutoff passes the lowest point of $\emprisk$,
-until enough positive slopes beyond it have been added,
-so the cutoff overshoots and swings back:
-over the 100 steps it ranges from `r sprintf("%.2f", min(unlist(py$stale_cutoffs)))` to `r sprintf("%.2f", max(unlist(py$stale_cutoffs)))`,
+At `r py$n_overshoot` of the 100 steps,
+the cutoff was already past `r sprintf("%.4f", py$theta_module)`, the lowest point of $\emprisk$,
+and the summed gradient was still negative,
+so the step moved the cutoff further past it.
+The cutoff overshoots and swings back.
+Over the 100 steps,
+it ranges from `r sprintf("%.2f", min(unlist(py$stale_cutoffs)))` to `r sprintf("%.2f", max(unlist(py$stale_cutoffs)))`
 and crosses `r sprintf("%.4f", py$theta_module)` `r py$n_crossings` times.
-PyTorch adds rather than replaces so that a gradient can be built up over several backward passes,
+PyTorch adds rather than replaces
+so that a gradient can be built up over several backward passes,
 for example over pieces of a batch too large to fit in memory at once.
 
 :::

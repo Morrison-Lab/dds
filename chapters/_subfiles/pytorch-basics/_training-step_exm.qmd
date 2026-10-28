@@ -16,10 +16,13 @@ cutoff_after_step = one_rule.cutoff.item()
 print(grad_at_start, grad_after_backward, cutoff_after_step)
 ```
 
-The code runs the first [training step](#def-training-step) of @sol-soft-rule-module one call at a time.
-A new [parameter](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter) has no stored gradient, so its `.grad` is `None`.
-After `loss.backward()`, the cutoff's `.grad` holds the slope of $\emprisk$ at $\param = 0$,
-`r sprintf("%.4f", py$grad_after_backward)`,
-and `optimizer.step()` moves the cutoff from 0 to $0 - `r py$learning_rate` \times (`r sprintf("%.4f", py$grad_after_backward)`) = `r sprintf("%.4f", py$cutoff_after_step)`$.
+The code runs the first [training step](#def-training-step) of @sol-train-soft-rule one call at a time.
+A new [parameter](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter) has no stored gradient,
+so its `.grad` is `None`.
+After `loss.backward()`,
+the cutoff's `.grad` holds the slope of $\emprisk$ at $\param = 0$,
+`r sprintf("%.4f", py$grad_after_backward)`.
+Then `optimizer.step()` moves the cutoff from 0 to
+$0 - `r py$learning_rate` \times (`r sprintf("%.4f", py$grad_after_backward)`) = `r sprintf("%.4f", py$cutoff_after_step)`$.
 
 :::

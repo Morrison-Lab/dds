@@ -1,0 +1,8 @@
+::: {#exr-train-soft-rule}
+
+#### Training the soft rule with an optimizer
+
+Train a `SoftRule` from @sol-soft-rule-module with `torch.optim.SGD`,
+using the start, learning rate and number of steps of @exr-autograd-descent.
+
+:::

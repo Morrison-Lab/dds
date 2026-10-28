@@ -18,10 +18,11 @@ print(largest.shape, scaled.shape, all_ones)
 giving one number per image, a [tensor](#def-tensor) of [shape](#def-shape) (`r py$n_images`,).
 Dividing by it fails.
 By @def-broadcasting, the last dimensions line up first,
-and they are 8 and `r py$n_images`, which differ with neither equal to 1.
-`keepdim=True` makes `.amax` keep the two dimensions it reduced, with size 1,
-so the largest pixels have shape (`r py$n_images`, 1, 1),
-which broadcasts against (`r py$n_images`, 8, 8) as in @exm-broadcasting.
+and they are 8 and `r py$n_images`.
+These sizes differ, and neither is 1.
+`keepdim=True` makes `.amax` keep the two dimensions it reduced, with size 1.
+So the largest pixels have shape (`r py$n_images`, 1, 1),
+and that shape broadcasts against (`r py$n_images`, 8, 8) as in @exm-broadcasting.
 `r if (py$all_ones) "Every" else "Not every"` scaled image has 1 as its largest pixel.
 
 :::

@@ -2,8 +2,7 @@
 
 #### Leaving out `zero_grad`
 
-Train a new `SoftRule` as in @sol-soft-rule-module,
-but without the call to `optimizer.zero_grad()`.
-Why does the cutoff end up where it does?
+What happens to the cutoff when a new `SoftRule` is trained as in @sol-train-soft-rule,
+but without the call to `optimizer.zero_grad()`?
 
 :::

@@ -23,7 +23,7 @@ Brian Hutchinson's CSCI 481/581 sets the order of topics in these notes,
 which follow it with his permission;
 his module on the course's tools is the starting point for this page.
 The exercises are new,
-except that the two exercises on the soft rule as a PyTorch model and on leaving out `zero_grad`
+except that the three exercises of the section on training a model
 adapt questions L.4 to L.8 of his Lab 2 (Winter 2025).
 :::
 
@@ -248,6 +248,14 @@ adapt questions L.4 to L.8 of his Lab 2 (Winter 2025).
 {{< slidebreak >}}
 
 {{< include _subfiles/pytorch-basics/_soft-rule-module_sol.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/pytorch-basics/_train-soft-rule_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/pytorch-basics/_train-soft-rule_sol.qmd >}}
 
 {{< slidebreak >}}
 
