@@ -4,6 +4,6 @@
 
 Train a new `SoftRule` as in @sol-soft-rule-module,
 but without the call to `optimizer.zero_grad()`.
-Where does the cutoff end up, and why?
+Why does the cutoff end up where it does?
 
 :::

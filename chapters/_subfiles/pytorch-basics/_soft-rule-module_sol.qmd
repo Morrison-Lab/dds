@@ -31,10 +31,10 @@ print(list(rule.parameters()), theta_module, module_gap)
 The cutoff ends at `r sprintf("%.4f", py$theta_module)`,
 where the loop of @sol-autograd-descent ended,
 `r if (py$module_gap == 0) "exactly" else paste("to within", format(py$module_gap, digits = 2))`.
-The code splits that loop into parts that PyTorch provides:
+The code splits that loop into the parts that `nn.Module` and `torch.optim` expect:
 
 - `__init__` runs `nn.Module`'s own setup, then creates the cutoff.
-  Wrapping a [tensor](#def-tensor) in `nn.Parameter` registers it with the module,
+  Assigning an `nn.Parameter`, a wrapped [tensor](#def-tensor), to an attribute of the module registers it,
   so `rule.parameters()` returns it, as the printout shows, and the optimizer updates it.
   An `nn.Parameter` is created with `requires_grad=True`.
 - `forward` computes the probability of a 1 for each image's center ink.

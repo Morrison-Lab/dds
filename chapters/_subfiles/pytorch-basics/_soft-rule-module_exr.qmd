@@ -5,6 +5,5 @@
 Write the [soft 0-or-1 rule](ml-review.qmd#exr-log-loss-curve) as a subclass of PyTorch's `nn.Module` whose cutoff is an `nn.Parameter`,
 and train it with `torch.optim.SGD`,
 from the start, learning rate and number of steps of @exr-autograd-descent.
-Where does the cutoff end up?
 
 :::

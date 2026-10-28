@@ -16,7 +16,7 @@ cutoff_after_step = one_rule.cutoff.item()
 print(grad_at_start, grad_after_backward, cutoff_after_step)
 ```
 
-This is the first step of @sol-soft-rule-module, one call at a time.
+The code runs the first [training step](#def-training-step) of @sol-soft-rule-module one call at a time.
 A new [parameter](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter) has no stored gradient, so its `.grad` is `None`.
 After `loss.backward()`, the cutoff's `.grad` holds the slope of $\emprisk$ at $\param = 0$,
 `r sprintf("%.4f", py$grad_after_backward)`,
