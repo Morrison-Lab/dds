@@ -3,6 +3,6 @@
 #### From an image to its loss
 
 List, in order, the operations that take one image $\vx$ with true digit $y$
-to the MLP's cross-entropy loss.
+to the [MLP](feedforward-networks.qmd#def-feedforward-network)'s [cross-entropy](https://morrison-lab.github.io/pds/expectation.html#def-cross-entropy) loss.
 
 :::

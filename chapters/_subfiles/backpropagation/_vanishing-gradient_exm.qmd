@@ -3,6 +3,6 @@
 #### The deep logistic network
 
 The 10-hidden-layer logistic network of @sol-deep-grad-norms has a [vanishing gradient](#def-vanishing-gradient):
-its first layer's weight gradient is `r sprintf("%.0e", 1 / py$shrink[["logistic"]])` times its last layer's.
+its first layer's weight gradient is about $10^{`r -round(log10(py$shrink[["logistic"]]))`}$ times its last layer's.
 
 :::

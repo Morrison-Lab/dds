@@ -9,4 +9,4 @@ This lecture opens it up for the [MLP](feedforward-networks.qmd#def-feedforward-
 4.  why the gradient can shrink layer by layer in a deep network.
 
 [lds's chapter on the same algorithm](https://morrison-lab.github.io/lds/chapters/backpropagation.html) derives it for a general network with one hidden layer, <!-- check-term-links: allow -->
-and runs more experiments on depth.
+and runs more experiments on [depth](https://morrison-lab.github.io/lds/chapters/neural-nets.html#def-depth).

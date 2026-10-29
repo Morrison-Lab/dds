@@ -13,11 +13,13 @@ $$
 &= \frac{\e{z_m}}{\sumto{k}{C} \e{z_k}}
 && \text{(only term $k = m$ depends on $z_m$)} \\
 &= \operatorname{softmax}(\vz)_m
-&& \text{(the [softmax function](https://morrison-lab.github.io/lds/chapters/multiclass-logistic-regression.html#def-softmax))}
+&& \text{(definition of softmax)}
 \end{aligned}
 $$
 
-The second term, $z_y$, has derivative 1 with respect to $z_y$ and 0 with respect to every other logit.
+The last line is the [softmax function](https://morrison-lab.github.io/lds/chapters/multiclass-logistic-regression.html#def-softmax) of $\vz$.
+
+The second term, $z_y$, has derivative 1 with respect to $z_y$ and 0 with respect to every other [logit](feedforward-networks.qmd#def-logits).
 So
 
 $$

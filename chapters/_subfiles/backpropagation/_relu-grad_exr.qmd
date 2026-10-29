@@ -2,7 +2,7 @@
 
 #### Back through the ReLU
 
-The hidden layer is $\vhidval = \operatorname{ReLU}(\vz_1)$, entry by entry,
+The [hidden layer](feedforward-networks.qmd#def-hidden-layer) is $\vhidval = \operatorname{ReLU}(\vz_1)$, entry by entry,
 and $\gradwrt{\vhidval} L$ is known.
 Find $\gradwrt{\vz_1} L$.
 

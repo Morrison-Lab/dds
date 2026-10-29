@@ -10,10 +10,10 @@ $$
 where $\odot$ multiplies entry by entry.
 Each layer back multiplies the gradient by the slopes $g'(\vz_{\layeridx})$ and by $\tp{\matr{W}_{\layeridx}}$.
 The [logistic function](https://morrison-lab.github.io/mds/functions.html#def-logistic-function)'s slope is at most $\frac{1}{4}$ ([lds's bound on it](https://morrison-lab.github.io/lds/chapters/logistic-regression.html#thm-logistic-derivative-bound)),
-and less where units [saturate](https://morrison-lab.github.io/lds/chapters/backpropagation.html#def-saturation),
+and less where [unit](feedforward-networks.qmd#def-unit)s [saturate](https://morrison-lab.github.io/lds/chapters/backpropagation.html#def-saturation),
 so unless the weights are large, every layer shrinks the gradient by a factor less than 1,
 and 10 layers multiply 10 such factors.
-The ReLU's slope is 1 wherever a unit is positive,
+The [ReLU](feedforward-networks.qmd#def-relu)'s slope is 1 wherever a [unit](feedforward-networks.qmd#def-unit) is positive,
 so in @sol-deep-grad-norms the shrinking there comes from the weights alone,
 which PyTorch starts small.
 

@@ -21,7 +21,7 @@ use_torch(c("numpy", "pandas", "matplotlib"))
 ::: notes
 Brian Hutchinson's CSCI 481/581 sets the order of topics in these notes,
 which follow it with his permission;
-this page covers the backpropagation lecture of his module on [machine learning](https://morrison-lab.github.io/lds/chapters/course-overview.html#def-machine-learning) fundamentals.
+this page covers the [backpropagation](#def-backpropagation) lecture of his module on [machine learning](https://morrison-lab.github.io/lds/chapters/course-overview.html#def-machine-learning) fundamentals.
 The exercises are new.
 The computational graph and the backward pass follow *Deep Learning*, Section 6.5 [@goodfellow2016deep]. <!-- check-term-links: allow -->
 :::

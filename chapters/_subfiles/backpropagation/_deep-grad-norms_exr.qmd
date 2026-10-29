@@ -2,7 +2,7 @@
 
 #### Gradients in a deep network
 
-Build two [MLPs](feedforward-networks.qmd#def-feedforward-network) for the digits with 10 [hidden layers](feedforward-networks.qmd#def-hidden-layer) of 32 units each,
+Build two [MLPs](feedforward-networks.qmd#def-feedforward-network) for the digits with 10 [hidden layers](feedforward-networks.qmd#def-hidden-layer) of 32 [unit](feedforward-networks.qmd#def-unit)s each,
 one with the [logistic function](https://morrison-lab.github.io/mds/functions.html#def-logistic-function) as its [activation function](feedforward-networks.qmd#def-activation-function) and one with the [ReLU](feedforward-networks.qmd#def-relu),
 and compute the gradient of each one's mean training loss.
 How does the size of the gradient with respect to each layer's weight matrix change from the last layer to the first?

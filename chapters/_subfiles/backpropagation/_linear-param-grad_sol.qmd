@@ -23,6 +23,6 @@ $$
 $$
 
 for a layer with $n$ inputs and $m$ outputs:
-an outer product with the same shape as $\matr{W}$.
+an outer product with the same [shape](pytorch-basics.qmd#def-shape) as $\matr{W}$.
 
 :::
