@@ -6,6 +6,6 @@ It covers
 
 1.  watching a [validation set](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-validation-set) during training,
     and stopping at the best point;
-2.  [weight decay](https://morrison-lab.github.io/lds/chapters/regularization.html#def-weight-decay) in PyTorch's optimizers;
+2.  weight decay in PyTorch's optimizers;
 3.  randomly switching off [units](feedforward-networks.qmd#def-unit) during training;
 4.  training on transformed copies of the training images.

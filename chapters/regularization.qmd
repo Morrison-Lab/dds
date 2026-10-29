@@ -74,6 +74,16 @@ This page's methods follow *Deep Learning*, Chapter 7 [@goodfellow2016deep]. <!-
 
 # Switching off units at random
 
+## Not relying on any one unit
+
+<!-- heading shares the slide; do not re-flag -->
+
+{{< include _subfiles/regularization/_rely-on-units_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/regularization/_rely-on-units_sol.qmd >}}
+
 ## Definition
 
 {{< include _subfiles/regularization/_dropout_def.qmd >}}
@@ -96,13 +106,33 @@ This page's methods follow *Deep Learning*, Chapter 7 [@goodfellow2016deep]. <!-
 
 <!-- heading shares the slide; do not re-flag -->
 
-{{< include _subfiles/regularization/_dropout-run_exr.qmd >}}
+{{< include _subfiles/regularization/_dropout-best_exr.qmd >}}
 
 {{< slidebreak >}}
 
-{{< include _subfiles/regularization/_dropout-run_sol.qmd >}}
+{{< include _subfiles/regularization/_dropout-best_sol.qmd >}}
+
+## Dropout after 300 epochs
+
+<!-- heading shares the slide; do not re-flag -->
+
+{{< include _subfiles/regularization/_dropout-final_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/regularization/_dropout-final_sol.qmd >}}
 
 # Transformed training images
+
+## More training images for free
+
+<!-- heading shares the slide; do not re-flag -->
+
+{{< include _subfiles/regularization/_more-images_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/regularization/_more-images_sol.qmd >}}
 
 ## Definition
 

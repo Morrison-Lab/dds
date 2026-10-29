@@ -14,20 +14,20 @@ def random_shift(images, generator):
 
 
 shift_net = make_net()
-shift_history, shift_best_state = fit(shift_net, transform=random_shift)
-shift_stopped = make_net()
-_ = shift_stopped.load_state_dict(shift_best_state)
-acc_shift = accuracy(shift_stopped, x_test, y_test)
-print(acc_shift, acc_stopped)
+shift_history, _ = fit(shift_net, transform=random_shift)
+shift_best_val = shift_history["val"].min()
+val_acc_plain = accuracy(stopped_net, x_val, y_val)
+val_acc_moved = accuracy(stopped_net, shift_images(x_val, 0, 1), y_val)
+print(shift_best_val, best_val_loss, val_acc_plain, val_acc_moved)
 ```
 
-The network trained on shifted images classifies `r sprintf("%.1f", 100 * py$acc_shift)`% of the test images correctly at its best [epoch](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-epoch),
-against `r sprintf("%.1f", 100 * py$acc_stopped)`% without shifts.
-So the answer is `r if (py$acc_shift > py$acc_stopped) "yes" else "no"`.
-Each pixel here counts the ink in a 4-by-4 block of a 32-by-32 bitmap [@alpaydin1998optdigits],
-so a one-pixel shift moves the digit by 4 pixels of the original bitmap.
-The test images are not shifted,
-so a shifted training image is unlike the images the network is tested on.
-A transformation for [data augmentation](#def-data-augmentation) should make inputs like the ones the network will see.
+`r if (py$shift_best_val < py$best_val_loss) "Yes" else "No"`.
+The lowest validation loss with shifts is `r sprintf("%.3f", py$shift_best_val)`,
+against `r sprintf("%.3f", py$best_val_loss)` without them.
+A one-pixel move is not a small change for these images.
+Each pixel counts the ink in a 4-by-4 block of a 32-by-32 bitmap [@alpaydin1998optdigits],
+so it moves the digit by 4 pixels of the original bitmap.
+The early-stopped network of @exm-early-stopping classifies `r sprintf("%.1f", 100 * py$val_acc_plain)`% of the validation images correctly,
+but only `r sprintf("%.1f", 100 * py$val_acc_moved)`% of the same images moved one pixel to the right.
 
 :::

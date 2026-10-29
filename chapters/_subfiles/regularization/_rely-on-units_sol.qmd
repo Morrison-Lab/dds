@@ -1,0 +1,8 @@
+::: {#sol-rely-on-units}
+
+Switch off a random set of [unit](feedforward-networks.qmd#def-unit)s at each [training step](pytorch-basics.qmd#def-training-step).
+A [unit](feedforward-networks.qmd#def-unit) that may be missing at any step cannot carry a prediction on its own,
+so each prediction has to rest on many [unit](feedforward-networks.qmd#def-unit)s
+[@srivastava2014dropout].
+
+:::

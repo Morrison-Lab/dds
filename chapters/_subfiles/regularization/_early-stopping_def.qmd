@@ -5,7 +5,5 @@
 **Early stopping** records the validation loss after every [epoch](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-epoch) of training,
 and returns the [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter) from the epoch with the lowest validation loss
 [@goodfellow2016deep, section 7.8].
-Training can end once the validation loss has not improved for a set number of [epochs](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-epoch),
-called the patience.
 
 :::

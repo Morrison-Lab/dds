@@ -3,18 +3,14 @@
 ```{python}
 #| code-fold: show
 noise_net = make_net()
-noise_history, noise_best_state = fit(noise_net, transform=add_noise)
+noise_history, _ = fit(noise_net, transform=add_noise)
 noise_best_val = noise_history["val"].min()
-noise_stopped = make_net()
-_ = noise_stopped.load_state_dict(noise_best_state)
-acc_noise = accuracy(noise_stopped, x_test, y_test)
-print(noise_best_val, best_val_loss, acc_noise, acc_stopped)
+print(noise_best_val, best_val_loss)
 ```
 
+`r if (py$noise_best_val < py$best_val_loss) "Yes" else "No"`.
 The lowest validation loss with noise is `r sprintf("%.3f", py$noise_best_val)`,
-against `r sprintf("%.3f", py$best_val_loss)` without it,
-so the answer is `r if (py$noise_best_val < py$best_val_loss) "yes" else "no"`.
-At their best [epochs](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-epoch) the two networks classify `r sprintf("%.1f", 100 * py$acc_noise)`% and `r sprintf("%.1f", 100 * py$acc_stopped)`% of the test images correctly.
+against `r sprintf("%.3f", py$best_val_loss)` without it.
 Noise added to the inputs is one of the regularizers *Deep Learning* discusses <!-- check-term-links: allow -->
 [@goodfellow2016deep, section 7.5].
 

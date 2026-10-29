@@ -1,8 +1,0 @@
-::: {#exr-dropout-run}
-
-#### Dropout on the digits
-
-Does `make_net(p_drop=0.5)` reach a lower validation loss under `fit()` than `make_net()`,
-either at its best [epoch](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-epoch) or after all 300?
-
-:::

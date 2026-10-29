@@ -1,0 +1,8 @@
+::: {#exr-more-images}
+
+#### More training images for free
+
+The [training set](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-training-set) has only `r py$n_train` images.
+How could training see more images of digits without anyone labelling new ones?
+
+:::

@@ -1,0 +1,8 @@
+::: {#exr-dropout-best}
+
+#### Dropout on the digits
+
+Suppose `make_net()` gets an `nn.Dropout(0.5)` after its [ReLU](feedforward-networks.qmd#def-relu) layer.
+Is its lowest validation loss under `fit()` lower than without [dropout](#def-dropout)?
+
+:::

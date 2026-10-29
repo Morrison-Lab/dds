@@ -24,12 +24,10 @@ n_test = len(x_test)
 loss_fn = nn.CrossEntropyLoss()
 
 
-def make_net(p_drop=0.0, seed=1):
-    # 64 pixels, a hidden layer of 256 ReLU units, optional dropout, then 10 logits.
+def make_net(seed=1):
+    # 64 pixels, a hidden layer of 256 ReLU units, then 10 logits.
     torch.manual_seed(seed)
-    return nn.Sequential(
-        nn.Linear(64, 256), nn.ReLU(), nn.Dropout(p_drop), nn.Linear(256, 10)
-    )
+    return nn.Sequential(nn.Linear(64, 256), nn.ReLU(), nn.Linear(256, 10))
 
 
 def accuracy(net, inputs, targets):
@@ -40,10 +38,10 @@ def accuracy(net, inputs, targets):
 
 
 def fit(net, n_epochs=300, weight_decay=0.0, transform=None, seed=0):
-    # Full-batch Adam on the training images.
+    # Full-batch AdamW on the training images.
     # Records both losses after every epoch, and keeps the parameters
     # from the epoch with the lowest validation loss.
-    optimizer = torch.optim.Adam(net.parameters(), lr=0.01, weight_decay=weight_decay)
+    optimizer = torch.optim.AdamW(net.parameters(), lr=0.01, weight_decay=weight_decay)
     generator = torch.Generator().manual_seed(seed)
     history, best_state, best_val = [], None, float("inf")
     for epoch in range(1, n_epochs + 1):
@@ -62,7 +60,8 @@ def fit(net, n_epochs=300, weight_decay=0.0, transform=None, seed=0):
     return pd.DataFrame(history), best_state
 
 
-print(len(x_train), len(x_val), len(x_test))
+n_params = sum(p.numel() for p in make_net().parameters())
+print(len(x_train), len(x_val), len(x_test), n_params)
 ```
 
 The exercises use the `r format(nrow(py$digits), big.mark = ",")` digits of [`data/optdigits-test.csv`](data/optdigits-test.csv) [@alpaydin1998optdigits].
@@ -70,8 +69,10 @@ To make a network fit its training images too well,
 the [training set](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-training-set) here is small,
 `r py$n_train` random images.
 Another `r py$n_val` form a [validation set](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-validation-set),
-and the other `r py$n_test` a [test set](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-test-set).
+and the other `r format(py$n_test, big.mark = ",")` a [test set](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-test-set).
 `make_net()` builds an [MLP](feedforward-networks.qmd#def-feedforward-network) with one [hidden layer](feedforward-networks.qmd#def-hidden-layer) of 256 [ReLU](feedforward-networks.qmd#def-relu) [units](feedforward-networks.qmd#def-unit),
-far more [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter) than training images.
-`fit()` trains it by full-batch [Adam](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-adam) with [learning rate](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-learning-rate) 0.01,
-and records the training and validation losses after every [epoch](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-epoch).
+which has `r format(py$n_params, big.mark = ",")` [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter).
+`fit()` trains it by full-batch AdamW,
+PyTorch's variant of [Adam](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-adam) with weight decay,
+with [learning rate](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-learning-rate) 0.01 and no weight decay unless asked.
+It records the training and validation losses after every [epoch](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-epoch).
