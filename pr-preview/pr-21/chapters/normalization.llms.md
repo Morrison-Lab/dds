@@ -147,9 +147,9 @@ The exercises use the digits split of the [feedforward networks chapter](../chap
 > print(plain_grad, plain_loss, plain_acc, plain_std)
 > ```
 >
->     1.927740633789199e-09 2.3031463623046875 0.1072026789188385 0.035105034708976746
+>     1.927740855833804e-09 2.3031463623046875 0.1072026789188385 0.035105034708976746
 >
-> No. Its training loss after 5 [epochs](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-epoch) is 2.303, against \\\log 10 \approx 2.303\\ for probabilities of \\\frac{1}{10}\\, and it classifies 10.7% of the test images correctly. The [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) that reaches its first layer has size 1.9e-09, and the last block’s output has standard deviation 3.5e-02. So the gradient vanishes before it reaches the first layer, as in the [backpropagation chapter](../chapters/backpropagation.llms.md#def-vanishing-gradient).
+> No. Its training loss after 5 [epochs](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-epoch) is 2.303, against \\\log 10 \approx 2.303\\ for probabilities of \\\frac{1}{10}\\. It classifies 10.7% of the test images correctly. The [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) that reaches its first layer has size 1.9e-09. The last block’s output has standard deviation 3.5e-02. So the gradient vanishes before it reaches the first layer, as in the [backpropagation chapter](../chapters/backpropagation.llms.md#def-vanishing-gradient).
 
 # 3 Batch normalization
 
@@ -188,7 +188,7 @@ The exercises use the digits split of the [feedforward networks chapter](../chap
 > print(normed.mean(dim=0)[:4], normed.std(dim=0, correction=0)[:4])
 > ```
 >
->     tensor([4.4703e-08, 1.9372e-07, 1.1176e-08, 2.1607e-07]) tensor([0.9998, 0.9997, 0.9999, 0.9997])
+>     tensor([6.7055e-08, 2.5332e-07, 4.4703e-08, 1.8626e-07]) tensor([0.9998, 0.9997, 0.9999, 0.9997])
 >
 > Show code
 >
@@ -198,7 +198,7 @@ The exercises use the digits split of the [feedforward networks chapter](../chap
 > std_max = normed.std(dim=0, correction=0).max().item()
 > ```
 >
-> `nn.BatchNorm1d(64)` applies [batch normalization](#def-batch-norm) to 64 [pre-activation](../chapters/feedforward-networks.llms.md#def-pre-activation)s. It starts with every \\\gamma_j = 1\\ and every \\\beta_j = 0\\ [\[3\]](#ref-pytorch_batchnorm1d). For 32 training images, the first 4 pre-activations of a random layer have the means and standard deviations on the first line. After batch normalization, on the second line, no column’s mean is farther from 0 than 3.5e-07, and the standard deviations run from 0.999 to 1.000.
+> `nn.BatchNorm1d(64)` applies [batch normalization](#def-batch-norm) to 64 [pre-activation](../chapters/feedforward-networks.llms.md#def-pre-activation)s. It starts with every \\\gamma_j = 1\\ and every \\\beta_j = 0\\ [\[3\]](#ref-pytorch_batchnorm1d). For 32 training images, the first 4 pre-activations of a random layer have the means and standard deviations on the first line. After batch normalization, on the second line, no column’s mean is farther from 0 than 3.3e-07, and the standard deviations run from 0.999 to 1.000.
 
 ## 3.2 A batch of one
 
@@ -258,9 +258,9 @@ The exercises use the digits split of the [feedforward networks chapter](../chap
 > print(batch_grad, batch_loss, batch_acc, batch_std)
 > ```
 >
->     20.276771545410156 1.2505766153335571 0.7721943259239197 0.6066935658454895
+>     20.3425235748291 1.379925012588501 0.6683416962623596 0.6066936254501343
 >
-> Yes. With [batch normalization](#def-batch-norm) in every block, the training loss after 5 [epochs](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-epoch) is 1.251, and the network classifies 77.2% of the test images correctly. The [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) at the first layer has size 2.0e+01, against 1.9e-09 without it. Each block rescales its [pre-activation](../chapters/feedforward-networks.llms.md#def-pre-activation)s to standard deviation 1 before the [ReLU](../chapters/feedforward-networks.llms.md#def-relu), so the values cannot shrink from block to block: the last block’s output has standard deviation 0.607, against 3.5e-02 without batch normalization.
+> Yes. With [batch normalization](#def-batch-norm) in every block, the training loss after 5 [epochs](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-epoch) is 1.380. The network classifies 66.8% of the test images correctly. The [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) at the first layer has size 2.0e+01, against 1.9e-09 without it. Each block rescales its [pre-activation](../chapters/feedforward-networks.llms.md#def-pre-activation)s to standard deviation 1 before the [ReLU](../chapters/feedforward-networks.llms.md#def-relu), so the values cannot shrink from block to block: the last block’s output has standard deviation 0.607, against 3.5e-02 without batch normalization.
 
 # 4 Layer normalization
 
@@ -286,9 +286,9 @@ The exercises use the digits split of the [feedforward networks chapter](../chap
 > print(row_normed.mean().item(), row_normed.std(correction=0).item())
 > ```
 >
->     1.0244548320770264e-08 0.9999433159828186
+>     -2.0489096641540527e-08 0.9999433159828186
 >
-> `nn.LayerNorm(64)` applies [layer normalization](#def-layer-norm) to each row of its input [\[5\]](#ref-pytorch_layernorm). For the first training image alone, its 64 outputs have mean 1.0e-08 and standard deviation 1.000.
+> `nn.LayerNorm(64)` applies [layer normalization](#def-layer-norm) to each row of its input [\[5\]](#ref-pytorch_layernorm). For the first training image alone, its 64 outputs have mean -2.0e-08 and standard deviation 1.000.
 
 ## 4.2 Layer normalization in the deep network
 
@@ -308,9 +308,9 @@ The exercises use the digits split of the [feedforward networks chapter](../chap
 > print(layer_grad, layer_loss, layer_acc)
 > ```
 >
->     0.3943977653980255 1.9132837057113647 0.15745393931865692
+>     0.39439767599105835 2.3055310249328613 0.09380234777927399
 >
-> Yes. With [layer normalization](#def-layer-norm), the training loss after 5 [epochs](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-epoch) is 1.913, and the test [accuracy](https://morrison-lab.github.io/lds/chapters/metrics.html#def-accuracy) is 15.7%, against 1.251 and 77.2% with [batch normalization](#def-batch-norm). The [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) at the first layer has size 3.9e-01. Here layer normalization learns less than batch normalization in the same 5 epochs. Because layer normalization never uses other examples, it also works for a minibatch of one and for sequences of different lengths [\[4\]](#ref-ba2016layer).
+> No. With [layer normalization](#def-layer-norm), the training loss after 5 [epochs](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-epoch) is 2.306, and the test [accuracy](https://morrison-lab.github.io/lds/chapters/metrics.html#def-accuracy) is 9.4%, against 1.380 and 66.8% with [batch normalization](#def-batch-norm). The [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) at the first layer has size 3.9e-01. Here layer normalization learns less than batch normalization in the same 5 epochs. Because layer normalization never uses other examples, it also works for a minibatch of one and for sequences of different lengths [\[4\]](#ref-ba2016layer).
 
 # 5 Residual connections
 
@@ -337,7 +337,7 @@ The exercises use the digits split of the [feedforward networks chapter](../chap
 > print(residual_grad, plain_grad)
 > ```
 >
->     25.320859909057617 1.927740633789199e-09
+>     25.32086181640625 1.927740855833804e-09
 >
 > The [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) has size 2.5e+01, against 1.9e-09 without [residual connections](https://morrison-lab.github.io/lds/chapters/backpropagation.html#def-residual-connection). A block computes \\\vhidval + f(\vhidval)\\, with \\f(\vhidval) = \operatorname{ReLU}\paren{\matr{W} \vhidval + \vecf{b}}\\ from [Remark 1](#rem-residual-block), so its derivative with respect to \\\vhidval\\ is the identity matrix plus the derivative of \\f\\. Going back through a block, the gradient keeps a copy of itself through the identity. It keeps that copy however small the derivative of \\f\\ is. Without the [residual connection](https://morrison-lab.github.io/lds/chapters/backpropagation.html#def-residual-connection), the gradient passes only through the derivative of \\f\\, and shrinks when that derivative is small. Across 20 blocks these derivatives multiply. So when each factor is below 1 in size, the gradient shrinks geometrically.
 
@@ -372,11 +372,11 @@ The exercises use the digits split of the [feedforward networks chapter](../chap
 >
 >                                             network  train_loss  test_accuracy
 >     0      no normalization or residual connections       2.303          0.107
->     1                           batch normalization       1.251          0.772
->     2                          residual connections       1.435          0.558
->     3  batch normalization and residual connections       0.040          0.953
+>     1                           batch normalization       1.380          0.668
+>     2                          residual connections       1.434          0.561
+>     3  batch normalization and residual connections       0.035          0.953
 >
-> The network with batch normalization and residual connections reaches the lowest training loss, 0.040, and classifies 95.3% of the test images correctly. The residual network without [batch normalization](#def-batch-norm) reaches 1.435. The residual networks of He et al. [\[6\]](#ref-he2016resnet) also put batch normalization inside each block.
+> The network with batch normalization and residual connections reaches the lowest training loss, 0.035, and classifies 95.3% of the test images correctly. The residual network without [batch normalization](#def-batch-norm) reaches 1.434. The residual networks of He et al. [\[6\]](#ref-he2016resnet) also put batch normalization inside each block.
 
 ## 5.4 Further reading
 
