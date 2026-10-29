@@ -3,7 +3,8 @@
 #### Computing log-sum-exp without overflow
 
 Let $c$ be any number.
-Write $\operatorname{LSE}(\vz)$ in terms of $c$ and $\operatorname{LSE}$ of the shifted vector $\vz - c$,
+Write $\operatorname{LSE}(\vz)$ in terms of $c$
+and $\operatorname{LSE}$ of the shifted vector $\vz - c$,
 whose entries are $z_k - c$.
 
 :::

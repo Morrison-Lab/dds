@@ -19,6 +19,7 @@ print(scores.shape)
 so `mlp` is a [feedforward network](#def-feedforward-network) with one [hidden layer](#def-hidden-layer) of [width](https://morrison-lab.github.io/lds/chapters/neural-nets.html#def-width) 32,
 the [ReLU](#def-relu) as its [activation function](#def-activation-function),
 and 10 outputs, one per digit.
-For 5 test images it returns a [tensor](pytorch-basics.qmd#def-tensor) of [shape](pytorch-basics.qmd#def-shape) (5, 10): 10 numbers for each image.
+For 5 test images it returns a [tensor](pytorch-basics.qmd#def-tensor) of [shape](pytorch-basics.qmd#def-shape) (5, 10):
+10 numbers for each image.
 
 :::

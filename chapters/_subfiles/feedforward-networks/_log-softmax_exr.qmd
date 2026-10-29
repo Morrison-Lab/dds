@@ -2,7 +2,8 @@
 
 #### The log of a softmax probability
 
-The [cross-entropy](https://morrison-lab.github.io/pds/expectation.html#def-cross-entropy) loss needs $\log \operatorname{softmax}(\vz)_m$, not the probability itself.
+The [cross-entropy](https://morrison-lab.github.io/pds/expectation.html#def-cross-entropy) loss needs $\log \operatorname{softmax}(\vz)_m$,
+not the probability itself.
 Write $\log \operatorname{softmax}(\vz)_m$ without a fraction.
 
 :::

@@ -2,11 +2,13 @@
 
 #### What keeps gradients from vanishing
 
-The [ReLU](feedforward-networks.qmd#def-relu), whose slope is 1 wherever a [unit](feedforward-networks.qmd#def-unit) is positive, is one remedy.
-The rest of these notes take up the others:
-starting the weights at a scale that keeps the gradient's size steady from layer to layer,
+The [ReLU](feedforward-networks.qmd#def-relu) removes the $\frac{1}{4}$ bound on each layer's slopes.
+Other remedies are
+starting the weights at a scale that keeps the [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient)'s size steady from layer to layer,
+such as [He initialization](https://morrison-lab.github.io/lds/chapters/backpropagation.html#def-he-initialization) or [Glorot initialization](https://morrison-lab.github.io/lds/chapters/backpropagation.html#def-glorot-initialization),
 normalizing each layer's values,
-and residual connections, which give the gradient a path around each layer.
+and [residual connections](https://morrison-lab.github.io/lds/chapters/backpropagation.html#def-residual-connection),
+which give the gradient a path around each layer.
 [lds's experiment on depth](https://morrison-lab.github.io/lds/chapters/backpropagation.html#sec-vanishing-experiment) measures the same effect.
 
 :::

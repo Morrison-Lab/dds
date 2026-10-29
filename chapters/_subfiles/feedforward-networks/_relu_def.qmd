@@ -10,7 +10,8 @@ $$
 
 [@nair2010rectified; @goodfellow2016deep, section 6.3.1].
 PyTorch provides it as `torch.relu` and as the layer `nn.ReLU()`.
-In mathematics $\maxf{0, z}$ is also called the positive part of $z$, written $z^+$.
+In mathematics $\maxf{0, z}$ is also called the positive part of $z$,
+written $z^+$.
 *Deep Learning* recommends ReLU as the default activation function for [hidden layers](#def-hidden-layer) [@goodfellow2016deep, section 6.1]. <!-- check-term-links: allow -->
 
 :::

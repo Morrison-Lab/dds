@@ -13,6 +13,7 @@ print(torch.log_softmax(z, dim=0))
 For the [logits](#def-logits) times 1,000 of @sol-naive-softmax,
 shifting by their largest entry gives $\operatorname{LSE} = `r sprintf("%.1f", py$shifted_lse)`$,
 the same value `torch.logsumexp` returns,
-and `torch.log_softmax` gives finite log probabilities where the formula gave `nan`.
+and `torch.log_softmax` gives finite log probabilities
+where the formula gave `nan`.
 
 :::

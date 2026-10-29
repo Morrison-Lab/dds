@@ -1,4 +1,5 @@
 ::: {.reading}
 *Deep Learning*'s [Chapter 6](https://www.deeplearningbook.org/contents/mlp.html) <!-- check-term-links: allow -->
-covers [feedforward networks](#def-feedforward-network), their output units and their [activation functions](#def-activation-function) [@goodfellow2016deep, Ch. 6]. <!-- check-term-links: allow -->
+covers [feedforward networks](#def-feedforward-network),
+their output units and their [activation functions](#def-activation-function) [@goodfellow2016deep, Ch. 6]. <!-- check-term-links: allow -->
 :::

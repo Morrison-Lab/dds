@@ -7,6 +7,8 @@ so PyTorch keeps every intermediate result that a later backward step needs
 until `.backward()` has run.
 That memory grows with the number of layers and with the batch size,
 and it is often what limits the batch size on a GPU.
-Code run inside `torch.no_grad()`, such as computing test [accuracy](https://morrison-lab.github.io/lds/chapters/metrics.html#def-accuracy), records nothing and keeps nothing.
+Code run inside `torch.no_grad()`,
+such as computing test [accuracy](https://morrison-lab.github.io/lds/chapters/metrics.html#def-accuracy),
+records nothing and keeps nothing.
 
 :::

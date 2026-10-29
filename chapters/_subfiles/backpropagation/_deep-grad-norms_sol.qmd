@@ -33,13 +33,13 @@ shrink = {name: norms[-1] / norms[0] for name, norms in grad_norms.items()}
 print(shrink)
 ```
 
-The size is the Frobenius norm, the square root of the sum of the squared entries.
-In both networks the gradient is largest at the last layer.
+The size of a matrix here is the square root of the sum of its squared entries.
+In both networks the weight [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) is largest at the last layer.
 With the [logistic function](https://morrison-lab.github.io/mds/functions.html#def-logistic-function),
-it shrinks at every layer going back,
+the weight gradient shrinks at every layer going back,
 and the last layer's weight gradient is about $10^{`r round(log10(py$shrink[["logistic"]]))`}$ times the first layer's.
 With the [ReLU](feedforward-networks.qmd#def-relu),
-it shrinks over the last few layers and then levels off,
+the weight gradient shrinks over the last few layers and then levels off,
 and the last layer's is `r sprintf("%.0f", py$shrink[["ReLU"]])` times the first layer's.
 A [training step](pytorch-basics.qmd#def-training-step) with one learning rate would move the logistic network's first layers almost not at all.
 
