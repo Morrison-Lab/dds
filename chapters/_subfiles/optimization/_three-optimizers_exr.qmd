@@ -6,7 +6,7 @@ Suppose three fresh [MLP](feedforward-networks.qmd#def-feedforward-network)s are
 using `train()` from @sol-minibatch-epochs:
 
 - one with `torch.optim.SGD` at [learning rate](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-learning-rate) 0.1;
-- one with `torch.optim.SGD` at learning rate 0.01 and momentum 0.9;
+- one with `torch.optim.SGD` at learning rate 0.01 and [momentum](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-momentum) 0.9;
 - one with `torch.optim.Adam`,
   PyTorch's [Adam](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-adam),
   at learning rate 0.01.

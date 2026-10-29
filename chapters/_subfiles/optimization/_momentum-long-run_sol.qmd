@@ -16,7 +16,8 @@ $$
 
 So the step approaches $\frac{\learnrate}{1 - \beta} \vg$:
 on a steady slope,
-momentum moves like plain [gradient descent](https://morrison-lab.github.io/mds/optimization.html#def-gradient-descent) with [learning rate](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-learning-rate) $\learnrate / (1 - \beta)$.
-With $\beta = 0.9$ that is 10 times $\learnrate$.
+[momentum](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-momentum) moves like plain [gradient descent](https://morrison-lab.github.io/mds/optimization.html#def-gradient-descent) with [learning rate](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-learning-rate) $\learnrate / (1 - \beta)$.
+With $\beta = 0.9$,
+that learning rate is `r 1 / (1 - 0.9)` times $\learnrate$.
 
 :::

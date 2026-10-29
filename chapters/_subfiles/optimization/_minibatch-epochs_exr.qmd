@@ -7,7 +7,7 @@ for 10 [epochs](https://morrison-lab.github.io/lds/chapters/gradient-descent.htm
 with [learning rate](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-learning-rate) 0.5.
 Another is trained for 10 epochs of [minibatch gradient descent](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-minibatch)
 with batch size 32 and learning rate 0.1.
-Each [epoch](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-epoch)'s minibatches come from a fresh shuffle of the training images,
+The minibatches of each pass come from a fresh shuffle of the training images,
 rather than being drawn with replacement.
 Which has the lower training loss after 10 epochs?
 

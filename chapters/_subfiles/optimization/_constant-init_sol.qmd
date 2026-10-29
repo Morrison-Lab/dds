@@ -5,7 +5,7 @@
 constant_mlp = make_mlp()
 with torch.no_grad():
     for p in constant_mlp.parameters():
-        p.fill_(0.1)
+        _ = p.fill_(0.1)
 _ = train(constant_mlp, torch.optim.SGD(constant_mlp.parameters(), lr=0.1), 5, 32)
 first_weights = constant_mlp[0].weight
 largest_row_gap = (first_weights - first_weights[0]).abs().max().item()

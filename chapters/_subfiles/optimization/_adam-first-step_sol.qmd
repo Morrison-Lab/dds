@@ -25,15 +25,17 @@ w = torch.ones(2, requires_grad=True)
 adam = torch.optim.Adam([w], lr=0.01)
 w.grad = torch.tensor([1000.0, 0.001])
 adam.step()
-print(1 - w.detach())
+step = (1 - w.detach()).tolist()
+print(step)
 ```
 
-[Gradients](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) of 1,000 and 0.001 both move their parameter by `r sprintf("%.3f", py$adam$param_groups[[1]]$lr)`,
-the [learning rate](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-learning-rate),
-up to the small effect of $\epsilon$.
-So [Adam](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-adam)'s learning rate sets the size of each step
+[Gradients](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) of 1,000 and 0.001 move their [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter) by `r sprintf("%.4f", py$step[[1]])` and `r sprintf("%.4f", py$step[[2]])`,
+both close to the [learning rate](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-learning-rate),
+`r py$adam$param_groups[[1]]$lr`.
+The small difference is the effect of $\epsilon$.
+So the learning rate of [Adam](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-adam) sets the size of each step
 on the [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter)' own scale.
-That stays roughly true for later steps [@kingma2015adam, section 2.1].
+Later steps are also bounded by about the learning rate [@kingma2015adam, section 2.1].
 A step of plain [gradient descent](https://morrison-lab.github.io/mds/optimization.html#def-gradient-descent)
 is instead the learning rate times the [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient).
 

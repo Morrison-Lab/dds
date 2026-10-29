@@ -4,7 +4,7 @@
 #| code-fold: show
 #| fig-alt: >-
 #|   Training loss after each of 10 epochs for full-batch gradient descent and for minibatches of 32.
-#|   The full-batch loss falls slowly from about 2.3;
+#|   The full-batch loss falls slowly;
 #|   the minibatch loss falls much faster and ends far lower.
 def train(mlp, optimizer, n_epochs, batch_size, scheduler=None, seed=0):
     # Minibatch training; returns the training loss after each epoch.
@@ -43,7 +43,7 @@ after 10 [epoch](https://morrison-lab.github.io/lds/chapters/gradient-descent.ht
 and `r sprintf("%.2f", py$full_losses[[10]])` for the full batch.
 An epoch costs about the same either way,
 since it computes the loss and its [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) once for each training image.
-Full-batch descent spends that on one step per epoch,
+Full-batch descent spends that cost on one step per epoch,
 while the minibatch version spends it on many smaller, noisier steps,
 each of which already points roughly downhill.
 `batch_size=n_train` makes `train()` take full-batch steps.
