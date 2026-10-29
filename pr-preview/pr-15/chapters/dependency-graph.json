@@ -1,0 +1,308 @@
+{
+ "site": "dds",
+ "meaning": "edge [A, B] means A uses B: B is a prerequisite of A, A a postrequisite of B",
+ "nodes": [
+  {
+   "id": "dds/course-overview#def-deep-learning",
+   "site": "dds",
+   "page": "course-overview",
+   "div": "def-deep-learning",
+   "kind": "def",
+   "title": "Deep learning",
+   "external": false
+  },
+  {
+   "id": "dds/course-overview#def-feature-engineering",
+   "site": "dds",
+   "page": "course-overview",
+   "div": "def-feature-engineering",
+   "kind": "def",
+   "title": "Feature engineering",
+   "external": false
+  },
+  {
+   "id": "dds/course-overview#def-representation-learning",
+   "site": "dds",
+   "page": "course-overview",
+   "div": "def-representation-learning",
+   "kind": "def",
+   "title": "Representation learning (feature learning)",
+   "external": false
+  },
+  {
+   "id": "dds/feedforward-networks#def-activation-function",
+   "site": "dds",
+   "page": "feedforward-networks",
+   "div": "def-activation-function",
+   "kind": "def",
+   "title": "Activation function (nonlinearity)",
+   "external": false
+  },
+  {
+   "id": "dds/feedforward-networks#def-feedforward-network",
+   "site": "dds",
+   "page": "feedforward-networks",
+   "div": "def-feedforward-network",
+   "kind": "def",
+   "title": "Feedforward network (multilayer perceptron, MLP)",
+   "external": false
+  },
+  {
+   "id": "dds/feedforward-networks#def-hidden-layer",
+   "site": "dds",
+   "page": "feedforward-networks",
+   "div": "def-hidden-layer",
+   "kind": "def",
+   "title": "Hidden layer",
+   "external": false
+  },
+  {
+   "id": "dds/feedforward-networks#def-log-sum-exp",
+   "site": "dds",
+   "page": "feedforward-networks",
+   "div": "def-log-sum-exp",
+   "kind": "def",
+   "title": "Log-sum-exp",
+   "external": false
+  },
+  {
+   "id": "dds/feedforward-networks#def-logits",
+   "site": "dds",
+   "page": "feedforward-networks",
+   "div": "def-logits",
+   "kind": "def",
+   "title": "Logits",
+   "external": false
+  },
+  {
+   "id": "dds/feedforward-networks#def-pre-activation",
+   "site": "dds",
+   "page": "feedforward-networks",
+   "div": "def-pre-activation",
+   "kind": "def",
+   "title": "Pre-activation",
+   "external": false
+  },
+  {
+   "id": "dds/feedforward-networks#def-relu",
+   "site": "dds",
+   "page": "feedforward-networks",
+   "div": "def-relu",
+   "kind": "def",
+   "title": "Rectified linear unit (ReLU)",
+   "external": false
+  },
+  {
+   "id": "dds/feedforward-networks#def-unit",
+   "site": "dds",
+   "page": "feedforward-networks",
+   "div": "def-unit",
+   "kind": "def",
+   "title": "Unit (neuron)",
+   "external": false
+  },
+  {
+   "id": "dds/feedforward-networks#thm-log-softmax",
+   "site": "dds",
+   "page": "feedforward-networks",
+   "div": "thm-log-softmax",
+   "kind": "thm",
+   "title": "Log softmax",
+   "external": false
+  },
+  {
+   "id": "dds/feedforward-networks#thm-shift-lse",
+   "site": "dds",
+   "page": "feedforward-networks",
+   "div": "thm-shift-lse",
+   "kind": "thm",
+   "title": "Shifting log-sum-exp",
+   "external": false
+  },
+  {
+   "id": "dds/feedforward-networks#thm-universal-approximation",
+   "site": "dds",
+   "page": "feedforward-networks",
+   "div": "thm-universal-approximation",
+   "kind": "thm",
+   "title": "Universal approximation",
+   "external": false
+  },
+  {
+   "id": "dds/pytorch-basics#def-automatic-differentiation",
+   "site": "dds",
+   "page": "pytorch-basics",
+   "div": "def-automatic-differentiation",
+   "kind": "def",
+   "title": "Automatic differentiation (autodiff)",
+   "external": false
+  },
+  {
+   "id": "dds/pytorch-basics#def-broadcasting",
+   "site": "dds",
+   "page": "pytorch-basics",
+   "div": "def-broadcasting",
+   "kind": "def",
+   "title": "Broadcasting",
+   "external": false
+  },
+  {
+   "id": "dds/pytorch-basics#def-device",
+   "site": "dds",
+   "page": "pytorch-basics",
+   "div": "def-device",
+   "kind": "def",
+   "title": "Device",
+   "external": false
+  },
+  {
+   "id": "dds/pytorch-basics#def-dtype",
+   "site": "dds",
+   "page": "pytorch-basics",
+   "div": "def-dtype",
+   "kind": "def",
+   "title": "Data type",
+   "external": false
+  },
+  {
+   "id": "dds/pytorch-basics#def-shape",
+   "site": "dds",
+   "page": "pytorch-basics",
+   "div": "def-shape",
+   "kind": "def",
+   "title": "Shape",
+   "external": false
+  },
+  {
+   "id": "dds/pytorch-basics#def-tensor",
+   "site": "dds",
+   "page": "pytorch-basics",
+   "div": "def-tensor",
+   "kind": "def",
+   "title": "Tensor",
+   "external": false
+  },
+  {
+   "id": "dds/pytorch-basics#def-training-step",
+   "site": "dds",
+   "page": "pytorch-basics",
+   "div": "def-training-step",
+   "kind": "def",
+   "title": "Training step",
+   "external": false
+  },
+  {
+   "id": "dds/pytorch-basics#thm-log-loss-slope",
+   "site": "dds",
+   "page": "pytorch-basics",
+   "div": "thm-log-loss-slope",
+   "kind": "thm",
+   "title": "The slope of the soft rule's log loss",
+   "external": false
+  },
+  {
+   "id": "mds/functions#def-logistic-function",
+   "site": "mds",
+   "page": "functions",
+   "div": "def-logistic-function",
+   "kind": "def",
+   "title": "logistic function",
+   "external": true,
+   "url": "https://morrison-lab.github.io/mds/functions.html#def-logistic-function"
+  },
+  {
+   "id": "pds/probability-basics#def-log-odds",
+   "site": "pds",
+   "page": "probability-basics",
+   "div": "def-log-odds",
+   "kind": "def",
+   "title": "log odds",
+   "external": true,
+   "url": "https://morrison-lab.github.io/pds/probability-basics.html#def-log-odds"
+  }
+ ],
+ "edges": [
+  [
+   "dds/course-overview#def-deep-learning",
+   "dds/course-overview#def-representation-learning"
+  ],
+  [
+   "dds/feedforward-networks#def-activation-function",
+   "dds/feedforward-networks#def-hidden-layer"
+  ],
+  [
+   "dds/feedforward-networks#def-feedforward-network",
+   "dds/feedforward-networks#def-activation-function"
+  ],
+  [
+   "dds/feedforward-networks#def-feedforward-network",
+   "dds/feedforward-networks#def-hidden-layer"
+  ],
+  [
+   "dds/feedforward-networks#def-logits",
+   "pds/probability-basics#def-log-odds"
+  ],
+  [
+   "dds/feedforward-networks#def-pre-activation",
+   "dds/feedforward-networks#def-activation-function"
+  ],
+  [
+   "dds/feedforward-networks#def-pre-activation",
+   "dds/feedforward-networks#def-hidden-layer"
+  ],
+  [
+   "dds/feedforward-networks#def-relu",
+   "dds/feedforward-networks#def-activation-function"
+  ],
+  [
+   "dds/feedforward-networks#def-relu",
+   "dds/feedforward-networks#def-hidden-layer"
+  ],
+  [
+   "dds/feedforward-networks#def-unit",
+   "dds/feedforward-networks#def-hidden-layer"
+  ],
+  [
+   "dds/feedforward-networks#thm-universal-approximation",
+   "dds/feedforward-networks#def-activation-function"
+  ],
+  [
+   "dds/feedforward-networks#thm-universal-approximation",
+   "dds/feedforward-networks#def-relu"
+  ],
+  [
+   "dds/feedforward-networks#thm-universal-approximation",
+   "mds/functions#def-logistic-function"
+  ],
+  [
+   "dds/pytorch-basics#def-broadcasting",
+   "dds/pytorch-basics#def-shape"
+  ],
+  [
+   "dds/pytorch-basics#def-broadcasting",
+   "dds/pytorch-basics#def-tensor"
+  ],
+  [
+   "dds/pytorch-basics#def-device",
+   "dds/pytorch-basics#def-tensor"
+  ],
+  [
+   "dds/pytorch-basics#def-dtype",
+   "dds/pytorch-basics#def-tensor"
+  ],
+  [
+   "dds/pytorch-basics#def-shape",
+   "dds/pytorch-basics#def-tensor"
+  ],
+  [
+   "dds/pytorch-basics#def-tensor",
+   "dds/course-overview#def-deep-learning"
+  ],
+  [
+   "dds/pytorch-basics#def-training-step",
+   "dds/pytorch-basics#def-automatic-differentiation"
+  ]
+ ],
+ "cycles": [],
+ "forwardReferences": []
+}
