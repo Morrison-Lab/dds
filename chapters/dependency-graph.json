@@ -30,6 +30,105 @@
    "external": false
   },
   {
+   "id": "dds/feedforward-networks#def-activation-function",
+   "site": "dds",
+   "page": "feedforward-networks",
+   "div": "def-activation-function",
+   "kind": "def",
+   "title": "Activation function (nonlinearity)",
+   "external": false
+  },
+  {
+   "id": "dds/feedforward-networks#def-feedforward-network",
+   "site": "dds",
+   "page": "feedforward-networks",
+   "div": "def-feedforward-network",
+   "kind": "def",
+   "title": "Feedforward network (multilayer perceptron, MLP)",
+   "external": false
+  },
+  {
+   "id": "dds/feedforward-networks#def-hidden-layer",
+   "site": "dds",
+   "page": "feedforward-networks",
+   "div": "def-hidden-layer",
+   "kind": "def",
+   "title": "Hidden layer",
+   "external": false
+  },
+  {
+   "id": "dds/feedforward-networks#def-log-sum-exp",
+   "site": "dds",
+   "page": "feedforward-networks",
+   "div": "def-log-sum-exp",
+   "kind": "def",
+   "title": "Log-sum-exp",
+   "external": false
+  },
+  {
+   "id": "dds/feedforward-networks#def-logits",
+   "site": "dds",
+   "page": "feedforward-networks",
+   "div": "def-logits",
+   "kind": "def",
+   "title": "Logits",
+   "external": false
+  },
+  {
+   "id": "dds/feedforward-networks#def-pre-activation",
+   "site": "dds",
+   "page": "feedforward-networks",
+   "div": "def-pre-activation",
+   "kind": "def",
+   "title": "Pre-activation",
+   "external": false
+  },
+  {
+   "id": "dds/feedforward-networks#def-relu",
+   "site": "dds",
+   "page": "feedforward-networks",
+   "div": "def-relu",
+   "kind": "def",
+   "title": "Rectified linear unit (ReLU)",
+   "external": false
+  },
+  {
+   "id": "dds/feedforward-networks#def-unit",
+   "site": "dds",
+   "page": "feedforward-networks",
+   "div": "def-unit",
+   "kind": "def",
+   "title": "Unit (neuron)",
+   "external": false
+  },
+  {
+   "id": "dds/feedforward-networks#thm-log-softmax",
+   "site": "dds",
+   "page": "feedforward-networks",
+   "div": "thm-log-softmax",
+   "kind": "thm",
+   "title": "Log softmax",
+   "external": false
+  },
+  {
+   "id": "dds/feedforward-networks#thm-shift-lse",
+   "site": "dds",
+   "page": "feedforward-networks",
+   "div": "thm-shift-lse",
+   "kind": "thm",
+   "title": "Shifting log-sum-exp",
+   "external": false
+  },
+  {
+   "id": "dds/feedforward-networks#thm-universal-approximation",
+   "site": "dds",
+   "page": "feedforward-networks",
+   "div": "thm-universal-approximation",
+   "kind": "thm",
+   "title": "Universal approximation",
+   "external": false
+  },
+  {
    "id": "dds/pytorch-basics#def-automatic-differentiation",
    "site": "dds",
    "page": "pytorch-basics",
@@ -100,12 +199,80 @@
    "kind": "thm",
    "title": "The slope of the soft rule's log loss",
    "external": false
+  },
+  {
+   "id": "mds/functions#def-logistic-function",
+   "site": "mds",
+   "page": "functions",
+   "div": "def-logistic-function",
+   "kind": "def",
+   "title": "logistic function",
+   "external": true,
+   "url": "https://morrison-lab.github.io/mds/functions.html#def-logistic-function"
+  },
+  {
+   "id": "pds/probability-basics#def-log-odds",
+   "site": "pds",
+   "page": "probability-basics",
+   "div": "def-log-odds",
+   "kind": "def",
+   "title": "log odds",
+   "external": true,
+   "url": "https://morrison-lab.github.io/pds/probability-basics.html#def-log-odds"
   }
  ],
  "edges": [
   [
    "dds/course-overview#def-deep-learning",
    "dds/course-overview#def-representation-learning"
+  ],
+  [
+   "dds/feedforward-networks#def-activation-function",
+   "dds/feedforward-networks#def-hidden-layer"
+  ],
+  [
+   "dds/feedforward-networks#def-feedforward-network",
+   "dds/feedforward-networks#def-activation-function"
+  ],
+  [
+   "dds/feedforward-networks#def-feedforward-network",
+   "dds/feedforward-networks#def-hidden-layer"
+  ],
+  [
+   "dds/feedforward-networks#def-logits",
+   "pds/probability-basics#def-log-odds"
+  ],
+  [
+   "dds/feedforward-networks#def-pre-activation",
+   "dds/feedforward-networks#def-activation-function"
+  ],
+  [
+   "dds/feedforward-networks#def-pre-activation",
+   "dds/feedforward-networks#def-hidden-layer"
+  ],
+  [
+   "dds/feedforward-networks#def-relu",
+   "dds/feedforward-networks#def-activation-function"
+  ],
+  [
+   "dds/feedforward-networks#def-relu",
+   "dds/feedforward-networks#def-hidden-layer"
+  ],
+  [
+   "dds/feedforward-networks#def-unit",
+   "dds/feedforward-networks#def-hidden-layer"
+  ],
+  [
+   "dds/feedforward-networks#thm-universal-approximation",
+   "dds/feedforward-networks#def-activation-function"
+  ],
+  [
+   "dds/feedforward-networks#thm-universal-approximation",
+   "dds/feedforward-networks#def-relu"
+  ],
+  [
+   "dds/feedforward-networks#thm-universal-approximation",
+   "mds/functions#def-logistic-function"
   ],
   [
    "dds/pytorch-basics#def-broadcasting",
