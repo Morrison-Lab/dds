@@ -1,0 +1,12 @@
+::: {#rem-vanishing-remedies}
+
+#### What keeps gradients from vanishing
+
+The [ReLU](feedforward-networks.qmd#def-relu), whose slope is 1 wherever a unit is positive, is one remedy.
+The rest of these notes take up the others:
+starting the weights at a scale that keeps the gradient's size steady from layer to layer,
+normalizing each layer's values,
+and residual connections, which give the gradient a path around each layer.
+[lds's experiment on depth](https://morrison-lab.github.io/lds/chapters/backpropagation.html#sec-vanishing-experiment) measures the same effect.
+
+:::

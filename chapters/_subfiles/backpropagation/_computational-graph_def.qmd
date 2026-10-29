@@ -1,0 +1,11 @@
+::: {#def-computational-graph}
+
+#### Computational graph
+
+A **computational graph** of a calculation has one node for each variable,
+whether an input, a [parameter](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter) or an intermediate result,
+and an arrow from each node to every node computed from it
+[@goodfellow2016deep, section 6.5.1].
+It has no cycles: following the arrows never returns to a node.
+
+:::

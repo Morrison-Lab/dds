@@ -1,0 +1,39 @@
+::: {#sol-deep-grad-norms}
+
+```{python}
+#| code-fold: show
+def deep_mlp(activation, n_hidden=10, width=32):
+    _ = torch.manual_seed(0)
+    layers, n_in = [], 64
+    for layer in range(n_hidden):
+        layers += [nn.Linear(n_in, width), activation()]
+        n_in = width
+    layers.append(nn.Linear(width, 10))
+    return nn.Sequential(*layers)
+
+
+grad_norms = {}
+for name, activation in [("logistic", nn.Sigmoid), ("ReLU", nn.ReLU)]:
+    net = deep_mlp(activation)
+    loss_fn(net(x_train), y_train).backward()
+    grad_norms[name] = [m.weight.grad.norm().item() for m in net if isinstance(m, nn.Linear)]
+
+fig, ax = plt.subplots(figsize=(6, 3.5))
+for name, norms in grad_norms.items():
+    ax.semilogy(range(1, len(norms) + 1), norms, marker="o", label=name)
+ax.set_xlabel("layer (1 = first)")
+ax.set_ylabel("size of weight gradient")
+ax.legend()
+plt.show()
+shrink = {name: norms[-1] / norms[0] for name, norms in grad_norms.items()}
+print(shrink)
+```
+
+The size is the Frobenius norm, the square root of the sum of the squared entries.
+In both networks the gradient is largest at the last layer and smaller at each earlier layer.
+With the logistic function,
+the last layer's weight gradient is `r sprintf("%.0e", py$shrink[["logistic"]])` times the first layer's;
+with the ReLU it is `r sprintf("%.0f", py$shrink[["ReLU"]])` times.
+A training step with one learning rate would move the logistic network's first layers almost not at all.
+
+:::

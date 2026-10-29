@@ -1,0 +1,18 @@
+::: {#def-backpropagation}
+
+#### Backpropagation (backprop)
+
+**Backpropagation**, or **backprop**,
+computes the gradient of a scalar, such as a loss,
+with respect to every node of a [computational graph](#def-computational-graph):
+it visits the nodes in the reverse of the order the forward computation made them,
+and at each node applies the chain rule,
+combining the gradient with respect to the node's output with the derivative of the node's own operation
+[@rumelhart1986learning; @goodfellow2016deep, section 6.5].
+
+Backpropagation is reverse-mode [automatic differentiation](pytorch-basics.qmd#def-automatic-differentiation) applied to a network's loss,
+and PyTorch's `.backward()` runs it.
+Some sources use "backpropagation" for the whole training algorithm, including the [parameter](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter) update;
+these notes use it only for computing the gradient.
+
+:::

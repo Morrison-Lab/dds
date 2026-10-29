@@ -1,0 +1,12 @@
+::: {#exm-backpropagation}
+
+#### Backpropagation through the MLP
+
+@sol-manual-backward is [backpropagation](#def-backpropagation) through the four steps of @sol-loss-operations.
+It visits them in reverse order:
+the loss gives the gradient at the [logits](feedforward-networks.qmd#def-logits) `g2`;
+the second affine step gives the gradients of $\matr{W}_2$, $\vecf{b}_2$ and the hidden layer;
+the ReLU gives the gradient at $\vz_1$;
+and the first affine step gives the gradients of $\matr{W}_1$ and $\vecf{b}_1$.
+
+:::

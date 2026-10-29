@@ -51,7 +51,7 @@ The final's review session will be held during finals week, at a time TBD.
 |                          | differentiation][pt]         | layers and activations       | output units, losses,        |                              |
 | Apr 4 -- Apr 10          |                              |                              | representational power       |                              |
 +--------------------------+------------------------------+------------------------------+------------------------------+------------------------------+
-| **Week 3**               | Backpropagation              | Optimization: minibatch      | Optimization: Adam,          | Lab session: Homework 2      |
+| **Week 3**               | [Backpropagation][bp]        | Optimization: minibatch      | Optimization: Adam,          | Lab session: Homework 2      |
 |                          |                              | stochastic gradient descent, | learning-rate schedules and  |                              |
 | Apr 11 -- Apr 17         |                              | momentum                     | warmup, initialization       | **Homework 1 due**           |
 +--------------------------+------------------------------+------------------------------+------------------------------+------------------------------+
@@ -110,4 +110,5 @@ The final's review session will be held during finals week, at a time TBD.
 [ml]: ml-review.qmd
 [pt]: pytorch-basics.qmd
 [ff]: feedforward-networks.qmd
+[bp]: backpropagation.qmd
 [lds]: https://morrison-lab.github.io/lds/

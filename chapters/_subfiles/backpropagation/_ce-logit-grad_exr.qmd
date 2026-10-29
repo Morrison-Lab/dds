@@ -1,0 +1,13 @@
+::: {#exr-ce-logit-grad}
+
+#### The gradient at the logits
+
+Find the derivative of the cross-entropy loss $L = -\log \operatorname{softmax}(\vz)_y$
+with respect to each [logit](feedforward-networks.qmd#def-logits) $z_m$, for $m = 1, \dots, C$.
+
+::: {.callout-tip}
+#### Hint
+Start from [the log softmax theorem](feedforward-networks.qmd#thm-log-softmax).
+:::
+
+:::

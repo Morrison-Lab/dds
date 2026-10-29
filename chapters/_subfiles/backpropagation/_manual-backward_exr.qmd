@@ -1,0 +1,11 @@
+::: {#exr-manual-backward}
+
+#### The backward pass by hand
+
+Compute the gradient of the MLP's mean loss over the training set
+with respect to $\matr{W}_1$, $\vecf{b}_1$, $\matr{W}_2$ and $\vecf{b}_2$,
+using @thm-ce-logit-grad, @sol-linear-param-grad, @sol-linear-input-grad and @sol-relu-grad,
+without `.backward()`.
+How closely does it match `loss.backward()`?
+
+:::

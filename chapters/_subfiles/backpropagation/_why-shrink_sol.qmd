@@ -1,0 +1,20 @@
+::: {#sol-why-shrink}
+
+Applying @sol-relu-grad's reasoning to $g$, then @sol-linear-input-grad, takes the gradient back one layer:
+
+$$
+\gradwrt{\vhidval_{\layeridx - 1}} L
+= \tp{\matr{W}_{\layeridx}} \paren{g'(\vz_{\layeridx}) \odot \gradwrt{\vhidval_{\layeridx}} L},
+$$
+
+where $\odot$ multiplies entry by entry.
+Each layer back multiplies the gradient by the slopes $g'(\vz_{\layeridx})$ and by $\tp{\matr{W}_{\layeridx}}$.
+The [logistic function](https://morrison-lab.github.io/mds/functions.html#def-logistic-function)'s slope is at most $\frac{1}{4}$ ([lds's bound on it](https://morrison-lab.github.io/lds/chapters/logistic-regression.html#thm-logistic-derivative-bound)),
+and less where units [saturate](https://morrison-lab.github.io/lds/chapters/backpropagation.html#def-saturation),
+so unless the weights are large, every layer shrinks the gradient by a factor less than 1,
+and 10 layers multiply 10 such factors.
+The ReLU's slope is 1 wherever a unit is positive,
+so in @sol-deep-grad-norms the shrinking there comes from the weights alone,
+which PyTorch starts small.
+
+:::

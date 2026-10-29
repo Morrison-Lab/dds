@@ -1,0 +1,8 @@
+::: {#exm-vanishing-gradient}
+
+#### The deep logistic network
+
+The 10-hidden-layer logistic network of @sol-deep-grad-norms has a [vanishing gradient](#def-vanishing-gradient):
+its first layer's weight gradient is `r sprintf("%.0e", 1 / py$shrink[["logistic"]])` times its last layer's.
+
+:::

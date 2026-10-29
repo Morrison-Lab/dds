@@ -1,0 +1,20 @@
+::: {#sol-linear-input-grad}
+
+Input $h_k$ affects every output $z_j$, so the chain rule adds up a term for each:
+
+$$
+\begin{aligned}
+\derivf{L}{h_k}
+&= \sum_j \derivf{L}{z_j} \derivf{z_j}{h_k}
+&& \text{(chain rule through every $z_j$)} \\
+&= \sum_j g_j W_{jk}
+&& \text{($\partial z_j / \partial h_k = W_{jk}$)} \\
+&= \paren{\tp{\matr{W}} \vecf{g}}_k
+&& \text{(entry $k$ of a matrix-vector product)}
+\end{aligned}
+$$
+
+So $\gradwrt{\vhidval} L = \tp{\matr{W}} \vecf{g}$:
+the gradient travels back through the layer by the transpose of its weight matrix.
+
+:::

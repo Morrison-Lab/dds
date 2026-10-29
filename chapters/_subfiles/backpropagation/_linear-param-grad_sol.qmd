@@ -1,0 +1,28 @@
+::: {#sol-linear-param-grad}
+
+Entry $j$ of the output is $z_j = \sum_k W_{jk} h_k + b_j$,
+so $W_{jk}$ affects $L$ only through $z_j$.
+
+$$
+\begin{aligned}
+\derivf{L}{W_{jk}}
+&= \derivf{L}{z_j} \derivf{z_j}{W_{jk}}
+&& \text{(chain rule through $z_j$)} \\
+&= g_j h_k
+&& \text{($\partial z_j / \partial W_{jk} = h_k$)}
+\end{aligned}
+$$
+
+and in the same way $\partial L / \partial b_j = g_j \cdot 1 = g_j$.
+As matrices,
+
+$$
+\gradwrt{\matr{W}} L = \underbrace{\vecf{g}}_{m \times 1} \, \underbrace{\tp{\vhidval}}_{1 \times n},
+\qquad
+\gradwrt{\vecf{b}} L = \vecf{g},
+$$
+
+for a layer with $n$ inputs and $m$ outputs:
+an outer product with the same shape as $\matr{W}$.
+
+:::

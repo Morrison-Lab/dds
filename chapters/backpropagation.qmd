@@ -1,0 +1,182 @@
+---
+title: "Backpropagation"
+format:
+  html: default
+  revealjs:
+    output-file: backpropagation-slides.html
+  pdf:
+    output-file: backpropagation-handout.pdf
+resources:
+  - data/optdigits-test.csv
+---
+
+```{r}
+# The Python chunks on this page import these; reticulate provisions them.
+# Attaching reticulate gives the inline R its `py` object.
+library(reticulate)
+source("../tools/use-torch.R")
+use_torch(c("numpy", "pandas", "matplotlib"))
+```
+
+::: notes
+Brian Hutchinson's CSCI 481/581 sets the order of topics in these notes,
+which follow it with his permission;
+this page covers the backpropagation lecture of his module on [machine learning](https://morrison-lab.github.io/lds/chapters/course-overview.html#def-machine-learning) fundamentals.
+The exercises are new.
+The computational graph and the backward pass follow *Deep Learning*, Section 6.5 [@goodfellow2016deep]. <!-- check-term-links: allow -->
+:::
+
+# Welcome
+
+## Plan for this lecture
+
+{{< include _subfiles/backpropagation/_plan_sec.qmd >}}
+
+## The digits and the network
+
+{{< include _subfiles/backpropagation/_digits-setup_sec.qmd >}}
+
+# Computational graphs
+
+## What the loss is made of
+
+<!-- heading shares the slide; do not re-flag -->
+
+{{< include _subfiles/backpropagation/_loss-operations_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/backpropagation/_loss-operations_sol.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/backpropagation/_computational-graph_def.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/backpropagation/_computational-graph_exm.qmd >}}
+
+# The backward pass
+
+## The gradient at the logits
+
+<!-- heading shares the slide; do not re-flag -->
+
+{{< include _subfiles/backpropagation/_ce-logit-grad_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/backpropagation/_ce-logit-grad_sol.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/backpropagation/_ce-logit-grad_thm.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/backpropagation/_ce-logit-grad_exm.qmd >}}
+
+## Through a linear layer
+
+<!-- heading shares the slide; do not re-flag -->
+
+{{< include _subfiles/backpropagation/_linear-param-grad_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/backpropagation/_linear-param-grad_sol.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/backpropagation/_linear-input-grad_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/backpropagation/_linear-input-grad_sol.qmd >}}
+
+## Through the ReLU
+
+<!-- heading shares the slide; do not re-flag -->
+
+{{< include _subfiles/backpropagation/_relu-grad_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/backpropagation/_relu-grad_sol.qmd >}}
+
+## The whole backward pass
+
+<!-- heading shares the slide; do not re-flag -->
+
+{{< include _subfiles/backpropagation/_manual-backward_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/backpropagation/_manual-backward_sol.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/backpropagation/_backpropagation_def.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/backpropagation/_backpropagation_exm.qmd >}}
+
+# Cost
+
+## Backpropagation against finite differences
+
+<!-- heading shares the slide; do not re-flag -->
+
+{{< include _subfiles/backpropagation/_finite-difference-cost_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/backpropagation/_finite-difference-cost_sol.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/backpropagation/_backprop-memory_rem.qmd >}}
+
+# Vanishing gradients
+
+## Gradients in a deep network
+
+<!-- heading shares the slide; do not re-flag -->
+
+{{< include _subfiles/backpropagation/_deep-grad-norms_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/backpropagation/_deep-grad-norms_sol.qmd >}}
+
+## Why they shrink
+
+<!-- heading shares the slide; do not re-flag -->
+
+{{< include _subfiles/backpropagation/_why-shrink_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/backpropagation/_why-shrink_sol.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/backpropagation/_vanishing-gradient_def.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/backpropagation/_vanishing-gradient_exm.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/backpropagation/_vanishing-remedies_rem.qmd >}}
+
+## Further reading
+
+{{< include _subfiles/backpropagation/_backprop_read.qmd >}}
+
+# References
+
+::: {#refs}
+:::

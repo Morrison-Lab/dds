@@ -1,0 +1,8 @@
+::: {#exr-loss-operations}
+
+#### From an image to its loss
+
+List, in order, the operations that take one image $\vx$ with true digit $y$
+to the MLP's cross-entropy loss.
+
+:::
