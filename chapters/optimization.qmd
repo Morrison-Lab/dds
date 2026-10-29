@@ -1,0 +1,164 @@
+---
+title: "Optimization"
+format:
+  html: default
+  revealjs:
+    output-file: optimization-slides.html
+  pdf:
+    output-file: optimization-handout.pdf
+resources:
+  - data/optdigits-test.csv
+---
+
+```{r}
+# The Python chunks on this page import these; reticulate provisions them.
+# Attaching reticulate gives the inline R its `py` object.
+library(reticulate)
+source("../tools/use-torch.R")
+use_torch(c("numpy", "pandas", "matplotlib"))
+```
+
+::: notes
+Brian Hutchinson's CSCI 481/581 sets the order of topics in these notes,
+which follow it with his permission;
+this page covers the training algorithms and starting weights of his module on optimization and regularization.
+The exercises are new.
+Minibatches, momentum, Adam and starting weights follow *Deep Learning*, Chapter 8 [@goodfellow2016deep]. <!-- check-term-links: allow -->
+:::
+
+# Welcome
+
+## Plan for this lecture
+
+{{< include _subfiles/optimization/_plan_sec.qmd >}}
+
+## The digits and the network
+
+{{< include _subfiles/optimization/_digits-setup_sec.qmd >}}
+
+# Minibatches
+
+## Ten passes over the data
+
+<!-- heading shares the slide; do not re-flag -->
+
+{{< include _subfiles/optimization/_minibatch-epochs_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/optimization/_minibatch-epochs_sol.qmd >}}
+
+## How noisy is a minibatch gradient?
+
+<!-- heading shares the slide; do not re-flag -->
+
+{{< include _subfiles/optimization/_gradient-noise_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/optimization/_gradient-noise_sol.qmd >}}
+
+# Momentum and Adam
+
+## Momentum in PyTorch
+
+{{< include _subfiles/optimization/_pytorch-momentum_rem.qmd >}}
+
+## Momentum on a steady slope
+
+<!-- heading shares the slide; do not re-flag -->
+
+{{< include _subfiles/optimization/_momentum-long-run_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/optimization/_momentum-long-run_sol.qmd >}}
+
+## Three optimizers on the digits
+
+<!-- heading shares the slide; do not re-flag -->
+
+{{< include _subfiles/optimization/_three-optimizers_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/optimization/_three-optimizers_sol.qmd >}}
+
+## Adam's first step
+
+<!-- heading shares the slide; do not re-flag -->
+
+{{< include _subfiles/optimization/_adam-first-step_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/optimization/_adam-first-step_sol.qmd >}}
+
+# Changing the learning rate
+
+## Starting slowly
+
+{{< include _subfiles/optimization/_warmup_def.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/optimization/_warmup_exm.qmd >}}
+
+## A schedule in PyTorch
+
+<!-- heading shares the slide; do not re-flag -->
+
+{{< include _subfiles/optimization/_warmup-cosine_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/optimization/_warmup-cosine_sol.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/optimization/_why-warmup_rem.qmd >}}
+
+# Starting weights
+
+## The scale of the starting weights
+
+<!-- heading shares the slide; do not re-flag -->
+
+{{< include _subfiles/optimization/_init-scale_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/optimization/_init-scale_sol.qmd >}}
+
+## PyTorch's default
+
+<!-- heading shares the slide; do not re-flag -->
+
+{{< include _subfiles/optimization/_default-init_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/optimization/_default-init_sol.qmd >}}
+
+## Starting every weight at the same value
+
+<!-- heading shares the slide; do not re-flag -->
+
+{{< include _subfiles/optimization/_constant-init_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/optimization/_constant-init_sol.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/optimization/_symmetry-breaking_rem.qmd >}}
+
+## Further reading
+
+{{< include _subfiles/optimization/_optimization_read.qmd >}}
+
+# References
+
+::: {#refs}
+:::

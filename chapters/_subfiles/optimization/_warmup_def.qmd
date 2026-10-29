@@ -1,0 +1,11 @@
+::: {#def-warmup}
+
+#### Learning-rate warmup
+
+**Learning-rate warmup** raises the [learning rate](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-learning-rate) from a small value to its target over the first steps of training,
+usually linearly,
+before the rest of the schedule takes over [@goyal2017accurate, section 2.2].
+With linear warmup over $T_w$ steps to a target learning rate $\learnrate$,
+step $t = 0, 1, \dots, T_w - 1$ uses learning rate $\learnrate (t + 1) / T_w$.
+
+:::

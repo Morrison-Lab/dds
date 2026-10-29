@@ -1,0 +1,9 @@
+::: {#exr-default-init}
+
+#### PyTorch's starting weights
+
+`nn.Linear(n_in, n_out)` draws each weight independently and uniformly
+from the interval $\paren{-1 / \sqrt{n_{\text{in}}}, 1 / \sqrt{n_{\text{in}}}}$ [@pytorch_linear].
+What is the variance of each weight?
+
+:::

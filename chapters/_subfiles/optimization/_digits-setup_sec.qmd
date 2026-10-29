@@ -1,0 +1,36 @@
+```{python}
+#| code-fold: show
+import math
+
+import numpy as np
+import pandas as pd
+import torch
+from torch import nn
+import matplotlib.pyplot as plt
+
+_ = torch.manual_seed(481)
+digits = pd.read_csv("data/optdigits-test.csv", header=None)
+x = torch.tensor(digits.iloc[:, :64].to_numpy(), dtype=torch.float32) / 16
+y = torch.tensor(digits[64].to_numpy())
+n_train = 1200
+order = torch.randperm(len(x))
+x_train, y_train = x[order[:n_train]], y[order[:n_train]]
+x_test, y_test = x[order[n_train:]], y[order[n_train:]]
+loss_fn = nn.CrossEntropyLoss()
+
+
+def make_mlp(seed=1):
+    # A fresh copy of the digits MLP, with the same starting weights for a given seed.
+    torch.manual_seed(seed)
+    return nn.Sequential(nn.Linear(64, 32), nn.ReLU(), nn.Linear(32, 10))
+
+
+print(make_mlp())
+```
+
+The exercises use the `r format(nrow(py$digits), big.mark = ",")` digits of [`data/optdigits-test.csv`](data/optdigits-test.csv) [@alpaydin1998optdigits],
+split as in the [feedforward networks chapter](feedforward-networks.qmd),
+with `r format(py$n_train, big.mark = ",")` images in the [training set](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-training-set).
+`make_mlp()` builds that chapter's [MLP](feedforward-networks.qmd#def-feedforward-network),
+with the same starting weights each time,
+so that every method below starts from the same place.

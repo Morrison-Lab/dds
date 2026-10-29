@@ -1,0 +1,29 @@
+::: {#sol-constant-init}
+
+```{python}
+#| code-fold: show
+constant_mlp = make_mlp()
+with torch.no_grad():
+    for p in constant_mlp.parameters():
+        _ = p.fill_(0.1)
+_ = train(constant_mlp, torch.optim.SGD(constant_mlp.parameters(), lr=0.1), 5, 32)
+first_weights = constant_mlp[0].weight
+largest_row_gap = (first_weights - first_weights[0]).abs().max().item()
+with torch.no_grad():
+    constant_acc = (constant_mlp(x_test).argmax(dim=1) == y_test).float().mean().item()
+print(largest_row_gap, constant_acc)
+```
+
+They stay identical:
+after training,
+the largest difference between any row of the first layer's weight matrix and the first row is `r format(py$largest_row_gap, digits = 2)`,
+so all 32 [unit](feedforward-networks.qmd#def-unit)s compute the same function of the pixels,
+and the network classifies only `r sprintf("%.1f", 100 * py$constant_acc)`% of the test images correctly.
+[Unit](feedforward-networks.qmd#def-unit)s that start equal receive equal [gradients](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient),
+since each enters the output in the same way,
+so every step changes them equally.
+The network has,
+in effect,
+one hidden [unit](feedforward-networks.qmd#def-unit).
+
+:::

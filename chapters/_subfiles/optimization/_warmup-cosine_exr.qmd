@@ -1,0 +1,10 @@
+::: {#exr-warmup-cosine}
+
+#### Warmup, then cosine decay
+
+A schedule for `torch.optim.SGD` at [learning rate](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-learning-rate) 0.1
+uses [learning-rate warmup](#def-warmup) over 100 steps,
+and then [cosine decay](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-cosine-decay) to 0 at step 1,000.
+What learning rate does it give at step 550?
+
+:::

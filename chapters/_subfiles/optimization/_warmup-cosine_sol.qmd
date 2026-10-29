@@ -1,0 +1,49 @@
+::: {#sol-warmup-cosine}
+
+```{python}
+#| code-fold: show
+#| fig-alt: >-
+#|   Learning rate against step for 1,000 steps:
+#|   a straight ramp from near 0 to 0.1 over the first 100 steps,
+#|   then a half cosine curve down to 0 at step 1,000.
+n_warmup, n_steps = 100, 1000
+
+
+def warmup_cosine(step):
+    # The factor that multiplies the base learning rate at this step.
+    if step < n_warmup:
+        return (step + 1) / n_warmup
+    progress = (step - n_warmup) / (n_steps - n_warmup)
+    return 0.5 * (1 + math.cos(math.pi * progress))
+
+
+schedule_mlp = make_mlp()
+sgd = torch.optim.SGD(schedule_mlp.parameters(), lr=0.1)
+scheduler = torch.optim.lr_scheduler.LambdaLR(sgd, warmup_cosine)
+rates = []
+for step in range(n_steps):
+    rates.append(sgd.param_groups[0]["lr"])
+    sgd.step()
+    scheduler.step()
+
+fig, ax = plt.subplots(figsize=(6, 3.5), layout="constrained")
+ax.plot(rates);
+ax.set_xlabel("step");
+ax.set_ylabel("learning rate");
+plt.show()
+rate_550 = rates[550]
+```
+
+`r sprintf("%.3f", py$rate_550)`.
+Step 550 is halfway through the cosine part,
+from step 100 to step 1,000,
+and halfway there [cosine decay](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-cosine-decay) gives half the base [learning rate](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-learning-rate),
+since $\frac{1}{2}\paren{1 + \cosf{\frac{\pi}{2}}} = \frac{1}{2}$.
+The loop calls `scheduler.step()` after `sgd.step()`,
+the order PyTorch expects,
+and `train()` in @sol-minibatch-epochs does the same at every minibatch.
+Here `sgd.step()` changes nothing,
+since no [gradients](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) have been computed;
+it is there only to show the order.
+
+:::

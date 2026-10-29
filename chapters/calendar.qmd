@@ -51,9 +51,9 @@ The final's review session will be held during finals week, at a time TBD.
 |                          | differentiation][pt]         | layers and activations       | output units, losses,        |                              |
 | Apr 4 -- Apr 10          |                              |                              | representational power       |                              |
 +--------------------------+------------------------------+------------------------------+------------------------------+------------------------------+
-| **Week 3**               | [Backpropagation][bp]        | Optimization: minibatch      | Optimization: Adam,          | Lab session: Homework 2      |
-|                          |                              | stochastic gradient descent, | learning-rate schedules and  |                              |
-| Apr 11 -- Apr 17         |                              | momentum                     | warmup, initialization       | **Homework 1 due**           |
+| **Week 3**               | [Backpropagation][bp]        | [Optimization][opt]:         | [Optimization][opt]: Adam,   | Lab session: Homework 2      |
+|                          |                              | minibatch stochastic         | learning-rate schedules and  |                              |
+| Apr 11 -- Apr 17         |                              | gradient descent, momentum   | warmup, initialization       | **Homework 1 due**           |
 +--------------------------+------------------------------+------------------------------+------------------------------+------------------------------+
 | **Week 4**               | Regularization: weight       | Regularization: dropout,     | Normalization: batch and     | **Midterm 1 review**         |
 |                          | decay, early stopping        | data augmentation            | layer normalization;         |                              |
@@ -111,4 +111,5 @@ The final's review session will be held during finals week, at a time TBD.
 [pt]: pytorch-basics.qmd
 [ff]: feedforward-networks.qmd
 [bp]: backpropagation.qmd
+[opt]: optimization.qmd
 [lds]: https://morrison-lab.github.io/lds/

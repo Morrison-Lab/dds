@@ -4,7 +4,7 @@
 
 Train the [MLP](#def-feedforward-network) of @exm-feedforward-network on the `r format(py$n_train, big.mark = ",")` training images,
 with `nn.CrossEntropyLoss`,
-taking 500 steps of `torch.optim.SGD` with a learning rate of 0.5,
+taking 500 steps of `torch.optim.SGD` with a [learning rate](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-learning-rate) of 0.5,
 each on the whole [training set](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-training-set).
 What fraction of the test images does it classify correctly?
 

@@ -1,0 +1,5 @@
+::: {.reading}
+*Deep Learning*'s [Chapter 8](https://www.deeplearningbook.org/contents/optimization.html) <!-- check-term-links: allow -->
+covers minibatches,
+[momentum](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-momentum), [Adam](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-adam) and starting weights for deep networks [@goodfellow2016deep, Ch. 8].
+:::

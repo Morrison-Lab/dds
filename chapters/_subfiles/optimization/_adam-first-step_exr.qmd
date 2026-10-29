@@ -1,0 +1,10 @@
+::: {#exr-adam-first-step}
+
+#### Adam's first step
+
+At [Adam](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-adam)'s first step,
+one [parameter](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter) has [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) $g \neq 0$.
+Ignoring $\smallconst$,
+how far does that step move the parameter?
+
+:::
