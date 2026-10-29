@@ -145,7 +145,7 @@ The exercises use the 1,797 digits of [`data/optdigits-test.csv`](data/optdigits
 > print(best_epoch, best_val_loss, final_row["train"], final_row["val"])
 > ```
 >
->     28 0.2795121371746063 0.0001482013612985611 0.3629535436630249
+>     28 0.2795120179653168 0.0001481997751398012 0.362955242395401
 >
 > The training loss falls the whole time, to 1.5e-04 after 300 [epochs](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-epoch). The validation loss falls to its lowest value, 0.280, at [epoch](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-epoch) 28, marked by the dotted line, and then rises to 0.363. After epoch 28 the network goes on fitting the training images in ways that do not carry over to new images: it [overfits](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-overfitting).
 
@@ -172,7 +172,7 @@ The exercises use the 1,797 digits of [`data/optdigits-test.csv`](data/optdigits
 > print(test_loss_stopped, test_loss_final, acc_stopped, acc_final)
 > ```
 >
->     0.30516549944877625 0.38375675678253174 0.9238171577453613 0.9230152368545532
+>     0.30516549944877625 0.38375428318977356 0.9238171577453613 0.9230152368545532
 >
 > `fit()` already does [early stopping](#def-early-stopping): it keeps the [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter) of [epoch](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-epoch) 28 of [Solution 1](#sol-overfit-curves). On the 1247 test images, those parameters have loss 0.305, against 0.384 after all 300 [epochs](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-epoch). The test accuracies are 92.4% and 92.3%. The [accuracy](https://morrison-lab.github.io/lds/chapters/metrics.html#def-accuracy) moves much less than the loss, because the loss also measures how much probability the network gives the true digit, not only whether that digit gets the most. `fit()` runs all 300 epochs; an early-stopping loop can instead end training once the validation loss has not improved for a set number of epochs.
 
@@ -220,11 +220,11 @@ The exercises use the 1,797 digits of [`data/optdigits-test.csv`](data/optdigits
 >
 >        weight_decay  train_loss  val_loss  weight_norm
 >     0           0.0      0.0001    0.3630      22.9366
->     1           0.1      0.0007    0.3178      21.1010
->     2           1.0      0.0038    0.2760      15.5783
->     3          10.0      0.2164    0.4593       9.4242
+>     1           0.1      0.0007    0.3179      21.0985
+>     2           1.0      0.0038    0.2764      15.5750
+>     3          10.0      0.2151    0.4601       9.4560
 >
-> `weight_decay` \\= 1\\ ends with the lowest validation loss, 0.276, against 0.363 with no weight decay. Weight decay keeps the weights smaller: their norm after 300 [epochs](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-epoch) falls from 22.9 with no weight decay to 9.4 with `weight_decay` \\= 10\\. At 10 the network no longer fits even its training images closely: its training loss is 0.216, against 1.5e-04 with no weight decay.
+> `weight_decay` \\= 1\\ ends with the lowest validation loss, 0.276, against 0.363 with no weight decay. Weight decay keeps the weights smaller: their norm after 300 [epochs](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-epoch) falls from 22.9 with no weight decay to 9.5 with `weight_decay` \\= 10\\. At 10 its training loss is 0.215, against 1.5e-04 with no weight decay, so it fits its training images less closely.
 
 # 4 Switching off units at random
 
@@ -326,7 +326,7 @@ The exercises use the 1,797 digits of [`data/optdigits-test.csv`](data/optdigits
 > print(drop_best_val, best_val_loss)
 > ```
 >
->     0.26976099610328674 0.2795121371746063
+>     0.26976099610328674 0.2795120179653168
 >
 > Yes. With [dropout](#def-dropout) the lowest validation loss is 0.270, against 0.280 without it.
 
@@ -334,11 +334,11 @@ The exercises use the 1,797 digits of [`data/optdigits-test.csv`](data/optdigits
 
 > **NOTE:**
 >
-> **Exercise 6 (Dropout after 300 epochs)** Is the validation loss of the network of [Solution 5](#sol-dropout-best) after all 300 [epochs](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-epoch) lower than without [dropout](#def-dropout)?
+> **Exercise 6 (Dropout after 300 epochs)** Is the validation loss of the network of [Exercise 5](#exr-dropout-best) after all 300 [epochs](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-epoch) lower than without [dropout](#def-dropout)?
 
 > **NOTE:**
 >
-> *Solution 6*. No. After 300 [epochs](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-epoch) its validation loss is 0.398, against 0.363 without [dropout](#def-dropout). So on these digits dropout does not replace [early stopping](#def-early-stopping): the validation loss still rises after its lowest point.
+> *Solution 6*. No. After 300 [epochs](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-epoch) its validation loss is 0.398, against 0.363 without [dropout](#def-dropout). With dropout the validation loss still rises after its lowest point, so on these digits dropout does not replace [early stopping](#def-early-stopping).
 
 # 5 Transformed training images
 
@@ -419,7 +419,7 @@ The exercises use the 1,797 digits of [`data/optdigits-test.csv`](data/optdigits
 > print(noise_best_val, best_val_loss)
 > ```
 >
->     0.2462419867515564 0.2795121371746063
+>     0.2462419867515564 0.2795120179653168
 >
 > Yes. The lowest validation loss with noise is 0.246, against 0.280 without it. Noise added to the inputs is one of the regularizers *Deep Learning* discusses [\[1, Sec. 7.5\]](#ref-goodfellow2016deep).
 
@@ -455,7 +455,7 @@ The exercises use the 1,797 digits of [`data/optdigits-test.csv`](data/optdigits
 > print(shift_best_val, best_val_loss, val_acc_plain, val_acc_moved)
 > ```
 >
->     0.3100763261318207 0.2795121371746063 0.925000011920929 0.4300000071525574
+>     0.310078889131546 0.2795120179653168 0.925000011920929 0.4300000071525574
 >
 > No. The lowest validation loss with shifts is 0.310, against 0.280 without them. A one-pixel move is not a small change for these images. Each pixel counts the ink in a 4-by-4 block of a 32-by-32 bitmap [\[2\]](#ref-alpaydin1998optdigits), so it moves the digit by 4 pixels of the original bitmap. The early-stopped network of [Example 1](#exm-early-stopping) classifies 92.5% of the validation images correctly, but only 43.0% of the same images moved one pixel to the right.
 

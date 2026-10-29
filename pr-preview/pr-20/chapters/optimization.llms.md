@@ -175,7 +175,7 @@ The exercises use the 1,797 digits of [`data/optdigits-test.csv`](data/optdigits
 
 > **NOTE:**
 >
-> **Exercise 3 (Momentum on a steady slope)** Suppose the [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) is the same vector \\\vg\\ at every step, and [momentum](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-momentum) starts from \\\vv_0 = \vzero\\. What does the step \\\learnrate \vv_t\\ approach as \\t\\ grows?
+> **Exercise 3 (Momentum on a steady slope)** Suppose the [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) is the same vector \\\vg\\ at every step, and [momentum](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-momentum), updated as in [Remark 1](#rem-pytorch-momentum), starts from \\\vv_0 = \vzero\\. What does the step \\\learnrate \vv_t\\ approach as \\t\\ grows?
 
 > **NOTE:**
 >
@@ -218,7 +218,7 @@ The exercises use the 1,797 digits of [`data/optdigits-test.csv`](data/optdigits
 > print(final_loss)
 > ```
 >
->     {'SGD': 0.5297544598579407, 'momentum': 0.5874408483505249, 'Adam': 0.10584727674722672}
+>     {'SGD': 0.5297544598579407, 'momentum': 0.5874408483505249, 'Adam': 0.10584726929664612}
 >
 > Show code
 >
@@ -234,7 +234,7 @@ The exercises use the 1,797 digits of [`data/optdigits-test.csv`](data/optdigits
 
 > **NOTE:**
 >
-> **Exercise 5 (Adam’s first step)** At [Adam](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-adam)’s first step, one [parameter](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter) has [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) \\g \neq 0\\. Ignoring \\\epsilon\\, how far does that step move the parameter?
+> **Exercise 5 (Adam’s first step)** At [Adam](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-adam)’s first step, one [parameter](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter) has [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) \\g \neq 0\\. Ignoring \\\smallconst\\, how far does that step move the parameter?
 
 > **NOTE:**
 >
@@ -257,7 +257,7 @@ The exercises use the 1,797 digits of [`data/optdigits-test.csv`](data/optdigits
 >
 >     [0.009999990463256836, 0.009999871253967285]
 >
-> [Gradients](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) of 1,000 and 0.001 move their [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter) by 0.0100 and 0.0100, both close to the [learning rate](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-learning-rate), 0.01. The small difference is the effect of \\\epsilon\\. So the learning rate of [Adam](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-adam) sets the size of each step on the [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter)’ own scale. Later steps are also bounded by about the learning rate [\[4, Sec. 2.1\]](#ref-kingma2015adam). A step of plain [gradient descent](https://morrison-lab.github.io/mds/optimization.html#def-gradient-descent) is instead the learning rate times the [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient).
+> [Gradients](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) of 1,000 and 0.001 move their [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter) by 0.0100000 and 0.0099999, both close to the [learning rate](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-learning-rate), 0.01. The small difference is the effect of \\\smallconst\\. So the learning rate of [Adam](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-adam) sets the size of each step on the [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter)’ own scale. Later steps are also bounded by about the learning rate [\[4, Sec. 2.1\]](#ref-kingma2015adam). A step of plain [gradient descent](https://morrison-lab.github.io/mds/optimization.html#def-gradient-descent) is instead the learning rate times the [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient).
 
 # 4 Changing the learning rate
 
@@ -428,9 +428,9 @@ The exercises use the 1,797 digits of [`data/optdigits-test.csv`](data/optdigits
 > print(largest_row_gap, constant_acc)
 > ```
 >
->     1.4901161193847656e-07 0.09380234777927399
+>     0.0 0.09380234777927399
 >
-> They stay identical: after training, the largest difference between any row of the first layer’s weight matrix and the first row is 1.5e-07, so all 32 [unit](../chapters/feedforward-networks.llms.md#def-unit)s compute the same function of the pixels, and the network classifies only 9.4% of the test images correctly. [Unit](../chapters/feedforward-networks.llms.md#def-unit)s that start equal receive equal [gradients](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient), since each enters the output in the same way, so every step changes them equally. The network has, in effect, one hidden [unit](../chapters/feedforward-networks.llms.md#def-unit).
+> They stay identical: after training, the largest difference between any row of the first layer’s weight matrix and the first row is 0, so all 32 [unit](../chapters/feedforward-networks.llms.md#def-unit)s compute the same function of the pixels, and the network classifies only 9.4% of the test images correctly. [Unit](../chapters/feedforward-networks.llms.md#def-unit)s that start equal receive equal [gradients](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient), since each enters the output in the same way, so every step changes them equally. The network has, in effect, one hidden [unit](../chapters/feedforward-networks.llms.md#def-unit).
 
 > **NOTE:**
 >
