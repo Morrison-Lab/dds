@@ -1,0 +1,39 @@
+::: {#sol-two-linear}
+
+Substituting the first layer into the second,
+
+$$
+\begin{aligned}
+\matr{W}_2 \paren{\matr{W}_1 \vx + \vecf{b}_1} + \vecf{b}_2
+&= \matr{W}_2 \matr{W}_1 \vx + \matr{W}_2 \vecf{b}_1 + \vecf{b}_2
+&& \text{(distribute $\matr{W}_2$)} \\
+&= \underbrace{\paren{\matr{W}_2 \matr{W}_1}}_{10 \times 64} \vx
++ \underbrace{\paren{\matr{W}_2 \vecf{b}_1 + \vecf{b}_2}}_{10 \times 1}
+&& \text{(group the terms that do not involve $\vx$)}
+\end{aligned}
+$$
+
+So the stack is an [affine function](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-affine-function) of $\vx$,
+the same kind of function as one `nn.Linear(64, 10)`,
+with weight matrix $\matr{W}_2 \matr{W}_1$ and bias $\matr{W}_2 \vecf{b}_1 + \vecf{b}_2$.
+The 32 numbers in the middle add nothing that one layer could not compute.
+
+```{python}
+#| code-fold: show
+first = nn.Linear(64, 32)
+second = nn.Linear(32, 10)
+weight = second.weight @ first.weight
+bias = second.weight @ first.bias + second.bias
+stacked = second(first(x_test))
+one_layer = x_test @ weight.T + bias
+stack_gap = (stacked - one_layer).abs().max().item()
+print(weight.shape, bias.shape, stack_gap)
+```
+
+On the `r py$n_test` test images,
+the stack and the single layer agree to within `r format(py$stack_gap, digits = 2)`,
+a rounding error.
+`nn.Linear` stores $\matr{W}$ with one row per output,
+and computes `x @ weight.T + bias` for a [tensor](pytorch-basics.qmd#def-tensor) `x` with one row per image.
+
+:::

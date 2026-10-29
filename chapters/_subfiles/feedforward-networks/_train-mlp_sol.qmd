@@ -1,0 +1,25 @@
+::: {#sol-train-mlp}
+
+```{python}
+#| code-fold: show
+loss_fn = nn.CrossEntropyLoss()
+optimizer = torch.optim.SGD(mlp.parameters(), lr=0.5)
+for step in range(500):
+    optimizer.zero_grad()
+    loss = loss_fn(mlp(x_train), y_train)
+    loss.backward()
+    optimizer.step()
+
+with torch.no_grad():
+    predicted = mlp(x_test).argmax(dim=1)
+test_accuracy = (predicted == y_test).float().mean().item()
+print(loss.item(), test_accuracy)
+```
+
+The trained network classifies `r sprintf("%.1f", 100 * py$test_accuracy)`% of the `r py$n_test` test images correctly,
+against 10% for guessing.
+The loop is the [training step](pytorch-basics.qmd#def-training-step) of the PyTorch chapter,
+and the predicted digit is the one with the largest [logit](#def-logits),
+which is also the one with the largest softmax probability.
+
+:::

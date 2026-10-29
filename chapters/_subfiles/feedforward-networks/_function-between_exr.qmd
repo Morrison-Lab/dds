@@ -1,0 +1,18 @@
+::: {#exr-function-between}
+
+#### A function between the layers
+
+Suppose the [logistic function](https://morrison-lab.github.io/mds/functions.html#def-logistic-function),
+$\sigmoidf{z} = 1 / \paren{1 + \e{-z}}$,
+is applied to each of the 32 numbers between the two layers of @exr-two-linear,
+giving `second(torch.sigmoid(first(x)))`.
+Is that stack still an [affine function](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-affine-function) of $\vx$?
+
+::: {.callout-tip}
+#### Hint
+An [affine function](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-affine-function) $f$ maps the midpoint of two inputs to the midpoint of their outputs:
+$f\paren{\frac{1}{2}(\vx + \vx')} = \frac{1}{2}\paren{f(\vx) + f(\vx')}$.
+Try two digits.
+:::
+
+:::

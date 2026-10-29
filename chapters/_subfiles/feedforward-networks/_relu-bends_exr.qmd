@@ -1,0 +1,15 @@
+::: {#exr-relu-bends}
+
+#### The shape of a small ReLU network
+
+An [MLP](#def-feedforward-network) has one input $z \in \reals$,
+one [hidden layer](#def-hidden-layer) of $L$ [ReLU](#def-relu) [unit](#def-unit)s,
+and one output with no [activation function](#def-activation-function):
+
+$$
+\hy = c + \sumto{i}{L} v_i \maxf{0, w_i z + b_i}.
+$$
+
+What does the graph of $\hy$ against $z$ look like?
+
+:::

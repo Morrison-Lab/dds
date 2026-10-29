@@ -1,0 +1,22 @@
+::: {#sol-scores-to-probabilities}
+
+Apply the [softmax function](https://morrison-lab.github.io/lds/chapters/multiclass-logistic-regression.html#def-softmax):
+exponentiate each number,
+which makes it positive,
+then divide by the sum of the exponentials,
+which makes them add up to 1.
+
+```{python}
+#| code-fold: show
+probabilities = torch.softmax(scores, dim=1)
+print(probabilities.detach().numpy().round(3))
+print(probabilities.sum(dim=1))
+```
+
+`dim=1` applies softmax across the 10 numbers in each row,
+one row per image.
+Each row of probabilities adds up to 1,
+and each is near $\frac{1}{10}$,
+since the network is untrained.
+
+:::

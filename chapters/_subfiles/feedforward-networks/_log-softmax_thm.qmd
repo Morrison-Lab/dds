@@ -1,0 +1,15 @@
+::: {#thm-log-softmax}
+
+#### Log softmax
+
+For $\vz \in \reals^C$ and $m = 1, \dots, C$,
+
+$$
+\log \operatorname{softmax}(\vz)_m = z_m - \operatorname{LSE}(\vz).
+$$
+
+:::
+
+::: proof
+By @sol-log-softmax and @def-log-sum-exp.
+:::

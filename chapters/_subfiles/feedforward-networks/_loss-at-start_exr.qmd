@@ -1,0 +1,8 @@
+::: {#exr-loss-at-start}
+
+#### The loss before training
+
+The untrained [MLP](#def-feedforward-network) of @exm-feedforward-network gives each test image probabilities near $\frac{1}{10}$.
+About what mean [cross-entropy](https://morrison-lab.github.io/pds/expectation.html#def-cross-entropy) loss should it have on the [test set](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-test-set)?
+
+:::

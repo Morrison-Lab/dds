@@ -1,0 +1,17 @@
+::: {#rem-layer-notation}
+
+#### Writing a layer
+
+One layer is written here as $g\paren{\matr{W} \vx + \vecf{b}}$,
+with $\vx$ a column vector and $\matr{W}$ having one row per output.
+Other sources write it differently:
+
+- PyTorch's `nn.Linear` stores $\matr{W}$ in the same orientation,
+  but takes a batch of inputs with one row per example,
+  and computes `x @ weight.T + bias`.
+- *Deep Learning* writes $g\paren{\tp{\matr{W}} \vx + \vecf{c}}$, <!-- check-term-links: allow -->
+  with one column of $\matr{W}$ per output [@goodfellow2016deep, section 6.1].
+- [lds](https://morrison-lab.github.io/lds/chapters/neural-nets.html#sec-learning-the-features) puts a 1 at the start of $\vx$
+  and folds the bias into $\matr{W}$.
+
+:::

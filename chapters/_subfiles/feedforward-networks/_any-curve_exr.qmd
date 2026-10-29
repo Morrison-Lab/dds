@@ -1,0 +1,8 @@
+::: {#exr-any-curve}
+
+#### Following any curve
+
+Let $f$ be a continuous function on an interval $[a, b]$.
+Could a network like the one in @exr-relu-bends follow $f$ as closely as you like?
+
+:::

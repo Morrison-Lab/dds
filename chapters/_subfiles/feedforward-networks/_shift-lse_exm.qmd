@@ -1,0 +1,19 @@
+::: {#exm-shift-lse}
+
+#### The confident logits again
+
+```{python}
+#| code-fold: show
+c = z.max()
+shifted_lse = (c + torch.log(torch.exp(z - c).sum())).item()
+print(shifted_lse, torch.logsumexp(z, dim=0).item())
+print(torch.log_softmax(z, dim=0))
+```
+
+For the [logits](#def-logits) times 1,000 of @sol-naive-softmax,
+shifting by their largest entry gives $\operatorname{LSE} = `r sprintf("%.1f", py$shifted_lse)`$,
+the same value `torch.logsumexp` returns,
+and `torch.log_softmax` gives finite log probabilities
+where the formula gave `nan`.
+
+:::

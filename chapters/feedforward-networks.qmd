@@ -1,0 +1,317 @@
+---
+title: "Feedforward Networks"
+format:
+  html: default
+  revealjs:
+    output-file: feedforward-networks-slides.html
+  pdf:
+    output-file: feedforward-networks-handout.pdf
+resources:
+  - data/optdigits-test.csv
+  - data/auto.csv
+---
+
+```{r}
+# The Python chunks on this page import these; reticulate provisions them.
+# Attaching reticulate gives the inline R its `py` object.
+library(reticulate)
+source("../tools/use-torch.R")
+use_torch(c("numpy", "pandas", "matplotlib"))
+```
+
+::: notes
+Brian Hutchinson's CSCI 481/581 sets the order of topics in these notes,
+which follow it with his permission;
+this page covers the layered networks of his module on [machine learning](https://morrison-lab.github.io/lds/chapters/course-overview.html#def-machine-learning) fundamentals.
+The exercises are new.
+The output units and universal approximation follow *Deep Learning*, Chapter 6 [@goodfellow2016deep]. <!-- check-term-links: allow -->
+:::
+
+# Welcome
+
+## Plan for this lecture
+
+{{< include _subfiles/feedforward-networks/_plan_sec.qmd >}}
+
+## The digits as tensors
+
+{{< include _subfiles/feedforward-networks/_digits-setup_sec.qmd >}}
+
+# Layers
+
+## Two layers with nothing between them
+
+<!-- heading shares the slide; do not re-flag -->
+
+{{< include _subfiles/feedforward-networks/_two-linear_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/feedforward-networks/_two-linear_sol.qmd >}}
+
+## A function between the layers
+
+<!-- heading shares the slide; do not re-flag -->
+
+{{< include _subfiles/feedforward-networks/_function-between_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/feedforward-networks/_function-between_sol.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/feedforward-networks/_hidden-layer_def.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/feedforward-networks/_hidden-layer_exm.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/feedforward-networks/_unit_def.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/feedforward-networks/_unit_exm.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/feedforward-networks/_activation-function_def.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/feedforward-networks/_activation-function_exm.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/feedforward-networks/_pre-activation_def.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/feedforward-networks/_pre-activation_exm.qmd >}}
+
+## Three activation functions
+
+<!-- heading shares the slide; do not re-flag -->
+
+{{< include _subfiles/feedforward-networks/_three-activations_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/feedforward-networks/_three-activations_sol.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/feedforward-networks/_relu_def.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/feedforward-networks/_relu_exm.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/feedforward-networks/_activation-slopes_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/feedforward-networks/_activation-slopes_sol.qmd >}}
+
+## Feedforward networks
+
+<!-- heading shares the slide; do not re-flag -->
+
+{{< include _subfiles/feedforward-networks/_feedforward-network_def.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/feedforward-networks/_feedforward-network_exm.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/feedforward-networks/_layer-notation_rem.qmd >}}
+
+{{< include _subfiles/feedforward-networks/_mlp_read.qmd >}}
+
+# Output units and losses
+
+## From scores to probabilities
+
+<!-- heading shares the slide; do not re-flag -->
+
+{{< include _subfiles/feedforward-networks/_scores-to-probabilities_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/feedforward-networks/_scores-to-probabilities_sol.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/feedforward-networks/_logits_def.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/feedforward-networks/_logits_exm.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/feedforward-networks/_loss-at-start_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/feedforward-networks/_loss-at-start_sol.qmd >}}
+
+## Computing the loss from logits
+
+<!-- heading shares the slide; do not re-flag -->
+
+{{< include _subfiles/feedforward-networks/_naive-softmax_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/feedforward-networks/_naive-softmax_sol.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/feedforward-networks/_log-softmax_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/feedforward-networks/_log-softmax_sol.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/feedforward-networks/_log-sum-exp_def.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/feedforward-networks/_log-sum-exp_exm.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/feedforward-networks/_log-softmax_thm.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/feedforward-networks/_log-softmax_exm.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/feedforward-networks/_shift-lse_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/feedforward-networks/_shift-lse_sol.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/feedforward-networks/_shift-lse_thm.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/feedforward-networks/_lse-shift-choice_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/feedforward-networks/_lse-shift-choice_sol.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/feedforward-networks/_shift-lse_exm.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/feedforward-networks/_cross-entropy-takes-logits_rem.qmd >}}
+
+## Other kinds of output
+
+<!-- heading shares the slide; do not re-flag -->
+
+{{< include _subfiles/feedforward-networks/_two-class-output_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/feedforward-networks/_two-class-output_sol.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/feedforward-networks/_two-class-loss_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/feedforward-networks/_two-class-loss_sol.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/feedforward-networks/_real-output_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/feedforward-networks/_real-output_sol.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/feedforward-networks/_real-loss_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/feedforward-networks/_real-loss_sol.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/feedforward-networks/_output-units_rem.qmd >}}
+
+# Representational power
+
+## Training the MLP
+
+<!-- heading shares the slide; do not re-flag -->
+
+{{< include _subfiles/feedforward-networks/_train-mlp_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/feedforward-networks/_train-mlp_sol.qmd >}}
+
+## Bends in a ReLU network
+
+<!-- heading shares the slide; do not re-flag -->
+
+{{< include _subfiles/feedforward-networks/_relu-bends_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/feedforward-networks/_relu-bends_sol.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/feedforward-networks/_any-curve_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/feedforward-networks/_any-curve_sol.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/feedforward-networks/_universal-approximation_thm.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/feedforward-networks/_universal-approximation_exm.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/feedforward-networks/_auto-widths_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/feedforward-networks/_auto-widths_sol.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/feedforward-networks/_approximation-limits_rem.qmd >}}
+
+# References {#references .unnumbered}
+
+::: {#refs}
+:::

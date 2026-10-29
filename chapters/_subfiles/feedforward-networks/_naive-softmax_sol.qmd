@@ -1,0 +1,25 @@
+::: {#sol-naive-softmax}
+
+```{python}
+#| code-fold: show
+z = (1000 * logits[0]).detach()
+naive = torch.exp(z) / torch.exp(z).sum()
+largest_float = torch.finfo(torch.float32).max
+print(z.numpy().round(1))
+print(naive)
+print(np.log(largest_float))
+n_nan = torch.isnan(naive).sum().item()
+n_zero = (naive == 0).sum().item()
+print(n_nan, n_zero)
+```
+
+The result holds `r py$n_nan` `nan`s and `r py$n_zero` zeros.
+A `float32` number cannot be larger than about $`r sprintf("%.1f", py$largest_float / 10^floor(log10(py$largest_float)))` \times 10^{`r floor(log10(py$largest_float))`}$,
+so `torch.exp(z)` is infinite for every $z$ above the log of that number,
+about `r sprintf("%.1f", log(py$largest_float))`,
+and infinity divided by infinity is `nan`.
+Every other entry has a finite exponential divided by that infinite sum,
+so its probability is 0,
+and the log of 0 is $-\infty$.
+
+:::

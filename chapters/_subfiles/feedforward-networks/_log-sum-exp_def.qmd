@@ -1,0 +1,19 @@
+::: {#def-log-sum-exp}
+
+#### Log-sum-exp
+
+The **log-sum-exp** function maps a vector $\vz \in \reals^C$ to
+
+$$
+\operatorname{LSE}(\vz) = \log \sumto{k}{C} \e{z_k}
+$$
+
+[@goodfellow2016deep, section 6.2.2.3].
+It is the log of the denominator of the [softmax function](https://morrison-lab.github.io/lds/chapters/multiclass-logistic-regression.html#def-softmax).
+PyTorch provides it as `torch.logsumexp`.
+$\operatorname{LSE}$ is differentiable.
+$\operatorname{LSE}(\vz)$ is at least the largest entry of $\vz$
+and at most that entry plus $\log C$.
+So it is called a smooth maximum.
+
+:::

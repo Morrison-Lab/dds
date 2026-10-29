@@ -1,0 +1,27 @@
+```{python}
+#| code-fold: show
+import numpy as np
+import pandas as pd
+import torch
+from torch import nn
+import matplotlib.pyplot as plt
+
+_ = torch.manual_seed(481)
+digits = pd.read_csv("data/optdigits-test.csv", header=None)
+x = torch.tensor(digits.iloc[:, :64].to_numpy(), dtype=torch.float32) / 16
+y = torch.tensor(digits[64].to_numpy())
+n_train = 1200
+order = torch.randperm(len(x))
+x_train, y_train = x[order[:n_train]], y[order[:n_train]]
+x_test, y_test = x[order[n_train:]], y[order[n_train:]]
+n_test = len(x_test)
+print(x_train.shape, x_test.shape)
+```
+
+The exercises use the `r format(nrow(py$digits), big.mark = ",")` handwritten digits from the [course overview](course-overview.qmd),
+from the same local copy, [`data/optdigits-test.csv`](data/optdigits-test.csv),
+of the UCI Machine Learning Repository's data [@alpaydin1998optdigits]. <!-- check-term-links: allow -->
+Each image's 64 pixels, from 0 to 16, are divided by 16
+so that they run from 0 to 1,
+and a random `r format(py$n_train, big.mark = ",")` images form a [training set](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-training-set),
+with the other images as a [test set](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-test-set).

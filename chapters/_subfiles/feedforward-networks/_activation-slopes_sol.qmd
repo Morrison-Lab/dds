@@ -1,0 +1,47 @@
+::: {#sol-activation-slopes}
+
+```{python}
+#| code-fold: show
+#| fig-alt: >-
+#|   Derivatives of the logistic function, tanh and the ReLU for z from -4 to 4.
+#|   The logistic and tanh derivatives peak at z = 0 and fall toward 0 on both sides;
+#|   the ReLU derivative is 0 for negative z and 1 for positive z.
+z = torch.linspace(-4, 4, 401, requires_grad=True)
+fig, ax = plt.subplots(figsize=(6, 3.5), layout="constrained")
+slopes = {}
+for name, g in [("logistic", torch.sigmoid), ("tanh", torch.tanh), ("ReLU", torch.relu)]:
+    (slope,) = torch.autograd.grad(g(z).sum(), z)
+    slopes[name] = slope
+    ax.plot(z.detach(), slope, label=name);
+ax.set_xlabel("z");
+ax.set_ylabel("g'(z)");
+ax.legend();
+plt.show()
+largest_logistic_slope = slopes["logistic"].max().item()
+logistic_slope_at_4 = slopes["logistic"][-1].item()
+```
+
+Each output of `g(z)` depends only on the matching entry of `z`,
+so the gradient of `g(z).sum()` holds the derivative $g'(z)$ at each point.
+
+- **Logistic.**
+  Its derivative peaks at `r sprintf("%.2f", py$largest_logistic_slope)` at $z = 0$,
+  and is close to 0 once $\abs{z}$ is large:
+  `r sprintf("%.3f", py$logistic_slope_at_4)` at $z = 4$.
+- **tanh.**
+  Its derivative peaks at 1 at $z = 0$
+  and is also close to 0 for large $\abs{z}$.
+- **[ReLU](#def-relu).**
+  Its derivative is 1 for every positive $z$
+  and exactly 0 for every negative $z$.
+  At $z = 0$ it has no derivative;
+  PyTorch uses 0 there.
+
+A [unit](#def-unit) whose [pre-activation](#def-pre-activation) sits where the derivative is near 0
+is [saturated](https://morrison-lab.github.io/lds/chapters/backpropagation.html#def-saturation):
+a small change in its weights barely changes its output,
+so the gradient that training follows is small too.
+The [logistic function](https://morrison-lab.github.io/mds/functions.html#def-logistic-function) and $\tanh$ saturate on both sides,
+and ReLU only on its negative side.
+
+:::

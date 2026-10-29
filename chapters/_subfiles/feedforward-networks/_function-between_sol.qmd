@@ -1,0 +1,39 @@
+::: {#sol-function-between}
+
+```{python}
+#| code-fold: show
+def midpoint_gap(f, a, b):
+    # Largest gap between f at the midpoint and the midpoint of f.
+    return (f((a + b) / 2) - (f(a) + f(b)) / 2).abs().max().item()
+
+a, b = x_test[0], x_test[1]
+gap_linear = midpoint_gap(lambda v: second(first(v)), a, b)
+gap_logistic = midpoint_gap(lambda v: second(torch.sigmoid(first(v))), a, b)
+mean_abs_pre = first(torch.stack([a, b])).abs().mean().item()
+print(gap_linear, gap_logistic, mean_abs_pre)
+```
+
+No.
+Take the first two test images,
+which show the digits `r py$y_test[0]$item()` and `r py$y_test[1]$item()`.
+For them,
+the stack with nothing between its layers maps their midpoint to the midpoint of their outputs,
+to within `r format(py$gap_linear, digits = 2)`,
+a rounding error.
+With $\sigmoid$ between the layers it misses by up to `r format(py$gap_logistic, digits = 2)`,
+far more than a rounding error,
+so it is not an [affine function](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-affine-function).
+Even so,
+$\sigmoid$ bends the untrained stack only a little.
+The untrained first layer's numbers for these two images have a mean absolute value of `r sprintf("%.2f", py$mean_abs_pre)`,
+and near 0, $\sigmoid$ is close to its tangent line,
+$\frac{1}{2} + \frac{z}{4}$.
+Training can move the numbers to where $\sigmoid$ bends.
+
+The [logistic function](https://morrison-lab.github.io/mds/functions.html#def-logistic-function) bends each of the 32 numbers,
+so each of the 10 outputs is an affine function of 32 bent [features](https://morrison-lab.github.io/lds/chapters/anatomy.html#def-feature),
+not of the pixels.
+Training moves $\matr{W}_1$ and $\vecf{b}_1$ as well as $\matr{W}_2$ and $\vecf{b}_2$,
+so it chooses those features.
+
+:::

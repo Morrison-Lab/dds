@@ -1,0 +1,10 @@
+::: {#sol-lse-shift-choice}
+
+Take $c = \max_k z_k$.
+Then every exponent $z_k - c$ is at most 0,
+so no exponential exceeds 1.
+One exponent is exactly 0,
+so the sum is at least 1,
+and its log is not $-\infty$.
+
+:::

@@ -1,0 +1,15 @@
+::: {#rem-output-units}
+
+#### Output layers and their losses
+
+@sol-scores-to-probabilities, @sol-two-class-output and @sol-real-output pair each kind of target with an output layer and a loss,
+each the negative log-likelihood of a distribution for the target
+[@goodfellow2016deep, section 6.2.2]:
+
+| Target | Output layer | Distribution | PyTorch loss |
+|:--|:--|:--|:--|
+| A real number | One number, no activation | Normal with fixed variance | `nn.MSELoss` |
+| One of 2 classes | One [logit](#def-logits), [logistic function](https://morrison-lab.github.io/mds/functions.html#def-logistic-function) | Bernoulli | `nn.BCEWithLogitsLoss` |
+| One of $C$ classes | $C$ [logits](#def-logits), softmax | Categorical | `nn.CrossEntropyLoss` |
+
+:::
