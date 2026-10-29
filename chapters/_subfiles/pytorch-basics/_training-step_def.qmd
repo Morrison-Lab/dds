@@ -1,0 +1,17 @@
+::: {#def-training-step}
+
+#### Training step
+
+A **training step** in PyTorch updates a model's [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter) once, in four stages:
+
+1.  `optimizer.zero_grad()` clears the gradient stored in each [parameter](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter)'s `.grad`;
+2.  calling the model, and then the [loss function](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-loss-function), computes the loss on a batch of data;
+3.  `loss.backward()` computes the gradient of the loss with respect to each parameter,
+    by [automatic differentiation](#def-automatic-differentiation),
+    and adds it to that parameter's `.grad`;
+4.  `optimizer.step()` updates each parameter using its `.grad`,
+    by the rule of the optimizer, such as [gradient descent](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#the-algorithm) for `torch.optim.SGD`.
+
+Training repeats the step, over the whole [training set](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-training-set) or over one batch of it at a time.
+
+:::

@@ -1,0 +1,8 @@
+::: {#exr-soft-rule-module}
+
+#### The soft rule as a PyTorch model
+
+Write the [soft 0-or-1 rule](ml-review.qmd#exr-log-loss-curve) as a subclass of PyTorch's `nn.Module`
+whose cutoff is an `nn.Parameter` that starts at 0.
+
+:::

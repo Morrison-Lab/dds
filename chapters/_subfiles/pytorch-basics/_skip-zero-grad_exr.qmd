@@ -1,0 +1,8 @@
+::: {#exr-skip-zero-grad}
+
+#### Leaving out `zero_grad`
+
+What happens to the cutoff of a new `SoftRule` trained as in @sol-train-soft-rule,
+but without the call to `optimizer.zero_grad()`?
+
+:::

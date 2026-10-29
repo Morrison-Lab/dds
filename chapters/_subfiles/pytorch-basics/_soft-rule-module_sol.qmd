@@ -1,0 +1,31 @@
+::: {#sol-soft-rule-module}
+
+```{python}
+#| code-fold: show
+from torch import nn
+
+
+class SoftRule(nn.Module):
+    """The soft 0-or-1 rule, with its cutoff as a parameter."""
+
+    def __init__(self):
+        super().__init__()
+        self.cutoff = nn.Parameter(torch.tensor(0.0, dtype=torch.float64))
+
+    def forward(self, ink):
+        return torch.sigmoid(ink - self.cutoff)
+
+
+rule = SoftRule()
+print(list(rule.parameters()))
+```
+
+- `__init__` runs `nn.Module`'s own setup, then creates the cutoff.
+  Assigning an `nn.Parameter`, a wrapped [tensor](#def-tensor), to an attribute of the module registers it,
+  so `rule.parameters()` returns it,
+  as the printout shows.
+  An `nn.Parameter` is created with `requires_grad=True`.
+- `forward` computes the probability of a 1 for each image's center ink.
+  Calling the module, as `rule(ink_01)`, runs `forward`.
+
+:::

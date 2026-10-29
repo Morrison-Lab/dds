@@ -1,0 +1,8 @@
+::: {#exr-scale-images}
+
+#### Scaling each image
+
+Divide each image by its own largest pixel,
+so that the largest pixel of every image is 1.
+
+:::
