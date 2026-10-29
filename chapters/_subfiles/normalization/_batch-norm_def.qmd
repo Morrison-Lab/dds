@@ -24,5 +24,6 @@ and $\smallconst$ is a small constant that keeps the division finite
 [@ioffe2015batch; @goodfellow2016deep, section 8.7.1].
 When the network makes predictions,
 running averages of $\mu_j$ and $\sigma_j^2$ from training take the place of the minibatch's.
+PyTorch's running average of the variance divides by $B - 1$ instead of $B$ [@pytorch_batchnorm1d].
 
 :::

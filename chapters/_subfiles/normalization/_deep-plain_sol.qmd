@@ -4,14 +4,16 @@
 #| code-fold: show
 plain_grad = first_layer_grad(make_deep())
 plain_loss, plain_acc = train(make_deep())
-print(plain_grad, plain_loss, plain_acc)
+plain_std = last_block_std(make_deep())
+print(plain_grad, plain_loss, plain_acc, plain_std)
 ```
 
-`r if (py$plain_loss > 0.9 * log(10)) "No" else "Yes"`.
+`r if (py$plain_loss > 0.9 * py$chance_loss) "No" else "Yes"`.
 Its training loss after 5 [epochs](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-epoch) is `r sprintf("%.3f", py$plain_loss)`,
-against $\log 10 \approx `r sprintf("%.3f", log(10))`$ for probabilities of $\frac{1}{10}$,
+against $\log 10 \approx `r sprintf("%.3f", py$chance_loss)`$ for probabilities of $\frac{1}{10}$,
 and it classifies `r sprintf("%.1f", 100 * py$plain_acc)`% of the test images correctly.
-The [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) that reaches its first layer has size `r sprintf("%.1e", py$plain_grad)`:
-a [vanishing gradient](backpropagation.qmd#def-vanishing-gradient).
+The [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) that reaches its first layer has size `r sprintf("%.1e", py$plain_grad)`,
+and the last block's output has standard deviation `r sprintf("%.1e", py$plain_std)`.
+`r if (py$plain_grad < 1e-4) "So the gradient vanishes before it reaches the first layer, as in the [backpropagation chapter](backpropagation.qmd#def-vanishing-gradient)." else ""`
 
 :::

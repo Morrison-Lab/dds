@@ -17,19 +17,14 @@ loss_fn = nn.CrossEntropyLoss()
 
 
 class Block(nn.Module):
-    # One hidden layer of `width` ReLU units,
-    # with optional normalization of its pre-activations
-    # and an optional residual connection around it.
+    # One hidden layer of `width` ReLU units.
+    # make_norm(width) builds a layer applied to its pre-activations;
+    # nn.Identity leaves them unchanged.
 
-    def __init__(self, width, norm="none", residual=False):
+    def __init__(self, width, make_norm=nn.Identity, residual=False):
         super().__init__()
         self.linear = nn.Linear(width, width)
-        norms = {
-            "none": nn.Identity(),
-            "batch": nn.BatchNorm1d(width),
-            "layer": nn.LayerNorm(width),
-        }
-        self.norm = norms[norm]
+        self.norm = make_norm(width)
         self.residual = residual
 
     def forward(self, h):
@@ -39,10 +34,10 @@ class Block(nn.Module):
         return out
 
 
-def make_deep(norm="none", residual=False, depth=20, width=64, seed=1):
+def make_deep(make_norm=nn.Identity, residual=False, depth=20, width=64, seed=1):
     # A first layer from the 64 pixels, `depth` blocks, then 10 logits.
     torch.manual_seed(seed)
-    blocks = [Block(width, norm, residual) for _ in range(depth)]
+    blocks = [Block(width, make_norm, residual) for _ in range(depth)]
     return nn.Sequential(nn.Linear(64, width), nn.ReLU(), *blocks, nn.Linear(width, 10))
 
 
@@ -73,6 +68,15 @@ def first_layer_grad(net):
     return net[0].weight.grad.norm().item()
 
 
+def last_block_std(net):
+    # Standard deviation of the last block's output, on 256 training images.
+    net.train()
+    with torch.no_grad():
+        return net[:-1](x_train[:256]).std().item()
+
+
+chance_loss = np.log(10)
+
 print(make_deep()[:3])
 ```
 
@@ -81,5 +85,8 @@ with `r format(py$n_train, big.mark = ",")` training images.
 `make_deep()` builds an [MLP](feedforward-networks.qmd#def-feedforward-network) with 21 [hidden layers](feedforward-networks.qmd#def-hidden-layer) of 64 [ReLU](feedforward-networks.qmd#def-relu) [units](feedforward-networks.qmd#def-unit):
 a first layer from the pixels,
 then 20 copies of `Block`.
-`train()` runs 5 [epochs](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-epoch) of minibatch SGD with batch size 32 and [learning rate](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-learning-rate) 0.01.
+`train()` runs 5 [epochs](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-epoch) of minibatch stochastic [gradient descent](https://morrison-lab.github.io/mds/optimization.html#def-gradient-descent) with batch size 32 and [learning rate](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-learning-rate) 0.01.
 `first_layer_grad()` measures the size of the [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) that reaches the first layer.
+The exercises count a network as having learned something
+when its training loss after `train()` is below 90% of $\log 10 \approx `r sprintf("%.3f", py$chance_loss)`$,
+the loss of predicting $\frac{1}{10}$ for every digit.

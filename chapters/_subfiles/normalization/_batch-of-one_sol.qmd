@@ -22,6 +22,7 @@ In training mode,
 "`r py$batch_of_one_error`".
 In evaluation mode it uses its running averages instead,
 so it accepts a single image.
-This is why `train()` calls `net.train()` and `net.eval()`.
+Evaluation mode is what makes predictions use the running averages,
+so `train()` calls `net.eval()` before it computes the test [accuracy](https://morrison-lab.github.io/lds/chapters/metrics.html#def-accuracy).
 
 :::

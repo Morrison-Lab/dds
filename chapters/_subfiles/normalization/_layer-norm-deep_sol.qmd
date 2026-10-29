@@ -2,12 +2,12 @@
 
 ```{python}
 #| code-fold: show
-layer_grad = first_layer_grad(make_deep(norm="layer"))
-layer_loss, layer_acc = train(make_deep(norm="layer"))
+layer_grad = first_layer_grad(make_deep(make_norm=nn.LayerNorm))
+layer_loss, layer_acc = train(make_deep(make_norm=nn.LayerNorm))
 print(layer_grad, layer_loss, layer_acc)
 ```
 
-`r if (py$layer_loss < 0.9 * log(10)) "Yes" else "No"`.
+`r if (py$layer_loss < 0.9 * py$chance_loss) "Yes" else "No"`.
 With [layer normalization](#def-layer-norm),
 the training loss after 5 [epochs](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-epoch) is `r sprintf("%.3f", py$layer_loss)`,
 and the test [accuracy](https://morrison-lab.github.io/lds/chapters/metrics.html#def-accuracy) is `r sprintf("%.1f", 100 * py$layer_acc)`%,

@@ -2,6 +2,6 @@
 
 #### Layer normalization in the 20-block network
 
-Does `make_deep(norm="layer")` learn in the 5 [epochs](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-epoch) of `train()`?
+Does `make_deep(make_norm=nn.LayerNorm)` learn in the 5 [epochs](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-epoch) of `train()`?
 
 :::
