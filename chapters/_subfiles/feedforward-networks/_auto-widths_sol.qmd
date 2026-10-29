@@ -51,7 +51,7 @@ With 1 [unit](#def-unit) the fit can bend only once,
 and its training mean squared error is `r sprintf("%.1f", py$auto_mse[["1"]])`.
 With 3 [unit](#def-unit)s it is `r sprintf("%.1f", py$auto_mse[["3"]])`,
 and with 20 it is `r sprintf("%.1f", py$auto_mse[["20"]])`.
-So the error falls as the network gets wider.
+So the error `r if (py$auto_mse[["1"]] > py$auto_mse[["3"]] && py$auto_mse[["3"]] > py$auto_mse[["20"]]) "falls" else "does not always fall"` as the network gets wider.
 @thm-universal-approximation says that a wide enough network can follow any continuous curve;
 it does not say that following the [training data](https://morrison-lab.github.io/lds/chapters/anatomy.html#def-training-data) more closely predicts new cars better.
 
