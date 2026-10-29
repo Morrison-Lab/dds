@@ -23,7 +23,8 @@ a rounding error.
 With $\sigmoid$ between the layers it misses by up to `r format(py$gap_logistic, digits = 2)`,
 far more than a rounding error,
 so it is not an [affine function](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-affine-function).
-The logistic gap is still small.
+Even so,
+$\sigmoid$ bends the untrained stack only a little.
 The untrained first layer's numbers for these two images have a mean absolute value of `r sprintf("%.2f", py$mean_abs_pre)`,
 and near 0, $\sigmoid$ is close to its tangent line,
 $\frac{1}{2} + \frac{z}{4}$.
