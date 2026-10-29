@@ -8,6 +8,13 @@ batch_std = last_block_std(make_deep(make_norm=nn.BatchNorm1d))
 print(batch_grad, batch_loss, batch_acc, batch_std)
 ```
 
+```{python}
+#| include: false
+# The prose below says batch normalization keeps the last block's output
+# from shrinking; stop the render if a change of seed or version breaks that.
+assert batch_std > plain_std
+```
+
 `r if (py$batch_loss < 0.9 * py$chance_loss) "Yes" else "No"`.
 With [batch normalization](#def-batch-norm) in every block,
 the training loss after 5 [epochs](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-epoch) is `r sprintf("%.3f", py$batch_loss)`,
