@@ -25,7 +25,7 @@ For `nn.Linear(256, 256)` the sample variance of the weights times 256 is `r spr
 close to $\frac{1}{3}$.
 That is $\frac{1}{6}$ of [He initialization](https://morrison-lab.github.io/lds/chapters/backpropagation.html#def-he-initialization)'s $2 / n_{\text{in}}$,
 so by @sol-init-scale each [ReLU](feedforward-networks.qmd#def-relu) layer with PyTorch's starting weights shrinks the values by a factor of about $1 / \sqrt{6}$.
-This is one reason the deep ReLU network's gradients shrank layer by layer in [the backpropagation chapter](backpropagation.qmd#sol-deep-grad-norms).
+This is one reason the deep ReLU network's [gradients](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) shrank layer by layer in [the backpropagation chapter](backpropagation.qmd#sol-deep-grad-norms).
 `nn.init.kaiming_normal_` gives a layer He initialization instead.
 
 :::

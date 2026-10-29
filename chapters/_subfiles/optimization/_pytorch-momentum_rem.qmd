@@ -4,8 +4,9 @@
 
 `torch.optim.SGD(params, lr=alpha, momentum=beta)` takes the steps of [lds's momentum](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-momentum),
 $\vv_t = \beta \vv_{t - 1} + \vg_t$ and $\vcoef_t = \vcoef_{t - 1} - \learnrate \vv_t$,
-where $\vg_t$ is the gradient at step $t$ and $\vcoef_t$ the [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter) after it.
-Its first step sets $\vv_1 = \vg_1$, as $\vv_0 = \vzero$ would [@pytorch_sgd].
+where $\vg_t$ is the [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) at step $t$ and $\vcoef_t$ the [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter) after it.
+Its first step sets $\vv_1 = \vg_1$,
+as $\vv_0 = \vzero$ would [@pytorch_sgd].
 Some sources scale the gradient term by $1 - \beta$ or fold $\learnrate$ into $\vv_t$;
 the steps are the same up to a rescaled [learning rate](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-learning-rate).
 

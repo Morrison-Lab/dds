@@ -26,13 +26,14 @@ The pixels have standard deviation `r sprintf("%.2f", py$init_sd[["pixels"]])`.
 After 10 layers,
 $\sigma = 0.01$ leaves values with standard deviation about $10^{`r round(log10(py$init_sd[["small"]]))`}$,
 $\sigma = 0.2$ gives about $10^{`r round(log10(py$init_sd[["large"]]))`}$,
-and $\sigma = \sqrt{2 / n_{\text{in}}}$ gives `r sprintf("%.2f", py$init_sd[["he"]])`, close to where it started.
+and $\sigma = \sqrt{2 / n_{\text{in}}}$ gives `r sprintf("%.2f", py$init_sd[["he"]])`,
+close to where it started.
 Each layer multiplies the typical size of the values by about $\sigma \sqrt{n_{\text{in}} / 2}$:
 the weighted sum of $n_{\text{in}}$ values has variance proportional to $n_{\text{in}} \sigma^2$,
 and the [ReLU](feedforward-networks.qmd#def-relu) zeroes about half of the results.
 That factor is 1 for $\sigma^2 = 2 / n_{\text{in}}$,
 which is [He initialization](https://morrison-lab.github.io/lds/chapters/backpropagation.html#def-he-initialization) [@he2015delving].
 Since [backpropagation](backpropagation.qmd#def-backpropagation) multiplies by the same weight matrices on the way back,
-the gradients shrink or grow layer by layer in the same way.
+the [gradients](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) shrink or grow layer by layer in the same way.
 
 :::

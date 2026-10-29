@@ -1,6 +1,7 @@
 ::: {#sol-adam-first-step}
 
-With $m_0 = u_0 = 0$, the first averages are $m_1 = (1 - \beta_1) g$ and $u_1 = (1 - \beta_2) g^2$.
+With $m_0 = u_0 = 0$,
+the first averages are $m_1 = (1 - \beta_1) g$ and $u_1 = (1 - \beta_2) g^2$.
 
 $$
 \begin{aligned}
@@ -14,7 +15,8 @@ $$
 \end{aligned}
 $$
 
-So the first step moves the [parameter](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter) by exactly $\learnrate$, against the sign of $g$,
+So the first step moves the [parameter](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter) by exactly $\learnrate$,
+against the sign of $g$,
 whatever the size of $g$.
 
 ```{python}
@@ -26,10 +28,13 @@ adam.step()
 print(1 - w.detach())
 ```
 
-Gradients of 1,000 and 0.001 both move their parameter by `r sprintf("%.3f", py$adam$param_groups[[1]]$lr)`, the [learning rate](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-learning-rate),
+[Gradients](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) of 1,000 and 0.001 both move their parameter by `r sprintf("%.3f", py$adam$param_groups[[1]]$lr)`,
+the [learning rate](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-learning-rate),
 up to the small effect of $\epsilon$.
-[Adam](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-adam)'s learning rate therefore sets the size of each step on the [parameter](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter)s' own scale,
-roughly, for later steps too [@kingma2015adam, section 2.1],
-while plain gradient descent's step is the learning rate times the gradient.
+So [Adam](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-adam)'s learning rate sets the size of each step
+on the [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter)' own scale.
+That stays roughly true for later steps [@kingma2015adam, section 2.1].
+A step of plain [gradient descent](https://morrison-lab.github.io/mds/optimization.html#def-gradient-descent)
+is instead the learning rate times the [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient).
 
 :::

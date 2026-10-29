@@ -41,7 +41,8 @@ plt.show()
 Minibatches win by far:
 after 10 [epoch](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-epoch)s the training loss is `r sprintf("%.2f", py$mini_losses[[10]])` for minibatches of 32
 and `r sprintf("%.2f", py$full_losses[[10]])` for the full batch.
-An epoch costs about the same either way, since it computes the loss and its gradient once for each training image.
+An epoch costs about the same either way,
+since it computes the loss and its [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) once for each training image.
 Full-batch descent spends that on one step per epoch,
 while the minibatch version spends it on many smaller, noisier steps,
 each of which already points roughly downhill.

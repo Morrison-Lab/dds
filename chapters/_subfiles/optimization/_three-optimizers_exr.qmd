@@ -2,10 +2,15 @@
 
 #### Plain steps, momentum and Adam
 
-Train three fresh [MLP](feedforward-networks.qmd#def-feedforward-network)s for 5 [epoch](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-epoch)s on minibatches of 32, using `train()` from @sol-minibatch-epochs:
-one with `torch.optim.SGD` at [learning rate](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-learning-rate) 0.1,
-one with `torch.optim.SGD` at learning rate 0.01 and momentum 0.9,
-and one with `torch.optim.Adam`, PyTorch's [Adam](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-adam), at learning rate 0.01.
+Suppose three fresh [MLP](feedforward-networks.qmd#def-feedforward-network)s are trained for 5 [epoch](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-epoch)s on minibatches of 32,
+using `train()` from @sol-minibatch-epochs:
+
+- one with `torch.optim.SGD` at [learning rate](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-learning-rate) 0.1;
+- one with `torch.optim.SGD` at learning rate 0.01 and momentum 0.9;
+- one with `torch.optim.Adam`,
+  PyTorch's [Adam](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-adam),
+  at learning rate 0.01.
+
 Which reaches the lowest training loss?
 
 :::

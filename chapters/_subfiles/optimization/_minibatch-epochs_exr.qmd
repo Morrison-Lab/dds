@@ -2,10 +2,13 @@
 
 #### Ten passes over the data
 
-Train a fresh [MLP](feedforward-networks.qmd#def-feedforward-network) from `make_mlp()` for 10 [epochs](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-epoch) of full-batch gradient descent with [learning rate](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-learning-rate) 0.5.
-Train another for 10 epochs of [minibatch gradient descent](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-minibatch) with batch size 32 and learning rate 0.1,
-taking each [epoch](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-epoch)'s minibatches from a fresh shuffle of the training images
-rather than drawing them with replacement.
+Suppose one fresh [MLP](feedforward-networks.qmd#def-feedforward-network) from `make_mlp()` is trained
+for 10 [epochs](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-epoch) of full-batch [gradient descent](https://morrison-lab.github.io/mds/optimization.html#def-gradient-descent)
+with [learning rate](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-learning-rate) 0.5.
+Another is trained for 10 epochs of [minibatch gradient descent](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-minibatch)
+with batch size 32 and learning rate 0.1.
+Each [epoch](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-epoch)'s minibatches come from a fresh shuffle of the training images,
+rather than being drawn with replacement.
 Which has the lower training loss after 10 epochs?
 
 :::

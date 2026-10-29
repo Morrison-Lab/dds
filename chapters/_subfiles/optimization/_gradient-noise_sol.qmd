@@ -27,8 +27,9 @@ print({b: round(float(b * d), 2) for b, d in noise.items()})
 Yes.
 The mean squared distance falls from `r sprintf("%.3f", py$noise[["8"]])` at $b = 8$ to `r sprintf("%.3f", py$noise[["128"]])` at $b = 128$,
 and $b$ times it stays between `r sprintf("%.1f", min(8 * py$noise[["8"]], 32 * py$noise[["32"]], 128 * py$noise[["128"]]))` and `r sprintf("%.1f", max(8 * py$noise[["8"]], 32 * py$noise[["32"]], 128 * py$noise[["128"]]))`.
-The mean squared distance is the sum of the variances of the gradient's entries,
-so it falls as $1/b$, as each variance does.
+The mean squared distance is the sum of the variances of the [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient)'s entries,
+so it falls as $1/b$,
+as each variance does.
 Quadrupling the batch size only halves the typical distance,
 which is one reason small batches are a good use of each gradient computation.
 

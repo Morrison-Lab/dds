@@ -17,7 +17,8 @@ print(final_loss)
 print(test_acc)
 ```
 
-[Adam](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-adam), with training loss `r sprintf("%.2f", py$final_loss[["Adam"]])`,
+[Adam](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-adam),
+with training loss `r sprintf("%.2f", py$final_loss[["Adam"]])`,
 against `r sprintf("%.2f", py$final_loss[["SGD"]])` for plain SGD
 and `r sprintf("%.2f", py$final_loss[["momentum"]])` with momentum.
 It also classifies the most images of the [test set](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-test-set) correctly,

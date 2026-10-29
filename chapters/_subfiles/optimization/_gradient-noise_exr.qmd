@@ -4,10 +4,11 @@
 
 [lds's exercise on minibatches](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#exr-minibatch) shows that,
 for minibatches drawn with replacement,
-the minibatch gradient's variance is $1/b$ times that of one image's gradient, for batch size $b$.
-For a fresh [MLP](feedforward-networks.qmd#def-feedforward-network) at its starting [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter),
-estimate the mean squared distance between the minibatch gradient and the full-batch gradient,
-over 200 minibatches each of sizes 8, 32 and 128.
-Does $b$ times that mean squared distance stay about the same?
+the minibatch [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient)'s variance is $1/b$ times that of one image's gradient,
+for batch size $b$.
+Take a fresh [MLP](feedforward-networks.qmd#def-feedforward-network) at its starting [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter),
+and 200 minibatches each of sizes 8, 32 and 128.
+Does $b$ times the mean squared distance between the minibatch gradient and the full-batch gradient
+stay about the same?
 
 :::

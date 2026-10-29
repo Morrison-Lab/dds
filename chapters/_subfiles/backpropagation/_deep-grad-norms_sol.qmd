@@ -41,6 +41,6 @@ and the last layer's weight gradient is about $10^{`r round(log10(py$shrink[["lo
 With the [ReLU](feedforward-networks.qmd#def-relu),
 the weight gradient shrinks over the last few layers and then levels off,
 and the last layer's is `r sprintf("%.0f", py$shrink[["ReLU"]])` times the first layer's.
-A [training step](pytorch-basics.qmd#def-training-step) with one learning rate would move the logistic network's first layers almost not at all.
+A [training step](pytorch-basics.qmd#def-training-step) with one [learning rate](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-learning-rate) would move the logistic network's first layers almost not at all.
 
 :::

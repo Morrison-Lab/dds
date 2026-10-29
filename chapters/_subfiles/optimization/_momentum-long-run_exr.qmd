@@ -2,7 +2,7 @@
 
 #### Momentum on a steady slope
 
-Suppose the gradient is the same vector $\vg$ at every step,
+Suppose the [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) is the same vector $\vg$ at every step,
 and momentum starts from $\vv_0 = \vzero$.
 What does the step $\learnrate \vv_t$ approach as $t$ grows?
 

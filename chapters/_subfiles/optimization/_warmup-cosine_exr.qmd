@@ -2,9 +2,8 @@
 
 #### Warmup, then cosine decay
 
-With `torch.optim.lr_scheduler.LambdaLR`, which multiplies the optimizer's [learning rate](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-learning-rate) by a function of the step number,
-build a schedule for `torch.optim.SGD` at learning rate 0.1
-that uses [learning-rate warmup](#def-warmup) over 100 steps
+A schedule for `torch.optim.SGD` at [learning rate](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-learning-rate) 0.1
+uses [learning-rate warmup](#def-warmup) over 100 steps,
 and then [cosine decay](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-cosine-decay) to 0 at step 1,000.
 What learning rate does it give at step 550?
 

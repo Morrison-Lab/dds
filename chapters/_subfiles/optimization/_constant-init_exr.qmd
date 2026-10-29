@@ -2,8 +2,9 @@
 
 #### Starting every weight at the same value
 
-Set every weight and bias of a fresh [MLP](feedforward-networks.qmd#def-feedforward-network) to 0.1,
-and train it for 5 [epoch](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-epoch)s on minibatches of 32 with `torch.optim.SGD` at [learning rate](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-learning-rate) 0.1.
+Suppose every weight and bias of a fresh [MLP](feedforward-networks.qmd#def-feedforward-network) is set to 0.1.
+It is then trained for 5 [epoch](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-epoch)s on minibatches of 32,
+with `torch.optim.SGD` at [learning rate](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-learning-rate) 0.1.
 What happens to the 32 [units](feedforward-networks.qmd#def-unit) of its [hidden layer](feedforward-networks.qmd#def-hidden-layer)?
 
 :::

@@ -15,12 +15,15 @@ print(largest_row_gap, constant_acc)
 ```
 
 They stay identical:
-after training, the largest difference between any row of the first layer's weight matrix and the first row is `r format(py$largest_row_gap, digits = 2)`,
+after training,
+the largest difference between any row of the first layer's weight matrix and the first row is `r format(py$largest_row_gap, digits = 2)`,
 so all 32 [unit](feedforward-networks.qmd#def-unit)s compute the same function of the pixels,
 and the network classifies only `r sprintf("%.1f", 100 * py$constant_acc)`% of the test images correctly.
-[Unit](feedforward-networks.qmd#def-unit)s that start equal receive equal gradients,
+[Unit](feedforward-networks.qmd#def-unit)s that start equal receive equal [gradients](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient),
 since each enters the output in the same way,
 so every step changes them equally.
-The network has, in effect, one hidden [unit](feedforward-networks.qmd#def-unit).
+The network has,
+in effect,
+one hidden [unit](feedforward-networks.qmd#def-unit).
 
 :::

@@ -35,12 +35,15 @@ rate_550 = rates[550]
 ```
 
 `r sprintf("%.3f", py$rate_550)`.
-Step 550 is halfway through the cosine part, from step 100 to step 1,000,
+Step 550 is halfway through the cosine part,
+from step 100 to step 1,000,
 and halfway there [cosine decay](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-cosine-decay) gives half the base [learning rate](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-learning-rate),
 since $\frac{1}{2}\paren{1 + \cos \frac{\pi}{2}} = \frac{1}{2}$.
-The loop calls `scheduler.step()` after `sgd.step()`, the order PyTorch expects,
+The loop calls `scheduler.step()` after `sgd.step()`,
+the order PyTorch expects,
 and `train()` in @sol-minibatch-epochs does the same at every minibatch.
-Here `sgd.step()` changes nothing, since no gradients have been computed;
+Here `sgd.step()` changes nothing,
+since no [gradients](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) have been computed;
 it is there only to show the order.
 
 :::
