@@ -20,8 +20,10 @@ jobs:
     with:
       # Entries the check skips: books with no DOI in Crossref, and
       # poh2010wearable, whose publisher (IEEE) answers the check's request
-      # with status 202 though the DOI is correct. Remove a key once its
+      # with status 202 though the DOI is correct, and srivastava2014dropout,
+      # a JMLR article (JMLR assigns no DOIs). Remove a key once its
       # entry gains a DOI the check can verify.
       exclude-keys: >-
         brown2014makeitstick goodfellow2016deep minsky1969perceptrons
         murphy2022pml poh2010wearable raschka2022mlpytorch
+        srivastava2014dropout
