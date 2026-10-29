@@ -29,10 +29,10 @@ step = (1 - w.detach()).tolist()
 print(step)
 ```
 
-[Gradients](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) of 1,000 and 0.001 move their [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter) by `r sprintf("%.4f", py$step[[1]])` and `r sprintf("%.4f", py$step[[2]])`,
+[Gradients](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) of 1,000 and 0.001 move their [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter) by `r sprintf("%.7f", py$step[[1]])` and `r sprintf("%.7f", py$step[[2]])`,
 both close to the [learning rate](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-learning-rate),
 `r py$adam$param_groups[[1]]$lr`.
-The small difference is the effect of $\epsilon$.
+The small difference is the effect of $\smallconst$.
 So the learning rate of [Adam](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-adam) sets the size of each step
 on the [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter)' own scale.
 Later steps are also bounded by about the learning rate [@kingma2015adam, section 2.1].

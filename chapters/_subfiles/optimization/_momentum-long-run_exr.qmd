@@ -3,7 +3,9 @@
 #### Momentum on a steady slope
 
 Suppose the [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) is the same vector $\vg$ at every step,
-and [momentum](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-momentum) starts from $\vv_0 = \vzero$.
+and [momentum](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-momentum),
+updated as in @rem-pytorch-momentum,
+starts from $\vv_0 = \vzero$.
 What does the step $\learnrate \vv_t$ approach as $t$ grows?
 
 :::
