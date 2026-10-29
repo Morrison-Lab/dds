@@ -124,7 +124,7 @@ print(make_deep()[:3])
       )
     )
 
-The exercises use the digits split of the [feedforward networks chapter](../chapters/feedforward-networks.llms.md), with 1,200 training images. `make_deep()` builds an [MLP](../chapters/feedforward-networks.llms.md#def-feedforward-network) with 21 [hidden layers](../chapters/feedforward-networks.llms.md#def-hidden-layer) of 64 [ReLU](../chapters/feedforward-networks.llms.md#def-relu) [units](../chapters/feedforward-networks.llms.md#def-unit): a first layer from the pixels, then 20 copies of `Block`. `train()` runs 5 [epochs](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-epoch) of minibatch stochastic [gradient descent](https://morrison-lab.github.io/mds/optimization.html#def-gradient-descent) with batch size 32 and [learning rate](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-learning-rate) 0.01. `first_layer_grad()` measures the size of the [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) that reaches the first layer. The exercises count a network as having learned something when its training loss after `train()` is below 90% of \\\log 10 \approx 2.303\\, the loss of predicting \\\frac{1}{10}\\ for every digit.
+The exercises use the digits split of the [feedforward networks chapter](../chapters/feedforward-networks.llms.md), with 1,200 training images. `make_deep()` builds an [MLP](../chapters/feedforward-networks.llms.md#def-feedforward-network) with 21 [hidden layers](../chapters/feedforward-networks.llms.md#def-hidden-layer) of 64 [ReLU](../chapters/feedforward-networks.llms.md#def-relu) [units](../chapters/feedforward-networks.llms.md#def-unit): a first layer from the pixels, then 20 copies of `Block`. `train()` runs 5 [epochs](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-epoch) of minibatch stochastic [gradient descent](https://morrison-lab.github.io/mds/optimization.html#def-gradient-descent), with batch size 32 and [learning rate](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-learning-rate) 0.01. `first_layer_grad()` measures the size of the [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) that reaches the first layer. The exercises count a network as having learned something when its training loss after `train()` is below 90% of \\\log 10 \approx 2.303\\, the loss of predicting \\\frac{1}{10}\\ for every digit.
 
 # 2 A deep network
 
@@ -165,7 +165,7 @@ The exercises use the digits split of the [feedforward networks chapter](../chap
 >
 > \\ \gamma_j \frac{z\_{ij} - \mu_j}{\sqrt{\sigma_j^2 + \smallconst}} + \beta_j, \\
 >
-> where \\\gamma_j\\ and \\\beta_j\\ are [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter) learned with the rest, and \\\smallconst\\ is a small constant that keeps the division finite [\[1\]](#ref-ioffe2015batch), [\[2, Sec. 8.7.1\]](#ref-goodfellow2016deep). When the network makes predictions, running averages of \\\mu_j\\ and \\\sigma_j^2\\ from training take the place of the minibatch’s. PyTorch’s running average of the variance divides by \\B - 1\\ instead of \\B\\ [\[3\]](#ref-pytorch_batchnorm1d).
+> where \\\gamma_j\\ and \\\beta_j\\ are [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter) learned with the rest and \\\smallconst\\ is a small constant that keeps the division finite [\[1\]](#ref-ioffe2015batch), [\[2, Sec. 8.7.1\]](#ref-goodfellow2016deep). When the network makes predictions, running averages of \\\mu_j\\ and \\\sigma_j^2\\ from training take the place of the minibatch’s. PyTorch’s running average of the variance divides by \\B - 1\\ instead of \\B\\ [\[3\]](#ref-pytorch_batchnorm1d).
 
 > **NOTE:**
 >
@@ -194,7 +194,8 @@ The exercises use the digits split of the [feedforward networks chapter](../chap
 >
 > ``` python
 > largest_mean = normed.mean(dim=0).abs().max().item()
-> std_range = normed.std(dim=0, correction=0).aminmax()
+> std_min = normed.std(dim=0, correction=0).min().item()
+> std_max = normed.std(dim=0, correction=0).max().item()
 > ```
 >
 > `nn.BatchNorm1d(64)` applies [batch normalization](#def-batch-norm) to 64 [pre-activation](../chapters/feedforward-networks.llms.md#def-pre-activation)s. It starts with every \\\gamma_j = 1\\ and every \\\beta_j = 0\\ [\[3\]](#ref-pytorch_batchnorm1d). For 32 training images, the first 4 pre-activations of a random layer have the means and standard deviations on the first line. After batch normalization, on the second line, no column’s mean is farther from 0 than 3.5e-07, and the standard deviations run from 0.999 to 1.000.
@@ -231,7 +232,12 @@ The exercises use the digits split of the [feedforward networks chapter](../chap
 >
 >     torch.Size([1, 64])
 >
-> In training mode, `nn.BatchNorm1d` refuses a minibatch of one: “Expected more than 1 value per channel when training, got input size torch.Size(\[1, 64\])”. In evaluation mode it uses its running averages instead, so it accepts a single image. Evaluation mode is what makes predictions use the running averages, so `train()` calls `net.eval()` before it computes the test [accuracy](https://morrison-lab.github.io/lds/chapters/metrics.html#def-accuracy).
+> `nn.BatchNorm1d` treats a minibatch of one differently in its two modes:
+>
+> - **Training mode.** It refuses the minibatch: “Expected more than 1 value per channel when training, got input size torch.Size(\[1, 64\])”.
+> - **Evaluation mode.** It uses its running averages instead, so it accepts a single image.
+>
+> Evaluation mode is what makes predictions use the running averages. That is why `train()` calls `net.eval()` before it computes the test [accuracy](https://morrison-lab.github.io/lds/chapters/metrics.html#def-accuracy).
 
 ## 3.3 Batch normalization in the deep network
 
@@ -333,7 +339,7 @@ The exercises use the digits split of the [feedforward networks chapter](../chap
 >
 >     25.320859909057617 1.927740633789199e-09
 >
-> The [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) has size 2.5e+01, against 1.9e-09 without [residual connections](https://morrison-lab.github.io/lds/chapters/backpropagation.html#def-residual-connection). A block computes \\\vhidval + f(\vhidval)\\, with \\f(\vhidval) = \operatorname{ReLU}\paren{\matr{W} \vhidval + \vecf{b}}\\ from [Remark 1](#rem-residual-block), so its derivative with respect to \\\vhidval\\ is the identity matrix plus the derivative of \\f\\. Going back through a block, the gradient keeps a copy of itself through the identity, however small the derivative of \\f\\ is. Without the [residual connection](https://morrison-lab.github.io/lds/chapters/backpropagation.html#def-residual-connection), the gradient passes only through the derivative of \\f\\, and shrinks when that derivative is small. Across 20 blocks these derivatives multiply, so a factor below 1 in size at each block shrinks the gradient geometrically.
+> The [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) has size 2.5e+01, against 1.9e-09 without [residual connections](https://morrison-lab.github.io/lds/chapters/backpropagation.html#def-residual-connection). A block computes \\\vhidval + f(\vhidval)\\, with \\f(\vhidval) = \operatorname{ReLU}\paren{\matr{W} \vhidval + \vecf{b}}\\ from [Remark 1](#rem-residual-block), so its derivative with respect to \\\vhidval\\ is the identity matrix plus the derivative of \\f\\. Going back through a block, the gradient keeps a copy of itself through the identity. It keeps that copy however small the derivative of \\f\\ is. Without the [residual connection](https://morrison-lab.github.io/lds/chapters/backpropagation.html#def-residual-connection), the gradient passes only through the derivative of \\f\\, and shrinks when that derivative is small. Across 20 blocks these derivatives multiply. So when each factor is below 1 in size, the gradient shrinks geometrically.
 
 ## 5.3 Four networks
 
