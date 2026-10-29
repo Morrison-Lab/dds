@@ -1,0 +1,8 @@
+The [feedforward networks chapter](feedforward-networks.qmd) trained its [MLP](feedforward-networks.qmd#def-feedforward-network) with full-batch gradient descent,
+and [lds's chapter on gradient descent](https://morrison-lab.github.io/lds/chapters/gradient-descent.html) covers the algorithms that do better. <!-- check-term-links: allow -->
+This lecture runs them in PyTorch on the digits:
+
+1.  training on small random subsets of the training images instead of all of them at each step;
+2.  momentum and [Adam](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-adam) as PyTorch optimizers;
+3.  changing the [learning rate](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-learning-rate) during training, starting with a short ramp up;
+4.  choosing the scale of the starting weights.

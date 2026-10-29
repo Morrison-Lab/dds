@@ -1,0 +1,35 @@
+::: {#sol-gradient-noise}
+
+```{python}
+#| code-fold: show
+noise_mlp = make_mlp()
+
+
+def flat_gradient(rows):
+    # The loss gradient on the given training images, as one long vector.
+    noise_mlp.zero_grad()
+    loss_fn(noise_mlp(x_train[rows]), y_train[rows]).backward()
+    return torch.cat([p.grad.flatten() for p in noise_mlp.parameters()])
+
+
+full_gradient = flat_gradient(torch.arange(n_train))
+sampler = torch.Generator().manual_seed(0)
+noise = {}
+for b in [8, 32, 128]:
+    distances = []
+    for draw in range(200):
+        rows = torch.randint(n_train, (b,), generator=sampler)
+        distances.append(((flat_gradient(rows) - full_gradient) ** 2).sum().item())
+    noise[b] = np.mean(distances)
+print({b: round(float(b * d), 2) for b, d in noise.items()})
+```
+
+Yes.
+The mean squared distance falls from `r sprintf("%.3f", py$noise[["8"]])` at $b = 8$ to `r sprintf("%.3f", py$noise[["128"]])` at $b = 128$,
+and $b$ times it stays between `r sprintf("%.1f", min(8 * py$noise[["8"]], 32 * py$noise[["32"]], 128 * py$noise[["128"]]))` and `r sprintf("%.1f", max(8 * py$noise[["8"]], 32 * py$noise[["32"]], 128 * py$noise[["128"]]))`.
+The mean squared distance is the sum of the variances of the gradient's entries,
+so it falls as $1/b$, as each variance does.
+Quadrupling the batch size only halves the typical distance,
+which is one reason small batches are a good use of each gradient computation.
+
+:::

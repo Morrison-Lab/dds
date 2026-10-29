@@ -1,0 +1,11 @@
+::: {#exr-init-scale}
+
+#### How the starting scale grows or shrinks
+
+Push the training images through 10 layers,
+each computing $\operatorname{ReLU}\paren{\matr{W} \vhidval}$ with [width](https://morrison-lab.github.io/lds/chapters/neural-nets.html#def-width) 256 and no bias,
+with every weight drawn independently from a normal distribution with mean 0 and standard deviation $\sigma$.
+How does the standard deviation of the last layer's values depend on $\sigma$,
+for $\sigma = 0.01$, for $\sigma = \sqrt{2 / n_{\text{in}}}$ where $n_{\text{in}}$ is the layer's number of inputs, and for $\sigma = 0.2$?
+
+:::

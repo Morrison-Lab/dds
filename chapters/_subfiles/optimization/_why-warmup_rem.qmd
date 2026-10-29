@@ -1,0 +1,12 @@
+::: {#rem-why-warmup}
+
+#### Why warm up
+
+At the start of training the [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter) are far from good ones and the gradients can be large,
+so a [learning rate](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-learning-rate) that works later can throw the network into a bad region in the first few steps.
+@goyal2017accurate added [warmup](#def-warmup) to train with very large minibatches and correspondingly large learning rates.
+For [Adam](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-adam), its running average of squared gradients rests on only a few gradients at first,
+so its step sizes vary widely,
+and warmup keeps those early steps small [@liu2020variance].
+
+:::

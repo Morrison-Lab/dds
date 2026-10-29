@@ -1,0 +1,31 @@
+::: {#sol-three-optimizers}
+
+```{python}
+#| code-fold: show
+optimizers = {
+    "SGD": lambda p: torch.optim.SGD(p, lr=0.1),
+    "momentum": lambda p: torch.optim.SGD(p, lr=0.01, momentum=0.9),
+    "Adam": lambda p: torch.optim.Adam(p, lr=0.01),
+}
+final_loss, test_acc = {}, {}
+for name, make_optimizer in optimizers.items():
+    mlp = make_mlp()
+    final_loss[name] = train(mlp, make_optimizer(mlp.parameters()), 5, 32)[-1]
+    with torch.no_grad():
+        test_acc[name] = (mlp(x_test).argmax(dim=1) == y_test).float().mean().item()
+print(final_loss)
+print(test_acc)
+```
+
+[Adam](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-adam), with training loss `r sprintf("%.2f", py$final_loss[["Adam"]])`,
+against `r sprintf("%.2f", py$final_loss[["SGD"]])` for plain SGD
+and `r sprintf("%.2f", py$final_loss[["momentum"]])` with momentum.
+It also classifies the most images of the [test set](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-test-set) correctly,
+`r sprintf("%.1f", 100 * py$test_acc[["Adam"]])`%.
+Momentum and plain SGD end close together,
+as @sol-momentum-long-run predicts:
+[learning rate](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-learning-rate) 0.01 with $\beta = 0.9$ moves like learning rate 0.1 on a steady slope.
+A comparison like this depends on the learning rates chosen for each method,
+so a fair one tunes each method's learning rate separately.
+
+:::

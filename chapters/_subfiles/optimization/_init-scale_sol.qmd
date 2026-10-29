@@ -1,0 +1,38 @@
+::: {#sol-init-scale}
+
+```{python}
+#| code-fold: show
+def last_layer_sd(scale, depth=10, width=256):
+    # scale(n_in) gives the standard deviation of the weights of a layer with n_in inputs.
+    torch.manual_seed(0)
+    h = x_train
+    for layer in range(depth):
+        n_in = h.shape[1]
+        weight = scale(n_in) * torch.randn(width, n_in)
+        h = torch.relu(h @ weight.T)
+    return h.std().item()
+
+
+init_sd = {
+    "small": last_layer_sd(lambda n_in: 0.01),
+    "he": last_layer_sd(lambda n_in: math.sqrt(2 / n_in)),
+    "large": last_layer_sd(lambda n_in: 0.2),
+    "pixels": x_train.std().item(),
+}
+print(init_sd)
+```
+
+The pixels have standard deviation `r sprintf("%.2f", py$init_sd[["pixels"]])`.
+After 10 layers,
+$\sigma = 0.01$ leaves values with standard deviation about $10^{`r round(log10(py$init_sd[["small"]]))`}$,
+$\sigma = 0.2$ gives about $10^{`r round(log10(py$init_sd[["large"]]))`}$,
+and $\sigma = \sqrt{2 / n_{\text{in}}}$ gives `r sprintf("%.2f", py$init_sd[["he"]])`, close to where it started.
+Each layer multiplies the typical size of the values by about $\sigma \sqrt{n_{\text{in}} / 2}$:
+the weighted sum of $n_{\text{in}}$ values has variance proportional to $n_{\text{in}} \sigma^2$,
+and the [ReLU](feedforward-networks.qmd#def-relu) zeroes about half of the results.
+That factor is 1 for $\sigma^2 = 2 / n_{\text{in}}$,
+which is [He initialization](https://morrison-lab.github.io/lds/chapters/backpropagation.html#def-he-initialization) [@he2015delving].
+Since [backpropagation](backpropagation.qmd#def-backpropagation) multiplies by the same weight matrices on the way back,
+the gradients shrink or grow layer by layer in the same way.
+
+:::

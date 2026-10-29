@@ -1,0 +1,31 @@
+::: {#sol-default-init}
+
+A uniform distribution on $(-a, a)$ has mean 0 and variance
+
+$$
+\begin{aligned}
+\int_{-a}^{a} w^2 \frac{1}{2a} \, dw
+&= \frac{1}{2a} \cdot \frac{2 a^3}{3}
+&& \text{(integrate $w^2$ from $-a$ to $a$)} \\
+&= \frac{a^2}{3},
+\end{aligned}
+$$
+
+so with $a = 1 / \sqrt{n_{\text{in}}}$ each weight has variance $1 / (3 n_{\text{in}})$.
+
+```{python}
+#| code-fold: show
+_ = torch.manual_seed(0)
+layer = nn.Linear(256, 256)
+default_var_times_n = layer.weight.var().item() * 256
+print(default_var_times_n)
+```
+
+For `nn.Linear(256, 256)` the sample variance of the weights times 256 is `r sprintf("%.3f", py$default_var_times_n)`,
+close to $\frac{1}{3}$.
+That is $\frac{1}{6}$ of [He initialization](https://morrison-lab.github.io/lds/chapters/backpropagation.html#def-he-initialization)'s $2 / n_{\text{in}}$,
+so by @sol-init-scale each [ReLU](feedforward-networks.qmd#def-relu) layer with PyTorch's starting weights shrinks the values by a factor of about $1 / \sqrt{6}$.
+This is one reason the deep ReLU network's gradients shrank layer by layer in [the backpropagation chapter](backpropagation.qmd#sol-deep-grad-norms).
+`nn.init.kaiming_normal_` gives a layer He initialization instead.
+
+:::

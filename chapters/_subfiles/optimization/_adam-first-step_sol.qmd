@@ -1,0 +1,35 @@
+::: {#sol-adam-first-step}
+
+With $m_0 = u_0 = 0$, the first averages are $m_1 = (1 - \beta_1) g$ and $u_1 = (1 - \beta_2) g^2$.
+
+$$
+\begin{aligned}
+\frac{\est{m}_1}{\sqrt{\est{u}_1}}
+&= \frac{m_1 / (1 - \beta_1)}{\sqrt{u_1 / (1 - \beta_2)}}
+&& \text{(bias corrections at $t = 1$)} \\
+&= \frac{g}{\sqrt{g^2}}
+&& \text{(substitute $m_1$ and $u_1$)} \\
+&= \frac{g}{\abs{g}}
+&& \text{($\sqrt{g^2} = \abs{g}$)}
+\end{aligned}
+$$
+
+So the first step moves the [parameter](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter) by exactly $\learnrate$, against the sign of $g$,
+whatever the size of $g$.
+
+```{python}
+#| code-fold: show
+w = torch.ones(2, requires_grad=True)
+adam = torch.optim.Adam([w], lr=0.01)
+w.grad = torch.tensor([1000.0, 0.001])
+adam.step()
+print(1 - w.detach())
+```
+
+Gradients of 1,000 and 0.001 both move their parameter by `r sprintf("%.3f", py$adam$param_groups[[1]]$lr)`, the [learning rate](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-learning-rate),
+up to the small effect of $\epsilon$.
+[Adam](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-adam)'s learning rate therefore sets the size of each step on the [parameter](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter)s' own scale,
+roughly, for later steps too [@kingma2015adam, section 2.1],
+while plain gradient descent's step is the learning rate times the gradient.
+
+:::

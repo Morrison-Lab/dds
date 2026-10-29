@@ -1,0 +1,8 @@
+::: {#exm-warmup}
+
+#### Warmup to 0.1 over 100 steps
+
+With $T_w = 100$ and $\learnrate = 0.1$, [learning-rate warmup](#def-warmup) uses [learning rate](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-learning-rate) 0.001 at step 0,
+0.05 at step 49, and 0.1 from step 99 on, until a decay begins.
+
+:::

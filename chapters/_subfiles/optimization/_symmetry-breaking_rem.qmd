@@ -1,0 +1,11 @@
+::: {#rem-symmetry-breaking}
+
+#### Random starting weights break the symmetry
+
+Drawing the starting weights at random makes each [unit](feedforward-networks.qmd#def-unit) start as a different function,
+so the [unit](feedforward-networks.qmd#def-unit)s receive different gradients and can learn different [features](https://morrison-lab.github.io/lds/chapters/anatomy.html#def-feature)
+[@goodfellow2016deep, section 8.4].
+The biases can start at 0, since the random weights already tell the [unit](feedforward-networks.qmd#def-unit)s apart.
+@sol-init-scale and @sol-default-init then set the scale of the random weights.
+
+:::

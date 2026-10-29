@@ -1,0 +1,50 @@
+::: {#sol-minibatch-epochs}
+
+```{python}
+#| code-fold: show
+#| fig-alt: >-
+#|   Training loss after each of 10 epochs for full-batch gradient descent and for minibatches of 32.
+#|   The full-batch loss falls slowly from about 2.3;
+#|   the minibatch loss falls much faster and ends far lower.
+def train(mlp, optimizer, n_epochs, batch_size, scheduler=None, seed=0):
+    # Minibatch training; returns the training loss after each epoch.
+    shuffler = torch.Generator().manual_seed(seed)
+    losses = []
+    for epoch in range(n_epochs):
+        shuffled = torch.randperm(n_train, generator=shuffler)
+        for start in range(0, n_train, batch_size):
+            batch = shuffled[start:start + batch_size]
+            optimizer.zero_grad()
+            loss_fn(mlp(x_train[batch]), y_train[batch]).backward()
+            optimizer.step()
+            if scheduler is not None:
+                scheduler.step()
+        with torch.no_grad():
+            losses.append(loss_fn(mlp(x_train), y_train).item())
+    return losses
+
+
+full_mlp = make_mlp()
+full_losses = train(full_mlp, torch.optim.SGD(full_mlp.parameters(), lr=0.5), 10, n_train)
+mini_mlp = make_mlp()
+mini_losses = train(mini_mlp, torch.optim.SGD(mini_mlp.parameters(), lr=0.1), 10, 32)
+
+fig, ax = plt.subplots(figsize=(6, 3.5), layout="constrained")
+ax.plot(range(1, 11), full_losses, marker="o", label="full batch");
+ax.plot(range(1, 11), mini_losses, marker="o", label="minibatches of 32");
+ax.set_xlabel("epoch");
+ax.set_ylabel("training loss");
+ax.legend();
+plt.show()
+```
+
+Minibatches win by far:
+after 10 [epoch](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-epoch)s the training loss is `r sprintf("%.2f", py$mini_losses[[10]])` for minibatches of 32
+and `r sprintf("%.2f", py$full_losses[[10]])` for the full batch.
+An epoch costs about the same either way, since it computes the loss and its gradient once for each training image.
+Full-batch descent spends that on one step per epoch,
+while the minibatch version spends it on many smaller, noisier steps,
+each of which already points roughly downhill.
+`batch_size=n_train` makes `train()` take full-batch steps.
+
+:::

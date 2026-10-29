@@ -1,0 +1,21 @@
+::: {#sol-momentum-long-run}
+
+Unrolling $\vv_t = \beta \vv_{t - 1} + \vg$ from $\vv_0 = \vzero$:
+
+$$
+\begin{aligned}
+\vv_t
+&= \vg + \beta \vg + \dots + \beta^{t - 1} \vg
+&& \text{(apply the update $t$ times)} \\
+&= \frac{1 - \beta^t}{1 - \beta} \vg
+&& \text{(sum of a geometric series, for $0 \le \beta < 1$)} \\
+&\to \frac{1}{1 - \beta} \vg
+&& \text{(since $\beta^t \to 0$)}
+\end{aligned}
+$$
+
+So the step approaches $\frac{\learnrate}{1 - \beta} \vg$:
+on a steady slope, momentum moves like plain gradient descent with [learning rate](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-learning-rate) $\learnrate / (1 - \beta)$.
+With $\beta = 0.9$ that is 10 times $\learnrate$.
+
+:::
