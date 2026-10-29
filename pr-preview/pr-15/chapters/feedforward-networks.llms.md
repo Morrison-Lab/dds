@@ -87,9 +87,9 @@ The exercises use the 1,797 handwritten digits from the [course overview](../cha
 > print(weight.shape, bias.shape, stack_gap)
 > ```
 >
->     torch.Size([10, 64]) torch.Size([10]) 1.4901161193847656e-07
+>     torch.Size([10, 64]) torch.Size([10]) 1.7881393432617188e-07
 >
-> On the 597 test images, the stack and the single layer agree to within 1.5e-07, a rounding error. `nn.Linear` stores \\\matr{W}\\ with one row per output, and computes `x @ weight.T + bias` for a [tensor](../chapters/pytorch-basics.llms.md#def-tensor) `x` with one row per image.
+> On the 597 test images, the stack and the single layer agree to within 1.8e-07, a rounding error. `nn.Linear` stores \\\matr{W}\\ with one row per output, and computes `x @ weight.T + bias` for a [tensor](../chapters/pytorch-basics.llms.md#def-tensor) `x` with one row per image.
 
 ## 2.2 A function between the layers
 
@@ -119,9 +119,9 @@ The exercises use the 1,797 handwritten digits from the [course overview](../cha
 > print(gap_linear, gap_logistic, mean_abs_pre)
 > ```
 >
->     5.960464477539063e-08 0.0003224015235900879 0.2633136212825775
+>     5.960464477539063e-08 0.0003224611282348633 0.2633136212825775
 >
-> No. Take the first two test images, which show the digits 2 and 8. For them, the stack with nothing between its layers maps their midpoint to the midpoint of their outputs, to within 6e-08, a rounding error. With \\\sigmoid\\ between the layers it misses by up to 0.00032, far more than a rounding error, so it is not an [affine function](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-affine-function). The logistic gap is still small. The untrained first layer’s numbers for these two images have a mean absolute value of 0.26, and near 0, \\\sigmoid\\ is close to its tangent line, \\\frac{1}{2} + \frac{z}{4}\\. Training can move the numbers to where \\\sigmoid\\ bends.
+> No. Take the first two test images, which show the digits 2 and 8. For them, the stack with nothing between its layers maps their midpoint to the midpoint of their outputs, to within 6e-08, a rounding error. With \\\sigmoid\\ between the layers it misses by up to 0.00032, far more than a rounding error, so it is not an [affine function](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-affine-function). Even so, \\\sigmoid\\ bends the untrained stack only a little. The untrained first layer’s numbers for these two images have a mean absolute value of 0.26, and near 0, \\\sigmoid\\ is close to its tangent line, \\\frac{1}{2} + \frac{z}{4}\\. Training can move the numbers to where \\\sigmoid\\ bends.
 >
 > The [logistic function](https://morrison-lab.github.io/mds/functions.html#def-logistic-function) bends each of the 32 numbers, so each of the 10 outputs is an affine function of 32 bent [features](https://morrison-lab.github.io/lds/chapters/anatomy.html#def-feature), not of the pixels. Training moves \\\matr{W}\_1\\ and \\\vecf{b}\_1\\ as well as \\\matr{W}\_2\\ and \\\vecf{b}\_2\\, so it chooses those features.
 
@@ -423,9 +423,9 @@ The exercises use the 1,797 handwritten digits from the [course overview](../cha
 > print(softmax_gap)
 > ```
 >
->     2.9802322387695312e-08
+>     2.2351741790771484e-08
 >
-> The [logits](#def-logits) of the first test image are the 10 numbers printed. Adding 5 to each changes the softmax probabilities by at most 3e-08, a rounding error.
+> The [logits](#def-logits) of the first test image are the 10 numbers printed. Adding 5 to each changes the softmax probabilities by at most 2.2e-08, a rounding error.
 
 > **NOTE:**
 >
@@ -442,7 +442,7 @@ The exercises use the 1,797 handwritten digits from the [course overview](../cha
 > print(start_loss, np.log(10))
 > ```
 >
->     2.3070168495178223 2.302585092994046
+>     2.307016611099243 2.302585092994046
 >
 > `nn.functional.cross_entropy` takes the [logits](#def-logits) and the true digits, and returns the mean loss over the [test set](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-test-set), 2.307, close to \\\log 10 \approx 2.303\\. A training run whose first loss is far from \\\log C\\, for \\C\\ classes, is worth checking for a bug before it runs further.
 
@@ -526,7 +526,7 @@ The exercises use the 1,797 handwritten digits from the [course overview](../cha
 > print(lse, largest_logit, largest_logit + np.log(10))
 > ```
 >
->     2.360166072845459 0.4042101502418518 2.7067952432358977
+>     2.360166072845459 0.40421009063720703 2.706795183631253
 >
 > For the first test image’s [logits](#def-logits), \\\operatorname{LSE}\\ is 2.360, between the largest [logit](#def-logits), 0.404, and that logit plus \\\log 10\\.
 
@@ -561,9 +561,9 @@ The exercises use the 1,797 handwritten digits from the [course overview](../cha
 > print(log_softmax_gap)
 > ```
 >
->     2.384185791015625e-07
+>     0.0
 >
-> For the first test image, the [logits](#def-logits) minus their [log-sum-exp](#def-log-sum-exp) agree with PyTorch’s `torch.log_softmax` to within 2.4e-07. Each is near \\\log \frac{1}{10} \approx -2.30\\.
+> For the first test image, the [logits](#def-logits) minus their [log-sum-exp](#def-log-sum-exp) agree with PyTorch’s `torch.log_softmax` to within 0. Each is near \\\log \frac{1}{10} \approx -2.30\\.
 
 > **NOTE:**
 >
@@ -603,7 +603,7 @@ The exercises use the 1,797 handwritten digits from the [course overview](../cha
 > print(shifted_lse, torch.logsumexp(z, dim=0).item())
 > ```
 >
->     404.21014404296875 404.21014404296875
+>     404.2100830078125 404.2100830078125
 >
 > Show code
 >
@@ -611,8 +611,8 @@ The exercises use the 1,797 handwritten digits from the [course overview](../cha
 > print(torch.log_softmax(z, dim=0))
 > ```
 >
->     tensor([-403.7620, -428.0196, -292.4266, -324.3521,    0.0000, -364.2654,
->             -537.2988, -308.9668, -359.2179, -561.8227])
+>     tensor([-403.7619, -428.0195, -292.4266, -324.3521,    0.0000, -364.2653,
+>             -537.2987, -308.9668, -359.2178, -561.8226])
 >
 > For the [logits](#def-logits) times 1,000 of [Solution 7](#sol-naive-softmax), shifting by their largest entry gives \\\operatorname{LSE} = 404.2\\, the same value `torch.logsumexp` returns, and `torch.log_softmax` gives finite log probabilities where the formula gave `nan`.
 
@@ -695,7 +695,7 @@ The exercises use the 1,797 handwritten digits from the [course overview](../cha
 > print(loss.item(), test_accuracy)
 > ```
 >
->     0.044963546097278595 0.9698492288589478
+>     0.044963542371988297 0.9698492288589478
 >
 > The trained network classifies 97.0% of the 597 test images correctly, against 10% for guessing. The loop is the [training step](../chapters/pytorch-basics.llms.md#def-training-step) of the PyTorch chapter, and the predicted digit is the one with the largest [logit](#def-logits), which is also the one with the largest softmax probability.
 
@@ -827,7 +827,7 @@ The exercises use the 1,797 handwritten digits from the [course overview](../cha
 > print(auto_mse)
 > ```
 >
->     {1: 19.619924545288086, 3: 18.540300369262695, 20: 18.385217666625977}
+>     {1: 19.619924545288086, 3: 18.540285110473633, 20: 18.385215759277344}
 >
 > The [Auto data](https://morrison-lab.github.io/lds/chapters/course-overview.html#def-auto-data) hold 392 cars from the UCI Auto MPG dataset [\[8\]](#ref-quinlan1993auto), from a local copy, [`data/auto.csv`](data/auto.csv), of the version in lds. Each network fits miles per gallon on horsepower, rescaled to mean 0 and standard deviation 1, by 3,000 steps of gradient descent on the mean squared error. With 1 [unit](#def-unit) the fit can bend only once, and its training mean squared error is 19.6. With 3 [unit](#def-unit)s it is 18.5, and with 20 it is 18.4. So the error falls as the network gets wider. [Theorem 3](#thm-universal-approximation) says that a wide enough network can follow any continuous curve; it does not say that following the [training data](https://morrison-lab.github.io/lds/chapters/anatomy.html#def-training-data) more closely predicts new cars better.
 
