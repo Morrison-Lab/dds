@@ -1,7 +1,8 @@
 ::: {#sol-ce-logit-grad}
 
 By [the log softmax theorem](feedforward-networks.qmd#thm-log-softmax),
-$\loss = \operatorname{LSE}(\vz) - z_y$, where $\operatorname{LSE}$ is [log-sum-exp](feedforward-networks.qmd#def-log-sum-exp).
+$\loss = \operatorname{LSE}(\vz) - z_y$,
+where $\operatorname{LSE}$ is [log-sum-exp](feedforward-networks.qmd#def-log-sum-exp).
 
 $$
 \begin{aligned}
@@ -19,7 +20,9 @@ $$
 \end{aligned}
 $$
 
-The second term, $z_y$, has derivative 1 with respect to $z_y$ and 0 with respect to every other [logit](feedforward-networks.qmd#def-logits).
+The second term, $z_y$,
+has derivative 1 with respect to $z_y$
+and 0 with respect to every other [logit](feedforward-networks.qmd#def-logits).
 So
 
 $$

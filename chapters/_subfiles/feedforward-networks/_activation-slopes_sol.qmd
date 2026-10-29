@@ -22,7 +22,7 @@ logistic_slope_at_4 = slopes["logistic"][-1].item()
 ```
 
 Each output of `g(z)` depends only on the matching entry of `z`,
-so the gradient of `g(z).sum()` holds the derivative $g'(z)$ at each point.
+so the [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) of `g(z).sum()` holds the derivative $g'(z)$ at each point.
 
 - **Logistic.**
   Its derivative peaks at `r sprintf("%.2f", py$largest_logistic_slope)` at $z = 0$,
@@ -41,7 +41,7 @@ A [unit](#def-unit) whose [pre-activation](#def-pre-activation) sits where the d
 is [saturated](https://morrison-lab.github.io/lds/chapters/backpropagation.html#def-saturation):
 a small change in its weights barely changes its output,
 so the gradient that training follows is small too.
-The [logistic function](https://morrison-lab.github.io/mds/functions.html#def-logistic-function) and $\tanh$ saturate on both sides,
+The [logistic function](https://morrison-lab.github.io/mds/functions.html#def-logistic-function) and $\tanh$ [saturate](https://morrison-lab.github.io/lds/chapters/backpropagation.html#def-saturation) on both sides,
 and ReLU only on its negative side.
 
 :::

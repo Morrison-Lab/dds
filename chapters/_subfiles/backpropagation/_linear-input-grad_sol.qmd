@@ -1,6 +1,7 @@
 ::: {#sol-linear-input-grad}
 
-Input $h_k$ affects every output $z_j$, so the chain rule adds up a term for each:
+Input $h_k$ affects every output $z_j$,
+so the chain rule adds up a term for each:
 
 $$
 \begin{aligned}

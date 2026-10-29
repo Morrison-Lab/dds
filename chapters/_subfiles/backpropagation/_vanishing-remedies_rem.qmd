@@ -7,7 +7,8 @@ Other remedies are
 starting the weights at a scale that keeps the [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient)'s size steady from layer to layer,
 such as [He initialization](https://morrison-lab.github.io/lds/chapters/backpropagation.html#def-he-initialization) or [Glorot initialization](https://morrison-lab.github.io/lds/chapters/backpropagation.html#def-glorot-initialization),
 normalizing each layer's values,
-and [residual connections](https://morrison-lab.github.io/lds/chapters/backpropagation.html#def-residual-connection), which give the gradient a path around each layer.
+and [residual connections](https://morrison-lab.github.io/lds/chapters/backpropagation.html#def-residual-connection),
+which give the gradient a path around each layer.
 [lds's experiment on depth](https://morrison-lab.github.io/lds/chapters/backpropagation.html#sec-vanishing-experiment) measures the same effect.
 
 :::

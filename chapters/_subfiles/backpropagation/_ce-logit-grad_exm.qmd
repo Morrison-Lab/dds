@@ -16,7 +16,10 @@ print(logit_grad_gap)
 
 For the first training image, a `r py$y_train[0]$item()`,
 autograd's [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) at the [logits](feedforward-networks.qmd#def-logits) matches @thm-ce-logit-grad to within `r format(py$logit_grad_gap, digits = 2)`.
-Every entry is a predicted probability, near $\frac{1}{10}$,
-except entry `r py$y_train[0]$item()`, the true digit, which is that probability minus 1.
+Every entry is a predicted probability,
+near $\frac{1}{10}$,
+except entry `r py$y_train[0]$item()`,
+the true digit,
+which is that probability minus 1.
 
 :::

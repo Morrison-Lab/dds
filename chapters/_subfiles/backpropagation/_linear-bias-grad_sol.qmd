@@ -1,7 +1,9 @@
 ::: {#sol-linear-bias-grad}
 
-Bias $b_j$ affects $\loss$ only through $z_j$, and $\derivf{z_j}{b_j} = 1$,
-so $\derivf{\loss}{b_j} = \backerr_j \cdot 1 = \backerr_j$, and
+Bias $b_j$ affects $\loss$ only through $z_j$,
+and $\derivf{z_j}{b_j} = 1$,
+so $\derivf{\loss}{b_j} = \backerr_j \cdot 1 = \backerr_j$,
+and
 
 $$
 \gradwrt{\vecf{b}} \loss = \vbackerr.

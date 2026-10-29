@@ -6,7 +6,8 @@ A network has a **vanishing gradient** when the [gradient](https://morrison-lab.
 is many orders of magnitude smaller than with respect to those of its later layers,
 because [backpropagation](#def-backpropagation) multiplies it by a factor smaller than 1 at each layer
 [@glorot2010understanding; @goodfellow2016deep, section 8.2.5].
-The early layers then learn far more slowly than the later ones, or not at all.
+The early layers then learn far more slowly than the later ones,
+or not at all.
 
 The opposite, a gradient that grows layer by layer, is an [exploding gradient](https://morrison-lab.github.io/lds/chapters/backpropagation.html#def-exploding-gradient).
 
