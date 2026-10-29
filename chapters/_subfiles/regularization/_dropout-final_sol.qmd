@@ -1,0 +1,9 @@
+::: {#sol-dropout-final}
+
+`r if (py$drop_final_val < py$final_row[["val"]]) "Yes" else "No"`.
+After 300 [epochs](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-epoch) its validation loss is `r sprintf("%.3f", py$drop_final_val)`,
+against `r sprintf("%.3f", py$final_row[["val"]])` without [dropout](#def-dropout).
+With dropout the validation loss still `r if (py$drop_final_val > py$drop_best_val) "rises" else "does not rise"` after its lowest point,
+so on these digits dropout `r if (py$drop_final_val > py$drop_best_val) "does not replace" else "can replace"` [early stopping](#def-early-stopping).
+
+:::

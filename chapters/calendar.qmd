@@ -55,8 +55,8 @@ The final's review session will be held during finals week, at a time TBD.
 |                          |                              | minibatch stochastic         | learning-rate schedules and  |                              |
 | Apr 11 -- Apr 17         |                              | gradient descent, momentum   | warmup, initialization       | **Homework 1 due**           |
 +--------------------------+------------------------------+------------------------------+------------------------------+------------------------------+
-| **Week 4**               | Regularization: weight       | Regularization: dropout,     | Normalization: batch and     | **Midterm 1 review**         |
-|                          | decay, early stopping        | data augmentation            | layer normalization;         |                              |
+| **Week 4**               | [Regularization][reg]:       | [Regularization][reg]:       | Normalization: batch and     | **Midterm 1 review**         |
+|                          | weight decay, early stopping | dropout, data augmentation   | layer normalization;         |                              |
 | Apr 18 -- Apr 24         |                              |                              | residual connections         | **Homework 1 self-grade      |
 |                          |                              |                              |                              | due**                        |
 +--------------------------+------------------------------+------------------------------+------------------------------+------------------------------+
@@ -112,4 +112,5 @@ The final's review session will be held during finals week, at a time TBD.
 [ff]: feedforward-networks.qmd
 [bp]: backpropagation.qmd
 [opt]: optimization.qmd
+[reg]: regularization.qmd
 [lds]: https://morrison-lab.github.io/lds/

@@ -1,0 +1,7 @@
+::: {#exr-overfit-curves}
+
+#### Watching the validation loss
+
+How do the training loss and the validation loss of `make_net()` change over 300 [epochs](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-epoch) of `fit()`?
+
+:::

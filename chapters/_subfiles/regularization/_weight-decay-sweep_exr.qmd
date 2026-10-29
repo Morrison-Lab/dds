@@ -1,0 +1,9 @@
+::: {#exr-weight-decay-sweep}
+
+#### Choosing the weight decay
+
+Which `weight_decay` among 0, 0.1, 1 and 10,
+passed to the AdamW of `fit()`,
+gives `make_net()` the lowest validation loss after 300 [epochs](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-epoch)?
+
+:::

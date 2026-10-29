@@ -1,0 +1,33 @@
+::: {#sol-shift-augment}
+
+```{python}
+#| code-fold: show
+def random_shift(images, generator):
+    # Move each image by its own random (rows, cols), each -1, 0 or 1.
+    moves = torch.randint(-1, 2, (len(images), 2), generator=generator)
+    out = images.clone()
+    for rows in [-1, 0, 1]:
+        for cols in [-1, 0, 1]:
+            chosen = (moves[:, 0] == rows) & (moves[:, 1] == cols)
+            out[chosen] = shift_images(images[chosen], rows, cols)
+    return out
+
+
+shift_net = make_net()
+shift_history, _ = fit(shift_net, transform=random_shift)
+shift_best_val = shift_history["val"].min()
+val_acc_plain = accuracy(stopped_net, x_val, y_val)
+val_acc_moved = accuracy(stopped_net, shift_images(x_val, 0, 1), y_val)
+print(shift_best_val, best_val_loss, val_acc_plain, val_acc_moved)
+```
+
+`r if (py$shift_best_val < py$best_val_loss) "Yes" else "No"`.
+The lowest validation loss with shifts is `r sprintf("%.3f", py$shift_best_val)`,
+against `r sprintf("%.3f", py$best_val_loss)` without them.
+A one-pixel move is not a small change for these images.
+Each pixel counts the ink in a 4-by-4 block of a 32-by-32 bitmap [@alpaydin1998optdigits],
+so it moves the digit by 4 pixels of the original bitmap.
+The early-stopped network of @exm-early-stopping classifies `r sprintf("%.1f", 100 * py$val_acc_plain)`% of the validation images correctly,
+but only `r sprintf("%.1f", 100 * py$val_acc_moved)`% of the same images moved one pixel to the right.
+
+:::

@@ -1,0 +1,23 @@
+::: {#exm-dropout}
+
+#### `nn.Dropout` in training and in evaluation
+
+```{python}
+#| code-fold: show
+dropout = nn.Dropout(p=0.5)
+ones = torch.ones(8)
+_ = torch.manual_seed(0)
+_ = dropout.train()
+print(dropout(ones))
+_ = dropout.eval()
+print(dropout(ones))
+```
+
+In training mode,
+`nn.Dropout(p=0.5)` sets each entry of a vector of 8 ones to 0 with probability $\frac{1}{2}$,
+and multiplies the others by $1 / (1 - \frac{1}{2}) = 2$.
+After `.eval()` it returns its input unchanged.
+`net.train()` and `net.eval()` switch every [dropout](#def-dropout) layer of a network,
+which is why `fit()` and `accuracy()` call them.
+
+:::

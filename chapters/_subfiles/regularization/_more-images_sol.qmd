@@ -1,0 +1,8 @@
+::: {#sol-more-images}
+
+Change the training images in ways that leave the digit the same,
+such as adding a little noise or moving the digit slightly,
+and train on the changed copies with the original labels
+[@goodfellow2016deep, section 7.4].
+
+:::

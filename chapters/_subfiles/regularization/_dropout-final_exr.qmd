@@ -1,0 +1,7 @@
+::: {#exr-dropout-final}
+
+#### Dropout after 300 epochs
+
+Is the validation loss of the network of @exr-dropout-best after all 300 [epochs](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-epoch) lower than without [dropout](#def-dropout)?
+
+:::

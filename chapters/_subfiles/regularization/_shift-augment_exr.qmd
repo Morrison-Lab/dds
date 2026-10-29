@@ -1,0 +1,8 @@
+::: {#exr-shift-augment}
+
+#### Training on shifted digits
+
+Suppose instead each training image is moved at random by $-1$, 0 or 1 pixels in each direction at every [epoch](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-epoch).
+Is the lowest validation loss of `make_net()` then lower than without shifts?
+
+:::

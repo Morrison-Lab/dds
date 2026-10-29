@@ -1,0 +1,7 @@
+::: {#exr-rely-on-units}
+
+#### Not relying on any one unit
+
+How could training stop a network from relying on any single [unit](feedforward-networks.qmd#def-unit) of its [hidden layer](feedforward-networks.qmd#def-hidden-layer)?
+
+:::

@@ -1,0 +1,24 @@
+::: {#sol-dropout-best}
+
+```{python}
+#| code-fold: show
+def make_dropout_net(p_drop=0.5, seed=1):
+    # make_net() with dropout after the hidden layer.
+    torch.manual_seed(seed)
+    return nn.Sequential(
+        nn.Linear(64, 256), nn.ReLU(), nn.Dropout(p_drop), nn.Linear(256, 10)
+    )
+
+
+drop_net = make_dropout_net()
+drop_history, _ = fit(drop_net)
+drop_best_val = drop_history["val"].min()
+drop_final_val = drop_history["val"].iloc[-1]
+print(drop_best_val, best_val_loss)
+```
+
+`r if (py$drop_best_val < py$best_val_loss) "Yes" else "No"`.
+With [dropout](#def-dropout) the lowest validation loss is `r sprintf("%.3f", py$drop_best_val)`,
+against `r sprintf("%.3f", py$best_val_loss)` without it.
+
+:::

@@ -1,0 +1,24 @@
+::: {#rem-weight-decay-pytorch}
+
+#### Weight decay in PyTorch
+
+[lds defines weight decay](https://morrison-lab.github.io/lds/chapters/regularization.html#def-weight-decay) for gradient descent, <!-- check-term-links: allow -->
+with decay coefficient $\lambda_{\text{wd}}$.
+PyTorch's optimizers take an argument `weight_decay`,
+and its meaning depends on the optimizer.
+`torch.optim.SGD` and `torch.optim.Adam` add $\lambda_{\text{wd}} \theta$ to the [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) of each [parameter](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter) $\theta$
+before they take their step,
+an L2 penalty [@pytorch_sgd; @pytorch_adam].
+For plain gradient descent,
+adding $\lambda_{\text{wd}} \theta$ shrinks every parameter by the same factor at each step,
+so the penalty is weight decay.
+[Adam](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-adam) divides the added $\lambda_{\text{wd}} \theta$ by its running scale of past [gradients](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient),
+so the penalty shrinks [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter) with small past gradients more than parameters with large ones
+[@loshchilov2019decoupled].
+`torch.optim.AdamW` instead multiplies each parameter by $1 - \learnrate \lambda_{\text{wd}}$ before Adam's step [@pytorch_adamw],
+PyTorch's form of the decoupled weight decay of @loshchilov2019decoupled.
+`fit()` uses AdamW.
+`weight_decay` applies to the biases too,
+unless the optimizer is given them as a separate group with `weight_decay=0`.
+
+:::

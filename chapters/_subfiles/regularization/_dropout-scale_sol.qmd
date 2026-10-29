@@ -1,0 +1,25 @@
+::: {#sol-dropout-scale}
+
+So that each [unit](feedforward-networks.qmd#def-unit)'s expected value during training equals its value at prediction time.
+A [unit](feedforward-networks.qmd#def-unit) with value $h$ becomes $D = 0$ with probability $p$,
+and $D = h / (1 - p)$ with probability $1 - p$,
+so its expected value is
+
+$$
+\E{D} = p \cdot 0 + (1 - p) \cdot \frac{h}{1 - p} = h.
+$$
+
+The next layer then sees inputs of the same size on average in both modes.
+
+```{python}
+#| code-fold: show
+_ = torch.manual_seed(0)
+_ = dropout.train()
+mean_kept = dropout(torch.ones(100_000)).mean().item()
+print(mean_kept)
+```
+
+Averaged over 100,000 ones,
+`nn.Dropout(p=0.5)` in training mode gives `r sprintf("%.3f", py$mean_kept)`.
+
+:::

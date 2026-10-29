@@ -1,0 +1,10 @@
+::: {#def-data-augmentation}
+
+#### Data augmentation
+
+**Data augmentation** trains on transformed copies of the training inputs,
+made by transformations that should not change the target
+[@goodfellow2016deep, section 7.4].
+Usually a new random transformation is drawn for each input at each [epoch](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-epoch).
+
+:::

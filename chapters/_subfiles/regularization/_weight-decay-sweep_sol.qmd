@@ -1,0 +1,36 @@
+::: {#sol-weight-decay-sweep}
+
+```{python}
+#| code-fold: show
+def weight_norm(net):
+    # Euclidean norm of all the weights, leaving out the biases.
+    weights = [p.flatten() for name, p in net.named_parameters() if "weight" in name]
+    return torch.cat(weights).norm().item()
+
+
+decay_rows = []
+for weight_decay in [0, 0.1, 1, 10]:
+    decay_net = make_net()
+    decay_history, _ = fit(decay_net, weight_decay=weight_decay)
+    decay_rows.append({
+        "weight_decay": weight_decay,
+        "train_loss": decay_history["train"].iloc[-1],
+        "val_loss": decay_history["val"].iloc[-1],
+        "weight_norm": weight_norm(decay_net),
+    })
+decay_table = pd.DataFrame(decay_rows)
+best_decay = decay_table.loc[decay_table["val_loss"].idxmin()]
+print(decay_table.round(4))
+```
+
+`weight_decay` $= `r py$best_decay[["weight_decay"]]`$ ends with the lowest validation loss,
+`r sprintf("%.3f", py$best_decay[["val_loss"]])`,
+against `r sprintf("%.3f", py$decay_table$val_loss[1])` with no weight decay.
+Weight decay keeps the weights smaller:
+their norm after 300 [epochs](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-epoch) falls from `r sprintf("%.1f", py$decay_table$weight_norm[1])` with no weight decay
+to `r sprintf("%.1f", py$decay_table$weight_norm[4])` with `weight_decay` $= 10$.
+At 10 its training loss is `r sprintf("%.3f", py$decay_table$train_loss[4])`,
+against `r sprintf("%.1e", py$decay_table$train_loss[1])` with no weight decay,
+so `r if (py$decay_table$train_loss[4] > py$decay_table$train_loss[1]) "it fits its training images less closely" else "it fits its training images at least as closely"`.
+
+:::

@@ -1,0 +1,172 @@
+---
+title: "Regularization"
+format:
+  html: default
+  revealjs:
+    output-file: regularization-slides.html
+  pdf:
+    output-file: regularization-handout.pdf
+resources:
+  - data/optdigits-test.csv
+---
+
+```{r}
+# The Python chunks on this page import these; reticulate provisions them.
+# Attaching reticulate gives the inline R its `py` object.
+library(reticulate)
+source("../tools/use-torch.R")
+use_torch(c("numpy", "pandas", "matplotlib"))
+```
+
+::: notes
+Brian Hutchinson's CSCI 481/581 sets the order of topics in these notes,
+which follow it with his permission;
+this page covers the [regularization](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-regularization) part of his module on optimization and regularization.
+The exercises are new.
+This page's methods follow *Deep Learning*, Chapter 7 [@goodfellow2016deep]. <!-- check-term-links: allow -->
+:::
+
+# Welcome
+
+## Plan for this lecture
+
+{{< include _subfiles/regularization/_plan_sec.qmd >}}
+
+## The digits and the network
+
+{{< include _subfiles/regularization/_digits-setup_sec.qmd >}}
+
+# Stopping early
+
+## Watching the validation loss
+
+<!-- heading shares the slide; do not re-flag -->
+
+{{< include _subfiles/regularization/_overfit-curves_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/regularization/_overfit-curves_sol.qmd >}}
+
+## Stopping at the best epoch
+
+{{< include _subfiles/regularization/_early-stopping_def.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/regularization/_early-stopping_exm.qmd >}}
+
+# Weight decay
+
+## Weight decay in PyTorch
+
+{{< include _subfiles/regularization/_weight-decay-pytorch_rem.qmd >}}
+
+## Choosing the weight decay
+
+<!-- heading shares the slide; do not re-flag -->
+
+{{< include _subfiles/regularization/_weight-decay-sweep_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/regularization/_weight-decay-sweep_sol.qmd >}}
+
+# Switching off units at random
+
+## Not relying on any one unit
+
+<!-- heading shares the slide; do not re-flag -->
+
+{{< include _subfiles/regularization/_rely-on-units_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/regularization/_rely-on-units_sol.qmd >}}
+
+## Definition
+
+{{< include _subfiles/regularization/_dropout_def.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/regularization/_dropout_exm.qmd >}}
+
+## Why scale the units that are kept?
+
+<!-- heading shares the slide; do not re-flag -->
+
+{{< include _subfiles/regularization/_dropout-scale_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/regularization/_dropout-scale_sol.qmd >}}
+
+## Dropout on the digits
+
+<!-- heading shares the slide; do not re-flag -->
+
+{{< include _subfiles/regularization/_dropout-best_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/regularization/_dropout-best_sol.qmd >}}
+
+## Dropout after 300 epochs
+
+<!-- heading shares the slide; do not re-flag -->
+
+{{< include _subfiles/regularization/_dropout-final_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/regularization/_dropout-final_sol.qmd >}}
+
+# Transformed training images
+
+## More training images for free
+
+<!-- heading shares the slide; do not re-flag -->
+
+{{< include _subfiles/regularization/_more-images_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/regularization/_more-images_sol.qmd >}}
+
+## Definition
+
+{{< include _subfiles/regularization/_data-augmentation_def.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/regularization/_data-augmentation_exm.qmd >}}
+
+## Noisy digits
+
+<!-- heading shares the slide; do not re-flag -->
+
+{{< include _subfiles/regularization/_noise-augment_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/regularization/_noise-augment_sol.qmd >}}
+
+## Shifted digits
+
+<!-- heading shares the slide; do not re-flag -->
+
+{{< include _subfiles/regularization/_shift-augment_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/regularization/_shift-augment_sol.qmd >}}
+
+## Further reading
+
+{{< include _subfiles/regularization/_regularization_read.qmd >}}
+
+# References
+
+::: {#refs}
+:::
