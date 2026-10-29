@@ -85,7 +85,9 @@ with `r format(py$n_train, big.mark = ",")` training images.
 `make_deep()` builds an [MLP](feedforward-networks.qmd#def-feedforward-network) with 21 [hidden layers](feedforward-networks.qmd#def-hidden-layer) of 64 [ReLU](feedforward-networks.qmd#def-relu) [units](feedforward-networks.qmd#def-unit):
 a first layer from the pixels,
 then 20 copies of `Block`.
-`train()` runs 5 [epochs](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-epoch) of minibatch stochastic [gradient descent](https://morrison-lab.github.io/mds/optimization.html#def-gradient-descent) with batch size 32 and [learning rate](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-learning-rate) 0.01.
+`train()` runs 5 [epochs](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-epoch) of minibatch stochastic [gradient descent](https://morrison-lab.github.io/mds/optimization.html#def-gradient-descent),
+with batch size 32
+and [learning rate](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-learning-rate) 0.01.
 `first_layer_grad()` measures the size of the [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) that reaches the first layer.
 The exercises count a network as having learned something
 when its training loss after `train()` is below 90% of $\log 10 \approx `r sprintf("%.3f", py$chance_loss)`$,

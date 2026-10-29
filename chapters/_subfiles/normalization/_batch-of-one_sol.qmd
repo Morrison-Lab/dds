@@ -1,6 +1,7 @@
 ::: {#sol-batch-of-one}
 
-A minibatch of one image has $\mu_j = z_{1j}$ and $\sigma_j^2 = 0$,
+A minibatch of one image has $\mu_j = z_{1j}$
+and $\sigma_j^2 = 0$,
 so every normalized [pre-activation](feedforward-networks.qmd#def-pre-activation) would be 0,
 whatever the image.
 The prediction would not depend on the image at all.
@@ -17,12 +18,17 @@ one_image_output = batch_norm(pre[:1])
 print(one_image_output.shape)
 ```
 
-In training mode,
-`nn.BatchNorm1d` refuses a minibatch of one:
-"`r py$batch_of_one_error`".
-In evaluation mode it uses its running averages instead,
-so it accepts a single image.
-Evaluation mode is what makes predictions use the running averages,
-so `train()` calls `net.eval()` before it computes the test [accuracy](https://morrison-lab.github.io/lds/chapters/metrics.html#def-accuracy).
+`nn.BatchNorm1d` treats a minibatch of one differently in its two modes:
+
+- **Training mode.**
+  It refuses the minibatch:
+  "`r py$batch_of_one_error`".
+- **Evaluation mode.**
+  It uses its running averages instead,
+  so it accepts a single image.
+
+Evaluation mode is what makes predictions use the running averages.
+That is why `train()` calls `net.eval()`
+before it computes the test [accuracy](https://morrison-lab.github.io/lds/chapters/metrics.html#def-accuracy).
 
 :::

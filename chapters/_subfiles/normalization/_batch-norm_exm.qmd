@@ -10,7 +10,8 @@ normed = batch_norm(pre).detach()
 print(pre.mean(dim=0)[:4], pre.std(dim=0, correction=0)[:4])
 print(normed.mean(dim=0)[:4], normed.std(dim=0, correction=0)[:4])
 largest_mean = normed.mean(dim=0).abs().max().item()
-std_range = normed.std(dim=0, correction=0).aminmax()
+std_min = normed.std(dim=0, correction=0).min().item()
+std_max = normed.std(dim=0, correction=0).max().item()
 ```
 
 `nn.BatchNorm1d(64)` applies [batch normalization](#def-batch-norm) to 64 [pre-activation](feedforward-networks.qmd#def-pre-activation)s.
@@ -20,6 +21,6 @@ the first 4 pre-activations of a random layer have the means and standard deviat
 After batch normalization,
 on the second line,
 no column's mean is farther from 0 than `r sprintf("%.1e", py$largest_mean)`,
-and the standard deviations run from `r sprintf("%.3f", py$std_range$min$item())` to `r sprintf("%.3f", py$std_range$max$item())`.
+and the standard deviations run from `r sprintf("%.3f", py$std_min)` to `r sprintf("%.3f", py$std_max)`.
 
 :::

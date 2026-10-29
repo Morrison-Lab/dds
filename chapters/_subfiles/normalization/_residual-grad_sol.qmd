@@ -12,12 +12,14 @@ A block computes $\vhidval + f(\vhidval)$,
 with $f(\vhidval) = \operatorname{ReLU}\paren{\matr{W} \vhidval + \vecf{b}}$ from @rem-residual-block,
 so its derivative with respect to $\vhidval$ is the identity matrix plus the derivative of $f$.
 Going back through a block,
-the gradient keeps a copy of itself through the identity,
+the gradient keeps a copy of itself through the identity.
+It keeps that copy
 however small the derivative of $f$ is.
 Without the [residual connection](https://morrison-lab.github.io/lds/chapters/backpropagation.html#def-residual-connection),
 the gradient passes only through the derivative of $f$,
 and shrinks when that derivative is small.
-Across 20 blocks these derivatives multiply,
-so a factor below 1 in size at each block shrinks the gradient geometrically.
+Across 20 blocks these derivatives multiply.
+So when each factor is below 1 in size,
+the gradient shrinks geometrically.
 
 :::
