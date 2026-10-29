@@ -1,19 +1,23 @@
 ::: {#sol-any-curve}
 
-Yes, with enough [unit](#def-unit)s.
+Yes,
+with enough [unit](#def-unit)s.
 Mark points on the graph of $f$ at closely spaced values of $z$,
 and join neighbouring points with straight lines.
 Because $f$ is continuous on a closed interval,
 it changes little between nearby points,
-so the joined-up graph stays as close to $f$ as you like once the points are close enough together.
+so the joined-up graph stays as close to $f$ as you like
+once the points are close enough together.
 Call the inner points $t_1 < \dots < t_{n - 1}$,
 and the slopes of the $n$ pieces $s_1, \dots, s_n$.
-A network like the one in @exr-relu-bends draws the joined-up graph on $[a, b]$ with $n$ [unit](#def-unit)s, one per piece,
+A network like the one in @exr-relu-bends draws the joined-up graph on $[a, b]$ with $n$ [unit](#def-unit)s,
+one per piece,
 each with $w_i = 1$:
 
 - $c = f(a)$ starts the graph at the first point;
 - the unit $s_1 \maxf{0, z - a}$ gives the first piece its slope;
-- for each inner point $t_j$, the unit $\paren{s_{j + 1} - s_j} \maxf{0, z - t_j}$ is 0 to the left of $t_j$,
+- for each inner point $t_j$,
+  the unit $\paren{s_{j + 1} - s_j} \maxf{0, z - t_j}$ is 0 to the left of $t_j$,
   and changes the slope from $s_j$ to $s_{j + 1}$ at $t_j$.
 
 :::

@@ -21,6 +21,7 @@ print(x_train.shape, x_test.shape)
 The exercises use the `r format(nrow(py$digits), big.mark = ",")` handwritten digits from the [course overview](course-overview.qmd),
 from the same local copy, [`data/optdigits-test.csv`](data/optdigits-test.csv),
 of the UCI Machine Learning Repository's data [@alpaydin1998optdigits]. <!-- check-term-links: allow -->
-Each image's 64 pixels, from 0 to 16, are divided by 16 so that they run from 0 to 1,
+Each image's 64 pixels, from 0 to 16, are divided by 16
+so that they run from 0 to 1,
 and a random `r format(py$n_train, big.mark = ",")` images form a [training set](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-training-set),
 with the other images as a [test set](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-test-set).

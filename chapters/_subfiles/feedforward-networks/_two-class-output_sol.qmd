@@ -1,11 +1,14 @@
 ::: {#sol-two-class-output}
 
-One number $z$, the [logit](#def-logits) of a 1,
-turned into a probability by the [logistic function](https://morrison-lab.github.io/mds/functions.html#def-logistic-function), $\sigmoidf{z}$.
+One number $z$,
+the [logit](#def-logits) of a 1,
+turned into a probability by the [logistic function](https://morrison-lab.github.io/mds/functions.html#def-logistic-function),
+$\sigmoidf{z}$.
 That is the [soft 0-or-1 rule](pytorch-basics.qmd#sol-soft-rule-module) of the PyTorch chapter,
 with $z$ computed by a network instead of from one [feature](https://morrison-lab.github.io/lds/chapters/anatomy.html#def-feature).
 
-Two outputs with softmax would also work, but carry one number too many:
+Two outputs with softmax would also work,
+but they carry one number too many:
 $\operatorname{softmax}(z_1, z_2)_2 = \sigmoidf{z_2 - z_1}$,
 so only the difference of the two [logits](#def-logits) matters.
 

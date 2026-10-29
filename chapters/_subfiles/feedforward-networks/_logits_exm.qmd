@@ -12,6 +12,7 @@ print(softmax_gap)
 ```
 
 The [logits](#def-logits) of the first test image are the 10 numbers printed.
-Adding 5 to each changes the softmax probabilities by at most `r format(py$softmax_gap, digits = 2)`, a rounding error.
+Adding 5 to each changes the softmax probabilities by at most `r format(py$softmax_gap, digits = 2)`,
+a rounding error.
 
 :::

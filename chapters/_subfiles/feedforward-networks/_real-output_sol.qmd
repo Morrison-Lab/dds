@@ -2,6 +2,7 @@
 
 One number, with no [activation function](#def-activation-function):
 any real number can be a prediction,
-and squashing it with the [logistic function](https://morrison-lab.github.io/mds/functions.html#def-logistic-function) or the [ReLU](#def-relu) would rule some out.
+and squashing it with the [logistic function](https://morrison-lab.github.io/mds/functions.html#def-logistic-function) or the [ReLU](#def-relu)
+would rule some out.
 
 :::

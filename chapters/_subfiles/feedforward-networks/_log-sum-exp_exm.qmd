@@ -9,7 +9,8 @@ largest_logit = logits[0].max().item()
 print(lse, largest_logit, largest_logit + np.log(10))
 ```
 
-For the first test image's [logits](#def-logits), $\operatorname{LSE}$ is `r sprintf("%.3f", py$lse)`,
+For the first test image's [logits](#def-logits),
+$\operatorname{LSE}$ is `r sprintf("%.3f", py$lse)`,
 between the largest [logit](#def-logits), `r sprintf("%.3f", py$largest_logit)`,
 and that logit plus $\log 10$.
 
