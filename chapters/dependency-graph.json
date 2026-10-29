@@ -3,6 +3,42 @@
  "meaning": "edge [A, B] means A uses B: B is a prerequisite of A, A a postrequisite of B",
  "nodes": [
   {
+   "id": "dds/backpropagation#def-backpropagation",
+   "site": "dds",
+   "page": "backpropagation",
+   "div": "def-backpropagation",
+   "kind": "def",
+   "title": "Backpropagation (backprop)",
+   "external": false
+  },
+  {
+   "id": "dds/backpropagation#def-computational-graph",
+   "site": "dds",
+   "page": "backpropagation",
+   "div": "def-computational-graph",
+   "kind": "def",
+   "title": "Computational graph",
+   "external": false
+  },
+  {
+   "id": "dds/backpropagation#def-vanishing-gradient",
+   "site": "dds",
+   "page": "backpropagation",
+   "div": "def-vanishing-gradient",
+   "kind": "def",
+   "title": "Vanishing gradient",
+   "external": false
+  },
+  {
+   "id": "dds/backpropagation#thm-ce-logit-grad",
+   "site": "dds",
+   "page": "backpropagation",
+   "div": "thm-ce-logit-grad",
+   "kind": "thm",
+   "title": "Gradient of the cross-entropy loss at the logits",
+   "external": false
+  },
+  {
    "id": "dds/course-overview#def-deep-learning",
    "site": "dds",
    "page": "course-overview",
@@ -129,6 +165,33 @@
    "external": false
   },
   {
+   "id": "dds/normalization#def-batch-norm",
+   "site": "dds",
+   "page": "normalization",
+   "div": "def-batch-norm",
+   "kind": "def",
+   "title": "Batch normalization",
+   "external": false
+  },
+  {
+   "id": "dds/normalization#def-layer-norm",
+   "site": "dds",
+   "page": "normalization",
+   "div": "def-layer-norm",
+   "kind": "def",
+   "title": "Layer normalization",
+   "external": false
+  },
+  {
+   "id": "dds/optimization#def-warmup",
+   "site": "dds",
+   "page": "optimization",
+   "div": "def-warmup",
+   "kind": "def",
+   "title": "Learning-rate warmup",
+   "external": false
+  },
+  {
    "id": "dds/pytorch-basics#def-automatic-differentiation",
    "site": "dds",
    "page": "pytorch-basics",
@@ -201,6 +264,33 @@
    "external": false
   },
   {
+   "id": "dds/regularization#def-data-augmentation",
+   "site": "dds",
+   "page": "regularization",
+   "div": "def-data-augmentation",
+   "kind": "def",
+   "title": "Data augmentation",
+   "external": false
+  },
+  {
+   "id": "dds/regularization#def-dropout",
+   "site": "dds",
+   "page": "regularization",
+   "div": "def-dropout",
+   "kind": "def",
+   "title": "Dropout",
+   "external": false
+  },
+  {
+   "id": "dds/regularization#def-early-stopping",
+   "site": "dds",
+   "page": "regularization",
+   "div": "def-early-stopping",
+   "kind": "def",
+   "title": "Early stopping",
+   "external": false
+  },
+  {
    "id": "mds/functions#def-logistic-function",
    "site": "mds",
    "page": "functions",
@@ -209,6 +299,16 @@
    "title": "logistic function",
    "external": true,
    "url": "https://morrison-lab.github.io/mds/functions.html#def-logistic-function"
+  },
+  {
+   "id": "pds/expectation#def-cross-entropy",
+   "site": "pds",
+   "page": "expectation",
+   "div": "def-cross-entropy",
+   "kind": "def",
+   "title": "cross entropy",
+   "external": true,
+   "url": "https://morrison-lab.github.io/pds/expectation.html#def-cross-entropy"
   },
   {
    "id": "pds/probability-basics#def-log-odds",
@@ -222,6 +322,26 @@
   }
  ],
  "edges": [
+  [
+   "dds/backpropagation#def-backpropagation",
+   "dds/backpropagation#def-computational-graph"
+  ],
+  [
+   "dds/backpropagation#def-backpropagation",
+   "dds/pytorch-basics#def-automatic-differentiation"
+  ],
+  [
+   "dds/backpropagation#def-vanishing-gradient",
+   "dds/backpropagation#def-backpropagation"
+  ],
+  [
+   "dds/backpropagation#thm-ce-logit-grad",
+   "dds/feedforward-networks#def-logits"
+  ],
+  [
+   "dds/backpropagation#thm-ce-logit-grad",
+   "pds/expectation#def-cross-entropy"
+  ],
   [
    "dds/course-overview#def-deep-learning",
    "dds/course-overview#def-representation-learning"
@@ -275,6 +395,18 @@
    "mds/functions#def-logistic-function"
   ],
   [
+   "dds/normalization#def-batch-norm",
+   "dds/feedforward-networks#def-pre-activation"
+  ],
+  [
+   "dds/normalization#def-layer-norm",
+   "dds/feedforward-networks#def-pre-activation"
+  ],
+  [
+   "dds/normalization#def-layer-norm",
+   "dds/feedforward-networks#def-unit"
+  ],
+  [
    "dds/pytorch-basics#def-broadcasting",
    "dds/pytorch-basics#def-shape"
   ],
@@ -301,6 +433,14 @@
   [
    "dds/pytorch-basics#def-training-step",
    "dds/pytorch-basics#def-automatic-differentiation"
+  ],
+  [
+   "dds/regularization#def-dropout",
+   "dds/feedforward-networks#def-unit"
+  ],
+  [
+   "dds/regularization#def-dropout",
+   "dds/pytorch-basics#def-training-step"
   ]
  ],
  "cycles": [],

@@ -296,13 +296,13 @@ The exercises use the 1,797 handwritten digits from the [course overview](../cha
 > logistic_slope_at_4 = slopes["logistic"][-1].item()
 > ```
 >
-> Each output of `g(z)` depends only on the matching entry of `z`, so the gradient of `g(z).sum()` holds the derivative \\g'(z)\\ at each point.
+> Each output of `g(z)` depends only on the matching entry of `z`, so the [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) of `g(z).sum()` holds the derivative \\g'(z)\\ at each point.
 >
 > - **Logistic.** Its derivative peaks at 0.25 at \\z = 0\\, and is close to 0 once \\\abs{z}\\ is large: 0.018 at \\z = 4\\.
 > - **tanh.** Its derivative peaks at 1 at \\z = 0\\ and is also close to 0 for large \\\abs{z}\\.
 > - **[ReLU](#def-relu).** Its derivative is 1 for every positive \\z\\ and exactly 0 for every negative \\z\\. At \\z = 0\\ it has no derivative; PyTorch uses 0 there.
 >
-> A [unit](#def-unit) whose [pre-activation](#def-pre-activation) sits where the derivative is near 0 is [saturated](https://morrison-lab.github.io/lds/chapters/backpropagation.html#def-saturation): a small change in its weights barely changes its output, so the gradient that training follows is small too. The [logistic function](https://morrison-lab.github.io/mds/functions.html#def-logistic-function) and \\\tanh\\ saturate on both sides, and ReLU only on its negative side.
+> A [unit](#def-unit) whose [pre-activation](#def-pre-activation) sits where the derivative is near 0 is [saturated](https://morrison-lab.github.io/lds/chapters/backpropagation.html#def-saturation): a small change in its weights barely changes its output, so the gradient that training follows is small too. The [logistic function](https://morrison-lab.github.io/mds/functions.html#def-logistic-function) and \\\tanh\\ [saturate](https://morrison-lab.github.io/lds/chapters/backpropagation.html#def-saturation) on both sides, and ReLU only on its negative side.
 
 ## 2.4 Feedforward networks
 
@@ -672,7 +672,7 @@ The exercises use the 1,797 handwritten digits from the [course overview](../cha
 
 > **NOTE:**
 >
-> **Exercise 15 (Training the MLP on the digits)** Train the [MLP](#def-feedforward-network) of [Example 6](#exm-feedforward-network) on the 1,200 training images, with `nn.CrossEntropyLoss`, taking 500 steps of `torch.optim.SGD` with a learning rate of 0.5, each on the whole [training set](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-training-set). What fraction of the test images does it classify correctly?
+> **Exercise 15 (Training the MLP on the digits)** Train the [MLP](#def-feedforward-network) of [Example 6](#exm-feedforward-network) on the 1,200 training images, with `nn.CrossEntropyLoss`, taking 500 steps of `torch.optim.SGD` with a [learning rate](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-learning-rate) of 0.5, each on the whole [training set](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-training-set). What fraction of the test images does it classify correctly?
 
 > **NOTE:**
 >
@@ -695,7 +695,7 @@ The exercises use the 1,797 handwritten digits from the [course overview](../cha
 > print(loss.item(), test_accuracy)
 > ```
 >
->     0.044963546097278595 0.9698492288589478
+>     0.044963538646698 0.9698492288589478
 >
 > The trained network classifies 97.0% of the 597 test images correctly, against 10% for guessing. The loop is the [training step](../chapters/pytorch-basics.llms.md#def-training-step) of the PyTorch chapter, and the predicted digit is the one with the largest [logit](#def-logits), which is also the one with the largest softmax probability.
 
@@ -829,7 +829,7 @@ The exercises use the 1,797 handwritten digits from the [course overview](../cha
 >
 >     {1: 19.619924545288086, 3: 18.540300369262695, 20: 18.385217666625977}
 >
-> The [Auto data](https://morrison-lab.github.io/lds/chapters/course-overview.html#def-auto-data) hold 392 cars from the UCI Auto MPG dataset [\[8\]](#ref-quinlan1993auto), from a local copy, [`data/auto.csv`](data/auto.csv), of the version in lds. Each network fits miles per gallon on horsepower, rescaled to mean 0 and standard deviation 1, by 3,000 steps of gradient descent on the mean squared error. With 1 [unit](#def-unit) the fit can bend only once, and its training mean squared error is 19.6. With 3 [unit](#def-unit)s it is 18.5, and with 20 it is 18.4. So the error falls as the network gets wider. [Theorem 3](#thm-universal-approximation) says that a wide enough network can follow any continuous curve; it does not say that following the [training data](https://morrison-lab.github.io/lds/chapters/anatomy.html#def-training-data) more closely predicts new cars better.
+> The [Auto data](https://morrison-lab.github.io/lds/chapters/course-overview.html#def-auto-data) hold 392 cars from the UCI Auto MPG dataset [\[8\]](#ref-quinlan1993auto), from a local copy, [`data/auto.csv`](data/auto.csv), of the version in lds. Each network fits miles per gallon on horsepower, rescaled to mean 0 and standard deviation 1, by 3,000 steps of [gradient descent](https://morrison-lab.github.io/mds/optimization.html#def-gradient-descent) on the mean squared error. With 1 [unit](#def-unit) the fit can bend only once, and its training mean squared error is 19.6. With 3 [unit](#def-unit)s it is 18.5, and with 20 it is 18.4. So the error falls as the network gets wider. [Theorem 3](#thm-universal-approximation) says that a wide enough network can follow any continuous curve; it does not say that following the [training data](https://morrison-lab.github.io/lds/chapters/anatomy.html#def-training-data) more closely predicts new cars better.
 
 > **NOTE:**
 >

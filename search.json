@@ -1,5 +1,341 @@
 [
   {
+    "objectID": "chapters/normalization.html",
+    "href": "chapters/normalization.html",
+    "title": "Normalization and residual connections",
+    "section": "",
+    "text": "Show code# The Python chunks on this page import these; reticulate provisions them.\n# Attaching reticulate gives the inline R its `py` object.\nlibrary(reticulate)\nsource(\"../tools/use-torch.R\")\nuse_torch(c(\"numpy\", \"pandas\", \"matplotlib\"))",
+    "crumbs": [
+      "Home",
+      "Notes",
+      "Normalization and residual connections"
+    ]
+  },
+  {
+    "objectID": "chapters/normalization.html#plan-for-this-lecture",
+    "href": "chapters/normalization.html#plan-for-this-lecture",
+    "title": "Normalization and residual connections",
+    "section": "\n1.1 Plan for this lecture",
+    "text": "1.1 Plan for this lecture\nThe backpropagation chapter found that the gradient of a deep MLP can shrink layer by layer, and the optimization chapter chose starting weights to keep each layer’s values at a steady size. This lecture tries two more ways to train a network of 20 such layers:\n\nrescaling each layer’s values during training, across the images of a minibatch or across the units of one image;\nadding each layer’s input to its output.",
+    "crumbs": [
+      "Home",
+      "Notes",
+      "Normalization and residual connections"
+    ]
+  },
+  {
+    "objectID": "chapters/normalization.html#the-digits-and-a-deep-network",
+    "href": "chapters/normalization.html#the-digits-and-a-deep-network",
+    "title": "Normalization and residual connections",
+    "section": "\n1.2 The digits and a deep network",
+    "text": "1.2 The digits and a deep network\n\nShow codeimport numpy as np\nimport pandas as pd\nimport torch\nfrom torch import nn\n\n_ = torch.manual_seed(481)\ndigits = pd.read_csv(\"data/optdigits-test.csv\", header=None)\nx = torch.tensor(digits.iloc[:, :64].to_numpy(), dtype=torch.float32) / 16\ny = torch.tensor(digits[64].to_numpy())\nn_train = 1200\norder = torch.randperm(len(x))\nx_train, y_train = x[order[:n_train]], y[order[:n_train]]\nx_test, y_test = x[order[n_train:]], y[order[n_train:]]\nloss_fn = nn.CrossEntropyLoss()\n\n\nclass Block(nn.Module):\n    # One hidden layer of `width` ReLU units.\n    # make_norm(width) builds a layer applied to its pre-activations;\n    # nn.Identity leaves them unchanged.\n\n    def __init__(self, width, make_norm=nn.Identity, residual=False):\n        super().__init__()\n        self.linear = nn.Linear(width, width)\n        self.norm = make_norm(width)\n        self.residual = residual\n\n    def forward(self, h):\n        out = torch.relu(self.norm(self.linear(h)))\n        if self.residual:\n            return h + out\n        return out\n\n\ndef make_deep(make_norm=nn.Identity, residual=False, depth=20, width=64, seed=1):\n    # A first layer from the 64 pixels, `depth` blocks, then 10 logits.\n    torch.manual_seed(seed)\n    blocks = [Block(width, make_norm, residual) for _ in range(depth)]\n    return nn.Sequential(nn.Linear(64, width), nn.ReLU(), *blocks, nn.Linear(width, 10))\n\n\ndef train(net, n_epochs=5, lr=0.01, batch_size=32, seed=0):\n    # Minibatch SGD; returns the training loss and the test accuracy at the end.\n    optimizer = torch.optim.SGD(net.parameters(), lr=lr)\n    generator = torch.Generator().manual_seed(seed)\n    for epoch in range(n_epochs):\n        net.train()\n        shuffled = torch.randperm(n_train, generator=generator)\n        for start in range(0, n_train, batch_size):\n            batch = shuffled[start:start + batch_size]\n            optimizer.zero_grad()\n            loss_fn(net(x_train[batch]), y_train[batch]).backward()\n            optimizer.step()\n    net.eval()\n    with torch.no_grad():\n        train_loss = loss_fn(net(x_train), y_train).item()\n        test_acc = (net(x_test).argmax(dim=1) == y_test).float().mean().item()\n    return train_loss, test_acc\n\n\ndef first_layer_grad(net):\n    # Size of the loss gradient for the first layer's weights, on 256 training images.\n    net.train()\n    net.zero_grad()\n    loss_fn(net(x_train[:256]), y_train[:256]).backward()\n    return net[0].weight.grad.norm().item()\n\n\ndef last_block_std(net):\n    # Standard deviation of the last block's output, on 256 training images.\n    net.train()\n    with torch.no_grad():\n        return net[:-1](x_train[:256]).std().item()\n\n\nchance_loss = np.log(10)\n\nprint(make_deep()[:3])\n\nSequential(\n  (0): Linear(in_features=64, out_features=64, bias=True)\n  (1): ReLU()\n  (2): Block(\n    (linear): Linear(in_features=64, out_features=64, bias=True)\n    (norm): Identity()\n  )\n)\n\n\nThe exercises use the digits split of the feedforward networks chapter, with 1,200 training images. make_deep() builds an MLP with 21 hidden layers of 64 ReLU units: a first layer from the pixels, then 20 copies of Block. train() runs 5 epochs of minibatch stochastic gradient descent, with batch size 32 and learning rate 0.01. first_layer_grad() measures the size of the gradient that reaches the first layer. The exercises count a network as having learned something when its training loss after train() is below 90% of \\(\\log 10 \\approx 2.303\\), the loss of predicting \\(\\frac{1}{10}\\) for every digit.",
+    "crumbs": [
+      "Home",
+      "Notes",
+      "Normalization and residual connections"
+    ]
+  },
+  {
+    "objectID": "chapters/normalization.html#training-20-layers",
+    "href": "chapters/normalization.html#training-20-layers",
+    "title": "Normalization and residual connections",
+    "section": "\n2.1 Training 20 layers",
+    "text": "2.1 Training 20 layers\n\n\n\n\n\n\nExrExercise 1 (A 20-block network)\n\n\n\n\n\n\nExercise 1 (A 20-block network) Does make_deep() learn anything in the 5 epochs of train()?\n\n\n\n\n\n\n\n\n\n\nSolutionSolution 1\n\n\n\n\n\n\nSolution 1. \n\nShow codeplain_grad = first_layer_grad(make_deep())\nplain_loss, plain_acc = train(make_deep())\nplain_std = last_block_std(make_deep())\nprint(plain_grad, plain_loss, plain_acc, plain_std)\n\n1.927740855833804e-09 2.3031463623046875 0.1072026789188385 0.035105034708976746\n\n\nNo. Its training loss after 5 epochs is 2.303, against \\(\\log 10 \\approx 2.303\\) for probabilities of \\(\\frac{1}{10}\\). It classifies 10.7% of the test images correctly. The gradient that reaches its first layer has size 1.9e-09. The last block’s output has standard deviation 3.5e-02. So the gradient vanishes before it reaches the first layer, as in the backpropagation chapter.",
+    "crumbs": [
+      "Home",
+      "Notes",
+      "Normalization and residual connections"
+    ]
+  },
+  {
+    "objectID": "chapters/normalization.html#definition",
+    "href": "chapters/normalization.html#definition",
+    "title": "Normalization and residual connections",
+    "section": "\n3.1 Definition",
+    "text": "3.1 Definition\n\n\n\n\n\n\nDefDefinition 1 (Batch normalization)\n\n\n\n\n\n\nDefinition 1 (Batch normalization) Batch normalization rescales each pre-activation of a layer across the examples of a minibatch. For a minibatch of \\(B\\) examples, let \\(z_{ij}\\) be pre-activation \\(j\\) for example \\(i\\), with mean and variance over the minibatch\n\\[\n\\mu_j = \\frac{1}{B} \\sumto{i}{B} z_{ij},\n\\qquad\n\\sigma_j^2 = \\frac{1}{B} \\sumto{i}{B} \\paren{z_{ij} - \\mu_j}^2.\n\\]\nBatch normalization replaces \\(z_{ij}\\) with\n\\[\n\\gamma_j \\frac{z_{ij} - \\mu_j}{\\sqrt{\\sigma_j^2 + \\smallconst}} + \\beta_j,\n\\]\nwhere \\(\\gamma_j\\) and \\(\\beta_j\\) are parameters learned with the rest and \\(\\smallconst\\) is a small constant that keeps the division finite [1], [2, Sec. 8.7.1]. When the network makes predictions, running averages of \\(\\mu_j\\) and \\(\\sigma_j^2\\) from training take the place of the minibatch’s. PyTorch’s running average of the variance divides by \\(B - 1\\) instead of \\(B\\) [3].\n\n\n\n\n\n\n\n\n\n\nExmExample 1 (nn.BatchNorm1d on a minibatch)\n\n\n\n\n\n\nExample 1 (nn.BatchNorm1d on a minibatch)  \n\nShow codebatch_norm = nn.BatchNorm1d(64)\npre = nn.Linear(64, 64)(x_train[:32]).detach()\nnormed = batch_norm(pre).detach()\nprint(pre.mean(dim=0)[:4], pre.std(dim=0, correction=0)[:4])\n\ntensor([ 0.1275, -0.3611,  0.5323,  0.4476]) tensor([0.1708, 0.1277, 0.1898, 0.1267])\n\nShow codeprint(normed.mean(dim=0)[:4], normed.std(dim=0, correction=0)[:4])\n\ntensor([6.7055e-08, 2.5332e-07, 4.4703e-08, 1.8626e-07]) tensor([0.9998, 0.9997, 0.9999, 0.9997])\n\nShow codelargest_mean = normed.mean(dim=0).abs().max().item()\nstd_min = normed.std(dim=0, correction=0).min().item()\nstd_max = normed.std(dim=0, correction=0).max().item()\n\n\nnn.BatchNorm1d(64) applies batch normalization to 64 pre-activations. It starts with every \\(\\gamma_j = 1\\) and every \\(\\beta_j = 0\\) [3]. For 32 training images, the first 4 pre-activations of a random layer have the means and standard deviations on the first line. After batch normalization, on the second line, no column’s mean is farther from 0 than 3.3e-07, and the standard deviations run from 0.999 to 1.000.",
+    "crumbs": [
+      "Home",
+      "Notes",
+      "Normalization and residual connections"
+    ]
+  },
+  {
+    "objectID": "chapters/normalization.html#a-batch-of-one",
+    "href": "chapters/normalization.html#a-batch-of-one",
+    "title": "Normalization and residual connections",
+    "section": "\n3.2 A batch of one",
+    "text": "3.2 A batch of one\n\n\n\n\n\n\nExrExercise 2 (Predicting for one image)\n\n\n\n\n\n\nExercise 2 (Predicting for one image) Why can batch normalization not use the mean and variance of the minibatch when a network makes a prediction for a single image?\n\n\n\n\n\n\n\n\n\n\nSolutionSolution 2\n\n\n\n\n\n\nSolution 2. A minibatch of one image has \\(\\mu_j = z_{1j}\\) and \\(\\sigma_j^2 = 0\\), so every normalized pre-activation would be 0, whatever the image. The prediction would not depend on the image at all.\n\nShow codetry:\n    _ = batch_norm(pre[:1])\nexcept ValueError as error:\n    batch_of_one_error = str(error)\nprint(batch_of_one_error)\n\nExpected more than 1 value per channel when training, got input size torch.Size([1, 64])\n\nShow code_ = batch_norm.eval()\none_image_output = batch_norm(pre[:1])\nprint(one_image_output.shape)\n\ntorch.Size([1, 64])\n\n\nnn.BatchNorm1d treats a minibatch of one differently in its two modes:\n\n\nTraining mode. It refuses the minibatch: “Expected more than 1 value per channel when training, got input size torch.Size([1, 64])”.\n\nEvaluation mode. It uses its running averages instead, so it accepts a single image.\n\nEvaluation mode is what makes predictions use the running averages. That is why train() calls net.eval() before it computes the test accuracy.",
+    "crumbs": [
+      "Home",
+      "Notes",
+      "Normalization and residual connections"
+    ]
+  },
+  {
+    "objectID": "chapters/normalization.html#batch-normalization-in-the-deep-network",
+    "href": "chapters/normalization.html#batch-normalization-in-the-deep-network",
+    "title": "Normalization and residual connections",
+    "section": "\n3.3 Batch normalization in the deep network",
+    "text": "3.3 Batch normalization in the deep network\n\n\n\n\n\n\nExrExercise 3 (Batch normalization in the 20-block network)\n\n\n\n\n\n\nExercise 3 (Batch normalization in the 20-block network) Does make_deep(make_norm=nn.BatchNorm1d) learn in the 5 epochs of train()?\n\n\n\n\n\n\n\n\n\n\nSolutionSolution 3\n\n\n\n\n\n\nSolution 3. \n\nShow codebatch_grad = first_layer_grad(make_deep(make_norm=nn.BatchNorm1d))\nbatch_loss, batch_acc = train(make_deep(make_norm=nn.BatchNorm1d))\nbatch_std = last_block_std(make_deep(make_norm=nn.BatchNorm1d))\nprint(batch_grad, batch_loss, batch_acc, batch_std)\n\n20.3425235748291 1.379925012588501 0.6683416962623596 0.6066936254501343\n\n\nYes. With batch normalization in every block, the training loss after 5 epochs is 1.380. The network classifies 66.8% of the test images correctly. The gradient at the first layer has size 2.0e+01, against 1.9e-09 without it. Each block rescales its pre-activations to standard deviation 1 before the ReLU, so the values cannot shrink from block to block: the last block’s output has standard deviation 0.607, against 3.5e-02 without batch normalization.",
+    "crumbs": [
+      "Home",
+      "Notes",
+      "Normalization and residual connections"
+    ]
+  },
+  {
+    "objectID": "chapters/normalization.html#definition-1",
+    "href": "chapters/normalization.html#definition-1",
+    "title": "Normalization and residual connections",
+    "section": "\n4.1 Definition",
+    "text": "4.1 Definition\n\n\n\n\n\n\nDefDefinition 2 (Layer normalization)\n\n\n\n\n\n\nDefinition 2 (Layer normalization) Layer normalization rescales the pre-activations of a layer across the units of one example. For an example with pre-activations \\(z_1, \\dots, z_L\\), it uses their mean and variance\n\\[\n\\mu = \\frac{1}{L} \\sumto{j}{L} z_j,\n\\qquad\n\\sigma^2 = \\frac{1}{L} \\sumto{j}{L} \\paren{z_j - \\mu}^2,\n\\]\nand replaces each \\(z_j\\) with \\(\\gamma_j \\paren{z_j - \\mu} / \\sqrt{\\sigma^2 + \\smallconst} + \\beta_j\\) [4]. It does the same in training and in prediction, since it never looks at other examples.\n\n\n\n\n\n\n\n\n\n\nExmExample 2 (nn.LayerNorm on one image)\n\n\n\n\n\n\nExample 2 (nn.LayerNorm on one image)  \n\nShow codelayer_norm = nn.LayerNorm(64)\nrow_normed = layer_norm(pre[:1]).detach()\nprint(row_normed.mean().item(), row_normed.std(correction=0).item())\n\n-2.0489096641540527e-08 0.9999433159828186\n\n\nnn.LayerNorm(64) applies layer normalization to each row of its input [5]. For the first training image alone, its 64 outputs have mean -2.0e-08 and standard deviation 1.000.",
+    "crumbs": [
+      "Home",
+      "Notes",
+      "Normalization and residual connections"
+    ]
+  },
+  {
+    "objectID": "chapters/normalization.html#layer-normalization-in-the-deep-network",
+    "href": "chapters/normalization.html#layer-normalization-in-the-deep-network",
+    "title": "Normalization and residual connections",
+    "section": "\n4.2 Layer normalization in the deep network",
+    "text": "4.2 Layer normalization in the deep network\n\n\n\n\n\n\nExrExercise 4 (Layer normalization in the 20-block network)\n\n\n\n\n\n\nExercise 4 (Layer normalization in the 20-block network) Does make_deep(make_norm=nn.LayerNorm) learn in the 5 epochs of train()?\n\n\n\n\n\n\n\n\n\n\nSolutionSolution 4\n\n\n\n\n\n\nSolution 4. \n\nShow codelayer_grad = first_layer_grad(make_deep(make_norm=nn.LayerNorm))\nlayer_loss, layer_acc = train(make_deep(make_norm=nn.LayerNorm))\nprint(layer_grad, layer_loss, layer_acc)\n\n0.39439767599105835 2.3055310249328613 0.09380234777927399\n\n\nNo. With layer normalization, the training loss after 5 epochs is 2.306, and the test accuracy is 9.4%, against 1.380 and 66.8% with batch normalization. The gradient at the first layer has size 3.9e-01. Here layer normalization learns less than batch normalization in the same 5 epochs. Because layer normalization never uses other examples, it also works for a minibatch of one and for sequences of different lengths [4].",
+    "crumbs": [
+      "Home",
+      "Notes",
+      "Normalization and residual connections"
+    ]
+  },
+  {
+    "objectID": "chapters/normalization.html#a-residual-block",
+    "href": "chapters/normalization.html#a-residual-block",
+    "title": "Normalization and residual connections",
+    "section": "\n5.1 A residual block",
+    "text": "5.1 A residual block\n\n\n\n\n\n\nRemarkRemark 1 (Residual connections in Block)\n\n\n\n\n\n\nRemark 1 (Residual connections in Block). Block(width, residual=True) returns \\(\\vhidval + \\operatorname{ReLU}\\paren{\\matr{W} \\vhidval + \\vecf{b}}\\) for its input \\(\\vhidval\\), a residual connection around one hidden layer. This block is simpler than those of He et al. [6], which go around two or three convolutional layers and apply the ReLU after the sum. The input and output have the same width, 64, so the sum is defined.",
+    "crumbs": [
+      "Home",
+      "Notes",
+      "Normalization and residual connections"
+    ]
+  },
+  {
+    "objectID": "chapters/normalization.html#gradients-with-residual-connections",
+    "href": "chapters/normalization.html#gradients-with-residual-connections",
+    "title": "Normalization and residual connections",
+    "section": "\n5.2 Gradients with residual connections",
+    "text": "5.2 Gradients with residual connections\n\n\n\n\n\n\nExrExercise 5 (The gradient through residual connections)\n\n\n\n\n\n\nExercise 5 (The gradient through residual connections) How large is the gradient at the first layer of make_deep(residual=True), compared with make_deep()?\n\n\n\n\n\n\n\n\n\n\nSolutionSolution 5\n\n\n\n\n\n\nSolution 5. \n\nShow coderesidual_grad = first_layer_grad(make_deep(residual=True))\nprint(residual_grad, plain_grad)\n\n25.32086181640625 1.927740855833804e-09\n\n\nThe gradient has size 2.5e+01, against 1.9e-09 without residual connections. A block computes \\(\\vhidval + f(\\vhidval)\\), with \\(f(\\vhidval) = \\operatorname{ReLU}\\paren{\\matr{W} \\vhidval + \\vecf{b}}\\) from Remark 1, so its derivative with respect to \\(\\vhidval\\) is the identity matrix plus the derivative of \\(f\\). Going back through a block, the gradient keeps a copy of itself through the identity. It keeps that copy however small the derivative of \\(f\\) is. Without the residual connection, the gradient passes only through the derivative of \\(f\\), and shrinks when that derivative is small. Across 20 blocks these derivatives multiply. So when each factor is below 1 in size, the gradient shrinks geometrically.",
+    "crumbs": [
+      "Home",
+      "Notes",
+      "Normalization and residual connections"
+    ]
+  },
+  {
+    "objectID": "chapters/normalization.html#four-networks",
+    "href": "chapters/normalization.html#four-networks",
+    "title": "Normalization and residual connections",
+    "section": "\n5.3 Four networks",
+    "text": "5.3 Four networks\n\n\n\n\n\n\nExrExercise 6 (Four 20-block networks)\n\n\n\n\n\n\nExercise 6 (Four 20-block networks) Which of make_deep(), make_deep(make_norm=nn.BatchNorm1d), make_deep(residual=True) and make_deep(make_norm=nn.BatchNorm1d, residual=True) reaches the lowest training loss in the 5 epochs of train()?\n\n\n\n\n\n\n\n\n\n\nSolutionSolution 6\n\n\n\n\n\n\nSolution 6. \n\nShow codesettings = {\n    \"no normalization or residual connections\": {},\n    \"batch normalization\": {\"make_norm\": nn.BatchNorm1d},\n    \"residual connections\": {\"residual\": True},\n    \"batch normalization and residual connections\": {\"make_norm\": nn.BatchNorm1d, \"residual\": True},\n}\nfour_rows = []\nfor name, options in settings.items():\n    loss, acc = train(make_deep(**options))\n    four_rows.append({\"network\": name, \"train_loss\": loss, \"test_accuracy\": acc})\nfour_table = pd.DataFrame(four_rows)\nbest_network = four_table.loc[four_table[\"train_loss\"].idxmin()]\nresidual_only_loss = four_table.set_index(\"network\").loc[\"residual connections\", \"train_loss\"]\nprint(four_table.round(3))\n\n                                        network  train_loss  test_accuracy\n0      no normalization or residual connections       2.303          0.107\n1                           batch normalization       1.380          0.668\n2                          residual connections       1.434          0.561\n3  batch normalization and residual connections       0.035          0.953\n\n\nThe network with batch normalization and residual connections reaches the lowest training loss, 0.035, and classifies 95.3% of the test images correctly. The residual network without batch normalization reaches 1.434. The residual networks of He et al. [6] also put batch normalization inside each block.",
+    "crumbs": [
+      "Home",
+      "Notes",
+      "Normalization and residual connections"
+    ]
+  },
+  {
+    "objectID": "chapters/normalization.html#further-reading",
+    "href": "chapters/normalization.html#further-reading",
+    "title": "Normalization and residual connections",
+    "section": "\n5.4 Further reading",
+    "text": "5.4 Further reading\n\n\n\n\n\n\n\nReadingRead\n\n\n\n\n\nDeep Learning’s section 8.7.1 covers batch normalization [2]. Ioffe and Szegedy [1] introduced batch normalization, Ba et al. [4] layer normalization, and He et al. [6] residual networks.",
+    "crumbs": [
+      "Home",
+      "Notes",
+      "Normalization and residual connections"
+    ]
+  },
+  {
+    "objectID": "chapters/optimization.html",
+    "href": "chapters/optimization.html",
+    "title": "Optimization",
+    "section": "",
+    "text": "Show code# The Python chunks on this page import these; reticulate provisions them.\n# Attaching reticulate gives the inline R its `py` object.\nlibrary(reticulate)\nsource(\"../tools/use-torch.R\")\nuse_torch(c(\"numpy\", \"pandas\", \"matplotlib\"))",
+    "crumbs": [
+      "Home",
+      "Notes",
+      "Optimization"
+    ]
+  },
+  {
+    "objectID": "chapters/optimization.html#plan-for-this-lecture",
+    "href": "chapters/optimization.html#plan-for-this-lecture",
+    "title": "Optimization",
+    "section": "\n1.1 Plan for this lecture",
+    "text": "1.1 Plan for this lecture\nThe feedforward networks chapter trained its MLP with full-batch gradient descent, and lds’s chapter on gradient descent covers the algorithms that do better. This lecture runs them in PyTorch on the digits:\n\ntraining on small random subsets of the training images instead of all of them at each step;\n\nmomentum and Adam as PyTorch optimizers;\nchanging the learning rate during training, starting with a short ramp up;\nchoosing the scale of the starting weights.",
+    "crumbs": [
+      "Home",
+      "Notes",
+      "Optimization"
+    ]
+  },
+  {
+    "objectID": "chapters/optimization.html#the-digits-and-the-network",
+    "href": "chapters/optimization.html#the-digits-and-the-network",
+    "title": "Optimization",
+    "section": "\n1.2 The digits and the network",
+    "text": "1.2 The digits and the network\n\nShow codeimport math\n\nimport numpy as np\nimport pandas as pd\nimport torch\nfrom torch import nn\nimport matplotlib.pyplot as plt\n\n_ = torch.manual_seed(481)\ndigits = pd.read_csv(\"data/optdigits-test.csv\", header=None)\nx = torch.tensor(digits.iloc[:, :64].to_numpy(), dtype=torch.float32) / 16\ny = torch.tensor(digits[64].to_numpy())\nn_train = 1200\norder = torch.randperm(len(x))\nx_train, y_train = x[order[:n_train]], y[order[:n_train]]\nx_test, y_test = x[order[n_train:]], y[order[n_train:]]\nloss_fn = nn.CrossEntropyLoss()\n\n\ndef make_mlp(seed=1):\n    # A fresh copy of the digits MLP, with the same starting weights for a given seed.\n    torch.manual_seed(seed)\n    return nn.Sequential(nn.Linear(64, 32), nn.ReLU(), nn.Linear(32, 10))\n\n\nprint(make_mlp())\n\nSequential(\n  (0): Linear(in_features=64, out_features=32, bias=True)\n  (1): ReLU()\n  (2): Linear(in_features=32, out_features=10, bias=True)\n)\n\n\nThe exercises use the 1,797 digits of data/optdigits-test.csv [2], split as in the feedforward networks chapter, with 1,200 images in the training set. make_mlp() builds that chapter’s MLP, with the same starting weights each time, so that every method below starts from the same place.",
+    "crumbs": [
+      "Home",
+      "Notes",
+      "Optimization"
+    ]
+  },
+  {
+    "objectID": "chapters/optimization.html#ten-passes-over-the-data",
+    "href": "chapters/optimization.html#ten-passes-over-the-data",
+    "title": "Optimization",
+    "section": "\n2.1 Ten passes over the data",
+    "text": "2.1 Ten passes over the data\n\n\n\n\n\n\nExrExercise 1 (Ten passes over the data)\n\n\n\n\n\n\nExercise 1 (Ten passes over the data) Suppose one fresh MLP from make_mlp() is trained for 10 epochs of full-batch gradient descent with learning rate 0.5. Another is trained for 10 epochs of minibatch gradient descent with batch size 32 and learning rate 0.1. The minibatches of each pass come from a fresh shuffle of the training images, rather than being drawn with replacement. Which has the lower training loss after 10 epochs?\n\n\n\n\n\n\n\n\n\n\nSolutionSolution 1\n\n\n\n\n\n\nSolution 1. \n\nShow codedef train(mlp, optimizer, n_epochs, batch_size, scheduler=None, seed=0):\n    # Minibatch training; returns the training loss after each epoch.\n    shuffler = torch.Generator().manual_seed(seed)\n    losses = []\n    for epoch in range(n_epochs):\n        shuffled = torch.randperm(n_train, generator=shuffler)\n        for start in range(0, n_train, batch_size):\n            batch = shuffled[start:start + batch_size]\n            optimizer.zero_grad()\n            loss_fn(mlp(x_train[batch]), y_train[batch]).backward()\n            optimizer.step()\n            if scheduler is not None:\n                scheduler.step()\n        with torch.no_grad():\n            losses.append(loss_fn(mlp(x_train), y_train).item())\n    return losses\n\n\nfull_mlp = make_mlp()\nfull_losses = train(full_mlp, torch.optim.SGD(full_mlp.parameters(), lr=0.5), 10, n_train)\nmini_mlp = make_mlp()\nmini_losses = train(mini_mlp, torch.optim.SGD(mini_mlp.parameters(), lr=0.1), 10, 32)\n\nfig, ax = plt.subplots(figsize=(6, 3.5), layout=\"constrained\")\nax.plot(range(1, 11), full_losses, marker=\"o\", label=\"full batch\");\nax.plot(range(1, 11), mini_losses, marker=\"o\", label=\"minibatches of 32\");\nax.set_xlabel(\"epoch\");\nax.set_ylabel(\"training loss\");\nax.legend();\nplt.show()\n\n\n\n\n\n\n\nMinibatches win by far: after 10 epochs the training loss is 0.24 for minibatches of 32 and 1.95 for the full batch. An epoch costs about the same either way, since it computes the loss and its gradient once for each training image. Full-batch descent spends that cost on one step per epoch, while the minibatch version spends it on many smaller, noisier steps, each of which already points roughly downhill. batch_size=n_train makes train() take full-batch steps.",
+    "crumbs": [
+      "Home",
+      "Notes",
+      "Optimization"
+    ]
+  },
+  {
+    "objectID": "chapters/optimization.html#how-noisy-is-a-minibatch-gradient",
+    "href": "chapters/optimization.html#how-noisy-is-a-minibatch-gradient",
+    "title": "Optimization",
+    "section": "\n2.2 How noisy is a minibatch gradient?",
+    "text": "2.2 How noisy is a minibatch gradient?\n\n\n\n\n\n\nExrExercise 2 (How noisy is a minibatch gradient?)\n\n\n\n\n\n\nExercise 2 (How noisy is a minibatch gradient?) lds’s exercise on minibatches shows that, for minibatches drawn with replacement, the minibatch gradient’s variance is \\(1/b\\) times that of one image’s gradient, for batch size \\(b\\). For a fresh MLP at its starting parameters, and 200 minibatches each of sizes 8, 32 and 128, does \\(b\\) times the mean squared distance between the minibatch gradient and the full-batch gradient stay about the same?\n\n\n\n\n\n\n\n\n\n\nSolutionSolution 2\n\n\n\n\n\n\nSolution 2. \n\nShow codenoise_mlp = make_mlp()\n\n\ndef flat_gradient(rows):\n    # The loss gradient on the given training images, as one long vector.\n    noise_mlp.zero_grad()\n    loss_fn(noise_mlp(x_train[rows]), y_train[rows]).backward()\n    return torch.cat([p.grad.flatten() for p in noise_mlp.parameters()])\n\n\nfull_gradient = flat_gradient(torch.arange(n_train))\nsampler = torch.Generator().manual_seed(0)\nnoise = {}\nfor b in [8, 32, 128]:\n    distances = []\n    for draw in range(200):\n        rows = torch.randint(n_train, (b,), generator=sampler)\n        distances.append(((flat_gradient(rows) - full_gradient) ** 2).sum().item())\n    noise[b] = np.mean(distances)\nprint({b: round(float(b * d), 2) for b, d in noise.items()})\n\n{8: 4.55, 32: 4.6, 128: 4.44}\n\n\nYes. The mean squared distance falls from 0.569 at \\(b = 8\\) to 0.035 at \\(b = 128\\), and \\(b\\) times it stays between 4.4 and 4.6. The mean squared distance is the sum of the variances of the gradient’s entries, so it falls as \\(1/b\\), as each variance does. Quadrupling the batch size only halves the typical distance, which is one reason small batches are a good use of each gradient computation.",
+    "crumbs": [
+      "Home",
+      "Notes",
+      "Optimization"
+    ]
+  },
+  {
+    "objectID": "chapters/optimization.html#momentum-in-pytorch",
+    "href": "chapters/optimization.html#momentum-in-pytorch",
+    "title": "Optimization",
+    "section": "\n3.1 Momentum in PyTorch",
+    "text": "3.1 Momentum in PyTorch\n\n\n\n\n\n\nRemarkRemark 1 (Momentum in PyTorch)\n\n\n\n\n\n\nRemark 1 (Momentum in PyTorch). torch.optim.SGD(params, lr=alpha, momentum=beta) takes the steps of lds’s momentum, \\(\\vv_t = \\beta \\vv_{t - 1} + \\vg_t\\) and \\(\\vcoef_t = \\vcoef_{t - 1} - \\learnrate \\vv_t\\), where \\(\\vg_t\\) is the gradient at step \\(t\\) and \\(\\vcoef_t\\) the parameters after it. Its first step sets \\(\\vv_1 = \\vg_1\\), as \\(\\vv_0 = \\vzero\\) would [3]. Some sources scale the gradient term by \\(1 - \\beta\\) or fold \\(\\learnrate\\) into \\(\\vv_t\\); the steps are the same up to a rescaled learning rate.",
+    "crumbs": [
+      "Home",
+      "Notes",
+      "Optimization"
+    ]
+  },
+  {
+    "objectID": "chapters/optimization.html#momentum-on-a-steady-slope",
+    "href": "chapters/optimization.html#momentum-on-a-steady-slope",
+    "title": "Optimization",
+    "section": "\n3.2 Momentum on a steady slope",
+    "text": "3.2 Momentum on a steady slope\n\n\n\n\n\n\nExrExercise 3 (Momentum on a steady slope)\n\n\n\n\n\n\nExercise 3 (Momentum on a steady slope) Suppose the gradient is the same vector \\(\\vg\\) at every step, and momentum, updated as in Remark 1, starts from \\(\\vv_0 = \\vzero\\). What does the step \\(\\learnrate \\vv_t\\) approach as \\(t\\) grows?\n\n\n\n\n\n\n\n\n\n\nSolutionSolution 3\n\n\n\n\n\n\nSolution 3. Unrolling \\(\\vv_t = \\beta \\vv_{t - 1} + \\vg\\) from \\(\\vv_0 = \\vzero\\):\n\\[\n\\begin{aligned}\n\\vv_t\n&= \\vg + \\beta \\vg + \\dots + \\beta^{t - 1} \\vg\n&& \\text{(apply the update $t$ times)} \\\\\n&= \\frac{1 - \\beta^t}{1 - \\beta} \\vg\n&& \\text{(sum of a geometric series, for $0 \\le \\beta &lt; 1$)} \\\\\n&\\to \\frac{1}{1 - \\beta} \\vg\n&& \\text{(since $\\beta^t \\to 0$)}\n\\end{aligned}\n\\]\nSo the step approaches \\(\\frac{\\learnrate}{1 - \\beta} \\vg\\): on a steady slope, momentum moves like plain gradient descent with learning rate \\(\\learnrate / (1 - \\beta)\\). With \\(\\beta = 0.9\\), that learning rate is 10 times \\(\\learnrate\\).",
+    "crumbs": [
+      "Home",
+      "Notes",
+      "Optimization"
+    ]
+  },
+  {
+    "objectID": "chapters/optimization.html#three-optimizers-on-the-digits",
+    "href": "chapters/optimization.html#three-optimizers-on-the-digits",
+    "title": "Optimization",
+    "section": "\n3.3 Three optimizers on the digits",
+    "text": "3.3 Three optimizers on the digits\n\n\n\n\n\n\nExrExercise 4 (Plain steps, momentum and Adam)\n\n\n\n\n\n\nExercise 4 (Plain steps, momentum and Adam) Suppose three fresh MLPs are trained for 5 epochs on minibatches of 32, using train() from Solution 1:\n\none with torch.optim.SGD at learning rate 0.1;\none with torch.optim.SGD at learning rate 0.01 and momentum 0.9;\none with torch.optim.Adam, PyTorch’s Adam, at learning rate 0.01.\n\nWhich reaches the lowest training loss?\n\n\n\n\n\n\n\n\n\n\nSolutionSolution 4\n\n\n\n\n\n\nSolution 4. \n\nShow codeoptimizers = {\n    \"SGD\": lambda p: torch.optim.SGD(p, lr=0.1),\n    \"momentum\": lambda p: torch.optim.SGD(p, lr=0.01, momentum=0.9),\n    \"Adam\": lambda p: torch.optim.Adam(p, lr=0.01),\n}\nfinal_loss, test_acc = {}, {}\nfor name, make_optimizer in optimizers.items():\n    mlp = make_mlp()\n    final_loss[name] = train(mlp, make_optimizer(mlp.parameters()), 5, 32)[-1]\n    with torch.no_grad():\n        test_acc[name] = (mlp(x_test).argmax(dim=1) == y_test).float().mean().item()\nprint(final_loss)\n\n{'SGD': 0.5297544598579407, 'momentum': 0.5874408483505249, 'Adam': 0.10584728419780731}\n\nShow codeprint(test_acc)\n\n{'SGD': 0.8860971331596375, 'momentum': 0.8844221234321594, 'Adam': 0.94807368516922}\n\n\nAdam reaches the lowest training loss, 0.11, against 0.53 for plain SGD and 0.59 with momentum. It also classifies the most images of the test set correctly, 94.8%. Momentum and plain SGD end close together, as Solution 3 predicts: learning rate 0.01 with \\(\\beta = 0.9\\) moves like learning rate 0.1 on a steady slope. A comparison like this depends on the learning rates chosen for each method, so a fair one tunes each method’s learning rate separately.",
+    "crumbs": [
+      "Home",
+      "Notes",
+      "Optimization"
+    ]
+  },
+  {
+    "objectID": "chapters/optimization.html#adams-first-step",
+    "href": "chapters/optimization.html#adams-first-step",
+    "title": "Optimization",
+    "section": "\n3.4 Adam’s first step",
+    "text": "3.4 Adam’s first step\n\n\n\n\n\n\nExrExercise 5 (Adam’s first step)\n\n\n\n\n\n\nExercise 5 (Adam’s first step) At Adam’s first step, one parameter has gradient \\(g \\neq 0\\). Ignoring \\(\\smallconst\\), how far does that step move the parameter?\n\n\n\n\n\n\n\n\n\n\nSolutionSolution 5\n\n\n\n\n\n\nSolution 5. With \\(m_0 = u_0 = 0\\), the first averages are \\(m_1 = (1 - \\beta_1) g\\) and \\(u_1 = (1 - \\beta_2) g^2\\).\n\\[\n\\begin{aligned}\n\\frac{\\est{m}_1}{\\sqrt{\\est{u}_1}}\n&= \\frac{m_1 / (1 - \\beta_1)}{\\sqrt{u_1 / (1 - \\beta_2)}}\n&& \\text{(bias corrections at $t = 1$)} \\\\\n&= \\frac{g}{\\sqrt{g^2}}\n&& \\text{(substitute $m_1$ and $u_1$)} \\\\\n&= \\frac{g}{\\abs{g}}\n&& \\text{($\\sqrt{g^2} = \\abs{g}$)}\n\\end{aligned}\n\\]\nSo the first step moves the parameter by exactly \\(\\learnrate\\), against the sign of \\(g\\), whatever the size of \\(g\\).\n\nShow codew = torch.ones(2, requires_grad=True)\nadam = torch.optim.Adam([w], lr=0.01)\nw.grad = torch.tensor([1000.0, 0.001])\nadam.step()\nstep = (1 - w.detach()).tolist()\nprint(step)\n\n[0.009999990463256836, 0.009999871253967285]\n\n\nGradients of 1,000 and 0.001 move their parameters by 0.0100000 and 0.0099999, both close to the learning rate, 0.01. The small difference is the effect of \\(\\smallconst\\). So the learning rate of Adam sets the size of each step on the parameters’ own scale. Later steps are also bounded by about the learning rate [4, Sec. 2.1]. A step of plain gradient descent is instead the learning rate times the gradient.",
+    "crumbs": [
+      "Home",
+      "Notes",
+      "Optimization"
+    ]
+  },
+  {
+    "objectID": "chapters/optimization.html#starting-slowly",
+    "href": "chapters/optimization.html#starting-slowly",
+    "title": "Optimization",
+    "section": "\n4.1 Starting slowly",
+    "text": "4.1 Starting slowly\n\n\n\n\n\n\nDefDefinition 1 (Learning-rate warmup)\n\n\n\n\n\n\nDefinition 1 (Learning-rate warmup) Learning-rate warmup raises the learning rate from a small value to its target over the first steps of training, usually linearly, before the rest of the schedule takes over [5, Sec. 2.2]. With linear warmup over \\(T_w\\) steps to a target learning rate \\(\\learnrate\\), step \\(t = 0, 1, \\dots, T_w - 1\\) uses learning rate \\(\\learnrate (t + 1) / T_w\\).\n\n\n\n\n\n\n\n\n\n\nExmExample 1 (Warmup to 0.1 over 100 steps)\n\n\n\n\n\n\nExample 1 (Warmup to 0.1 over 100 steps)  \n\nShow codetarget_rate, n_warmup_steps = 0.1, 100\nwarmup_rates = {t: target_rate * (t + 1) / n_warmup_steps for t in [0, 49, 99]}\nprint(warmup_rates)\n\n{0: 0.001, 49: 0.05, 99: 0.1}\n\n\nWith \\(T_w = 100\\) and \\(\\learnrate = 0.1\\), learning-rate warmup uses learning rate 0.001 at step 0, 0.05 at step 49, and 0.1 at step 99, the last step of the warmup.",
+    "crumbs": [
+      "Home",
+      "Notes",
+      "Optimization"
+    ]
+  },
+  {
+    "objectID": "chapters/optimization.html#a-schedule-in-pytorch",
+    "href": "chapters/optimization.html#a-schedule-in-pytorch",
+    "title": "Optimization",
+    "section": "\n4.2 A schedule in PyTorch",
+    "text": "4.2 A schedule in PyTorch\n\n\n\n\n\n\nExrExercise 6 (Warmup, then cosine decay)\n\n\n\n\n\n\nExercise 6 (Warmup, then cosine decay) A schedule for torch.optim.SGD at learning rate 0.1 uses learning-rate warmup over 100 steps, and then cosine decay to 0 at step 1,000. What learning rate does it give at step 550?\n\n\n\n\n\n\n\n\n\n\nSolutionSolution 6\n\n\n\n\n\n\nSolution 6. \n\nShow coden_warmup, n_steps = 100, 1000\n\n\ndef warmup_cosine(step):\n    # The factor that multiplies the base learning rate at this step.\n    if step &lt; n_warmup:\n        return (step + 1) / n_warmup\n    progress = (step - n_warmup) / (n_steps - n_warmup)\n    return 0.5 * (1 + math.cos(math.pi * progress))\n\n\nschedule_mlp = make_mlp()\nsgd = torch.optim.SGD(schedule_mlp.parameters(), lr=0.1)\nscheduler = torch.optim.lr_scheduler.LambdaLR(sgd, warmup_cosine)\nrates = []\nfor step in range(n_steps):\n    rates.append(sgd.param_groups[0][\"lr\"])\n    sgd.step()\n    scheduler.step()\n\nfig, ax = plt.subplots(figsize=(6, 3.5), layout=\"constrained\")\nax.plot(rates);\nax.set_xlabel(\"step\");\nax.set_ylabel(\"learning rate\");\nplt.show()\n\n\n\n\n\n\nShow coderate_550 = rates[550]\n\n\n0.050. Step 550 is halfway through the cosine part, from step 100 to step 1,000, and halfway there cosine decay gives half the base learning rate, since \\(\\frac{1}{2}\\paren{1 + \\cosf{\\frac{\\pi}{2}}} = \\frac{1}{2}\\). The loop calls scheduler.step() after sgd.step(), the order PyTorch expects, and train() in Solution 1 does the same at every minibatch. Here sgd.step() changes nothing, since no gradients have been computed; it is there only to show the order.\n\n\n\n\n\n\n\n\n\n\nRemarkRemark 2 (Why warm up)\n\n\n\n\n\n\nRemark 2 (Why warm up). At the start of training the parameters are far from good ones, and the gradients can be large, so a learning rate that works later can throw the network into a bad region in the first few steps. Goyal et al. [5] proposed gradual warmup for training with very large minibatches. For Adam, its running average of squared gradients rests on only a few gradients at first, so its step sizes vary widely, and warmup keeps those early steps small [6].",
+    "crumbs": [
+      "Home",
+      "Notes",
+      "Optimization"
+    ]
+  },
+  {
+    "objectID": "chapters/optimization.html#the-scale-of-the-starting-weights",
+    "href": "chapters/optimization.html#the-scale-of-the-starting-weights",
+    "title": "Optimization",
+    "section": "\n5.1 The scale of the starting weights",
+    "text": "5.1 The scale of the starting weights\n\n\n\n\n\n\nExrExercise 7 (How the starting scale grows or shrinks)\n\n\n\n\n\n\nExercise 7 (How the starting scale grows or shrinks) Suppose the training images are pushed through 10 layers, each computing \\(\\operatorname{ReLU}\\paren{\\matr{W} \\vhidval}\\) with width 256 and no bias. Every weight is drawn independently from a normal distribution with mean 0 and standard deviation \\(\\sigma\\). How does the standard deviation of the last layer’s values depend on \\(\\sigma\\), for \\(\\sigma = 0.01\\), for \\(\\sigma = \\sqrt{2 / n_{\\text{in}}}\\), where \\(n_{\\text{in}}\\) is the layer’s number of inputs, and for \\(\\sigma = 0.2\\)?\n\n\n\n\n\n\n\n\n\n\nSolutionSolution 7\n\n\n\n\n\n\nSolution 7. \n\nShow codedef last_layer_sd(scale, depth=10, width=256):\n    # scale(n_in) gives the standard deviation of the weights of a layer with n_in inputs.\n    torch.manual_seed(0)\n    h = x_train\n    for layer in range(depth):\n        n_in = h.shape[1]\n        weight = scale(n_in) * torch.randn(width, n_in)\n        h = torch.relu(h @ weight.T)\n    return h.std().item()\n\n\ninit_sd = {\n    \"small\": last_layer_sd(lambda n_in: 0.01),\n    \"he\": last_layer_sd(lambda n_in: math.sqrt(2 / n_in)),\n    \"large\": last_layer_sd(lambda n_in: 0.2),\n    \"pixels\": x_train.std().item(),\n}\nprint(init_sd)\n\n{'small': 5.173762460120024e-11, 'he': 0.30115261673927307, 'large': 529.7935180664062, 'pixels': 0.37631645798683167}\n\n\nThe pixels have standard deviation 0.38. After 10 layers, \\(\\sigma = 0.01\\) leaves values with standard deviation about \\(10^{-10}\\), \\(\\sigma = 0.2\\) gives about \\(10^{3}\\), and \\(\\sigma = \\sqrt{2 / n_{\\text{in}}}\\) gives 0.30, close to where it started. Each layer multiplies the typical size of the values by about \\(\\sigma \\sqrt{n_{\\text{in}} / 2}\\): the weighted sum of \\(n_{\\text{in}}\\) values has variance proportional to \\(n_{\\text{in}} \\sigma^2\\), and the ReLU zeroes about half of the results. That factor is 1 for \\(\\sigma^2 = 2 / n_{\\text{in}}\\), which is He initialization [7]. Since backpropagation multiplies by the same weight matrices on the way back, the gradients shrink or grow layer by layer in the same way.",
+    "crumbs": [
+      "Home",
+      "Notes",
+      "Optimization"
+    ]
+  },
+  {
+    "objectID": "chapters/optimization.html#pytorchs-default",
+    "href": "chapters/optimization.html#pytorchs-default",
+    "title": "Optimization",
+    "section": "\n5.2 PyTorch’s default",
+    "text": "5.2 PyTorch’s default\n\n\n\n\n\n\nExrExercise 8 (PyTorch’s starting weights)\n\n\n\n\n\n\nExercise 8 (PyTorch’s starting weights) nn.Linear(n_in, n_out) draws each weight independently and uniformly from the interval \\(\\paren{-1 / \\sqrt{n_{\\text{in}}}, 1 / \\sqrt{n_{\\text{in}}}}\\) [8]. What is the variance of each weight?\n\n\n\n\n\n\n\n\n\n\nSolutionSolution 8\n\n\n\n\n\n\nSolution 8. A weight \\(w\\) drawn uniformly from \\((-a, a)\\) has mean 0, so its variance is\n\\[\n\\begin{aligned}\n\\Var{w}\n&= \\E{w^2}\n&& \\text{(the mean is 0)} \\\\\n&= \\int_{-a}^{a} w^2 \\frac{1}{2a} \\, dw\n&& \\text{(the density is $\\frac{1}{2a}$ on $(-a, a)$)} \\\\\n&= \\frac{1}{2a} \\cdot \\frac{2 a^3}{3}\n&& \\text{(integrate $w^2$ from $-a$ to $a$)} \\\\\n&= \\frac{a^2}{3},\n\\end{aligned}\n\\]\nso with \\(a = 1 / \\sqrt{n_{\\text{in}}}\\) each weight has variance \\(1 / (3 n_{\\text{in}})\\).\n\nShow code_ = torch.manual_seed(0)\nlayer = nn.Linear(256, 256)\ndefault_var_times_n = layer.weight.var().item() * 256\nprint(default_var_times_n)\n\n0.33143436908721924\n\n\nFor nn.Linear(256, 256) the sample variance of the weights times 256 is 0.331, close to \\(\\frac{1}{3}\\). This variance is \\(\\frac{1}{6}\\) of He initialization’s \\(2 / n_{\\text{in}}\\), so by Solution 7 each ReLU layer with PyTorch’s starting weights shrinks the values by a factor of about \\(1 / \\sqrt{6}\\). nn.init.kaiming_normal_ gives a layer He initialization instead.",
+    "crumbs": [
+      "Home",
+      "Notes",
+      "Optimization"
+    ]
+  },
+  {
+    "objectID": "chapters/optimization.html#starting-every-weight-at-the-same-value",
+    "href": "chapters/optimization.html#starting-every-weight-at-the-same-value",
+    "title": "Optimization",
+    "section": "\n5.3 Starting every weight at the same value",
+    "text": "5.3 Starting every weight at the same value\n\n\n\n\n\n\nExrExercise 9 (Starting every weight at the same value)\n\n\n\n\n\n\nExercise 9 (Starting every weight at the same value) Suppose every weight and bias of a fresh MLP is set to 0.1. It is then trained for 5 epochs on minibatches of 32, with torch.optim.SGD at learning rate 0.1. What happens to the 32 units of its hidden layer?\n\n\n\n\n\n\n\n\n\n\nSolutionSolution 9\n\n\n\n\n\n\nSolution 9. \n\nShow codeconstant_mlp = make_mlp()\nwith torch.no_grad():\n    for p in constant_mlp.parameters():\n        _ = p.fill_(0.1)\n_ = train(constant_mlp, torch.optim.SGD(constant_mlp.parameters(), lr=0.1), 5, 32)\nfirst_weights = constant_mlp[0].weight\nlargest_row_gap = (first_weights - first_weights[0]).abs().max().item()\nwith torch.no_grad():\n    constant_acc = (constant_mlp(x_test).argmax(dim=1) == y_test).float().mean().item()\nprint(largest_row_gap, constant_acc)\n\n0.0 0.09380234777927399\n\n\nThey stay identical: after training, the largest difference between any row of the first layer’s weight matrix and the first row is 0, so all 32 units compute the same function of the pixels, and the network classifies only 9.4% of the test images correctly. Units that start equal receive equal gradients, since each enters the output in the same way, so every step changes them equally. The network has, in effect, one hidden unit.\n\n\n\n\n\n\n\n\n\n\nRemarkRemark 3 (Random starting weights break the symmetry)\n\n\n\n\n\n\nRemark 3 (Random starting weights break the symmetry). Drawing the starting weights at random makes each unit start as a different function, so the units receive different gradients and can come to compute different functions [1, Sec. 8.4]. The biases can start at 0, since the random weights already tell the units apart. Solution 7 and Solution 8 show how to choose the scale of the random weights.",
+    "crumbs": [
+      "Home",
+      "Notes",
+      "Optimization"
+    ]
+  },
+  {
+    "objectID": "chapters/optimization.html#further-reading",
+    "href": "chapters/optimization.html#further-reading",
+    "title": "Optimization",
+    "section": "\n5.4 Further reading",
+    "text": "5.4 Further reading\n\n\n\n\n\n\n\nReadingRead\n\n\n\n\n\nDeep Learning’s Chapter 8 covers minibatches, momentum, Adam and starting weights for deep networks [1, Ch. 8].",
+    "crumbs": [
+      "Home",
+      "Notes",
+      "Optimization"
+    ]
+  },
+  {
     "objectID": "chapters/feedforward-networks.html",
     "href": "chapters/feedforward-networks.html",
     "title": "Feedforward Networks",
@@ -124,7 +460,7 @@
     "href": "chapters/feedforward-networks.html#training-the-mlp",
     "title": "Feedforward Networks",
     "section": "\n4.1 Training the MLP",
-    "text": "4.1 Training the MLP\n\n\n\n\n\n\nExrExercise 15 (Training the MLP on the digits)\n\n\n\n\n\n\nExercise 15 (Training the MLP on the digits) Train the MLP of Example 6 on the 1,200 training images, with nn.CrossEntropyLoss, taking 500 steps of torch.optim.SGD with a learning rate of 0.5, each on the whole training set. What fraction of the test images does it classify correctly?\n\n\n\n\n\n\n\n\n\n\nSolutionSolution 15\n\n\n\n\n\n\nSolution 15. \n\nShow codeloss_fn = nn.CrossEntropyLoss()\noptimizer = torch.optim.SGD(mlp.parameters(), lr=0.5)\nfor step in range(500):\n    optimizer.zero_grad()\n    loss = loss_fn(mlp(x_train), y_train)\n    loss.backward()\n    optimizer.step()\n\nwith torch.no_grad():\n    predicted = mlp(x_test).argmax(dim=1)\ntest_accuracy = (predicted == y_test).float().mean().item()\nprint(loss.item(), test_accuracy)\n\n0.044963546097278595 0.9698492288589478\n\n\nThe trained network classifies 97.0% of the 597 test images correctly, against 10% for guessing. The loop is the training step of the PyTorch chapter, and the predicted digit is the one with the largest logit, which is also the one with the largest softmax probability.",
+    "text": "4.1 Training the MLP\n\n\n\n\n\n\nExrExercise 15 (Training the MLP on the digits)\n\n\n\n\n\n\nExercise 15 (Training the MLP on the digits) Train the MLP of Example 6 on the 1,200 training images, with nn.CrossEntropyLoss, taking 500 steps of torch.optim.SGD with a learning rate of 0.5, each on the whole training set. What fraction of the test images does it classify correctly?\n\n\n\n\n\n\n\n\n\n\nSolutionSolution 15\n\n\n\n\n\n\nSolution 15. \n\nShow codeloss_fn = nn.CrossEntropyLoss()\noptimizer = torch.optim.SGD(mlp.parameters(), lr=0.5)\nfor step in range(500):\n    optimizer.zero_grad()\n    loss = loss_fn(mlp(x_train), y_train)\n    loss.backward()\n    optimizer.step()\n\nwith torch.no_grad():\n    predicted = mlp(x_test).argmax(dim=1)\ntest_accuracy = (predicted == y_test).float().mean().item()\nprint(loss.item(), test_accuracy)\n\n0.044963538646698 0.9698492288589478\n\n\nThe trained network classifies 97.0% of the 597 test images correctly, against 10% for guessing. The loop is the training step of the PyTorch chapter, and the predicted digit is the one with the largest logit, which is also the one with the largest softmax probability.",
     "crumbs": [
       "Home",
       "Notes",
@@ -833,6 +1169,354 @@
       "Home",
       "Notes",
       "Tensors, Automatic Differentiation and Training"
+    ]
+  },
+  {
+    "objectID": "chapters/backpropagation.html",
+    "href": "chapters/backpropagation.html",
+    "title": "Backpropagation",
+    "section": "",
+    "text": "Show code# The Python chunks on this page import these; reticulate provisions them.\n# Attaching reticulate gives the inline R its `py` object.\nlibrary(reticulate)\nsource(\"../tools/use-torch.R\")\nuse_torch(c(\"numpy\", \"pandas\", \"matplotlib\"))",
+    "crumbs": [
+      "Home",
+      "Notes",
+      "Backpropagation"
+    ]
+  },
+  {
+    "objectID": "chapters/backpropagation.html#plan-for-this-lecture",
+    "href": "chapters/backpropagation.html#plan-for-this-lecture",
+    "title": "Backpropagation",
+    "section": "\n1.1 Plan for this lecture",
+    "text": "1.1 Plan for this lecture\nAutomatic differentiation gave the derivative of a loss without anyone writing it down. This lecture opens it up for the MLP on the digits:\n\nhow PyTorch records the operations that compute a loss;\nhow the chain rule, applied to those operations from the loss back to the input, gives the gradient with respect to every parameter at once, and how to compute it by hand and match PyTorch;\nwhy that costs only a few times as much as computing the loss once;\nwhy the gradient can shrink layer by layer in a deep network.\n\nlds’s chapter on the same algorithm derives it for a general network with one hidden layer, and runs more experiments on depth.",
+    "crumbs": [
+      "Home",
+      "Notes",
+      "Backpropagation"
+    ]
+  },
+  {
+    "objectID": "chapters/backpropagation.html#the-digits-and-the-network",
+    "href": "chapters/backpropagation.html#the-digits-and-the-network",
+    "title": "Backpropagation",
+    "section": "\n1.2 The digits and the network",
+    "text": "1.2 The digits and the network\n\nShow codeimport time\n\nimport numpy as np\nimport pandas as pd\nimport torch\nfrom torch import nn\nimport matplotlib.pyplot as plt\n\n_ = torch.manual_seed(481)\ndigits = pd.read_csv(\"data/optdigits-test.csv\", header=None)\nx = torch.tensor(digits.iloc[:, :64].to_numpy(), dtype=torch.float32) / 16\ny = torch.tensor(digits[64].to_numpy())\nn_train = 1200\norder = torch.randperm(len(x))\nx_train, y_train = x[order[:n_train]], y[order[:n_train]]\n\n_ = torch.manual_seed(1)\nmlp = nn.Sequential(nn.Linear(64, 32), nn.ReLU(), nn.Linear(32, 10))\nloss_fn = nn.CrossEntropyLoss()\nprint(mlp)\n\nSequential(\n  (0): Linear(in_features=64, out_features=32, bias=True)\n  (1): ReLU()\n  (2): Linear(in_features=32, out_features=10, bias=True)\n)\n\n\nThe exercises use the same digits, split and network as the feedforward networks chapter: the 1,797 images of data/optdigits-test.csv [2], with pixels divided by 16, a random 1,200 of them as the training set, and an untrained MLP with one hidden layer of 32 ReLU units.",
+    "crumbs": [
+      "Home",
+      "Notes",
+      "Backpropagation"
+    ]
+  },
+  {
+    "objectID": "chapters/backpropagation.html#what-the-loss-is-made-of",
+    "href": "chapters/backpropagation.html#what-the-loss-is-made-of",
+    "title": "Backpropagation",
+    "section": "\n2.1 What the loss is made of",
+    "text": "2.1 What the loss is made of\n\n\n\n\n\n\nExrExercise 1 (From an image to its loss)\n\n\n\n\n\n\nExercise 1 (From an image to its loss) List, in order, the operations that take one image \\(\\vx\\) with true digit \\(y\\) to the MLP’s cross-entropy loss.\n\n\n\n\n\n\n\n\n\n\nSolutionSolution 1\n\n\n\n\n\n\nSolution 1. Write \\(\\matr{W}_1, \\vecf{b}_1\\) for the first layer’s parameters and \\(\\matr{W}_2, \\vecf{b}_2\\) for the second’s.\n\n\n\\(\\vz_1 = \\matr{W}_1 \\vx + \\vecf{b}_1\\), an affine function of the pixels;\n\n\\(\\vhidval = \\operatorname{ReLU}(\\vz_1)\\), entry by entry;\n\n\\(\\vz_2 = \\matr{W}_2 \\vhidval + \\vecf{b}_2\\), the logits;\n\n\\(\\loss = -\\log \\operatorname{softmax}(\\vz_2)_y\\), the cross-entropy loss, where softmax is the softmax function.\n\nEach step uses only the input and the results of earlier steps.\n\n\n\n\n\n\n\n\n\n\nDefDefinition 1 (Computational graph)\n\n\n\n\n\n\nDefinition 1 (Computational graph) A computational graph of a calculation has one node for each variable, whether an input, a parameter or an intermediate result, and an arrow from each node to every node computed from it [1, Sec. 6.5.1]. It has no cycles: following the arrows never returns to a node.\n\n\n\n\n\n\n\n\n\n\nExmExample 1 (The graph PyTorch records)\n\n\n\n\n\n\nExample 1 (The graph PyTorch records)  \n\nShow codeloss = loss_fn(mlp(x_train[:1]), y_train[:1])\nnode = loss.grad_fn\nrecorded = []\nwhile node is not None:\n    recorded.append(type(node).__name__)\n    # Follow the first input that is not a leaf parameter.\n    earlier = [f for f, _ in node.next_functions\n               if f is not None and type(f).__name__ != \"AccumulateGrad\"]\n    node = earlier[0] if earlier else None\nprint(*recorded, sep=\"\\n\")\n\nNllLossBackward0\nLogSoftmaxBackward0\nAddmmBackward0\nReluBackward0\nAddmmBackward0\nTBackward0\n\n\nFor the first training image, PyTorch’s computational graph holds the four steps of Solution 1, read from the loss back to the input. Each grad_fn names the operation that made a tensor:\n\n\nNllLossBackward0 and LogSoftmaxBackward0 are step 4, which nn.CrossEntropyLoss computes as a log softmax followed by picking out entry \\(y\\);\n\nAddmmBackward0 (“add matrix multiply”) is each affine step, 3 and then 1;\n\nReluBackward0 is step 2;\n\nTBackward0 is the transpose of \\(\\matr{W}_1\\) in x @ weight.T.\n\nThe chain stops at the transpose, since the image itself was not made with requires_grad=True.",
+    "crumbs": [
+      "Home",
+      "Notes",
+      "Backpropagation"
+    ]
+  },
+  {
+    "objectID": "chapters/backpropagation.html#the-gradient-at-the-logits",
+    "href": "chapters/backpropagation.html#the-gradient-at-the-logits",
+    "title": "Backpropagation",
+    "section": "\n3.1 The gradient at the logits",
+    "text": "3.1 The gradient at the logits\n\n\n\n\n\n\nExrExercise 2 (The gradient at the logits)\n\n\n\n\n\n\nExercise 2 (The gradient at the logits) Find the derivative of the cross-entropy loss \\(\\loss = -\\log \\operatorname{softmax}(\\vz)_y\\), where softmax is the softmax function, with respect to each logit \\(z_m\\), for \\(m = 1, \\dots, C\\), where \\(C\\) is the number of classes.\n\n\n\n\n\n\nTipHint\n\n\n\nStart from the log softmax theorem.\n\n\n\n\n\n\n\n\n\n\n\n\nSolutionSolution 2\n\n\n\n\n\n\nSolution 2. By the log softmax theorem, \\(\\loss = \\operatorname{LSE}(\\vz) - z_y\\), where \\(\\operatorname{LSE}\\) is log-sum-exp.\n\\[\n\\begin{aligned}\n\\derivf{\\operatorname{LSE}(\\vz)}{z_m}\n&= \\derivf{}{z_m} \\log \\sumto{k}{C} \\e{z_k}\n&& \\text{(definition of $\\operatorname{LSE}$)} \\\\\n&= \\frac{1}{\\sumto{k}{C} \\e{z_k}} \\derivf{}{z_m} \\sumto{k}{C} \\e{z_k}\n&& \\text{(chain rule for $\\log$)} \\\\\n&= \\frac{1}{\\sumto{k}{C} \\e{z_k}} \\derivf{}{z_m} \\e{z_m}\n&& \\text{(only term $k = m$ depends on $z_m$)} \\\\\n&= \\frac{\\e{z_m}}{\\sumto{k}{C} \\e{z_k}}\n&& \\text{(derivative of the exponential)} \\\\\n&= \\operatorname{softmax}(\\vz)_m\n&& \\text{(definition of softmax)}\n\\end{aligned}\n\\]\nThe second term, \\(z_y\\), has derivative 1 with respect to \\(z_y\\) and 0 with respect to every other logit. So\n\\[\n\\derivf{\\loss}{z_m} = \\operatorname{softmax}(\\vz)_m - \\indicf{m = y}.\n\\]\n\n\n\n\n\n\n\n\n\n\nLemTheorem 1 (Gradient of the cross-entropy loss at the logits)\n\n\n\n\n\n\nTheorem 1 (Gradient of the cross-entropy loss at the logits) For logits \\(\\vz \\in \\reals^C\\) and true class \\(y\\), the cross-entropy loss \\(\\loss = -\\log \\operatorname{softmax}(\\vz)_y\\), where softmax is the softmax function, has gradient\n\\[\n\\gradwrt{\\vz} \\loss = \\operatorname{softmax}(\\vz) - \\ve_y,\n\\]\nwhere \\(\\ve_y\\) has 1 in entry \\(y\\) and 0 in every other entry.\n\n\n\n\n\n\n\n\n\n\nProofProof\n\n\n\n\n\n\nProof. By Solution 2.\n\n\n\n\n\n\n\n\n\n\nExmExample 2 (Checking the gradient at the logits)\n\n\n\n\n\n\nExample 2 (Checking the gradient at the logits)  \n\nShow codelogits = mlp(x_train[:1]).detach().requires_grad_()\nloss = loss_fn(logits, y_train[:1])\nloss.backward()\nby_theorem = torch.softmax(logits, dim=1) - nn.functional.one_hot(y_train[:1], 10)\nlogit_grad_gap = (logits.grad - by_theorem).abs().max().item()\nprint(y_train[0].item())\n\n0\n\nShow codeprint(logits.grad.numpy().round(3))\n\n[[-0.921  0.104  0.125  0.092  0.142  0.082  0.072  0.113  0.106  0.085]]\n\nShow codeprint(logit_grad_gap)\n\n1.4901161193847656e-08\n\n\nFor the first training image, a 0, autograd’s gradient at the logits matches Theorem 1 to within 1.5e-08. Every entry is a predicted probability, near \\(\\frac{1}{10}\\), except entry 0, the true digit, which is that probability minus 1.",
+    "crumbs": [
+      "Home",
+      "Notes",
+      "Backpropagation"
+    ]
+  },
+  {
+    "objectID": "chapters/backpropagation.html#through-a-linear-layer",
+    "href": "chapters/backpropagation.html#through-a-linear-layer",
+    "title": "Backpropagation",
+    "section": "\n3.2 Through a linear layer",
+    "text": "3.2 Through a linear layer\n\n\n\n\n\n\nExrExercise 3 (Gradient for a layer’s weight matrix)\n\n\n\n\n\n\nExercise 3 (Gradient for a layer’s weight matrix) A layer computes \\(\\vz = \\matr{W} \\vhidval + \\vecf{b}\\), and the gradient \\(\\vbackerr = \\gradwrt{\\vz} \\loss\\) of the loss with respect to its output is known. What is the gradient of \\(\\loss\\) with respect to \\(\\matr{W}\\)?\n\n\n\n\n\n\n\n\n\n\nSolutionSolution 3\n\n\n\n\n\n\nSolution 3. Entry \\(j\\) of the output is \\(z_j = \\sum_k W_{jk} h_k + b_j\\), so \\(W_{jk}\\) affects \\(\\loss\\) only through \\(z_j\\).\n\\[\n\\begin{aligned}\n\\derivf{\\loss}{W_{jk}}\n&= \\derivf{\\loss}{z_j} \\derivf{z_j}{W_{jk}}\n&& \\text{(chain rule through $z_j$)} \\\\\n&= \\backerr_j h_k\n&& \\text{(since $\\derivf{z_j}{W_{jk}} = h_k$)}\n\\end{aligned}\n\\]\nAs a matrix,\n\\[\n\\gradwrt{\\matr{W}} \\loss = \\oprod{\\vbackerr}{\\vhidval},\n\\]\nan \\(m \\times n\\) outer product for a layer with \\(n\\) inputs and \\(m\\) outputs, with the same shape as \\(\\matr{W}\\).\n\n\n\n\n\n\n\n\n\n\nExrExercise 4 (Gradient for a layer’s bias)\n\n\n\n\n\n\nExercise 4 (Gradient for a layer’s bias) For the layer of Exercise 3, what is the gradient of \\(\\loss\\) with respect to \\(\\vecf{b}\\)?\n\n\n\n\n\n\n\n\n\n\nSolutionSolution 4\n\n\n\n\n\n\nSolution 4. Bias \\(b_j\\) affects \\(\\loss\\) only through \\(z_j\\), and \\(\\derivf{z_j}{b_j} = 1\\), so \\(\\derivf{\\loss}{b_j} = \\backerr_j \\cdot 1 = \\backerr_j\\), and\n\\[\n\\gradwrt{\\vecf{b}} \\loss = \\vbackerr.\n\\]\n\n\n\n\n\n\n\n\n\n\nExrExercise 5 (The gradient passed back)\n\n\n\n\n\n\nExercise 5 (The gradient passed back) For the layer of Exercise 3, find the gradient of \\(\\loss\\) with respect to the layer’s input \\(\\vhidval\\).\n\n\n\n\n\n\n\n\n\n\nSolutionSolution 5\n\n\n\n\n\n\nSolution 5. Input \\(h_k\\) affects every output \\(z_j\\), so the chain rule adds up a term for each:\n\\[\n\\begin{aligned}\n\\derivf{\\loss}{h_k}\n&= \\sum_j \\derivf{\\loss}{z_j} \\derivf{z_j}{h_k}\n&& \\text{(chain rule through every $z_j$)} \\\\\n&= \\sum_j \\backerr_j W_{jk}\n&& \\text{(since $\\derivf{z_j}{h_k} = W_{jk}$)} \\\\\n&= \\paren{\\tp{\\matr{W}} \\vbackerr}_k\n&& \\text{(entry $k$ of a matrix-vector product)}\n\\end{aligned}\n\\]\nSo \\(\\gradwrt{\\vhidval} \\loss = \\tp{\\matr{W}} \\vbackerr\\): the gradient travels back through the layer by the transpose of its weight matrix.",
+    "crumbs": [
+      "Home",
+      "Notes",
+      "Backpropagation"
+    ]
+  },
+  {
+    "objectID": "chapters/backpropagation.html#through-the-relu",
+    "href": "chapters/backpropagation.html#through-the-relu",
+    "title": "Backpropagation",
+    "section": "\n3.3 Through the ReLU",
+    "text": "3.3 Through the ReLU\n\n\n\n\n\n\nExrExercise 6 (Back through the ReLU)\n\n\n\n\n\n\nExercise 6 (Back through the ReLU) The hidden layer is \\(\\vhidval = \\operatorname{ReLU}(\\vz_1)\\), entry by entry, and \\(\\gradwrt{\\vhidval} \\loss\\) is known. Find \\(\\gradwrt{\\vz_1} \\loss\\).\n\n\n\n\n\n\n\n\n\n\nSolutionSolution 6\n\n\n\n\n\n\nSolution 6. Entry \\(h_k = \\maxf{0, z_{1k}}\\) depends only on \\(z_{1k}\\), with derivative 1 where \\(z_{1k} &gt; 0\\) and 0 where \\(z_{1k} &lt; 0\\); at \\(z_{1k} = 0\\) PyTorch, and these notes, take it to be 0, as in the slopes of the activation functions. So\n\\[\n\\derivf{\\loss}{z_{1k}} = \\derivf{\\loss}{h_k} \\, \\indicf{z_{1k} &gt; 0}:\n\\]\nthe gradient passes through each unit that was positive and stops at each unit that was 0.",
+    "crumbs": [
+      "Home",
+      "Notes",
+      "Backpropagation"
+    ]
+  },
+  {
+    "objectID": "chapters/backpropagation.html#the-whole-backward-pass",
+    "href": "chapters/backpropagation.html#the-whole-backward-pass",
+    "title": "Backpropagation",
+    "section": "\n3.4 The whole backward pass",
+    "text": "3.4 The whole backward pass\n\n\n\n\n\n\nExrExercise 7 (The backward pass by hand)\n\n\n\n\n\n\nExercise 7 (The backward pass by hand) Computed by hand from Theorem 1, Solution 3, Solution 4, Solution 5 and Solution 6, without .backward(), how closely does the gradient of the MLP’s mean loss over the training set with respect to \\(\\matr{W}_1\\), \\(\\vecf{b}_1\\), \\(\\matr{W}_2\\) and \\(\\vecf{b}_2\\) match the one loss.backward() gives?\n\n\n\n\n\n\n\n\n\n\nSolutionSolution 7\n\n\n\n\n\n\nSolution 7. \n\nShow codefirst, second = mlp[0], mlp[2]\n\n# Forward, keeping every intermediate result.\nz1 = x_train @ first.weight.T + first.bias\nh = torch.relu(z1)\nz2 = h @ second.weight.T + second.bias\nloss = loss_fn(z2, y_train)\n\nmlp.zero_grad()\nloss.backward()\n\nwith torch.no_grad():\n    # Backward, from the loss to the first layer, one row per image.\n    g2 = (torch.softmax(z2, dim=1) - nn.functional.one_hot(y_train, 10)) / n_train\n    grad_W2 = g2.T @ h\n    grad_b2 = g2.sum(dim=0)\n    grad_h = g2 @ second.weight\n    grad_z1 = grad_h * (z1 &gt; 0)\n    grad_W1 = grad_z1.T @ x_train\n    grad_b1 = grad_z1.sum(dim=0)\n\npairs = [(grad_W1, first.weight), (grad_b1, first.bias),\n         (grad_W2, second.weight), (grad_b2, second.bias)]\nbackward_gap = max((mine - p.grad).abs().max().item() for mine, p in pairs)\nprint(backward_gap)\n\n7.450580596923828e-09\n\n\nThe four gradients match autograd’s to within 7.5e-09. The code runs the steps of Solution 1 forward, then their derivatives in reverse:\n\n\ng2 is \\(\\gradwrt{\\vz_2} \\loss\\) from Theorem 1, for every image at once, divided by 1200 because the loss is the mean over that many images;\n\ngrad_W2 and grad_b2 are Solution 3 and Solution 4, with the outer products of the images added up by one matrix product;\n\ngrad_h is Solution 5, written for rows instead of columns;\n\ngrad_z1 is Solution 6;\n\ngrad_W1 and grad_b1 are Solution 3 and Solution 4 again, for the first layer.\n\nThe backward steps reuse z1 and h from the forward pass.\n\n\n\n\n\n\n\n\n\n\nDefDefinition 2 (Backpropagation (backprop))\n\n\n\n\n\n\nDefinition 2 (Backpropagation (backprop)) Backpropagation, or backprop, computes the gradient of a scalar, such as a loss, with respect to every node of a computational graph: it visits the nodes in the reverse of the order the forward computation made them, and at each node applies the chain rule, combining the gradient with respect to the node’s output with the derivative of the node’s own operation [1, Sec. 6.5], [3].\nBackpropagation is reverse-mode automatic differentiation applied to a network’s loss, and PyTorch’s .backward() runs it. Some sources use “backpropagation” for the whole training algorithm, including the parameter update; these notes use it only for computing the gradient.\n\n\n\n\n\n\n\n\n\n\nExmExample 3 (Backpropagation through the MLP)\n\n\n\n\n\n\nExample 3 (Backpropagation through the MLP) Solution 7 is backpropagation through the four steps of Solution 1. It visits them in reverse order: the loss gives the gradient at the logits g2; the second affine step gives the gradients of \\(\\matr{W}_2\\), \\(\\vecf{b}_2\\) and the hidden layer; the ReLU gives the gradient at \\(\\vz_1\\); and the first affine step gives the gradients of \\(\\matr{W}_1\\) and \\(\\vecf{b}_1\\).",
+    "crumbs": [
+      "Home",
+      "Notes",
+      "Backpropagation"
+    ]
+  },
+  {
+    "objectID": "chapters/backpropagation.html#backpropagation-against-finite-differences",
+    "href": "chapters/backpropagation.html#backpropagation-against-finite-differences",
+    "title": "Backpropagation",
+    "section": "\n4.1 Backpropagation against finite differences",
+    "text": "4.1 Backpropagation against finite differences\n\n\n\n\n\n\nExrExercise 8 (The cost of finite differences)\n\n\n\n\n\n\nExercise 8 (The cost of finite differences) A finite difference, \\(\\paren{\\loss(\\theta_i + \\smallconst) - \\loss(\\theta_i)} / \\smallconst\\) for a small \\(\\smallconst\\), estimates the derivative of the MLP’s mean training loss \\(\\loss\\) with respect to one parameter \\(\\theta_i\\), with every other parameter held fixed. How many evaluations of the loss does that take to estimate the gradient with respect to \\(P\\) parameters?\n\n\n\n\n\n\n\n\n\n\nSolutionSolution 8\n\n\n\n\n\n\nSolution 8. \\(P + 1\\): one at the current parameters, and one more for each parameter nudged. Backpropagation gets all \\(P\\) derivatives from one forward pass and one backward pass, and each backward step costs a small multiple of its forward step: a matrix product forward becomes two matrix products backward, as in Solution 3 and Solution 5, so the two passes together cost about three forward passes.\n\nShow codedef mean_loss():\n    return loss_fn(mlp(x_train), y_train)\n\nstart = time.perf_counter()\nfor repeat in range(20):\n    mlp.zero_grad()\n    mean_loss().backward()\nbackprop_seconds = (time.perf_counter() - start) / 20\n\nstart = time.perf_counter()\nwith torch.no_grad():\n    base = mean_loss()\n    w = second.weight\n    estimate = torch.zeros_like(w)\n    for j in range(w.shape[0]):\n        for k in range(w.shape[1]):\n            w[j, k] += 1e-3\n            estimate[j, k] = (mean_loss() - base) / 1e-3\n            w[j, k] -= 1e-3\ndifference_seconds = time.perf_counter() - start\nfd_gap = (estimate - second.weight.grad).abs().max().item()\nprint(backprop_seconds, difference_seconds, fd_gap)\n\n0.005830402300000514 0.15436204900004213 0.00044121919199824333\n\n\nOne forward and backward pass over the training set took 5.83 milliseconds, for every parameter of the MLP. Finite differences for only the 320 entries of \\(\\matr{W}_2\\) took 154 milliseconds, 26 times as long, and agree with backpropagation only to within 0.00044, since a finite difference is an approximation. Timings vary from run to run; the ratio grows with the number of parameters.\n\n\n\n\n\n\n\n\n\n\nRemarkRemark 1 (What backpropagation stores)\n\n\n\n\n\n\nRemark 1 (What backpropagation stores). The backward steps of Solution 7 reuse z1 and h from the forward pass, so PyTorch keeps every intermediate result that a later backward step needs until .backward() has run. That memory grows with the number of layers and with the batch size, and it is often what limits the batch size on a GPU. Code run inside torch.no_grad(), such as computing test accuracy, records nothing and keeps nothing.",
+    "crumbs": [
+      "Home",
+      "Notes",
+      "Backpropagation"
+    ]
+  },
+  {
+    "objectID": "chapters/backpropagation.html#gradient-sizes-layer-by-layer",
+    "href": "chapters/backpropagation.html#gradient-sizes-layer-by-layer",
+    "title": "Backpropagation",
+    "section": "\n5.1 Gradient sizes layer by layer",
+    "text": "5.1 Gradient sizes layer by layer\n\n\n\n\n\n\nExrExercise 9 (Gradients in a deep network)\n\n\n\n\n\n\nExercise 9 (Gradients in a deep network) Take two MLPs for the digits with 10 hidden layers of 32 units each, one with the logistic function as its activation function and one with the ReLU. At their starting weights, how does the size of the gradient of the mean training loss with respect to each layer’s weight matrix change from the last layer to the first?\n\n\n\n\n\n\n\n\n\n\nSolutionSolution 9\n\n\n\n\n\n\nSolution 9. \n\nShow codedef deep_mlp(activation, n_hidden=10, width=32):\n    _ = torch.manual_seed(0)\n    layers, n_in = [], 64\n    for layer in range(n_hidden):\n        layers += [nn.Linear(n_in, width), activation()]\n        n_in = width\n    layers.append(nn.Linear(width, 10))\n    return nn.Sequential(*layers)\n\n\ngrad_norms = {}\nfor name, activation in [(\"logistic\", nn.Sigmoid), (\"ReLU\", nn.ReLU)]:\n    net = deep_mlp(activation)\n    loss_fn(net(x_train), y_train).backward()\n    grad_norms[name] = [m.weight.grad.norm().item() for m in net if isinstance(m, nn.Linear)]\n\nfig, ax = plt.subplots(figsize=(6, 3.5), layout=\"constrained\")\nfor name, norms in grad_norms.items():\n    ax.semilogy(range(1, len(norms) + 1), norms, marker=\"o\", label=name);\nax.set_xlabel(\"layer (1 = first)\");\nax.set_ylabel(\"size of weight gradient\");\nax.legend();\nplt.show()\n\n\n\n\n\n\nShow codeshrink = {name: norms[-1] / norms[0] for name, norms in grad_norms.items()}\nprint(shrink)\n\n{'logistic': 129510900.18186893, 'ReLU': 251.30350519888285}\n\n\nThe size of a matrix here is the square root of the sum of its squared entries. In both networks the weight gradient is largest at the last layer. With the logistic function, the weight gradient shrinks at every layer going back, and the last layer’s weight gradient is about \\(10^{8}\\) times the first layer’s. With the ReLU, the weight gradient shrinks over the last few layers and then levels off, and the last layer’s is 251 times the first layer’s. A training step with one learning rate would move the logistic network’s first layers almost not at all.",
+    "crumbs": [
+      "Home",
+      "Notes",
+      "Backpropagation"
+    ]
+  },
+  {
+    "objectID": "chapters/backpropagation.html#why-they-shrink",
+    "href": "chapters/backpropagation.html#why-they-shrink",
+    "title": "Backpropagation",
+    "section": "\n5.2 Why they shrink",
+    "text": "5.2 Why they shrink\n\n\n\n\n\n\nExrExercise 10 (Why the gradient shrinks)\n\n\n\n\n\n\nExercise 10 (Why the gradient shrinks) In a deep MLP, hidden layer \\(\\layeridx\\) is \\(\\vhidval_{\\layeridx} = g\\paren{\\vz_{\\layeridx}}\\) with \\(\\vz_{\\layeridx} = \\matr{W}_{\\layeridx} \\vhidval_{\\layeridx - 1} + \\vecf{b}_{\\layeridx}\\). Why does the gradient shrink from layer to layer, going back, when \\(g\\) is the logistic function?\n\n\n\n\n\n\n\n\n\n\nSolutionSolution 10\n\n\n\n\n\n\nSolution 10. Applying Solution 6’s reasoning to \\(g\\), then Solution 5, takes the gradient back one layer:\n\\[\n\\gradwrt{\\vhidval_{\\layeridx - 1}} \\loss\n= \\tp{\\matr{W}_{\\layeridx}} \\vbackerr_{\\layeridx},\n\\qquad\n\\vbackerr_{\\layeridx} = \\gradwrt{\\vz_{\\layeridx}} \\loss = g'(\\vz_{\\layeridx}) \\odot \\gradwrt{\\vhidval_{\\layeridx}} \\loss,\n\\]\nwhere \\(\\odot\\) multiplies entry by entry. Each layer back multiplies the gradient by the slopes \\(g'(\\vz_{\\layeridx})\\) and by \\(\\tp{\\matr{W}_{\\layeridx}}\\). The logistic function’s slope is at most \\(\\frac{1}{4}\\) (lds’s bound on it), and less where units saturate, so unless the weights are large, every layer shrinks the gradient by a factor less than 1, and 10 layers multiply 10 such factors. The ReLU’s slope has no \\(\\frac{1}{4}\\) bound: it is 1 at each unit that is positive and 0 at each unit that is not. In the ReLU network of Solution 9, the gradient going back still shrinks, both because the weights PyTorch starts with are small and because the units at 0 pass none of it back.\nThe weight gradient of layer \\(\\layeridx\\) is \\(\\oprod{\\vbackerr_{\\layeridx}}{\\vhidval_{\\layeridx - 1}}\\), by Solution 3, so its size depends on the layer’s input \\(\\vhidval_{\\layeridx - 1}\\) as well as on the gradient \\(\\vbackerr_{\\layeridx}\\) at its output. In the ReLU network the layer inputs grow toward the first layers, which is why its weight gradients level off there while the gradients \\(\\vbackerr_{\\layeridx}\\) keep shrinking.\n\n\n\n\n\n\n\n\n\n\nDefDefinition 3 (Vanishing gradient)\n\n\n\n\n\n\nDefinition 3 (Vanishing gradient) A network has a vanishing gradient when the gradient of its loss with respect to the parameters of its early layers is many orders of magnitude smaller than with respect to those of its later layers, because backpropagation multiplies it by a factor smaller than 1 at each layer [1, Sec. 8.2.5], [4]. The early layers then learn far more slowly than the later ones, or not at all.\nThe opposite, a gradient that grows layer by layer, is an exploding gradient.\n\n\n\n\n\n\n\n\n\n\nExmExample 4 (The deep logistic network)\n\n\n\n\n\n\nExample 4 (The deep logistic network) The 10-hidden-layer logistic network of Solution 9 has a vanishing gradient: its first layer’s weight gradient is about \\(10^{-8}\\) times its last layer’s.\n\n\n\n\n\n\n\n\n\n\nRemarkRemark 2 (What keeps gradients from vanishing)\n\n\n\n\n\n\nRemark 2 (What keeps gradients from vanishing). The ReLU removes the \\(\\frac{1}{4}\\) bound on each layer’s slopes. Other remedies are starting the weights at a scale that keeps the gradient’s size steady from layer to layer, such as He initialization or Glorot initialization, normalizing each layer’s values, and residual connections, which give the gradient a path around each layer. lds’s experiment on depth measures the same effect.",
+    "crumbs": [
+      "Home",
+      "Notes",
+      "Backpropagation"
+    ]
+  },
+  {
+    "objectID": "chapters/backpropagation.html#further-reading",
+    "href": "chapters/backpropagation.html#further-reading",
+    "title": "Backpropagation",
+    "section": "\n5.3 Further reading",
+    "text": "5.3 Further reading\n\n\n\n\n\n\n\nReadingRead\n\n\n\n\n\nDeep Learning’s section 6.5 covers backpropagation on general computational graphs [1, Sec. 6.5].",
+    "crumbs": [
+      "Home",
+      "Notes",
+      "Backpropagation"
+    ]
+  },
+  {
+    "objectID": "chapters/regularization.html",
+    "href": "chapters/regularization.html",
+    "title": "Regularization",
+    "section": "",
+    "text": "Show code# The Python chunks on this page import these; reticulate provisions them.\n# Attaching reticulate gives the inline R its `py` object.\nlibrary(reticulate)\nsource(\"../tools/use-torch.R\")\nuse_torch(c(\"numpy\", \"pandas\", \"matplotlib\"))",
+    "crumbs": [
+      "Home",
+      "Notes",
+      "Regularization"
+    ]
+  },
+  {
+    "objectID": "chapters/regularization.html#plan-for-this-lecture",
+    "href": "chapters/regularization.html#plan-for-this-lecture",
+    "title": "Regularization",
+    "section": "\n1.1 Plan for this lecture",
+    "text": "1.1 Plan for this lecture\nThe optimization chapter made training faster. This lecture is about what training finds: a network with many parameters can fit its training set far better than new images, and regularization trades some of that fit for better predictions. It covers\n\nwatching a validation set during training, and stopping at the best point;\nweight decay in PyTorch’s optimizers;\nrandomly switching off units during training;\ntraining on transformed copies of the training images.",
+    "crumbs": [
+      "Home",
+      "Notes",
+      "Regularization"
+    ]
+  },
+  {
+    "objectID": "chapters/regularization.html#the-digits-and-the-network",
+    "href": "chapters/regularization.html#the-digits-and-the-network",
+    "title": "Regularization",
+    "section": "\n1.2 The digits and the network",
+    "text": "1.2 The digits and the network\n\nShow codeimport copy\n\nimport numpy as np\nimport pandas as pd\nimport torch\nfrom torch import nn\nimport matplotlib.pyplot as plt\n\n_ = torch.manual_seed(481)\ndigits = pd.read_csv(\"data/optdigits-test.csv\", header=None)\nx = torch.tensor(digits.iloc[:, :64].to_numpy(), dtype=torch.float32) / 16\ny = torch.tensor(digits[64].to_numpy())\nn_train, n_val = 150, 400\norder = torch.randperm(len(x))\ntrain_idx = order[:n_train]\nval_idx = order[n_train:n_train + n_val]\ntest_idx = order[n_train + n_val:]\nx_train, y_train = x[train_idx], y[train_idx]\nx_val, y_val = x[val_idx], y[val_idx]\nx_test, y_test = x[test_idx], y[test_idx]\nn_test = len(x_test)\nloss_fn = nn.CrossEntropyLoss()\n\n\ndef make_net(seed=1):\n    # 64 pixels, a hidden layer of 256 ReLU units, then 10 logits.\n    torch.manual_seed(seed)\n    return nn.Sequential(nn.Linear(64, 256), nn.ReLU(), nn.Linear(256, 10))\n\n\ndef accuracy(net, inputs, targets):\n    # Share of `inputs` whose largest logit is the true digit.\n    net.eval()\n    with torch.no_grad():\n        return (net(inputs).argmax(dim=1) == targets).float().mean().item()\n\n\ndef fit(net, n_epochs=300, weight_decay=0.0, transform=None, seed=0):\n    # Full-batch AdamW on the training images.\n    # Records both losses after every epoch, and keeps the parameters\n    # from the epoch with the lowest validation loss.\n    optimizer = torch.optim.AdamW(net.parameters(), lr=0.01, weight_decay=weight_decay)\n    generator = torch.Generator().manual_seed(seed)\n    history, best_state, best_val = [], None, float(\"inf\")\n    for epoch in range(1, n_epochs + 1):\n        net.train()\n        inputs = x_train if transform is None else transform(x_train, generator)\n        optimizer.zero_grad()\n        loss_fn(net(inputs), y_train).backward()\n        optimizer.step()\n        net.eval()\n        with torch.no_grad():\n            train_loss = loss_fn(net(x_train), y_train).item()\n            val_loss = loss_fn(net(x_val), y_val).item()\n        history.append({\"epoch\": epoch, \"train\": train_loss, \"val\": val_loss})\n        if val_loss &lt; best_val:\n            best_val, best_state = val_loss, copy.deepcopy(net.state_dict())\n    return pd.DataFrame(history), best_state\n\n\nn_params = sum(p.numel() for p in make_net().parameters())\nprint(len(x_train), len(x_val), len(x_test), n_params)\n\n150 400 1247 19210\n\n\nThe exercises use the 1,797 digits of data/optdigits-test.csv [2]. To make a network fit its training images too well, the training set here is small, 150 random images. Another 400 form a validation set, and the other 1,247 a test set. make_net() builds an MLP with one hidden layer of 256 ReLU units, which has 19,210 parameters. fit() trains it by full-batch AdamW, PyTorch’s variant of Adam with weight decay, with learning rate 0.01 and no weight decay unless asked. It records the training and validation losses after every epoch.",
+    "crumbs": [
+      "Home",
+      "Notes",
+      "Regularization"
+    ]
+  },
+  {
+    "objectID": "chapters/regularization.html#watching-the-validation-loss",
+    "href": "chapters/regularization.html#watching-the-validation-loss",
+    "title": "Regularization",
+    "section": "\n2.1 Watching the validation loss",
+    "text": "2.1 Watching the validation loss\n\n\n\n\n\n\nExrExercise 1 (Watching the validation loss)\n\n\n\n\n\n\nExercise 1 (Watching the validation loss) How do the training loss and the validation loss of make_net() change over 300 epochs of fit()?\n\n\n\n\n\n\n\n\n\n\nSolutionSolution 1\n\n\n\n\n\n\nSolution 1. \n\nShow codeplain_net = make_net()\nplain_history, plain_best_state = fit(plain_net)\nbest_row = plain_history.loc[plain_history[\"val\"].idxmin()]\nbest_epoch = int(best_row[\"epoch\"])\nbest_val_loss = best_row[\"val\"]\nfinal_row = plain_history.iloc[-1]\nfig, ax = plt.subplots(figsize=(6, 3.5), layout=\"constrained\")\nax.plot(plain_history[\"epoch\"], plain_history[\"train\"], label=\"training\");\nax.plot(plain_history[\"epoch\"], plain_history[\"val\"], label=\"validation\");\nax.axvline(best_epoch, color=\"gray\", linestyle=\":\");\nax.set_yscale(\"log\");\nax.set_xlabel(\"epoch\");\nax.set_ylabel(\"cross-entropy loss\");\nax.legend();\nplt.show()\n\n\n\n\n\n\nShow codeprint(best_epoch, best_val_loss, final_row[\"train\"], final_row[\"val\"])\n\n28 0.27951204776763916 0.0001481997751398012 0.3629544973373413\n\n\nThe training loss falls the whole time, to 1.5e-04 after 300 epochs. The validation loss falls to its lowest value, 0.280, at epoch 28, marked by the dotted line, and then rises to 0.363. After epoch 28 the network goes on fitting the training images in ways that do not carry over to new images: it overfits.",
+    "crumbs": [
+      "Home",
+      "Notes",
+      "Regularization"
+    ]
+  },
+  {
+    "objectID": "chapters/regularization.html#stopping-at-the-best-epoch",
+    "href": "chapters/regularization.html#stopping-at-the-best-epoch",
+    "title": "Regularization",
+    "section": "\n2.2 Stopping at the best epoch",
+    "text": "2.2 Stopping at the best epoch\n\n\n\n\n\n\nDefDefinition 1 (Early stopping)\n\n\n\n\n\n\nDefinition 1 (Early stopping) Early stopping records the validation loss after every epoch of training, and returns the parameters from the epoch with the lowest validation loss [1, Sec. 7.8].\n\n\n\n\n\n\n\n\n\n\nExmExample 1 (Stopping at the lowest validation loss)\n\n\n\n\n\n\nExample 1 (Stopping at the lowest validation loss)  \n\nShow codestopped_net = make_net()\n_ = stopped_net.load_state_dict(plain_best_state)\nwith torch.no_grad():\n    test_loss_stopped = loss_fn(stopped_net(x_test), y_test).item()\n    test_loss_final = loss_fn(plain_net(x_test), y_test).item()\nacc_stopped = accuracy(stopped_net, x_test, y_test)\nacc_final = accuracy(plain_net, x_test, y_test)\nprint(test_loss_stopped, test_loss_final, acc_stopped, acc_final)\n\n0.30516552925109863 0.38375428318977356 0.9238171577453613 0.9230152368545532\n\n\nfit() already does early stopping: it keeps the parameters of epoch 28 of Solution 1. On the 1247 test images, those parameters have loss 0.305, against 0.384 after all 300 epochs. The test accuracies are 92.4% and 92.3%. The accuracy moves much less than the loss, because the loss also measures how much probability the network gives the true digit, not only whether that digit gets the most. fit() runs all 300 epochs; an early-stopping loop can instead end training once the validation loss has not improved for a set number of epochs.",
+    "crumbs": [
+      "Home",
+      "Notes",
+      "Regularization"
+    ]
+  },
+  {
+    "objectID": "chapters/regularization.html#weight-decay-in-pytorch",
+    "href": "chapters/regularization.html#weight-decay-in-pytorch",
+    "title": "Regularization",
+    "section": "\n3.1 Weight decay in PyTorch",
+    "text": "3.1 Weight decay in PyTorch\n\n\n\n\n\n\nRemarkRemark 1 (Weight decay in PyTorch)\n\n\n\n\n\n\nRemark 1 (Weight decay in PyTorch). lds defines weight decay for gradient descent, with decay coefficient \\(\\lambda_{\\text{wd}}\\). PyTorch’s optimizers take an argument weight_decay, and its meaning depends on the optimizer. torch.optim.SGD and torch.optim.Adam add \\(\\lambda_{\\text{wd}} \\theta\\) to the gradient of each parameter \\(\\theta\\) before they take their step, an L2 penalty [3], [4]. For plain gradient descent, adding \\(\\lambda_{\\text{wd}} \\theta\\) shrinks every parameter by the same factor at each step, so the penalty is weight decay. Adam divides the added \\(\\lambda_{\\text{wd}} \\theta\\) by its running scale of past gradients, so the penalty shrinks parameters with small past gradients more than parameters with large ones [5]. torch.optim.AdamW instead multiplies each parameter by \\(1 - \\learnrate \\lambda_{\\text{wd}}\\) before Adam’s step [6], PyTorch’s form of the decoupled weight decay of Loshchilov and Hutter [5]. fit() uses AdamW. weight_decay applies to the biases too, unless the optimizer is given them as a separate group with weight_decay=0.",
+    "crumbs": [
+      "Home",
+      "Notes",
+      "Regularization"
+    ]
+  },
+  {
+    "objectID": "chapters/regularization.html#choosing-the-weight-decay",
+    "href": "chapters/regularization.html#choosing-the-weight-decay",
+    "title": "Regularization",
+    "section": "\n3.2 Choosing the weight decay",
+    "text": "3.2 Choosing the weight decay\n\n\n\n\n\n\nExrExercise 2 (Choosing the weight decay)\n\n\n\n\n\n\nExercise 2 (Choosing the weight decay) Which weight_decay among 0, 0.1, 1 and 10, passed to the AdamW of fit(), gives make_net() the lowest validation loss after 300 epochs?\n\n\n\n\n\n\n\n\n\n\nSolutionSolution 2\n\n\n\n\n\n\nSolution 2. \n\nShow codedef weight_norm(net):\n    # Euclidean norm of all the weights, leaving out the biases.\n    weights = [p.flatten() for name, p in net.named_parameters() if \"weight\" in name]\n    return torch.cat(weights).norm().item()\n\n\ndecay_rows = []\nfor weight_decay in [0, 0.1, 1, 10]:\n    decay_net = make_net()\n    decay_history, _ = fit(decay_net, weight_decay=weight_decay)\n    decay_rows.append({\n        \"weight_decay\": weight_decay,\n        \"train_loss\": decay_history[\"train\"].iloc[-1],\n        \"val_loss\": decay_history[\"val\"].iloc[-1],\n        \"weight_norm\": weight_norm(decay_net),\n    })\ndecay_table = pd.DataFrame(decay_rows)\nbest_decay = decay_table.loc[decay_table[\"val_loss\"].idxmin()]\nprint(decay_table.round(4))\n\n   weight_decay  train_loss  val_loss  weight_norm\n0           0.0      0.0001    0.3630      22.9366\n1           0.1      0.0007    0.3178      21.1014\n2           1.0      0.0038    0.2762      15.5763\n3          10.0      0.2165    0.4598       9.4236\n\n\nweight_decay \\(= 1\\) ends with the lowest validation loss, 0.276, against 0.363 with no weight decay. Weight decay keeps the weights smaller: their norm after 300 epochs falls from 22.9 with no weight decay to 9.4 with weight_decay \\(= 10\\). At 10 its training loss is 0.216, against 1.5e-04 with no weight decay, so it fits its training images less closely.",
+    "crumbs": [
+      "Home",
+      "Notes",
+      "Regularization"
+    ]
+  },
+  {
+    "objectID": "chapters/regularization.html#not-relying-on-any-one-unit",
+    "href": "chapters/regularization.html#not-relying-on-any-one-unit",
+    "title": "Regularization",
+    "section": "\n4.1 Not relying on any one unit",
+    "text": "4.1 Not relying on any one unit\n\n\n\n\n\n\nExrExercise 3 (Not relying on any one unit)\n\n\n\n\n\n\nExercise 3 (Not relying on any one unit) How could training stop a network from relying on any single unit of its hidden layer?\n\n\n\n\n\n\n\n\n\n\nSolutionSolution 3\n\n\n\n\n\n\nSolution 3. Switch off a random set of units at each training step. A unit that may be missing at any step cannot carry a prediction on its own, so each prediction has to rest on many units [7].",
+    "crumbs": [
+      "Home",
+      "Notes",
+      "Regularization"
+    ]
+  },
+  {
+    "objectID": "chapters/regularization.html#definition",
+    "href": "chapters/regularization.html#definition",
+    "title": "Regularization",
+    "section": "\n4.2 Definition",
+    "text": "4.2 Definition\n\n\n\n\n\n\nDefDefinition 2 (Dropout)\n\n\n\n\n\n\nDefinition 2 (Dropout) Dropout with rate \\(p\\) sets each unit of a layer to 0 independently with probability \\(p\\) at each training step, and multiplies the units it keeps by \\(1 / (1 - p)\\). When the network makes predictions, dropout leaves the layer unchanged [1, Sec. 7.12], [7]. Srivastava et al. [7] write \\(p\\) for the probability of keeping a unit, and multiply the weights out of the layer at prediction time instead, which gives the same expected values; PyTorch’s nn.Dropout scales during training [8].\n\n\n\n\n\n\n\n\n\n\nExmExample 2 (nn.Dropout in training and in evaluation)\n\n\n\n\n\n\nExample 2 (nn.Dropout in training and in evaluation)  \n\nShow codedropout = nn.Dropout(p=0.5)\nones = torch.ones(8)\n_ = torch.manual_seed(0)\n_ = dropout.train()\nprint(dropout(ones))\n\ntensor([0., 0., 2., 0., 0., 0., 2., 2.])\n\nShow code_ = dropout.eval()\nprint(dropout(ones))\n\ntensor([1., 1., 1., 1., 1., 1., 1., 1.])\n\n\nIn training mode, nn.Dropout(p=0.5) sets each entry of a vector of 8 ones to 0 with probability \\(\\frac{1}{2}\\), and multiplies the others by \\(1 / (1 - \\frac{1}{2}) = 2\\). After .eval() it returns its input unchanged. net.train() and net.eval() switch every dropout layer of a network, which is why fit() and accuracy() call them.",
+    "crumbs": [
+      "Home",
+      "Notes",
+      "Regularization"
+    ]
+  },
+  {
+    "objectID": "chapters/regularization.html#why-scale-the-units-that-are-kept",
+    "href": "chapters/regularization.html#why-scale-the-units-that-are-kept",
+    "title": "Regularization",
+    "section": "\n4.3 Why scale the units that are kept?",
+    "text": "4.3 Why scale the units that are kept?\n\n\n\n\n\n\nExrExercise 4 (Why scale the units that are kept?)\n\n\n\n\n\n\nExercise 4 (Why scale the units that are kept?) Why does dropout multiply the units it keeps by \\(1 / (1 - p)\\)?\n\n\n\n\n\n\n\n\n\n\nSolutionSolution 4\n\n\n\n\n\n\nSolution 4. So that each unit’s expected value during training equals its value at prediction time. A unit with value \\(h\\) becomes \\(D = 0\\) with probability \\(p\\), and \\(D = h / (1 - p)\\) with probability \\(1 - p\\), so its expected value is\n\\[\n\\E{D} = p \\cdot 0 + (1 - p) \\cdot \\frac{h}{1 - p} = h.\n\\]\nThe next layer then sees inputs of the same size on average in both modes.\n\nShow code_ = torch.manual_seed(0)\n_ = dropout.train()\nmean_kept = dropout(torch.ones(100_000)).mean().item()\nprint(mean_kept)\n\n0.9985799789428711\n\n\nAveraged over 100,000 ones, nn.Dropout(p=0.5) in training mode gives 0.999.",
+    "crumbs": [
+      "Home",
+      "Notes",
+      "Regularization"
+    ]
+  },
+  {
+    "objectID": "chapters/regularization.html#dropout-on-the-digits",
+    "href": "chapters/regularization.html#dropout-on-the-digits",
+    "title": "Regularization",
+    "section": "\n4.4 Dropout on the digits",
+    "text": "4.4 Dropout on the digits\n\n\n\n\n\n\nExrExercise 5 (Dropout on the digits)\n\n\n\n\n\n\nExercise 5 (Dropout on the digits) Suppose make_net() gets an nn.Dropout(0.5) after its ReLU layer. Is its lowest validation loss under fit() lower than without dropout?\n\n\n\n\n\n\n\n\n\n\nSolutionSolution 5\n\n\n\n\n\n\nSolution 5. \n\nShow codedef make_dropout_net(p_drop=0.5, seed=1):\n    # make_net() with dropout after the hidden layer.\n    torch.manual_seed(seed)\n    return nn.Sequential(\n        nn.Linear(64, 256), nn.ReLU(), nn.Dropout(p_drop), nn.Linear(256, 10)\n    )\n\n\ndrop_net = make_dropout_net()\ndrop_history, _ = fit(drop_net)\ndrop_best_val = drop_history[\"val\"].min()\ndrop_final_val = drop_history[\"val\"].iloc[-1]\nprint(drop_best_val, best_val_loss)\n\n0.26976096630096436 0.27951204776763916\n\n\nYes. With dropout the lowest validation loss is 0.270, against 0.280 without it.",
+    "crumbs": [
+      "Home",
+      "Notes",
+      "Regularization"
+    ]
+  },
+  {
+    "objectID": "chapters/regularization.html#dropout-after-300-epochs",
+    "href": "chapters/regularization.html#dropout-after-300-epochs",
+    "title": "Regularization",
+    "section": "\n4.5 Dropout after 300 epochs",
+    "text": "4.5 Dropout after 300 epochs\n\n\n\n\n\n\nExrExercise 6 (Dropout after 300 epochs)\n\n\n\n\n\n\nExercise 6 (Dropout after 300 epochs) Is the validation loss of the network of Exercise 5 after all 300 epochs lower than without dropout?\n\n\n\n\n\n\n\n\n\n\nSolutionSolution 6\n\n\n\n\n\n\nSolution 6. No. After 300 epochs its validation loss is 0.398, against 0.363 without dropout. With dropout the validation loss still rises after its lowest point, so on these digits dropout does not replace early stopping.",
+    "crumbs": [
+      "Home",
+      "Notes",
+      "Regularization"
+    ]
+  },
+  {
+    "objectID": "chapters/regularization.html#more-training-images-for-free",
+    "href": "chapters/regularization.html#more-training-images-for-free",
+    "title": "Regularization",
+    "section": "\n5.1 More training images for free",
+    "text": "5.1 More training images for free\n\n\n\n\n\n\nExrExercise 7 (More training images for free)\n\n\n\n\n\n\nExercise 7 (More training images for free) The training set has only 150 images. How could training see more images of digits without anyone labelling new ones?\n\n\n\n\n\n\n\n\n\n\nSolutionSolution 7\n\n\n\n\n\n\nSolution 7. Change the training images in ways that leave the digit the same, such as adding a little noise or moving the digit slightly, and train on the changed copies with the original labels [1, Sec. 7.4].",
+    "crumbs": [
+      "Home",
+      "Notes",
+      "Regularization"
+    ]
+  },
+  {
+    "objectID": "chapters/regularization.html#definition-1",
+    "href": "chapters/regularization.html#definition-1",
+    "title": "Regularization",
+    "section": "\n5.2 Definition",
+    "text": "5.2 Definition\n\n\n\n\n\n\nDefDefinition 3 (Data augmentation)\n\n\n\n\n\n\nDefinition 3 (Data augmentation) Data augmentation trains on transformed copies of the training inputs, made by transformations that should not change the target [1, Sec. 7.4]. Usually a new random transformation is drawn for each input at each epoch.\n\n\n\n\n\n\n\n\n\n\nExmExample 3 (Noise and shifts for the digits)\n\n\n\n\n\n\nExample 3 (Noise and shifts for the digits)  \n\nShow codedef add_noise(images, generator, sd=0.2):\n    # Add independent normal noise with standard deviation `sd` to every pixel.\n    return images + sd * torch.randn(images.shape, generator=generator)\n\n\ndef shift_images(images, rows, cols):\n    # Move each 8-by-8 image by (rows, cols) pixels, filling the gap with 0.\n    grid = images.reshape(-1, 8, 8)\n    moved = torch.roll(grid, shifts=(rows, cols), dims=(1, 2))\n    if rows &gt; 0:\n        moved[:, :rows, :] = 0\n    if rows &lt; 0:\n        moved[:, rows:, :] = 0\n    if cols &gt; 0:\n        moved[:, :, :cols] = 0\n    if cols &lt; 0:\n        moved[:, :, cols:] = 0\n    return moved.reshape(-1, 64)\n\n\nexample = x_train[:1]\nnoisy = add_noise(example, torch.Generator().manual_seed(0))\nshifted = shift_images(example, 0, 1)\nfig, axes = plt.subplots(1, 3, figsize=(6, 2.2), layout=\"constrained\")\nfor ax, image, title in zip(axes, [example, noisy, shifted], [\"original\", \"noise\", \"shifted\"]):\n    ax.imshow(image.reshape(8, 8), cmap=\"gray_r\");\n    ax.set_title(title);\n    ax.axis(\"off\");\nplt.show()\n\n\n\n\n\n\n\nThe first training image is a 0. Adding normal noise with standard deviation 0.2 to every pixel leaves it recognizable, and so does moving it one pixel to the right. Both are candidate transformations for data augmentation on the digits.",
+    "crumbs": [
+      "Home",
+      "Notes",
+      "Regularization"
+    ]
+  },
+  {
+    "objectID": "chapters/regularization.html#noisy-digits",
+    "href": "chapters/regularization.html#noisy-digits",
+    "title": "Regularization",
+    "section": "\n5.3 Noisy digits",
+    "text": "5.3 Noisy digits\n\n\n\n\n\n\nExrExercise 8 (Training on noisy digits)\n\n\n\n\n\n\nExercise 8 (Training on noisy digits) Suppose fit() is given transform=add_noise, so that it trains on new noisy copies of the training images at every epoch. Is the lowest validation loss of make_net() then lower than without noise?\n\n\n\n\n\n\n\n\n\n\nSolutionSolution 8\n\n\n\n\n\n\nSolution 8. \n\nShow codenoise_net = make_net()\nnoise_history, _ = fit(noise_net, transform=add_noise)\nnoise_best_val = noise_history[\"val\"].min()\nprint(noise_best_val, best_val_loss)\n\n0.24624192714691162 0.27951204776763916\n\n\nYes. The lowest validation loss with noise is 0.246, against 0.280 without it. Noise added to the inputs is one of the regularizers Deep Learning discusses [1, Sec. 7.5].",
+    "crumbs": [
+      "Home",
+      "Notes",
+      "Regularization"
+    ]
+  },
+  {
+    "objectID": "chapters/regularization.html#shifted-digits",
+    "href": "chapters/regularization.html#shifted-digits",
+    "title": "Regularization",
+    "section": "\n5.4 Shifted digits",
+    "text": "5.4 Shifted digits\n\n\n\n\n\n\nExrExercise 9 (Training on shifted digits)\n\n\n\n\n\n\nExercise 9 (Training on shifted digits) Suppose instead each training image is moved at random by \\(-1\\), 0 or 1 pixels in each direction at every epoch. Is the lowest validation loss of make_net() then lower than without shifts?\n\n\n\n\n\n\n\n\n\n\nSolutionSolution 9\n\n\n\n\n\n\nSolution 9. \n\nShow codedef random_shift(images, generator):\n    # Move each image by its own random (rows, cols), each -1, 0 or 1.\n    moves = torch.randint(-1, 2, (len(images), 2), generator=generator)\n    out = images.clone()\n    for rows in [-1, 0, 1]:\n        for cols in [-1, 0, 1]:\n            chosen = (moves[:, 0] == rows) & (moves[:, 1] == cols)\n            out[chosen] = shift_images(images[chosen], rows, cols)\n    return out\n\n\nshift_net = make_net()\nshift_history, _ = fit(shift_net, transform=random_shift)\nshift_best_val = shift_history[\"val\"].min()\nval_acc_plain = accuracy(stopped_net, x_val, y_val)\nval_acc_moved = accuracy(stopped_net, shift_images(x_val, 0, 1), y_val)\nprint(shift_best_val, best_val_loss, val_acc_plain, val_acc_moved)\n\n0.3100764751434326 0.27951204776763916 0.925000011920929 0.4300000071525574\n\n\nNo. The lowest validation loss with shifts is 0.310, against 0.280 without them. A one-pixel move is not a small change for these images. Each pixel counts the ink in a 4-by-4 block of a 32-by-32 bitmap [2], so it moves the digit by 4 pixels of the original bitmap. The early-stopped network of Example 1 classifies 92.5% of the validation images correctly, but only 43.0% of the same images moved one pixel to the right.",
+    "crumbs": [
+      "Home",
+      "Notes",
+      "Regularization"
+    ]
+  },
+  {
+    "objectID": "chapters/regularization.html#further-reading",
+    "href": "chapters/regularization.html#further-reading",
+    "title": "Regularization",
+    "section": "\n5.5 Further reading",
+    "text": "5.5 Further reading\n\n\n\n\n\n\n\nReadingRead\n\n\n\n\n\nDeep Learning’s Chapter 7 covers early stopping, weight decay, dropout and data augmentation [1, Ch. 7]. lds’s chapter on regularization covers penalties on the weights in linear models.",
+    "crumbs": [
+      "Home",
+      "Notes",
+      "Regularization"
     ]
   }
 ]

@@ -1,6 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://morrison-lab.github.io/dds/chapters/normalization.html</loc>
+    <lastmod>2026-10-29T09:49:40.000Z</lastmod>
+  </url>
+  <url>
+    <loc>https://morrison-lab.github.io/dds/chapters/normalization-slides.html</loc>
+    <lastmod>2026-10-29T09:49:40.000Z</lastmod>
+  </url>
+  <url>
+    <loc>https://morrison-lab.github.io/dds/chapters/optimization.html</loc>
+    <lastmod>2026-10-29T09:27:21.000Z</lastmod>
+  </url>
+  <url>
+    <loc>https://morrison-lab.github.io/dds/chapters/optimization-slides.html</loc>
+    <lastmod>2026-10-29T09:27:21.000Z</lastmod>
+  </url>
+  <url>
     <loc>https://morrison-lab.github.io/dds/chapters/feedforward-networks.html</loc>
     <lastmod>2026-10-29T08:30:07.000Z</lastmod>
   </url>
@@ -34,7 +50,7 @@
   </url>
   <url>
     <loc>https://morrison-lab.github.io/dds/chapters/calendar.html</loc>
-    <lastmod>2026-10-29T08:08:46.000Z</lastmod>
+    <lastmod>2026-10-29T09:49:40.000Z</lastmod>
   </url>
   <url>
     <loc>https://morrison-lab.github.io/dds/chapters/course-overview-slides.html</loc>
@@ -51,5 +67,21 @@
   <url>
     <loc>https://morrison-lab.github.io/dds/chapters/pytorch-basics.html</loc>
     <lastmod>2026-10-28T23:42:56.000Z</lastmod>
+  </url>
+  <url>
+    <loc>https://morrison-lab.github.io/dds/chapters/backpropagation-slides.html</loc>
+    <lastmod>2026-10-29T08:49:16.000Z</lastmod>
+  </url>
+  <url>
+    <loc>https://morrison-lab.github.io/dds/chapters/backpropagation.html</loc>
+    <lastmod>2026-10-29T08:49:16.000Z</lastmod>
+  </url>
+  <url>
+    <loc>https://morrison-lab.github.io/dds/chapters/regularization-slides.html</loc>
+    <lastmod>2026-10-29T09:41:03.000Z</lastmod>
+  </url>
+  <url>
+    <loc>https://morrison-lab.github.io/dds/chapters/regularization.html</loc>
+    <lastmod>2026-10-29T09:41:03.000Z</lastmod>
   </url>
 </urlset>
