@@ -13,7 +13,7 @@ while node is not None:
     earlier = [f for f, _ in node.next_functions
                if f is not None and type(f).__name__ != "AccumulateGrad"]
     node = earlier[0] if earlier else None
-print(recorded)
+print(*recorded, sep="\n")
 ```
 
 For the first training image, PyTorch's [computational graph](#def-computational-graph) holds the four steps of @sol-loss-operations,
@@ -25,6 +25,6 @@ Each `grad_fn` names the operation that made a [tensor](pytorch-basics.qmd#def-t
 - `ReluBackward0` is step 2;
 - `TBackward0` is the transpose of $\matr{W}_1$ in `x @ weight.T`.
 
-The chain stops there, since the image itself was not made with `requires_grad=True`.
+The chain stops at the transpose, since the image itself was not made with `requires_grad=True`.
 
 :::

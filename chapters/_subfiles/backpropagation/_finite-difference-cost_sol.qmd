@@ -2,9 +2,10 @@
 
 $P + 1$: one at the current [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter), and one more for each [parameter](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter) nudged.
 [Backpropagation](#def-backpropagation) gets all $P$ derivatives from one forward pass and one backward pass,
-and each backward step costs about as much as its forward step:
+and each backward step costs a small multiple of its forward step:
 a matrix product forward becomes two matrix products backward,
-as in @sol-linear-param-grad and @sol-linear-input-grad.
+as in @sol-linear-param-grad and @sol-linear-input-grad,
+so the two passes together cost about three forward passes.
 
 ```{python}
 #| code-fold: show
@@ -34,7 +35,7 @@ print(backprop_seconds, difference_seconds, fd_gap)
 
 One forward and backward pass over the [training set](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-training-set) took `r sprintf("%.2f", 1000 * py$backprop_seconds)` milliseconds,
 for every parameter of the [MLP](feedforward-networks.qmd#def-feedforward-network).
-Finite differences for only the `r 10 * 32` entries of $\matr{W}_2$ took `r sprintf("%.0f", 1000 * py$difference_seconds)` milliseconds,
+Finite differences for only the `r py$second$weight$numel()` entries of $\matr{W}_2$ took `r sprintf("%.0f", 1000 * py$difference_seconds)` milliseconds,
 `r sprintf("%.0f", py$difference_seconds / py$backprop_seconds)` times as long,
 and agree with backpropagation only to within `r format(py$fd_gap, digits = 2)`, since a finite difference is an approximation.
 Timings vary from run to run; the ratio grows with the number of [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter).

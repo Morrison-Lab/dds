@@ -1,10 +1,12 @@
 ::: {#sol-why-shrink}
 
-Applying @sol-relu-grad's reasoning to $g$, then @sol-linear-input-grad, takes the gradient back one layer:
+Applying @sol-relu-grad's reasoning to $g$, then @sol-linear-input-grad, takes the [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) back one layer:
 
 $$
-\gradwrt{\vhidval_{\layeridx - 1}} L
-= \tp{\matr{W}_{\layeridx}} \paren{g'(\vz_{\layeridx}) \odot \gradwrt{\vhidval_{\layeridx}} L},
+\gradwrt{\vhidval_{\layeridx - 1}} \loss
+= \tp{\matr{W}_{\layeridx}} \vbackerr_{\layeridx},
+\qquad
+\vbackerr_{\layeridx} = \gradwrt{\vz_{\layeridx}} \loss = g'(\vz_{\layeridx}) \odot \gradwrt{\vhidval_{\layeridx}} \loss,
 $$
 
 where $\odot$ multiplies entry by entry.
@@ -13,8 +15,15 @@ The [logistic function](https://morrison-lab.github.io/mds/functions.html#def-lo
 and less where [unit](feedforward-networks.qmd#def-unit)s [saturate](https://morrison-lab.github.io/lds/chapters/backpropagation.html#def-saturation),
 so unless the weights are large, every layer shrinks the gradient by a factor less than 1,
 and 10 layers multiply 10 such factors.
-The [ReLU](feedforward-networks.qmd#def-relu)'s slope is 1 wherever a [unit](feedforward-networks.qmd#def-unit) is positive,
-so in @sol-deep-grad-norms the shrinking there comes from the weights alone,
-which PyTorch starts small.
+The [ReLU](feedforward-networks.qmd#def-relu)'s slope has no $\frac{1}{4}$ bound:
+it is 1 at each [unit](feedforward-networks.qmd#def-unit) that is positive and 0 at each unit that is not.
+In the ReLU network of @sol-deep-grad-norms,
+the gradient going back still shrinks, both because the weights PyTorch starts with are small
+and because the [unit](feedforward-networks.qmd#def-unit)s at 0 pass none of it back.
+
+The weight gradient of layer $\layeridx$ is $\oprod{\vbackerr_{\layeridx}}{\vhidval_{\layeridx - 1}}$, by @sol-linear-param-grad,
+so its size depends on the layer's input $\vhidval_{\layeridx - 1}$ as well as on the gradient $\vbackerr_{\layeridx}$ at its output.
+In the ReLU network the layer inputs grow toward the first layers,
+which is why its weight [gradients](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) level off there while the gradients $\vbackerr_{\layeridx}$ keep shrinking.
 
 :::

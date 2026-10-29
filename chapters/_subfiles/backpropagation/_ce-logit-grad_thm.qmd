@@ -3,13 +3,13 @@
 #### Gradient of the cross-entropy loss at the logits
 
 For [logits](feedforward-networks.qmd#def-logits) $\vz \in \reals^C$ and true class $y$,
-the [cross-entropy](https://morrison-lab.github.io/pds/expectation.html#def-cross-entropy) loss $L = -\log \operatorname{softmax}(\vz)_y$ has gradient
+the [cross-entropy](https://morrison-lab.github.io/pds/expectation.html#def-cross-entropy) loss $\loss = -\log \operatorname{softmax}(\vz)_y$, with softmax the [softmax function](https://morrison-lab.github.io/lds/chapters/multiclass-logistic-regression.html#def-softmax), has [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient)
 
 $$
-\gradwrt{\vz} L = \operatorname{softmax}(\vz) - \vecf{e}_y,
+\gradwrt{\vz} \loss = \operatorname{softmax}(\vz) - \ve_y,
 $$
 
-where $\vecf{e}_y$ has 1 in entry $y$ and 0 in every other entry.
+where $\ve_y$ has 1 in entry $y$ and 0 in every other entry.
 
 :::
 

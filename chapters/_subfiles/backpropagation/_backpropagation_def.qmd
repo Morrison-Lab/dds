@@ -3,7 +3,7 @@
 #### Backpropagation (backprop)
 
 **Backpropagation**, or **backprop**,
-computes the gradient of a scalar, such as a loss,
+computes the [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) of a scalar, such as a loss,
 with respect to every node of a [computational graph](#def-computational-graph):
 it visits the nodes in the reverse of the order the forward computation made them,
 and at each node applies the chain rule,

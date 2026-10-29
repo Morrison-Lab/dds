@@ -1,7 +1,7 @@
 ::: {#sol-ce-logit-grad}
 
 By [the log softmax theorem](feedforward-networks.qmd#thm-log-softmax),
-$L = \operatorname{LSE}(\vz) - z_y$, where $\operatorname{LSE}$ is [log-sum-exp](feedforward-networks.qmd#def-log-sum-exp).
+$\loss = \operatorname{LSE}(\vz) - z_y$, where $\operatorname{LSE}$ is [log-sum-exp](feedforward-networks.qmd#def-log-sum-exp).
 
 $$
 \begin{aligned}
@@ -10,20 +10,20 @@ $$
 && \text{(definition of $\operatorname{LSE}$)} \\
 &= \frac{1}{\sumto{k}{C} \e{z_k}} \derivf{}{z_m} \sumto{k}{C} \e{z_k}
 && \text{(chain rule for $\log$)} \\
-&= \frac{\e{z_m}}{\sumto{k}{C} \e{z_k}}
+&= \frac{1}{\sumto{k}{C} \e{z_k}} \derivf{}{z_m} \e{z_m}
 && \text{(only term $k = m$ depends on $z_m$)} \\
+&= \frac{\e{z_m}}{\sumto{k}{C} \e{z_k}}
+&& \text{(derivative of the exponential)} \\
 &= \operatorname{softmax}(\vz)_m
 && \text{(definition of softmax)}
 \end{aligned}
 $$
 
-The last line is the [softmax function](https://morrison-lab.github.io/lds/chapters/multiclass-logistic-regression.html#def-softmax) of $\vz$.
-
 The second term, $z_y$, has derivative 1 with respect to $z_y$ and 0 with respect to every other [logit](feedforward-networks.qmd#def-logits).
 So
 
 $$
-\derivf{L}{z_m} = \operatorname{softmax}(\vz)_m - \indicf{m = y}.
+\derivf{\loss}{z_m} = \operatorname{softmax}(\vz)_m - \indicf{m = y}.
 $$
 
 :::

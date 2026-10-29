@@ -1,0 +1,8 @@
+::: {#exr-linear-bias-grad}
+
+#### Gradient for a layer's bias
+
+For the layer of @exr-linear-param-grad,
+what is the [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) of $\loss$ with respect to $\vecf{b}$?
+
+:::

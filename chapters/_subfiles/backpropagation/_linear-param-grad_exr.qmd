@@ -1,9 +1,9 @@
 ::: {#exr-linear-param-grad}
 
-#### Gradients for a layer's weights
+#### Gradient for a layer's weight matrix
 
 A layer computes $\vz = \matr{W} \vhidval + \vecf{b}$,
-and the gradient $\vecf{g} = \gradwrt{\vz} L$ of the loss with respect to its output is known.
-Find the gradient of $L$ with respect to $\matr{W}$ and to $\vecf{b}$.
+and the [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) $\vbackerr = \gradwrt{\vz} \loss$ of the loss with respect to its output is known.
+What is the gradient of $\loss$ with respect to $\matr{W}$?
 
 :::

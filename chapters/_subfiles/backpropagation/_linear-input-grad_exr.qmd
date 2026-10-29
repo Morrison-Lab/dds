@@ -3,6 +3,6 @@
 #### The gradient passed back
 
 For the layer of @exr-linear-param-grad,
-find the gradient of $L$ with respect to the layer's input $\vhidval$.
+find the [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) of $\loss$ with respect to the layer's input $\vhidval$.
 
 :::

@@ -5,7 +5,7 @@ Write $\matr{W}_1, \vecf{b}_1$ for the first layer's [parameters](https://morris
 1.  $\vz_1 = \matr{W}_1 \vx + \vecf{b}_1$, an [affine function](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-affine-function) of the pixels;
 2.  $\vhidval = \operatorname{ReLU}(\vz_1)$, entry by entry;
 3.  $\vz_2 = \matr{W}_2 \vhidval + \vecf{b}_2$, the [logits](feedforward-networks.qmd#def-logits);
-4.  $L = -\log \operatorname{softmax}(\vz_2)_y$, the [cross-entropy](https://morrison-lab.github.io/pds/expectation.html#def-cross-entropy) loss.
+4.  $\loss = -\log \operatorname{softmax}(\vz_2)_y$, with softmax the [softmax function](https://morrison-lab.github.io/lds/chapters/multiclass-logistic-regression.html#def-softmax): the [cross-entropy](https://morrison-lab.github.io/pds/expectation.html#def-cross-entropy) loss.
 
 Each step uses only the input and the results of earlier steps.
 

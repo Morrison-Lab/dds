@@ -1,14 +1,15 @@
 ::: {#sol-relu-grad}
 
 Entry $h_k = \maxf{0, z_{1k}}$ depends only on $z_{1k}$,
-with derivative 1 where $z_{1k} > 0$ and 0 where $z_{1k} < 0$,
+with derivative 1 where $z_{1k} > 0$ and 0 where $z_{1k} < 0$;
+at $z_{1k} = 0$ PyTorch, and these notes, take it to be 0,
 as in [the slopes of the activation functions](feedforward-networks.qmd#sol-activation-slopes).
 So
 
 $$
-\derivf{L}{z_{1k}} = \derivf{L}{h_k} \, \indicf{z_{1k} > 0}:
+\derivf{\loss}{z_{1k}} = \derivf{\loss}{h_k} \, \indicf{z_{1k} > 0}:
 $$
 
-the gradient passes through each [unit](feedforward-networks.qmd#def-unit) that was positive and stops at each unit that was 0.
+the [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) passes through each [unit](feedforward-networks.qmd#def-unit) that was positive and stops at each unit that was 0.
 
 :::

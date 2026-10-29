@@ -29,15 +29,15 @@ backward_gap = max((mine - p.grad).abs().max().item() for mine, p in pairs)
 print(backward_gap)
 ```
 
-The four gradients match autograd's to within `r format(py$backward_gap, digits = 2)`.
+The four [gradients](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) match autograd's to within `r format(py$backward_gap, digits = 2)`.
 The code runs the steps of @sol-loss-operations forward, then their derivatives in reverse:
 
-- `g2` is $\gradwrt{\vz_2} L$ from @thm-ce-logit-grad, for every image at once,
+- `g2` is $\gradwrt{\vz_2} \loss$ from @thm-ce-logit-grad, for every image at once,
   divided by `r py$n_train` because the loss is the mean over that many images;
-- `grad_W2` and `grad_b2` are @sol-linear-param-grad, with the outer products of the images added up by one matrix product;
+- `grad_W2` and `grad_b2` are @sol-linear-param-grad and @sol-linear-bias-grad, with the outer products of the images added up by one matrix product;
 - `grad_h` is @sol-linear-input-grad, written for rows instead of columns;
 - `grad_z1` is @sol-relu-grad;
-- `grad_W1` and `grad_b1` are @sol-linear-param-grad again, for the first layer.
+- `grad_W1` and `grad_b1` are @sol-linear-param-grad and @sol-linear-bias-grad again, for the first layer.
 
 The backward steps reuse `z1` and `h` from the forward pass.
 
