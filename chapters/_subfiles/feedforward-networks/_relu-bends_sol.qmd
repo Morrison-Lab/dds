@@ -1,9 +1,12 @@
 ::: {#sol-relu-bends}
 
-For $w_i \neq 0$, [unit](#def-unit) $i$ is 0 on one side of $z = -b_i / w_i$ and the line $w_i z + b_i$ on the other,
+For $w_i \neq 0$,
+[unit](#def-unit) $i$ is 0 on one side of $z = -b_i / w_i$
+and the line $w_i z + b_i$ on the other,
 so its graph is two straight pieces that meet at that point.
-A weighted sum of such graphs, plus a constant, is still made of straight pieces,
-and can change slope only where some unit does.
+A weighted sum of such graphs, plus a constant,
+is still made of straight pieces.
+It can change slope only where some unit does.
 So the graph of $\hy$ is a connected chain of straight pieces,
 with at most $L$ bends.
 
@@ -28,7 +31,8 @@ ax.set_ylabel("network output");
 plt.show()
 ```
 
-For a random network with $L = 3$, the dotted lines mark the three points $-b_i / w_i$,
+For a random network with $L = 3$,
+the dotted lines mark the three points $-b_i / w_i$,
 and the graph bends at each one that lies in the plotted range.
 
 :::

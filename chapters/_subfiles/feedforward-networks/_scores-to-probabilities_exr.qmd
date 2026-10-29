@@ -2,8 +2,10 @@
 
 #### From scores to probabilities
 
-The [MLP](#def-feedforward-network) of @exm-feedforward-network gives each image 10 real numbers, positive or negative.
-How can they become 10 probabilities, one per digit,
+The [MLP](#def-feedforward-network) of @exm-feedforward-network gives each image 10 real numbers,
+positive or negative.
+How can they become 10 probabilities,
+one per digit,
 each positive and adding up to 1?
 
 :::

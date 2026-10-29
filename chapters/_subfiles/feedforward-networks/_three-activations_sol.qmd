@@ -23,13 +23,16 @@ plt.show()
 ```
 
 - **Large positive $z$.**
-  $\sigmoidf{z}$ levels off at 1 and $\tanhf{z}$ levels off at 1,
+  $\sigmoidf{z}$ levels off at 1,
+  and $\tanhf{z}$ levels off at 1,
   while $\maxf{0, z} = z$ keeps growing.
 - **Large negative $z$.**
-  $\sigmoidf{z}$ levels off at 0, $\tanhf{z}$ levels off at $-1$,
-  and $\maxf{0, z}$ is exactly 0 for every negative $z$.
+  $\sigmoidf{z}$ levels off at 0,
+  and $\tanhf{z}$ levels off at $-1$,
+  while $\maxf{0, z}$ is exactly 0 for every negative $z$.
 
 $\tanh$ is a rescaled [logistic function](https://morrison-lab.github.io/mds/functions.html#def-logistic-function), $\tanhf{z} = 2 \sigmoidf{2z} - 1$,
-so its graph is the same S curve, centred on 0 instead of $\frac{1}{2}$.
+so its graph is the same S curve,
+centred on 0 instead of $\frac{1}{2}$.
 
 :::

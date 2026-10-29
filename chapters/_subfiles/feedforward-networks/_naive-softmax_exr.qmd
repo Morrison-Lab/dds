@@ -2,9 +2,10 @@
 
 #### Softmax straight from its formula
 
-A trained network can be confident, with [logits](#def-logits) in the hundreds.
-Multiply the first test image's logits from @exm-logits by 1,000,
-and compute the softmax with its formula, `torch.exp(z) / torch.exp(z).sum()`.
-What goes wrong?
+A trained network can be confident,
+with [logits](#def-logits) in the hundreds.
+Take `z` to be the first test image's logits from @exm-logits times 1,000.
+What goes wrong when the softmax of `z` is computed with its formula,
+`torch.exp(z) / torch.exp(z).sum()`?
 
 :::

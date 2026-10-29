@@ -17,7 +17,8 @@ $$
 :::
 
 ::: proof
-For one input and the [ReLU](#def-relu), @sol-any-curve gives the idea.
+For one input and the [ReLU](#def-relu),
+@sol-any-curve gives the idea.
 @cybenko1989approximation proved the theorem for logistic-shaped [activation functions](#def-activation-function),
 @hornik1991approximation for bounded nonconstant ones,
 and @leshno1993multilayer for every [activation function](#def-activation-function) that is not a polynomial;

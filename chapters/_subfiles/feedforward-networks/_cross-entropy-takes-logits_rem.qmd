@@ -3,11 +3,14 @@
 #### Why PyTorch's cross-entropy takes logits
 
 `nn.CrossEntropyLoss` and `nn.functional.cross_entropy` take [logits](#def-logits), not probabilities.
-They compute the log probabilities by @thm-log-softmax, with the shift of @thm-shift-lse,
+They compute the log probabilities by @thm-log-softmax,
+with the shift of @thm-shift-lse,
 so the loss stays finite for any logits.
 A classification network built for them ends with a linear layer and no softmax:
-softmax is applied only when probabilities are wanted for their own sake,
+softmax is applied only
+when probabilities are wanted for their own sake,
 as in @sol-scores-to-probabilities.
-Putting `nn.Softmax` at the end of the network and then calling `nn.CrossEntropyLoss` applies softmax twice.
+Putting `nn.Softmax` at the end of the network
+and then calling `nn.CrossEntropyLoss` applies softmax twice.
 
 :::

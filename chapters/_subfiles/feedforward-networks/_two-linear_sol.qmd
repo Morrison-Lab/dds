@@ -30,7 +30,8 @@ stack_gap = (stacked - one_layer).abs().max().item()
 print(weight.shape, bias.shape, stack_gap)
 ```
 
-On the `r py$n_test` test images, the stack and the single layer agree to within `r format(py$stack_gap, digits = 2)`,
+On the `r py$n_test` test images,
+the stack and the single layer agree to within `r format(py$stack_gap, digits = 2)`,
 a rounding error.
 `nn.Linear` stores $\matr{W}$ with one row per output,
 and computes `x @ weight.T + bias` for a [tensor](pytorch-basics.qmd#def-tensor) `x` with one row per image.
