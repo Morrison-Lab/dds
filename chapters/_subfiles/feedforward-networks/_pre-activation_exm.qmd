@@ -1,0 +1,9 @@
+::: {#exm-pre-activation}
+
+#### The pre-activation of one digit
+
+In @exm-activation-function, the first line printed holds the first 4 entries of the [pre-activation](#def-pre-activation) of the [hidden layer](#def-hidden-layer) of @exm-hidden-layer,
+for the first test image,
+and the second line holds the same entries of the hidden layer itself.
+
+:::

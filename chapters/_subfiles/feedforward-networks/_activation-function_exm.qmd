@@ -11,8 +11,8 @@ print(torch.sigmoid(pre[:4]).detach().numpy().round(3))
 
 In @exm-hidden-layer the [activation function](#def-activation-function) is the [logistic function](https://morrison-lab.github.io/mds/functions.html#def-logistic-function),
 $g(z) = \sigmoidf{z} = 1 / \paren{1 + \e{-z}}$.
-The first line printed holds the first 4 entries of the first test image's pre-activation, $\matr{W}_1 \vx + \vecf{b}_1$,
-and the second holds $\sigmoid$ of each.
-$\sigmoid$ maps each entry separately: entry 1 of the output depends only on entry 1 of the input.
+The first line printed holds the first 4 entries of $\matr{W}_1 \vx + \vecf{b}_1$ for the first test image,
+and the second holds the logistic function of each.
+The logistic function maps each entry separately: entry 1 of the output depends only on entry 1 of the input.
 
 :::

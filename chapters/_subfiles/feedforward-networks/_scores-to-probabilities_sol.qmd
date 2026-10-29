@@ -14,7 +14,5 @@ print(probabilities.sum(dim=1))
 `dim=1` applies softmax across the 10 numbers in each row, one row per image.
 Each row of probabilities adds up to 1,
 and each is near $\frac{1}{10}$, since the network is untrained.
-The output layer with softmax on top is a [multinomial logistic regression](https://morrison-lab.github.io/lds/chapters/multiclass-logistic-regression.html#def-multinomial-logistic-regression)
-whose inputs are the 32 values of the [hidden layer](#def-hidden-layer).
 
 :::

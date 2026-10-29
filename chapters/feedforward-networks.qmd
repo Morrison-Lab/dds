@@ -69,11 +69,27 @@ The output units and universal approximation follow *Deep Learning*, Chapter 6 [
 
 {{< slidebreak >}}
 
+{{< include _subfiles/feedforward-networks/_unit_def.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/feedforward-networks/_unit_exm.qmd >}}
+
+{{< slidebreak >}}
+
 {{< include _subfiles/feedforward-networks/_activation-function_def.qmd >}}
 
 {{< slidebreak >}}
 
 {{< include _subfiles/feedforward-networks/_activation-function_exm.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/feedforward-networks/_pre-activation_def.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/feedforward-networks/_pre-activation_exm.qmd >}}
 
 ## Three activation functions
 
@@ -193,6 +209,14 @@ The output units and universal approximation follow *Deep Learning*, Chapter 6 [
 
 {{< slidebreak >}}
 
+{{< include _subfiles/feedforward-networks/_lse-shift-choice_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/feedforward-networks/_lse-shift-choice_sol.qmd >}}
+
+{{< slidebreak >}}
+
 {{< include _subfiles/feedforward-networks/_shift-lse_exm.qmd >}}
 
 {{< slidebreak >}}
@@ -211,11 +235,27 @@ The output units and universal approximation follow *Deep Learning*, Chapter 6 [
 
 {{< slidebreak >}}
 
+{{< include _subfiles/feedforward-networks/_two-class-loss_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/feedforward-networks/_two-class-loss_sol.qmd >}}
+
+{{< slidebreak >}}
+
 {{< include _subfiles/feedforward-networks/_real-output_exr.qmd >}}
 
 {{< slidebreak >}}
 
 {{< include _subfiles/feedforward-networks/_real-output_sol.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/feedforward-networks/_real-loss_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/feedforward-networks/_real-loss_sol.qmd >}}
 
 {{< slidebreak >}}
 
@@ -257,7 +297,15 @@ The output units and universal approximation follow *Deep Learning*, Chapter 6 [
 
 {{< slidebreak >}}
 
-{{< include _subfiles/feedforward-networks/_auto-widths_exm.qmd >}}
+{{< include _subfiles/feedforward-networks/_universal-approximation_exm.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/feedforward-networks/_auto-widths_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/feedforward-networks/_auto-widths_sol.qmd >}}
 
 {{< slidebreak >}}
 

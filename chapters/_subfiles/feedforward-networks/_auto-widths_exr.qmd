@@ -1,0 +1,10 @@
+::: {#exr-auto-widths}
+
+#### Wider networks on the Auto data
+
+Fit networks with one [hidden layer](#def-hidden-layer) of [ReLU](#def-relu) [unit](#def-unit)s,
+of [width](https://morrison-lab.github.io/lds/chapters/neural-nets.html#def-width) 1, 3 and 20,
+to miles per gallon on horsepower in the [Auto data](https://morrison-lab.github.io/lds/chapters/course-overview.html#def-auto-data).
+How does the training mean squared error change as the width grows?
+
+:::

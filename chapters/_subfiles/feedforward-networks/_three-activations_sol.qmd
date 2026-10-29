@@ -2,19 +2,23 @@
 
 ```{python}
 #| code-fold: show
+#| fig-alt: >-
+#|   Graphs of the logistic function, tanh and max(0, z) for z from -4 to 4.
+#|   The logistic and tanh curves are S-shaped and level off on both sides;
+#|   max(0, z) is 0 for negative z and rises along the line z for positive z.
 z = torch.linspace(-4, 4, 401)
 activations = {
     "logistic": torch.sigmoid(z),
     "tanh": torch.tanh(z),
     "max(0, z)": torch.relu(z),
 }
-fig, ax = plt.subplots(figsize=(6, 3.5))
+fig, ax = plt.subplots(figsize=(6, 3.5), layout="constrained")
 for name, value in activations.items():
-    ax.plot(z, value, label=name)
-ax.axhline(0, color="gray", linewidth=0.5)
-ax.set_xlabel("z")
-ax.set_ylabel("g(z)")
-ax.legend()
+    ax.plot(z, value, label=name);
+ax.axhline(0, color="gray", linewidth=0.5);
+ax.set_xlabel("z");
+ax.set_ylabel("g(z)");
+ax.legend();
 plt.show()
 ```
 
