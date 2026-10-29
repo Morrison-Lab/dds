@@ -1,0 +1,77 @@
+```{python}
+#| code-fold: show
+import copy
+
+import numpy as np
+import pandas as pd
+import torch
+from torch import nn
+import matplotlib.pyplot as plt
+
+_ = torch.manual_seed(481)
+digits = pd.read_csv("data/optdigits-test.csv", header=None)
+x = torch.tensor(digits.iloc[:, :64].to_numpy(), dtype=torch.float32) / 16
+y = torch.tensor(digits[64].to_numpy())
+n_train, n_val = 150, 400
+order = torch.randperm(len(x))
+train_idx = order[:n_train]
+val_idx = order[n_train:n_train + n_val]
+test_idx = order[n_train + n_val:]
+x_train, y_train = x[train_idx], y[train_idx]
+x_val, y_val = x[val_idx], y[val_idx]
+x_test, y_test = x[test_idx], y[test_idx]
+n_test = len(x_test)
+loss_fn = nn.CrossEntropyLoss()
+
+
+def make_net(p_drop=0.0, seed=1):
+    # 64 pixels, a hidden layer of 256 ReLU units, optional dropout, then 10 logits.
+    torch.manual_seed(seed)
+    return nn.Sequential(
+        nn.Linear(64, 256), nn.ReLU(), nn.Dropout(p_drop), nn.Linear(256, 10)
+    )
+
+
+def accuracy(net, inputs, targets):
+    # Share of `inputs` whose largest logit is the true digit.
+    net.eval()
+    with torch.no_grad():
+        return (net(inputs).argmax(dim=1) == targets).float().mean().item()
+
+
+def fit(net, n_epochs=300, weight_decay=0.0, transform=None, seed=0):
+    # Full-batch Adam on the training images.
+    # Records both losses after every epoch, and keeps the parameters
+    # from the epoch with the lowest validation loss.
+    optimizer = torch.optim.Adam(net.parameters(), lr=0.01, weight_decay=weight_decay)
+    generator = torch.Generator().manual_seed(seed)
+    history, best_state, best_val = [], None, float("inf")
+    for epoch in range(1, n_epochs + 1):
+        net.train()
+        inputs = x_train if transform is None else transform(x_train, generator)
+        optimizer.zero_grad()
+        loss_fn(net(inputs), y_train).backward()
+        optimizer.step()
+        net.eval()
+        with torch.no_grad():
+            train_loss = loss_fn(net(x_train), y_train).item()
+            val_loss = loss_fn(net(x_val), y_val).item()
+        history.append({"epoch": epoch, "train": train_loss, "val": val_loss})
+        if val_loss < best_val:
+            best_val, best_state = val_loss, copy.deepcopy(net.state_dict())
+    return pd.DataFrame(history), best_state
+
+
+print(len(x_train), len(x_val), len(x_test))
+```
+
+The exercises use the `r format(nrow(py$digits), big.mark = ",")` digits of [`data/optdigits-test.csv`](data/optdigits-test.csv) [@alpaydin1998optdigits].
+To make a network fit its training images too well,
+the [training set](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-training-set) here is small,
+`r py$n_train` random images.
+Another `r py$n_val` form a [validation set](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-validation-set),
+and the other `r py$n_test` a [test set](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-test-set).
+`make_net()` builds an [MLP](feedforward-networks.qmd#def-feedforward-network) with one [hidden layer](feedforward-networks.qmd#def-hidden-layer) of 256 [ReLU](feedforward-networks.qmd#def-relu) [units](feedforward-networks.qmd#def-unit),
+far more [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter) than training images.
+`fit()` trains it by full-batch [Adam](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-adam) with [learning rate](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-learning-rate) 0.01,
+and records the training and validation losses after every [epoch](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-epoch).

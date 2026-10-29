@@ -1,0 +1,38 @@
+::: {#sol-overfit-curves}
+
+```{python}
+#| code-fold: show
+#| fig-alt: >-
+#|   Training and validation loss on a log scale against epoch, over 300 epochs.
+#|   The training loss falls steadily toward 0.
+#|   The validation loss falls to a minimum early in training and then rises.
+plain_net = make_net()
+plain_history, plain_best_state = fit(plain_net)
+best_row = plain_history.loc[plain_history["val"].idxmin()]
+best_epoch = int(best_row["epoch"])
+best_val_loss = best_row["val"]
+final_row = plain_history.iloc[-1]
+fig, ax = plt.subplots(figsize=(6, 3.5), layout="constrained")
+ax.plot(plain_history["epoch"], plain_history["train"], label="training");
+ax.plot(plain_history["epoch"], plain_history["val"], label="validation");
+ax.axvline(best_epoch, color="gray", linestyle=":");
+ax.set_yscale("log");
+ax.set_xlabel("epoch");
+ax.set_ylabel("cross-entropy loss");
+ax.legend();
+plt.show()
+print(best_epoch, best_val_loss, final_row["train"], final_row["val"])
+```
+
+The training loss falls the whole time,
+to `r sprintf("%.1e", py$final_row[["train"]])` after 300 [epochs](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-epoch).
+The validation loss falls to its lowest value,
+`r sprintf("%.3f", py$best_val_loss)`,
+at [epoch](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-epoch) `r py$best_epoch`,
+marked by the dotted line,
+and then rises to `r sprintf("%.3f", py$final_row[["val"]])`.
+After epoch `r py$best_epoch` the network goes on fitting the training images
+in ways that do not carry over to new images:
+it [overfits](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-overfitting).
+
+:::

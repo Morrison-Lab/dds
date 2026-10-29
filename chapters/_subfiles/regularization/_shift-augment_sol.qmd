@@ -1,0 +1,33 @@
+::: {#sol-shift-augment}
+
+```{python}
+#| code-fold: show
+def random_shift(images, generator):
+    # Move each image by its own random (rows, cols), each -1, 0 or 1.
+    moves = torch.randint(-1, 2, (len(images), 2), generator=generator)
+    out = images.clone()
+    for rows in [-1, 0, 1]:
+        for cols in [-1, 0, 1]:
+            chosen = (moves[:, 0] == rows) & (moves[:, 1] == cols)
+            out[chosen] = shift_images(images[chosen], rows, cols)
+    return out
+
+
+shift_net = make_net()
+shift_history, shift_best_state = fit(shift_net, transform=random_shift)
+shift_stopped = make_net()
+_ = shift_stopped.load_state_dict(shift_best_state)
+acc_shift = accuracy(shift_stopped, x_test, y_test)
+print(acc_shift, acc_stopped)
+```
+
+The network trained on shifted images classifies `r sprintf("%.1f", 100 * py$acc_shift)`% of the test images correctly at its best [epoch](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-epoch),
+against `r sprintf("%.1f", 100 * py$acc_stopped)`% without shifts.
+So the answer is `r if (py$acc_shift > py$acc_stopped) "yes" else "no"`.
+Each pixel here counts the ink in a 4-by-4 block of a 32-by-32 bitmap [@alpaydin1998optdigits],
+so a one-pixel shift moves the digit by 4 pixels of the original bitmap.
+The test images are not shifted,
+so a shifted training image is unlike the images the network is tested on.
+A transformation for [data augmentation](#def-data-augmentation) should make inputs like the ones the network will see.
+
+:::

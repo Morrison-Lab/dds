@@ -1,0 +1,7 @@
+::: {#exr-dropout-scale}
+
+#### Why scale the units that are kept?
+
+Why does [dropout](#def-dropout) multiply the [units](feedforward-networks.qmd#def-unit) it keeps by $1 / (1 - p)$?
+
+:::

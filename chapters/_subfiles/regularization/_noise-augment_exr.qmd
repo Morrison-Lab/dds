@@ -1,0 +1,9 @@
+::: {#exr-noise-augment}
+
+#### Training on noisy digits
+
+Suppose `fit()` is given `transform=add_noise`,
+so that it trains on new noisy copies of the training images at every [epoch](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-epoch).
+Is the lowest validation loss of `make_net()` then lower than without noise?
+
+:::

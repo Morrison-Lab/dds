@@ -21,7 +21,7 @@ use_torch(c("numpy", "pandas", "matplotlib"))
 ::: notes
 Brian Hutchinson's CSCI 481/581 sets the order of topics in these notes,
 which follow it with his permission;
-this page covers the training algorithms and starting weights of his module on optimization and regularization.
+this page covers the training algorithms and starting weights of his module on optimization and [regularization](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-regularization).
 The exercises are new.
 Minibatches, momentum, Adam and starting weights follow *Deep Learning*, Chapter 8 [@goodfellow2016deep]. <!-- check-term-links: allow -->
 :::

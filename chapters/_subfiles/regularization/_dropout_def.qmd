@@ -1,0 +1,15 @@
+::: {#def-dropout}
+
+#### Dropout
+
+**Dropout** with rate $p$ sets each [unit](feedforward-networks.qmd#def-unit) of a [hidden layer](feedforward-networks.qmd#def-hidden-layer) to 0
+independently with probability $p$ at each [training step](pytorch-basics.qmd#def-training-step),
+and multiplies the [unit](feedforward-networks.qmd#def-unit)s it keeps by $1 / (1 - p)$.
+When the network makes predictions,
+dropout leaves the layer unchanged
+[@srivastava2014dropout; @goodfellow2016deep, section 7.12].
+@srivastava2014dropout instead multiply the weights out of the layer by $1 - p$ at prediction time,
+which gives the same expected values;
+PyTorch's `nn.Dropout` scales during training [@pytorch_dropout].
+
+:::

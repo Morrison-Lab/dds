@@ -1,0 +1,32 @@
+::: {#sol-weight-decay-sweep}
+
+```{python}
+#| code-fold: show
+decay_rows = []
+for weight_decay in [0, 1e-4, 1e-3, 1e-2, 1e-1]:
+    decay_net = make_net()
+    decay_history, _ = fit(decay_net, weight_decay=weight_decay)
+    decay_rows.append({
+        "weight_decay": weight_decay,
+        "train_loss": decay_history["train"].iloc[-1],
+        "val_loss": decay_history["val"].iloc[-1],
+        "test_accuracy": accuracy(decay_net, x_test, y_test),
+    })
+decay_table = pd.DataFrame(decay_rows)
+best_decay = decay_table.loc[decay_table["val_loss"].idxmin()]
+print(decay_table.round(4))
+```
+
+`weight_decay` $= `r py$best_decay[["weight_decay"]]`$ ends with the lowest validation loss,
+`r sprintf("%.3f", py$best_decay[["val_loss"]])`,
+against `r sprintf("%.3f", py$decay_table$val_loss[1])` with no [weight decay](https://morrison-lab.github.io/lds/chapters/regularization.html#def-weight-decay).
+That is also lower than the `r sprintf("%.3f", py$best_val_loss)` that [early stopping](#def-early-stopping) reached in @sol-overfit-curves.
+The largest value,
+$10^{-1}$,
+holds the weights so close to 0 that the network cannot fit even its training images:
+its training loss is `r sprintf("%.2f", py$decay_table$train_loss[5])`.
+The choice uses the [validation set](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-validation-set),
+not the [test set](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-test-set),
+so the test [accuracy](https://morrison-lab.github.io/lds/chapters/metrics.html#def-accuracy) stays a fair estimate for the chosen value.
+
+:::

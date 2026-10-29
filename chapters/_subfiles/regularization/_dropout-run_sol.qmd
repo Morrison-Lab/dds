@@ -1,0 +1,23 @@
+::: {#sol-dropout-run}
+
+```{python}
+#| code-fold: show
+drop_net = make_net(p_drop=0.5)
+drop_history, _ = fit(drop_net)
+drop_best_val = drop_history["val"].min()
+drop_final_val = drop_history["val"].iloc[-1]
+print(drop_best_val, best_val_loss, drop_final_val, final_row["val"])
+```
+
+With [dropout](#def-dropout) the lowest validation loss is `r sprintf("%.3f", py$drop_best_val)`,
+against `r sprintf("%.3f", py$best_val_loss)` without it,
+and the final one is `r sprintf("%.3f", py$drop_final_val)`,
+against `r sprintf("%.3f", py$final_row[["val"]])`.
+On this small problem,
+trained on all `r py$n_train` images at every step,
+dropout changes the validation loss little,
+and the [weight decay](https://morrison-lab.github.io/lds/chapters/regularization.html#def-weight-decay) of @sol-weight-decay-sweep does far more.
+How much a regularizer helps depends on the network and the data,
+which is why the [validation set](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-validation-set) decides.
+
+:::

@@ -1,0 +1,5 @@
+::: {.reading}
+*Deep Learning*'s [Chapter 7](https://www.deeplearningbook.org/contents/regularization.html) <!-- check-term-links: allow -->
+covers [early stopping](#def-early-stopping), [weight decay](https://morrison-lab.github.io/lds/chapters/regularization.html#def-weight-decay), [dropout](#def-dropout) and [data augmentation](#def-data-augmentation) [@goodfellow2016deep, Ch. 7].
+[lds's chapter on regularization](https://morrison-lab.github.io/lds/chapters/regularization.html) covers penalties on the weights in linear models. <!-- check-term-links: allow -->
+:::

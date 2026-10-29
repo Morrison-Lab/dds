@@ -1,0 +1,18 @@
+::: {#rem-weight-decay-pytorch}
+
+#### Weight decay in PyTorch
+
+[lds defines weight decay](https://morrison-lab.github.io/lds/chapters/regularization.html#def-weight-decay) for gradient descent. <!-- check-term-links: allow -->
+PyTorch's optimizers take it as the argument `weight_decay`, written $\lambda$ here.
+`torch.optim.SGD` and `torch.optim.Adam` add $\lambda \theta$ to the [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) of each [parameter](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter) $\theta$
+before they take their step [@pytorch_adam].
+For plain gradient descent,
+that shrinks every parameter by the same factor at each step.
+[Adam](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-adam) divides the added $\lambda \theta$ by its running scale of the gradient,
+so it shrinks [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter) with small [gradients](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) more than parameters with large ones.
+`torch.optim.AdamW` instead multiplies each parameter by $1 - \learnrate \lambda$ before Adam's step,
+the decoupled [weight decay](https://morrison-lab.github.io/lds/chapters/regularization.html#def-weight-decay) of @loshchilov2019decoupled.
+`weight_decay` applies to the biases too,
+unless the optimizer is given them as a separate group with `weight_decay=0`.
+
+:::

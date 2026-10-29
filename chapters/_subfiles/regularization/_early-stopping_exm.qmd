@@ -1,0 +1,27 @@
+::: {#exm-early-stopping}
+
+#### Stopping at the lowest validation loss
+
+```{python}
+#| code-fold: show
+stopped_net = make_net()
+_ = stopped_net.load_state_dict(plain_best_state)
+with torch.no_grad():
+    test_loss_stopped = loss_fn(stopped_net(x_test), y_test).item()
+    test_loss_final = loss_fn(plain_net(x_test), y_test).item()
+acc_stopped = accuracy(stopped_net, x_test, y_test)
+acc_final = accuracy(plain_net, x_test, y_test)
+print(test_loss_stopped, test_loss_final, acc_stopped, acc_final)
+```
+
+`fit()` already does [early stopping](#def-early-stopping):
+it keeps the [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter) of [epoch](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-epoch) `r py$best_epoch` of @sol-overfit-curves.
+On the `r py$n_test` test images,
+those parameters have loss `r sprintf("%.3f", py$test_loss_stopped)`,
+against `r sprintf("%.3f", py$test_loss_final)` after all 300 [epochs](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-epoch).
+The test accuracies are `r sprintf("%.1f", 100 * py$acc_stopped)`% and `r sprintf("%.1f", 100 * py$acc_final)`%.
+The [accuracy](https://morrison-lab.github.io/lds/chapters/metrics.html#def-accuracy) moves much less than the loss,
+because the loss also measures how much probability the network gives the true digit,
+not only whether that digit gets the most.
+
+:::

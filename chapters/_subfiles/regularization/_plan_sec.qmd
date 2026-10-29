@@ -1,0 +1,11 @@
+The [optimization chapter](optimization.qmd) made training faster.
+This lecture is about what training finds:
+a network with many [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter) can fit its [training set](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-training-set) far better than new images,
+and [regularization](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-regularization) trades some of that fit for better predictions.
+It covers
+
+1.  watching a [validation set](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-validation-set) during training,
+    and stopping at the best point;
+2.  [weight decay](https://morrison-lab.github.io/lds/chapters/regularization.html#def-weight-decay) in PyTorch's optimizers;
+3.  randomly switching off [units](feedforward-networks.qmd#def-unit) during training;
+4.  training on transformed copies of the training images.
