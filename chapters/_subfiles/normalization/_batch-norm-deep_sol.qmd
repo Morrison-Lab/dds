@@ -1,0 +1,20 @@
+::: {#sol-batch-norm-deep}
+
+```{python}
+#| code-fold: show
+batch_grad = first_layer_grad(make_deep(norm="batch"))
+batch_loss, batch_acc = train(make_deep(norm="batch"))
+print(batch_grad, batch_loss, batch_acc)
+```
+
+`r if (py$batch_loss < 0.9 * log(10)) "Yes" else "No"`.
+With [batch normalization](#def-batch-norm) in every block,
+the training loss after 5 [epochs](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-epoch) is `r sprintf("%.3f", py$batch_loss)`,
+and the network classifies `r sprintf("%.1f", 100 * py$batch_acc)`% of the test images correctly.
+The [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) at the first layer has size `r sprintf("%.1e", py$batch_grad)`,
+against `r sprintf("%.1e", py$plain_grad)` without it.
+Each block rescales its [pre-activation](feedforward-networks.qmd#def-pre-activation)s to standard deviation about 1,
+so the values do not shrink from block to block,
+and neither does the gradient.
+
+:::

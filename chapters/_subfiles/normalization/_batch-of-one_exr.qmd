@@ -1,0 +1,8 @@
+::: {#exr-batch-of-one}
+
+#### Predicting for one image
+
+Why can [batch normalization](#def-batch-norm) not use the mean and variance of the minibatch
+when a network makes a prediction for a single image?
+
+:::

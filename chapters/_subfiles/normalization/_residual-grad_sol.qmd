@@ -1,0 +1,20 @@
+::: {#sol-residual-grad}
+
+```{python}
+#| code-fold: show
+residual_grad = first_layer_grad(make_deep(residual=True))
+print(residual_grad, plain_grad)
+```
+
+The [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) has size `r sprintf("%.1e", py$residual_grad)`,
+against `r sprintf("%.1e", py$plain_grad)` without [residual connections](https://morrison-lab.github.io/lds/chapters/backpropagation.html#def-residual-connection).
+A block computes $\vhidval + f(\vhidval)$,
+so its derivative with respect to $\vhidval$ is the identity matrix plus the derivative of $f$.
+Going back through a block,
+the gradient keeps a copy of itself through the identity,
+however small the derivative of $f$ is.
+Without the [residual connection](https://morrison-lab.github.io/lds/chapters/backpropagation.html#def-residual-connection),
+the gradient passes only through the derivative of $f$,
+and shrinks when that derivative is small.
+
+:::

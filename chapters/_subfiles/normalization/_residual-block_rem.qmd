@@ -1,0 +1,11 @@
+::: {#rem-residual-block}
+
+#### Residual connections in `Block`
+
+`Block(width, residual=True)` returns $\vhidval + \operatorname{ReLU}\paren{\matr{W} \vhidval + \vecf{b}}$ for its input $\vhidval$,
+a [residual connection](https://morrison-lab.github.io/lds/chapters/backpropagation.html#def-residual-connection) around one [hidden layer](feedforward-networks.qmd#def-hidden-layer) [@he2016resnet].
+The input and output have the same [width](https://morrison-lab.github.io/lds/chapters/neural-nets.html#def-width),
+64,
+so the sum is defined.
+
+:::

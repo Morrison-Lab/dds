@@ -1,0 +1,11 @@
+::: {#exr-four-networks}
+
+#### Four 20-block networks
+
+Which of `make_deep()`,
+`make_deep(norm="batch")`,
+`make_deep(residual=True)`
+and `make_deep(norm="batch", residual=True)`
+reaches the lowest training loss in the 5 [epochs](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-epoch) of `train()`?
+
+:::

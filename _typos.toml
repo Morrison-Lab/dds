@@ -14,3 +14,5 @@ gam = "gam"
 # Surnames of Yee-Whye Teh and Martin Raison, authors cited in references.bib.
 Teh = "Teh"
 Raison = "Raison"
+# Surname of Jimmy Lei Ba, an author cited in references.bib.
+ba = "ba"

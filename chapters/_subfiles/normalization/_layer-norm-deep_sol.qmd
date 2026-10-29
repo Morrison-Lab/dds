@@ -1,0 +1,22 @@
+::: {#sol-layer-norm-deep}
+
+```{python}
+#| code-fold: show
+layer_grad = first_layer_grad(make_deep(norm="layer"))
+layer_loss, layer_acc = train(make_deep(norm="layer"))
+print(layer_grad, layer_loss, layer_acc)
+```
+
+`r if (py$layer_loss < 0.9 * log(10)) "Yes" else "No"`.
+With [layer normalization](#def-layer-norm),
+the training loss after 5 [epochs](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-epoch) is `r sprintf("%.3f", py$layer_loss)`,
+and the test [accuracy](https://morrison-lab.github.io/lds/chapters/metrics.html#def-accuracy) is `r sprintf("%.1f", 100 * py$layer_acc)`%,
+against `r sprintf("%.3f", py$batch_loss)` and `r sprintf("%.1f", 100 * py$batch_acc)`% with [batch normalization](#def-batch-norm).
+The [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) at the first layer has size `r sprintf("%.1e", py$layer_grad)`.
+Here layer normalization learns `r if (py$layer_loss > py$batch_loss) "less" else "more"` than batch normalization in the same 5 epochs.
+Because layer normalization never uses other examples,
+it also works for a minibatch of one
+and for sequences of different lengths
+[@ba2016layer].
+
+:::

@@ -1,0 +1,17 @@
+::: {#exm-layer-norm}
+
+#### `nn.LayerNorm` on one image
+
+```{python}
+#| code-fold: show
+layer_norm = nn.LayerNorm(64)
+row_normed = layer_norm(pre[:1]).detach()
+print(row_normed.mean().item(), row_normed.std(correction=0).item())
+```
+
+`nn.LayerNorm(64)` applies [layer normalization](#def-layer-norm) to each row of its input [@pytorch_layernorm].
+For the first training image alone,
+its 64 outputs have mean `r sprintf("%.1e", py$row_normed$mean()$item())`
+and standard deviation `r sprintf("%.3f", py$row_normed$std(correction = 0L)$item())`.
+
+:::

@@ -1,0 +1,85 @@
+```{python}
+#| code-fold: show
+import numpy as np
+import pandas as pd
+import torch
+from torch import nn
+
+_ = torch.manual_seed(481)
+digits = pd.read_csv("data/optdigits-test.csv", header=None)
+x = torch.tensor(digits.iloc[:, :64].to_numpy(), dtype=torch.float32) / 16
+y = torch.tensor(digits[64].to_numpy())
+n_train = 1200
+order = torch.randperm(len(x))
+x_train, y_train = x[order[:n_train]], y[order[:n_train]]
+x_test, y_test = x[order[n_train:]], y[order[n_train:]]
+loss_fn = nn.CrossEntropyLoss()
+
+
+class Block(nn.Module):
+    # One hidden layer of `width` ReLU units,
+    # with optional normalization of its pre-activations
+    # and an optional residual connection around it.
+
+    def __init__(self, width, norm="none", residual=False):
+        super().__init__()
+        self.linear = nn.Linear(width, width)
+        norms = {
+            "none": nn.Identity(),
+            "batch": nn.BatchNorm1d(width),
+            "layer": nn.LayerNorm(width),
+        }
+        self.norm = norms[norm]
+        self.residual = residual
+
+    def forward(self, h):
+        out = torch.relu(self.norm(self.linear(h)))
+        if self.residual:
+            return h + out
+        return out
+
+
+def make_deep(norm="none", residual=False, depth=20, width=64, seed=1):
+    # A first layer from the 64 pixels, `depth` blocks, then 10 logits.
+    torch.manual_seed(seed)
+    blocks = [Block(width, norm, residual) for _ in range(depth)]
+    return nn.Sequential(nn.Linear(64, width), nn.ReLU(), *blocks, nn.Linear(width, 10))
+
+
+def train(net, n_epochs=5, lr=0.01, batch_size=32, seed=0):
+    # Minibatch SGD; returns the training loss and the test accuracy at the end.
+    optimizer = torch.optim.SGD(net.parameters(), lr=lr)
+    generator = torch.Generator().manual_seed(seed)
+    for epoch in range(n_epochs):
+        net.train()
+        shuffled = torch.randperm(n_train, generator=generator)
+        for start in range(0, n_train, batch_size):
+            batch = shuffled[start:start + batch_size]
+            optimizer.zero_grad()
+            loss_fn(net(x_train[batch]), y_train[batch]).backward()
+            optimizer.step()
+    net.eval()
+    with torch.no_grad():
+        train_loss = loss_fn(net(x_train), y_train).item()
+        test_acc = (net(x_test).argmax(dim=1) == y_test).float().mean().item()
+    return train_loss, test_acc
+
+
+def first_layer_grad(net):
+    # Size of the loss gradient for the first layer's weights, on 256 training images.
+    net.train()
+    net.zero_grad()
+    loss_fn(net(x_train[:256]), y_train[:256]).backward()
+    return net[0].weight.grad.norm().item()
+
+
+print(make_deep()[:3])
+```
+
+The exercises use the digits split of the [feedforward networks chapter](feedforward-networks.qmd),
+with `r format(py$n_train, big.mark = ",")` training images.
+`make_deep()` builds an [MLP](feedforward-networks.qmd#def-feedforward-network) with 21 [hidden layers](feedforward-networks.qmd#def-hidden-layer) of 64 [ReLU](feedforward-networks.qmd#def-relu) [units](feedforward-networks.qmd#def-unit):
+a first layer from the pixels,
+then 20 copies of `Block`.
+`train()` runs 5 [epochs](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-epoch) of minibatch SGD with batch size 32 and [learning rate](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-learning-rate) 0.01.
+`first_layer_grad()` measures the size of the [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) that reaches the first layer.

@@ -1,0 +1,20 @@
+::: {#def-layer-norm}
+
+#### Layer normalization
+
+**Layer normalization** rescales the [pre-activation](feedforward-networks.qmd#def-pre-activation)s of a layer across the [units](feedforward-networks.qmd#def-unit) of one example.
+For an example with pre-activations $z_1, \dots, z_L$,
+it uses their mean and variance
+
+$$
+\mu = \frac{1}{L} \sumto{j}{L} z_j,
+\qquad
+\sigma^2 = \frac{1}{L} \sumto{j}{L} \paren{z_j - \mu}^2,
+$$
+
+and replaces each $z_j$ with $\gamma_j \paren{z_j - \mu} / \sqrt{\sigma^2 + \smallconst} + \beta_j$
+[@ba2016layer].
+It does the same in training and in prediction,
+since it never looks at other examples.
+
+:::

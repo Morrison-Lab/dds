@@ -1,0 +1,28 @@
+::: {#def-batch-norm}
+
+#### Batch normalization
+
+**Batch normalization** rescales each [pre-activation](feedforward-networks.qmd#def-pre-activation) of a layer across the examples of a minibatch.
+For a minibatch of $B$ examples,
+let $z_{ij}$ be pre-activation $j$ for example $i$,
+with mean and variance over the minibatch
+
+$$
+\mu_j = \frac{1}{B} \sumto{i}{B} z_{ij},
+\qquad
+\sigma_j^2 = \frac{1}{B} \sumto{i}{B} \paren{z_{ij} - \mu_j}^2.
+$$
+
+Batch normalization replaces $z_{ij}$ with
+
+$$
+\gamma_j \frac{z_{ij} - \mu_j}{\sqrt{\sigma_j^2 + \smallconst}} + \beta_j,
+$$
+
+where $\gamma_j$ and $\beta_j$ are [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter) learned with the rest,
+and $\smallconst$ is a small constant that keeps the division finite
+[@ioffe2015batch; @goodfellow2016deep, section 8.7.1].
+When the network makes predictions,
+running averages of $\mu_j$ and $\sigma_j^2$ from training take the place of the minibatch's.
+
+:::

@@ -1,0 +1,6 @@
+::: {.reading}
+*Deep Learning*'s [section 8.7.1](https://www.deeplearningbook.org/contents/optimization.html) covers batch normalization [@goodfellow2016deep]. <!-- check-term-links: allow -->
+@ioffe2015batch introduced batch normalization,
+@ba2016layer [layer normalization](#def-layer-norm),
+and @he2016resnet residual networks.
+:::
