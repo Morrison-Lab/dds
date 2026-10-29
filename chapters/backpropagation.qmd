@@ -21,9 +21,9 @@ use_torch(c("numpy", "pandas", "matplotlib"))
 ::: notes
 Brian Hutchinson's CSCI 481/581 sets the order of topics in these notes,
 which follow it with his permission;
-this page covers the [backpropagation](#def-backpropagation) lecture of his module on [machine learning](https://morrison-lab.github.io/lds/chapters/course-overview.html#def-machine-learning) fundamentals.
+this page covers the lecture on computing gradients in his module on [machine learning](https://morrison-lab.github.io/lds/chapters/course-overview.html#def-machine-learning) fundamentals.
 The exercises are new.
-The computational graph and the backward pass follow *Deep Learning*, Section 6.5 [@goodfellow2016deep]. <!-- check-term-links: allow -->
+Recording a computation and running it backward follow *Deep Learning*, Section 6.5 [@goodfellow2016deep]. <!-- check-term-links: allow -->
 :::
 
 # Welcome
@@ -36,7 +36,7 @@ The computational graph and the backward pass follow *Deep Learning*, Section 6.
 
 {{< include _subfiles/backpropagation/_digits-setup_sec.qmd >}}
 
-# Computational graphs
+# Recording a computation
 
 ## What the loss is made of
 
@@ -138,9 +138,9 @@ The computational graph and the backward pass follow *Deep Learning*, Section 6.
 
 {{< include _subfiles/backpropagation/_backprop-memory_rem.qmd >}}
 
-# Vanishing gradients
+# Gradients in deep networks
 
-## Gradients in a deep network
+## Gradient sizes layer by layer
 
 <!-- heading shares the slide; do not re-flag -->
 
