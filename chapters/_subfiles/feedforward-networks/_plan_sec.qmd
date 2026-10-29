@@ -1,0 +1,9 @@
+[The PyTorch chapter](pytorch-basics.qmd) fit the [soft 0-or-1 rule](pytorch-basics.qmd#sol-soft-rule-module),
+a model with one [parameter](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter).
+This lecture builds models that learn their own [features](https://morrison-lab.github.io/lds/chapters/course-overview.html#def-feature) of the digits:
+
+1.  what a stack of linear layers can and cannot compute,
+    and what a function applied between the layers changes;
+2.  how a network turns its last layer's numbers into class probabilities and a loss,
+    and how PyTorch computes that loss without overflowing;
+3.  how much a network with one layer of learned [features](https://morrison-lab.github.io/lds/chapters/course-overview.html#def-feature) can represent.

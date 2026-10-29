@@ -1,0 +1,12 @@
+::: {#sol-real-output}
+
+One number, with no [activation function](#def-activation-function):
+any real number can be a prediction,
+and squashing it with the [logistic function](https://morrison-lab.github.io/mds/functions.html#def-logistic-function) or the [ReLU](#def-relu) would rule some out.
+The loss is the mean squared error, PyTorch's `nn.MSELoss`.
+
+Minimizing the mean squared error is maximum likelihood when the output is the mean of a normal distribution with a fixed variance
+[@goodfellow2016deep, section 6.2.2.1],
+just as the [cross-entropy](https://morrison-lab.github.io/pds/expectation.html#def-cross-entropy) loss is maximum likelihood for the probabilities of the classes.
+
+:::

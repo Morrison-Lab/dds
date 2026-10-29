@@ -1,0 +1,18 @@
+::: {#rem-approximation-limits}
+
+#### What universal approximation leaves out
+
+@thm-universal-approximation says that some network of one [hidden layer](#def-hidden-layer) comes within $\epsilon$ of $f$.
+It does not say how wide that network must be, which can grow very fast with the number of inputs $d$,
+nor that training finds its [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter),
+nor that it predicts new data well
+[@goodfellow2016deep, section 6.4.1].
+
+[Depth](https://morrison-lab.github.io/lds/chapters/neural-nets.html#def-depth) helps with the first of these.
+A [ReLU](#def-relu) network's graph is made of straight pieces, as @sol-relu-bends showed for one input.
+For networks with the same total number of units,
+the number of pieces a deep network can make grows exponentially with its number of layers,
+while a network with one hidden layer makes far fewer [@montufar2014linear].
+Some functions with many pieces therefore need far fewer units when the units are spread over several layers.
+
+:::

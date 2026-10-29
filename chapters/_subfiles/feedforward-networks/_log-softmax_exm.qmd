@@ -1,0 +1,18 @@
+::: {#exm-log-softmax}
+
+#### Log softmax of the logits
+
+```{python}
+#| code-fold: show
+by_theorem = logits[0] - torch.logsumexp(logits[0], dim=0)
+by_torch = torch.log_softmax(logits[0], dim=0)
+log_softmax_gap = (by_theorem - by_torch).abs().max().item()
+print(by_theorem.detach().numpy().round(3))
+print(log_softmax_gap)
+```
+
+For the first test image, the [logits](#def-logits) minus their [log-sum-exp](#def-log-sum-exp)
+agree with PyTorch's `torch.log_softmax` to within `r format(py$log_softmax_gap, digits = 2)`.
+Each is near $\log \frac{1}{10} \approx `r sprintf("%.2f", log(0.1))`$.
+
+:::

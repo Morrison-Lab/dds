@@ -1,0 +1,18 @@
+::: {#sol-log-softmax}
+
+$$
+\begin{aligned}
+\log \operatorname{softmax}(\vz)_m
+&= \log \frac{\e{z_m}}{\sumto{k}{C} \e{z_k}}
+&& \text{(the softmax function)} \\
+&= \log \e{z_m} - \log \sumto{k}{C} \e{z_k}
+&& \text{(log of a quotient)} \\
+&= z_m - \log \sumto{k}{C} \e{z_k}
+&& \text{($\log$ undoes $\expt$)}
+\end{aligned}
+$$
+
+The first term needs no exponential at all.
+Only the second, the log of a sum of exponentials, can still overflow.
+
+:::

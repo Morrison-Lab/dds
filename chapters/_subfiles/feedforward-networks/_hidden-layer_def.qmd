@@ -1,0 +1,16 @@
+::: {#def-hidden-layer}
+
+#### Hidden layer
+
+A **hidden layer** of a network is a vector that the network computes from its input
+on the way to its output,
+and that is neither the input nor the output [@goodfellow2016deep, Ch. 6].
+
+The [training data](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-training-data) give an input and a target output for each example,
+but no target for a hidden layer:
+training chooses its values.
+Its entries are called units, or neurons,
+and their number is the layer's [width](https://morrison-lab.github.io/lds/chapters/neural-nets.html#def-width).
+These notes write a hidden layer as $\vhidval$.
+
+:::

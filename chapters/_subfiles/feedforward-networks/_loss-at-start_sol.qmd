@@ -1,0 +1,19 @@
+::: {#sol-loss-at-start}
+
+The [cross-entropy](https://morrison-lab.github.io/pds/expectation.html#def-cross-entropy) loss of one image is $-\log$ of the probability the network gives its true class.
+If every probability is $\frac{1}{10}$, every image's loss is $-\log \frac{1}{10} = \log 10$,
+and so is their mean.
+
+```{python}
+#| code-fold: show
+start_loss = nn.functional.cross_entropy(mlp(x_test), y_test).item()
+print(start_loss, np.log(10))
+```
+
+`nn.functional.cross_entropy` takes the [logits](#def-logits) and the true digits,
+and returns the mean loss over the [test set](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-test-set), `r sprintf("%.3f", py$start_loss)`,
+close to $\log 10 \approx `r sprintf("%.3f", log(10))`$.
+A training run whose first loss is far from $\log C$, for $C$ classes,
+is worth checking for a bug before it runs further.
+
+:::

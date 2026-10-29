@@ -1,0 +1,15 @@
+::: {#thm-shift-lse}
+
+#### Shifting log-sum-exp
+
+For $\vz \in \reals^C$ and any $c \in \reals$,
+
+$$
+\operatorname{LSE}(\vz) = c + \operatorname{LSE}(\vz - c).
+$$
+
+:::
+
+::: proof
+By @sol-shift-lse.
+:::

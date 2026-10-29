@@ -1,0 +1,14 @@
+::: {#sol-two-class-output}
+
+One number $z$, the [logit](#def-logits) of a 1,
+turned into a probability by the [logistic function](https://morrison-lab.github.io/mds/functions.html#def-logistic-function), $\sigmoidf{z}$,
+with the [log loss](https://morrison-lab.github.io/lds/chapters/logistic-regression.html#def-log-loss) as its loss.
+That is the [soft 0-or-1 rule](pytorch-basics.qmd#sol-soft-rule-module) of the PyTorch chapter,
+with $z$ computed by a network instead of from one [feature](https://morrison-lab.github.io/lds/chapters/course-overview.html#def-feature).
+PyTorch's `nn.BCEWithLogitsLoss` takes $z$ itself, for the reason of @rem-cross-entropy-takes-logits.
+
+Two outputs with softmax would also work, but carry one number too many:
+$\operatorname{softmax}(z_1, z_2)_2 = \sigmoidf{z_2 - z_1}$,
+so only the difference of the two [logits](#def-logits) matters.
+
+:::

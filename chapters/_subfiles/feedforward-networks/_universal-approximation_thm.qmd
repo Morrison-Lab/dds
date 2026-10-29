@@ -1,0 +1,25 @@
+::: {#thm-universal-approximation}
+
+#### Universal approximation
+
+Let $g$ be a continuous [activation function](#def-activation-function) that is not a polynomial,
+such as the [logistic function](https://morrison-lab.github.io/mds/functions.html#def-logistic-function) or the [ReLU](#def-relu).
+For every continuous function $f$ on a closed and bounded set $K \subset \reals^d$ and every $\epsilon > 0$,
+there is a [width](https://morrison-lab.github.io/lds/chapters/neural-nets.html#def-width) $L$ and [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter) $\vw_i \in \reals^d$ and $b_i, v_i, c \in \reals$ such that
+
+$$
+\abs{f(\vx) - \paren{c + \sumto{i}{L} v_i \, g\paren{\tp{\vw_i} \vx + b_i}}} < \epsilon
+\quad \text{for every } \vx \in K.
+$$
+
+[@leshno1993multilayer; @goodfellow2016deep, section 6.4.1].
+
+:::
+
+::: proof
+For one input and the [ReLU](#def-relu), @sol-any-curve gives the idea.
+@cybenko1989approximation proved the theorem for logistic-shaped [activation functions](#def-activation-function),
+@hornik1991approximation for bounded nonconstant ones,
+and @leshno1993multilayer for every [activation function](#def-activation-function) that is not a polynomial;
+those proofs need more analysis than these notes assume.
+:::

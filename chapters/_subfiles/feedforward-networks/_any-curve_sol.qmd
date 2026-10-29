@@ -1,0 +1,13 @@
+::: {#sol-any-curve}
+
+Yes, with enough units.
+Mark points on the graph of $f$ at closely spaced values of $z$,
+and join neighbouring points with straight lines.
+Because $f$ is continuous on a closed interval,
+it changes little between nearby points,
+so the joined-up graph stays as close to $f$ as you like once the points are close enough together.
+The joined-up graph is a chain of straight pieces with one bend at each inner point,
+and by @sol-relu-bends a network with one unit per bend can draw such a chain:
+each unit $v_i \maxf{0, z - t_i}$ adds a change of slope $v_i$ at its bend $t_i$.
+
+:::

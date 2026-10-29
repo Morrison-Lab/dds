@@ -47,8 +47,8 @@ The final's review session will be held during finals week, at a time TBD.
 | Mar 28 -- Apr 3          |                              | [Course overview][co]        |                              |                              |
 |                          |                              |                              | [Tensors][pt] (begun)        |                              |
 +--------------------------+------------------------------+------------------------------+------------------------------+------------------------------+
-| **Week 2**               | [Tensors and automatic       | Feedforward networks: layers | Feedforward networks: output | Lab session: Homework 1      |
-|                          | differentiation][pt]         | and activations              | units, losses,               |                              |
+| **Week 2**               | [Tensors and automatic       | [Feedforward networks][ff]:  | [Feedforward networks][ff]:  | Lab session: Homework 1      |
+|                          | differentiation][pt]         | layers and activations       | output units, losses,        |                              |
 | Apr 4 -- Apr 10          |                              |                              | representational power       |                              |
 +--------------------------+------------------------------+------------------------------+------------------------------+------------------------------+
 | **Week 3**               | Backpropagation              | Optimization: minibatch      | Optimization: Adam,          | Lab session: Homework 2      |
@@ -109,4 +109,5 @@ The final's review session will be held during finals week, at a time TBD.
 [co]: course-overview.qmd
 [ml]: ml-review.qmd
 [pt]: pytorch-basics.qmd
+[ff]: feedforward-networks.qmd
 [lds]: https://morrison-lab.github.io/lds/

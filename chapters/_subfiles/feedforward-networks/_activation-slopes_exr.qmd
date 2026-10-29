@@ -1,0 +1,8 @@
+::: {#exr-activation-slopes}
+
+#### Where the slopes vanish
+
+For which $z$ is the derivative of each [activation function](#def-activation-function) of @exr-three-activations close to 0?
+Compute the derivatives with [automatic differentiation](pytorch-basics.qmd#def-automatic-differentiation).
+
+:::

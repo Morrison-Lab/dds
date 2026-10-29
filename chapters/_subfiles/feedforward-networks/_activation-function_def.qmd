@@ -1,0 +1,16 @@
+::: {#def-activation-function}
+
+#### Activation function (nonlinearity)
+
+An **activation function**, or **nonlinearity**, is a fixed function $g: \reals \to \reals$, not an [affine function](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-affine-function),
+that a network applies to each entry of an affine function of the layer before,
+so that a [hidden layer](#def-hidden-layer) is
+
+$$
+\vhidval = g\paren{\matr{W} \vx + \vecf{b}},
+$$
+
+with $g$ applied entry by entry [@goodfellow2016deep, section 6.3].
+The vector $\matr{W} \vx + \vecf{b}$ that goes into $g$ is called the layer's pre-activation.
+
+:::

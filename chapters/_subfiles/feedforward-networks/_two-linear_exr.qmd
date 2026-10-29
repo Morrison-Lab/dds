@@ -1,0 +1,9 @@
+::: {#exr-two-linear}
+
+#### Two layers with nothing between them
+
+`nn.Linear(64, 32)` maps a digit's 64 pixels $\vx$ to 32 numbers $\matr{W}_1 \vx + \vecf{b}_1$,
+and `nn.Linear(32, 10)` maps 32 numbers $\vecf{u}$ to 10 numbers $\matr{W}_2 \vecf{u} + \vecf{b}_2$.
+What kind of function of $\vx$ does the stack `second(first(x))` compute?
+
+:::

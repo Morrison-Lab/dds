@@ -1,0 +1,10 @@
+::: {#exr-three-activations}
+
+#### Three activation functions
+
+How do the [logistic function](https://morrison-lab.github.io/mds/functions.html#def-logistic-function) $\sigmoidf{z}$,
+the hyperbolic tangent $\tanhf{z}$,
+and the function $\maxf{0, z}$
+behave as $z$ grows large and positive, and large and negative?
+
+:::

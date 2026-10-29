@@ -1,0 +1,17 @@
+::: {#exm-hidden-layer}
+
+#### The 32 hidden values of one digit
+
+```{python}
+#| code-fold: show
+hidden = torch.sigmoid(first(x_test[0]))
+print(hidden.shape)
+print(hidden.detach().numpy().round(2))
+```
+
+In @sol-function-between, `torch.sigmoid(first(x))` is a [hidden layer](#def-hidden-layer) of [width](https://morrison-lab.github.io/lds/chapters/neural-nets.html#def-width) 32.
+For the first test image it holds the 32 numbers printed, each between 0 and 1.
+`.detach()` drops the record that [automatic differentiation](pytorch-basics.qmd#def-automatic-differentiation) keeps,
+so that NumPy can print the values.
+
+:::

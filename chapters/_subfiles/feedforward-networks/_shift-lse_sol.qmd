@@ -1,0 +1,23 @@
+::: {#sol-shift-lse}
+
+$$
+\begin{aligned}
+\operatorname{LSE}(\vz)
+&= \log \sumto{k}{C} \e{z_k}
+&& \text{(definition of $\operatorname{LSE}$)} \\
+&= \log \sumto{k}{C} \e{c} \e{z_k - c}
+&& \text{(add and subtract $c$ in each exponent)} \\
+&= \log \paren{\e{c} \sumto{k}{C} \e{z_k - c}}
+&& \text{(take $\e{c}$ out of the sum)} \\
+&= c + \log \sumto{k}{C} \e{z_k - c}
+&& \text{(log of a product)} \\
+&= c + \operatorname{LSE}(\vz - c)
+&& \text{(definition of $\operatorname{LSE}$)}
+\end{aligned}
+$$
+
+Take $c = \max_k z_k$.
+Then every exponent $z_k - c$ is at most 0, so no exponential exceeds 1,
+and one exponent is exactly 0, so the sum is at least 1 and its log is not $-\infty$.
+
+:::

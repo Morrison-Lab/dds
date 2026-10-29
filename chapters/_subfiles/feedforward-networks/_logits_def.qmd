@@ -1,0 +1,16 @@
+::: {#def-logits}
+
+#### Logits
+
+The **logits** of a classification network are the numbers its output layer computes for each class,
+before the [softmax function](https://morrison-lab.github.io/lds/chapters/multiclass-logistic-regression.html#def-softmax) turns them into probabilities.
+PyTorch's documentation uses this name.
+
+The name comes from the logit function, the [log odds](https://morrison-lab.github.io/pds/probability-basics.html#def-log-odds),
+but most logits are not log odds.
+Adding one number to every logit leaves the softmax unchanged,
+so only their differences matter:
+with two classes, the difference $z_2 - z_1$ is the log odds of class 2.
+Other names for logits are scores and unnormalized log probabilities.
+
+:::

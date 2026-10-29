@@ -1,0 +1,18 @@
+::: {#exm-relu}
+
+#### ReLU on the digits
+
+```{python}
+#| code-fold: show
+hidden_relu = torch.relu(first(x_test))
+zero_share = (hidden_relu == 0).float().mean().item()
+print(hidden_relu.shape, zero_share)
+```
+
+Applying the [ReLU](#def-relu) to the pre-activations of the first layer of @exr-two-linear,
+for all `r py$n_test` test images,
+gives a [hidden layer](#def-hidden-layer) of [width](https://morrison-lab.github.io/lds/chapters/neural-nets.html#def-width) 32 for each image.
+`r sprintf("%.0f", 100 * py$zero_share)`% of its entries are exactly 0,
+one for each negative pre-activation.
+
+:::

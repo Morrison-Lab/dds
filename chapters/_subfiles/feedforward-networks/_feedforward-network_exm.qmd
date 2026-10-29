@@ -1,0 +1,24 @@
+::: {#exm-feedforward-network}
+
+#### An MLP for the digits
+
+```{python}
+#| code-fold: show
+_ = torch.manual_seed(1)
+mlp = nn.Sequential(
+    nn.Linear(64, 32),
+    nn.ReLU(),
+    nn.Linear(32, 10),
+)
+print(mlp)
+scores = mlp(x_test[:5])
+print(scores.shape)
+```
+
+`nn.Sequential` applies its layers in order,
+so `mlp` is a [feedforward network](#def-feedforward-network) with one [hidden layer](#def-hidden-layer) of [width](https://morrison-lab.github.io/lds/chapters/neural-nets.html#def-width) 32,
+the [ReLU](#def-relu) as its [activation function](#def-activation-function),
+and 10 outputs, one per digit.
+For 5 test images it returns a [tensor](pytorch-basics.qmd#def-tensor) of [shape](pytorch-basics.qmd#def-shape) (5, 10): 10 numbers for each image.
+
+:::

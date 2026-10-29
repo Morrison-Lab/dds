@@ -1,0 +1,17 @@
+::: {#exm-logits}
+
+#### Shifting the logits
+
+```{python}
+#| code-fold: show
+logits = mlp(x_test[:1])
+shifted = logits + 5
+softmax_gap = (torch.softmax(shifted, dim=1) - torch.softmax(logits, dim=1)).abs().max().item()
+print(logits.detach().numpy().round(3))
+print(softmax_gap)
+```
+
+The [logits](#def-logits) of the first test image are the 10 numbers printed.
+Adding 5 to each changes the softmax probabilities by at most `r format(py$softmax_gap, digits = 2)`, a rounding error.
+
+:::

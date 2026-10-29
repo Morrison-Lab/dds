@@ -1,0 +1,11 @@
+::: {#exr-train-mlp}
+
+#### Training the MLP on the digits
+
+Train the [MLP](#def-feedforward-network) of @exm-feedforward-network on the 1,200 training images,
+with `nn.CrossEntropyLoss`,
+taking 500 steps of `torch.optim.SGD` with a learning rate of 0.5,
+each on the whole [training set](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-training-set).
+What fraction of the test images does it classify correctly?
+
+:::

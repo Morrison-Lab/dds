@@ -1,0 +1,8 @@
+::: {#exr-real-output}
+
+#### An output layer for a number
+
+An [MLP](#def-feedforward-network) is to predict a car's fuel economy in miles per gallon.
+What should its output layer compute, and what loss fits it?
+
+:::
