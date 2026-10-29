@@ -1,0 +1,7 @@
+::: {#exr-two-class-loss}
+
+#### A loss for two classes
+
+What loss should training minimize for the output layer of @sol-two-class-output?
+
+:::

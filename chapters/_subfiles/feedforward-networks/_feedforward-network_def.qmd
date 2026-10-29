@@ -3,7 +3,7 @@
 #### Feedforward network (multilayer perceptron, MLP)
 
 A **feedforward network**, or **multilayer perceptron** (**MLP**),
-computes its output $\hat{\vecf{y}}$ from its input $\vx$
+computes its output $\vecf{\hy}$ from its input $\vx$
 through a sequence of $K$ [hidden layers](#def-hidden-layer),
 
 $$
@@ -11,7 +11,7 @@ $$
 \vhidval^{(1)} &= g\paren{\matr{W}^{(1)} \vx + \vecf{b}^{(1)}}, \\
 \vhidval^{(\layeridx)} &= g\paren{\matr{W}^{(\layeridx)} \vhidval^{(\layeridx - 1)} + \vecf{b}^{(\layeridx)}},
 \qquad \layeridx = 2, \dots, K, \\
-\hat{\vecf{y}} &= \matr{W}^{(K + 1)} \vhidval^{(K)} + \vecf{b}^{(K + 1)},
+\vecf{\hy} &= \matr{W}^{(K + 1)} \vhidval^{(K)} + \vecf{b}^{(K + 1)},
 \end{aligned}
 $$
 
@@ -23,8 +23,8 @@ Information flows from the input to the output, with no path from a later layer 
 Every layer of an MLP is [fully connected](https://morrison-lab.github.io/lds/chapters/neural-nets.html#def-fully-connected),
 so it is also called a fully connected network,
 and *Deep Learning* calls it a deep feedforward network. <!-- check-term-links: allow -->
-It has no perceptrons in the sense of Rosenblatt's threshold unit [@rosenblatt1958perceptron];
-the name is historical.
+It contains no perceptron in Rosenblatt's sense, a threshold function of a weighted sum [@rosenblatt1958perceptron],
+so the name is historical.
 Its [depth](https://morrison-lab.github.io/lds/chapters/neural-nets.html#def-depth) is $K + 1$.
 The last layer has no activation function;
 how its numbers become predictions depends on the task.

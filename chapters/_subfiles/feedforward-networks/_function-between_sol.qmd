@@ -17,14 +17,14 @@ For the first two test images, which show the digits `r py$y_test[0]$item()` and
 the stack with nothing between its layers maps their midpoint to the midpoint of their outputs,
 to within `r format(py$gap_linear, digits = 2)`, a rounding error.
 With $\sigmoid$ between the layers it misses by up to `r format(py$gap_logistic, digits = 2)`,
-`r sprintf("%.0f", py$gap_logistic / py$gap_linear)` times as much,
+far more than a rounding error,
 so it is not an [affine function](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-affine-function).
 The gap is small because the untrained first layer gives numbers near 0,
 where $\sigmoid$ is close to a straight line;
-training can move them to where it bends.
+training can move them to where $\sigmoid$ bends.
 
-$\sigmoid$ bends each of the 32 numbers,
-so each of the 10 outputs is an affine function of 32 bent [features](https://morrison-lab.github.io/lds/chapters/course-overview.html#def-feature),
+The [logistic function](https://morrison-lab.github.io/mds/functions.html#def-logistic-function) bends each of the 32 numbers,
+so each of the 10 outputs is an affine function of 32 bent [features](https://morrison-lab.github.io/lds/chapters/anatomy.html#def-feature),
 not of the pixels.
 Training moves $\matr{W}_1$ and $\vecf{b}_1$ as well as $\matr{W}_2$ and $\vecf{b}_2$,
 so it chooses those features.

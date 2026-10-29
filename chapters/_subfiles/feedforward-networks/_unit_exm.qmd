@@ -1,0 +1,9 @@
+::: {#exm-unit}
+
+#### One unit of the digits network
+
+The [hidden layer](#def-hidden-layer) of @exm-hidden-layer has `r py$hidden$numel()` [units](#def-unit).
+For the first test image, [unit](#def-unit) 1 holds `r sprintf("%.2f", py$hidden[0]$item())`,
+the first number printed there.
+
+:::

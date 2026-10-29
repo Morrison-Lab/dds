@@ -3,6 +3,6 @@
 #### An output layer for two classes
 
 An [MLP](#def-feedforward-network) is to tell 0s from 1s, predicting the probability that a digit is a 1.
-What should its output layer compute, and what loss fits it?
+What should its output layer compute?
 
 :::

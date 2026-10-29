@@ -1,0 +1,7 @@
+::: {#exr-lse-shift-choice}
+
+#### Choosing the shift
+
+Which $c$ in @thm-shift-lse keeps every exponential in $\operatorname{LSE}(\vz - c)$ from overflowing?
+
+:::

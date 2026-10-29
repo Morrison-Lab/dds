@@ -1,0 +1,8 @@
+::: {#def-pre-activation}
+
+#### Pre-activation
+
+The **pre-activation** of a [hidden layer](#def-hidden-layer) $\vhidval = g\paren{\matr{W} \vx + \vecf{b}}$
+is the vector $\matr{W} \vx + \vecf{b}$ that goes into its [activation function](#def-activation-function) $g$.
+
+:::

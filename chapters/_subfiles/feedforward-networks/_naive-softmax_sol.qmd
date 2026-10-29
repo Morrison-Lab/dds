@@ -14,7 +14,7 @@ The result holds `nan`s.
 A `float32` number cannot be larger than about $`r sprintf("%.1f", py$largest_float / 10^floor(log10(py$largest_float)))` \times 10^{`r floor(log10(py$largest_float))`}$,
 so `torch.exp(z)` is infinite for every $z$ above the log of that number, about `r sprintf("%.1f", log(py$largest_float))`,
 and infinity divided by infinity is `nan`.
-For [logits](#def-logits) far below 0, `torch.exp` returns 0,
-and the log of that probability is $-\infty$.
+Every other entry has a finite exponential divided by that infinite sum,
+so its probability is 0, and the log of 0 is $-\infty$.
 
 :::

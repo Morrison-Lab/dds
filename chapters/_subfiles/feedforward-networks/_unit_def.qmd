@@ -1,0 +1,8 @@
+::: {#def-unit}
+
+#### Unit (neuron)
+
+A **unit**, or **neuron**, is one entry of a [hidden layer](#def-hidden-layer) [@goodfellow2016deep, Ch. 6].
+The number of units in a hidden layer is its [width](https://morrison-lab.github.io/lds/chapters/neural-nets.html#def-width).
+
+:::

@@ -11,6 +11,5 @@ $$
 $$
 
 with $g$ applied entry by entry [@goodfellow2016deep, section 6.3].
-The vector $\matr{W} \vx + \vecf{b}$ that goes into $g$ is called the layer's pre-activation.
 
 :::

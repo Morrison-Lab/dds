@@ -1,0 +1,12 @@
+::: {#exm-universal-approximation}
+
+#### Universal approximation for one input
+
+For one input, the [ReLU](#def-relu) and a closed interval $[a, b]$,
+@sol-any-curve builds the network that @thm-universal-approximation promises:
+it joins points on the graph of $f$ with straight pieces,
+and gives the network one [unit](#def-unit) for each piece.
+Making the pieces shorter brings the network closer to $f$,
+at the cost of more [unit](#def-unit)s.
+
+:::

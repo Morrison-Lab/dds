@@ -1,0 +1,7 @@
+::: {#sol-two-class-loss}
+
+Use the [log loss](https://morrison-lab.github.io/lds/chapters/logistic-regression.html#def-log-loss),
+which is the [cross-entropy](https://morrison-lab.github.io/pds/expectation.html#def-cross-entropy) loss for two classes.
+PyTorch's `nn.BCEWithLogitsLoss` takes the [logit](#def-logits) $z$ itself, for the reason of @rem-cross-entropy-takes-logits.
+
+:::

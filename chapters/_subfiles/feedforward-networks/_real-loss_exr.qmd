@@ -1,0 +1,7 @@
+::: {#exr-real-loss}
+
+#### A loss for a number
+
+What loss should training minimize for the output layer of @sol-real-output?
+
+:::
