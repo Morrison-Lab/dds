@@ -1,0 +1,25 @@
+::: {#sol-linear-param-grad}
+
+Entry $j$ of the output is $z_j = \sum_k W_{jk} h_k + b_j$,
+so $W_{jk}$ affects $\loss$ only through $z_j$.
+
+$$
+\begin{aligned}
+\derivf{\loss}{W_{jk}}
+&= \derivf{\loss}{z_j} \derivf{z_j}{W_{jk}}
+&& \text{(chain rule through $z_j$)} \\
+&= \backerr_j h_k
+&& \text{(since $\derivf{z_j}{W_{jk}} = h_k$)}
+\end{aligned}
+$$
+
+As a matrix,
+
+$$
+\gradwrt{\matr{W}} \loss = \oprod{\vbackerr}{\vhidval},
+$$
+
+an $m \times n$ outer product for a layer with $n$ inputs and $m$ outputs,
+with the same [shape](pytorch-basics.qmd#def-shape) as $\matr{W}$.
+
+:::

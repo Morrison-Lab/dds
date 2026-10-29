@@ -1,0 +1,46 @@
+::: {#sol-deep-grad-norms}
+
+```{python}
+#| code-fold: show
+#| fig-alt: >-
+#|   Size of the weight gradient at each of the 11 layers of two deep networks, on a log scale.
+#|   For the logistic network it falls by many orders of magnitude from the last layer to the first;
+#|   for the ReLU network it falls by far less.
+def deep_mlp(activation, n_hidden=10, width=32):
+    _ = torch.manual_seed(0)
+    layers, n_in = [], 64
+    for layer in range(n_hidden):
+        layers += [nn.Linear(n_in, width), activation()]
+        n_in = width
+    layers.append(nn.Linear(width, 10))
+    return nn.Sequential(*layers)
+
+
+grad_norms = {}
+for name, activation in [("logistic", nn.Sigmoid), ("ReLU", nn.ReLU)]:
+    net = deep_mlp(activation)
+    loss_fn(net(x_train), y_train).backward()
+    grad_norms[name] = [m.weight.grad.norm().item() for m in net if isinstance(m, nn.Linear)]
+
+fig, ax = plt.subplots(figsize=(6, 3.5), layout="constrained")
+for name, norms in grad_norms.items():
+    ax.semilogy(range(1, len(norms) + 1), norms, marker="o", label=name);
+ax.set_xlabel("layer (1 = first)");
+ax.set_ylabel("size of weight gradient");
+ax.legend();
+plt.show()
+shrink = {name: norms[-1] / norms[0] for name, norms in grad_norms.items()}
+print(shrink)
+```
+
+The size of a matrix here is the square root of the sum of its squared entries.
+In both networks the weight [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) is largest at the last layer.
+With the [logistic function](https://morrison-lab.github.io/mds/functions.html#def-logistic-function),
+the weight gradient shrinks at every layer going back,
+and the last layer's weight gradient is about $10^{`r round(log10(py$shrink[["logistic"]]))`}$ times the first layer's.
+With the [ReLU](feedforward-networks.qmd#def-relu),
+the weight gradient shrinks over the last few layers and then levels off,
+and the last layer's is `r sprintf("%.0f", py$shrink[["ReLU"]])` times the first layer's.
+A [training step](pytorch-basics.qmd#def-training-step) with one learning rate would move the logistic network's first layers almost not at all.
+
+:::

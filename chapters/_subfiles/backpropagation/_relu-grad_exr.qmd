@@ -1,0 +1,9 @@
+::: {#exr-relu-grad}
+
+#### Back through the ReLU
+
+The [hidden layer](feedforward-networks.qmd#def-hidden-layer) is $\vhidval = \operatorname{ReLU}(\vz_1)$, entry by entry,
+and $\gradwrt{\vhidval} \loss$ is known.
+Find $\gradwrt{\vz_1} \loss$.
+
+:::

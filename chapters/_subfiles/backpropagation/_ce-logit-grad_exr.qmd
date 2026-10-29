@@ -1,0 +1,16 @@
+::: {#exr-ce-logit-grad}
+
+#### The gradient at the logits
+
+Find the derivative of the [cross-entropy](https://morrison-lab.github.io/pds/expectation.html#def-cross-entropy) loss $\loss = -\log \operatorname{softmax}(\vz)_y$,
+where softmax is the [softmax function](https://morrison-lab.github.io/lds/chapters/multiclass-logistic-regression.html#def-softmax),
+with respect to each [logit](feedforward-networks.qmd#def-logits) $z_m$,
+for $m = 1, \dots, C$,
+where $C$ is the number of classes.
+
+::: {.callout-tip}
+#### Hint
+Start from [the log softmax theorem](feedforward-networks.qmd#thm-log-softmax).
+:::
+
+:::

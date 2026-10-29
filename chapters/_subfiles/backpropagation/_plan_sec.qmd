@@ -1,0 +1,12 @@
+[Automatic differentiation](pytorch-basics.qmd#def-automatic-differentiation) gave the derivative of a loss without anyone writing it down.
+This lecture opens it up for the [MLP](feedforward-networks.qmd#def-feedforward-network) on the digits:
+
+1.  how PyTorch records the operations that compute a loss;
+2.  how the chain rule, applied to those operations from the loss back to the input,
+    gives the [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) with respect to every [parameter](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter) at once,
+    and how to compute it by hand and match PyTorch;
+3.  why that costs only a few times as much as computing the loss once;
+4.  why the gradient can shrink layer by layer in a deep network.
+
+[lds's chapter on the same algorithm](https://morrison-lab.github.io/lds/chapters/backpropagation.html) derives it for a general network with one hidden layer, <!-- check-term-links: allow -->
+and runs more experiments on [depth](https://morrison-lab.github.io/lds/chapters/neural-nets.html#def-depth).

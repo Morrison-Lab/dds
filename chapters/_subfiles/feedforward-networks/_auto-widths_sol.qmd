@@ -46,7 +46,7 @@ The [Auto data](https://morrison-lab.github.io/lds/chapters/course-overview.html
 from a local copy, [`data/auto.csv`](data/auto.csv), of the version in lds.
 Each network fits miles per gallon on horsepower,
 rescaled to mean 0 and standard deviation 1,
-by `r format(py$n_steps, big.mark = ",")` steps of gradient descent on the mean squared error.
+by `r format(py$n_steps, big.mark = ",")` steps of [gradient descent](https://morrison-lab.github.io/mds/optimization.html#def-gradient-descent) on the mean squared error.
 With 1 [unit](#def-unit) the fit can bend only once,
 and its training mean squared error is `r sprintf("%.1f", py$auto_mse[["1"]])`.
 With 3 [unit](#def-unit)s it is `r sprintf("%.1f", py$auto_mse[["3"]])`,

@@ -1,0 +1,29 @@
+```{python}
+#| code-fold: show
+import time
+
+import numpy as np
+import pandas as pd
+import torch
+from torch import nn
+import matplotlib.pyplot as plt
+
+_ = torch.manual_seed(481)
+digits = pd.read_csv("data/optdigits-test.csv", header=None)
+x = torch.tensor(digits.iloc[:, :64].to_numpy(), dtype=torch.float32) / 16
+y = torch.tensor(digits[64].to_numpy())
+n_train = 1200
+order = torch.randperm(len(x))
+x_train, y_train = x[order[:n_train]], y[order[:n_train]]
+
+_ = torch.manual_seed(1)
+mlp = nn.Sequential(nn.Linear(64, 32), nn.ReLU(), nn.Linear(32, 10))
+loss_fn = nn.CrossEntropyLoss()
+print(mlp)
+```
+
+The exercises use the same digits, split and network as the [feedforward networks chapter](feedforward-networks.qmd#exm-feedforward-network):
+the `r format(nrow(py$digits), big.mark = ",")` images of [`data/optdigits-test.csv`](data/optdigits-test.csv) [@alpaydin1998optdigits],
+with pixels divided by 16,
+a random `r format(py$n_train, big.mark = ",")` of them as the [training set](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-training-set),
+and an untrained [MLP](feedforward-networks.qmd#def-feedforward-network) with one [hidden layer](feedforward-networks.qmd#def-hidden-layer) of `r py$mlp[0]$out_features` [ReLU](feedforward-networks.qmd#def-relu) [units](feedforward-networks.qmd#def-unit).

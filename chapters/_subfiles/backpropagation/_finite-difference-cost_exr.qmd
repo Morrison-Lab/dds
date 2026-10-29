@@ -1,0 +1,11 @@
+::: {#exr-finite-difference-cost}
+
+#### The cost of finite differences
+
+A finite difference,
+$\paren{\loss(\theta_i + \smallconst) - \loss(\theta_i)} / \smallconst$ for a small $\smallconst$,
+estimates the derivative of the [MLP](feedforward-networks.qmd#def-feedforward-network)'s mean training loss $\loss$ with respect to one [parameter](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter) $\theta_i$,
+with every other parameter held fixed.
+How many evaluations of the loss does that take to estimate the [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) with respect to $P$ [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter)?
+
+:::

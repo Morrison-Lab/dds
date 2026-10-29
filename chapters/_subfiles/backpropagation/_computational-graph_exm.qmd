@@ -1,0 +1,33 @@
+::: {#exm-computational-graph}
+
+#### The graph PyTorch records
+
+```{python}
+#| code-fold: show
+loss = loss_fn(mlp(x_train[:1]), y_train[:1])
+node = loss.grad_fn
+recorded = []
+while node is not None:
+    recorded.append(type(node).__name__)
+    # Follow the first input that is not a leaf parameter.
+    earlier = [f for f, _ in node.next_functions
+               if f is not None and type(f).__name__ != "AccumulateGrad"]
+    node = earlier[0] if earlier else None
+print(*recorded, sep="\n")
+```
+
+For the first training image,
+PyTorch's [computational graph](#def-computational-graph) holds the four steps of @sol-loss-operations,
+read from the loss back to the input.
+Each `grad_fn` names the operation that made a [tensor](pytorch-basics.qmd#def-tensor):
+
+- `NllLossBackward0` and `LogSoftmaxBackward0` are step 4,
+  which `nn.CrossEntropyLoss` computes as a log softmax followed by picking out entry $y$;
+- `AddmmBackward0` ("add matrix multiply") is each affine step, 3 and then 1;
+- `ReluBackward0` is step 2;
+- `TBackward0` is the transpose of $\matr{W}_1$ in `x @ weight.T`.
+
+The chain stops at the transpose,
+since the image itself was not made with `requires_grad=True`.
+
+:::

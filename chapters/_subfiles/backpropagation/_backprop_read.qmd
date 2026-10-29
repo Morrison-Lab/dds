@@ -1,0 +1,4 @@
+::: {.reading}
+*Deep Learning*'s [section 6.5](https://www.deeplearningbook.org/contents/mlp.html) <!-- check-term-links: allow -->
+covers [backpropagation](#def-backpropagation) on general [computational graph](#def-computational-graph)s [@goodfellow2016deep, section 6.5].
+:::

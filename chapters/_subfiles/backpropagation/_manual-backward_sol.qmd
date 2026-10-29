@@ -1,0 +1,49 @@
+::: {#sol-manual-backward}
+
+```{python}
+#| code-fold: show
+first, second = mlp[0], mlp[2]
+
+# Forward, keeping every intermediate result.
+z1 = x_train @ first.weight.T + first.bias
+h = torch.relu(z1)
+z2 = h @ second.weight.T + second.bias
+loss = loss_fn(z2, y_train)
+
+mlp.zero_grad()
+loss.backward()
+
+with torch.no_grad():
+    # Backward, from the loss to the first layer, one row per image.
+    g2 = (torch.softmax(z2, dim=1) - nn.functional.one_hot(y_train, 10)) / n_train
+    grad_W2 = g2.T @ h
+    grad_b2 = g2.sum(dim=0)
+    grad_h = g2 @ second.weight
+    grad_z1 = grad_h * (z1 > 0)
+    grad_W1 = grad_z1.T @ x_train
+    grad_b1 = grad_z1.sum(dim=0)
+
+pairs = [(grad_W1, first.weight), (grad_b1, first.bias),
+         (grad_W2, second.weight), (grad_b2, second.bias)]
+backward_gap = max((mine - p.grad).abs().max().item() for mine, p in pairs)
+print(backward_gap)
+```
+
+The four [gradients](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) match autograd's to within `r format(py$backward_gap, digits = 2)`.
+The code runs the steps of @sol-loss-operations forward,
+then their derivatives in reverse:
+
+- `g2` is $\gradwrt{\vz_2} \loss$ from @thm-ce-logit-grad,
+  for every image at once,
+  divided by `r py$n_train`
+  because the loss is the mean over that many images;
+- `grad_W2` and `grad_b2` are @sol-linear-param-grad and @sol-linear-bias-grad,
+  with the outer products of the images added up by one matrix product;
+- `grad_h` is @sol-linear-input-grad, written for rows instead of columns;
+- `grad_z1` is @sol-relu-grad;
+- `grad_W1` and `grad_b1` are @sol-linear-param-grad and @sol-linear-bias-grad again,
+  for the first layer.
+
+The backward steps reuse `z1` and `h` from the forward pass.
+
+:::

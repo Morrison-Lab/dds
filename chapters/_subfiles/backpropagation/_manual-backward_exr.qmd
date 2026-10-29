@@ -1,0 +1,11 @@
+::: {#exr-manual-backward}
+
+#### The backward pass by hand
+
+Computed by hand from @thm-ce-logit-grad, @sol-linear-param-grad, @sol-linear-bias-grad, @sol-linear-input-grad and @sol-relu-grad,
+without `.backward()`,
+how closely does the [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) of the [MLP](feedforward-networks.qmd#def-feedforward-network)'s mean loss over the [training set](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-training-set)
+with respect to $\matr{W}_1$, $\vecf{b}_1$, $\matr{W}_2$ and $\vecf{b}_2$
+match the one `loss.backward()` gives?
+
+:::
