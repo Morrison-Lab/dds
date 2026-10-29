@@ -33,7 +33,7 @@ so the gradient of `g(z).sum()` holds the derivative $g'(z)$ at each point.
 A unit whose pre-activation sits where the derivative is near 0 is [saturated](https://morrison-lab.github.io/lds/chapters/backpropagation.html#def-saturation):
 a small change in its weights barely changes its output,
 so the gradient that training follows is small too.
-The [logistic function](https://morrison-lab.github.io/mds/functions.html#def-logistic-function) and tanh saturate on both sides,
+The [logistic function](https://morrison-lab.github.io/mds/functions.html#def-logistic-function) and $\tanh$ saturate on both sides,
 and ReLU only on its negative side.
 
 :::
