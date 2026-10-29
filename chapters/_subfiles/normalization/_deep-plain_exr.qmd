@@ -1,0 +1,7 @@
+::: {#exr-deep-plain}
+
+#### A 20-block network
+
+Does `make_deep()` learn anything in the 5 [epochs](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-epoch) of `train()`?
+
+:::

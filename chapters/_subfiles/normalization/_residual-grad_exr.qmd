@@ -1,0 +1,8 @@
+::: {#exr-residual-grad}
+
+#### The gradient through residual connections
+
+How large is the [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) at the first layer of `make_deep(residual=True)`,
+compared with `make_deep()`?
+
+:::

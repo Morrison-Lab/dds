@@ -1,0 +1,7 @@
+The [backpropagation chapter](backpropagation.qmd#sol-deep-grad-norms) found that the [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) of a deep [MLP](feedforward-networks.qmd#def-feedforward-network) can shrink layer by layer,
+and the [optimization chapter](optimization.qmd#sol-init-scale) chose starting weights to keep each layer's values at a steady size.
+This lecture tries two more ways to train a network of 20 such layers:
+
+1.  rescaling each layer's values during training,
+    across the images of a minibatch or across the [unit](feedforward-networks.qmd#def-unit)s of one image;
+2.  adding each layer's input to its output.

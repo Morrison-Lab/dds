@@ -1,0 +1,27 @@
+::: {#sol-four-networks}
+
+```{python}
+#| code-fold: show
+settings = {
+    "no normalization or residual connections": {},
+    "batch normalization": {"make_norm": nn.BatchNorm1d},
+    "residual connections": {"residual": True},
+    "batch normalization and residual connections": {"make_norm": nn.BatchNorm1d, "residual": True},
+}
+four_rows = []
+for name, options in settings.items():
+    loss, acc = train(make_deep(**options))
+    four_rows.append({"network": name, "train_loss": loss, "test_accuracy": acc})
+four_table = pd.DataFrame(four_rows)
+best_network = four_table.loc[four_table["train_loss"].idxmin()]
+residual_only_loss = four_table.set_index("network").loc["residual connections", "train_loss"]
+print(four_table.round(3))
+```
+
+The network with `r py$best_network[["network"]]` reaches the lowest training loss,
+`r sprintf("%.3f", py$best_network[["train_loss"]])`,
+and classifies `r sprintf("%.1f", 100 * py$best_network[["test_accuracy"]])`% of the test images correctly.
+The residual network without [batch normalization](#def-batch-norm) reaches `r sprintf("%.3f", py$residual_only_loss)`.
+The residual networks of @he2016resnet also put batch normalization inside each block.
+
+:::
