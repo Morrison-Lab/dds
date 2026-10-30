@@ -1,0 +1,10 @@
+::: {#exr-rnn-shape}
+
+#### What `nn.RNN` returns
+
+`nn.RNN(8, 32, batch_first=True)` is a [recurrent layer](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-recurrent-layer) with inputs of length 8 and a [hidden state](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-hidden-state) of length 32.
+It returns two [tensors](pytorch-basics.qmd#def-tensor).
+What are their [shapes](pytorch-basics.qmd#def-shape) for the first 16 training digits,
+each read as a sequence of 8 rows?
+
+:::

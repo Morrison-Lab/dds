@@ -1,0 +1,30 @@
+::: {#sol-gru-pixels}
+
+```{python}
+#| code-fold: show
+pixel_gru = make_reader(nn.GRU, 1)
+_ = train(pixel_gru, n_epochs=20)
+gru_acc = accuracy(pixel_gru)
+print(gru_acc)
+gap_digits = round(abs(gru_acc - lstm_acc) * len(y_test))
+# The prose below says both gated readers beat both plain ones; stop if not.
+assert min(gru_acc, lstm_acc) > max(pixel_acc, clipped_acc)
+```
+
+| Layer reading the pixels | [Gradient clipping](https://morrison-lab.github.io/lds/chapters/backpropagation.html#def-gradient-clipping) | Test [accuracy](https://morrison-lab.github.io/lds/chapters/metrics.html#def-accuracy) |
+|:--|:--|--:|
+| `nn.RNN` | None | `r sprintf("%.1f%%", 100 * py$pixel_acc)` |
+| `nn.RNN` | To 1 | `r sprintf("%.1f%%", 100 * py$clipped_acc)` |
+| `nn.LSTM` | None | `r sprintf("%.1f%%", 100 * py$lstm_acc)` |
+| `nn.GRU` | None | `r sprintf("%.1f%%", 100 * py$gru_acc)` |
+
+The [GRU](#def-gru) reader classifies `r sprintf("%.1f%%", 100 * py$gru_acc)` of the test digits correctly,
+`r sprintf("%.1f", 100 * abs(py$gru_acc - py$lstm_acc))` percentage points `r if (py$gru_acc > py$lstm_acc) "above" else "below"` the [LSTM](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-lstm) reader,
+with `r sprintf("%.0f%%", 100 * py$gru_count / py$lstm_count)` as many [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter) in its [recurrent layer](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-recurrent-layer).
+`r if (py$gru_acc > py$lstm_acc) "So yes" else "So no"`:
+the two readers differ by `r py$gap_digits` of the `r length(py$y_test)` test digits.
+Both gated readers beat the plain recurrent readers.
+On other tasks,
+@chung2014empirical found neither gated layer consistently better than the other.
+
+:::

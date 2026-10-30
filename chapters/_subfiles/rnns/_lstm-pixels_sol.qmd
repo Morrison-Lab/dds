@@ -1,0 +1,23 @@
+::: {#sol-lstm-pixels}
+
+```{python}
+#| code-fold: show
+pixel_lstm = make_reader(nn.LSTM, 1)
+lstm_norms = train(pixel_lstm, n_epochs=20)
+lstm_acc = accuracy(pixel_lstm)
+print(lstm_acc, max(lstm_norms))
+# The prose below says the LSTM does better; stop the render if it does not.
+assert lstm_acc > max(clipped_acc, pixel_acc)
+```
+
+Yes.
+The [LSTM](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-lstm) classifies `r sprintf("%.1f%%", 100 * py$lstm_acc)` of the test digits correctly,
+against `r sprintf("%.1f%%", 100 * py$clipped_acc)` for the clipped pixel reader.
+Its [cell state](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-lstm) $\vecf{c}_t$ changes only by the [gates'](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-gate) products and sums,
+with no squashing activation between one step and the next.
+So a [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) can pass back along the cell state through many steps
+when the [forget gate](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-lstm) stays near 1 [@goodfellow2016deep, section 10.10.1].
+The LSTM's largest gradient [norm](https://morrison-lab.github.io/mds/linear-algebra-inner-products.html#def-norm) during training was `r sprintf("%.1f", max(unlist(py$lstm_norms)))`,
+against `r sprintf("%.0f", py$max_norm_seen)` for the pixel reader of @sol-pixels.
+
+:::

@@ -1,0 +1,25 @@
+::: {#def-gru}
+
+#### Gated recurrent unit (GRU)
+
+A **gated recurrent unit** (GRU) layer keeps only a [hidden state](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-hidden-state) $\vhidval_t \in \reals^{H}$,
+with no separate [cell state](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-lstm),
+and two [gates](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-gate) [@cho2014gru].
+In the form PyTorch computes [@pytorch_gru],
+
+$$\begin{aligned}
+\vecf{z}_t &= \sigmoidf{\matr{W}_z \vx_t + \matr{U}_z \vhidval_{t-1} + \vecf{b}_z}, &&\text{(update gate)} \\
+\vecf{r}_t &= \sigmoidf{\matr{W}_r \vx_t + \matr{U}_r \vhidval_{t-1} + \vecf{b}_r}, &&\text{(reset gate)} \\
+\vecf{u}_t &= \tanhf{\matr{W}_u \vx_t + \vecf{b}_u + \vecf{r}_t \odot \paren{\matr{U}_u \vhidval_{t-1} + \vecf{c}_u}}, &&\text{(candidate)} \\
+\vhidval_t &= \vecf{z}_t \odot \vhidval_{t-1} + \paren{1 - \vecf{z}_t} \odot \vecf{u}_t.
+\end{aligned}$$
+
+Here $\vecf{c}_u$ is a second bias vector,
+and PyTorch also adds one to $\matr{U}_z \vhidval_{t-1}$ and to $\matr{U}_r \vhidval_{t-1}$.
+@cho2014gru apply the reset gate before the matrix,
+writing $\matr{U}_u \paren{\vecf{r}_t \odot \vhidval_{t-1}}$ in the candidate,
+and also put $\vecf{z}_t$ on the old state.
+@chung2014empirical and the [DATA 471 notes](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#rem-gru) put $1 - \vecf{z}_t$ on the old state instead,
+which swaps the meaning of $\vecf{z}_t$ near 0 and near 1.
+
+:::

@@ -1,0 +1,10 @@
+::: {#exr-lstm-pixels}
+
+#### An LSTM reading pixels
+
+`make_reader(nn.LSTM, 1)` reads the pixels with an [LSTM](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-lstm) layer instead,
+with no clipping.
+Trained for 20 [epochs](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-epoch),
+does it classify more test digits correctly than the pixel reader of @sol-clipped?
+
+:::

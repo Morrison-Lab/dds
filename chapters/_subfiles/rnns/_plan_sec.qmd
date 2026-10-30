@@ -1,0 +1,11 @@
+The DATA 471 notes defined [recurrent layers](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-recurrent-layer),
+found that their [gradients](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) can [vanish or explode](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#thm-jacobian-bound) over long sequences,
+and defined the [LSTM](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-lstm) layer that keeps a memory with [gates](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-gate).
+This lecture trains these layers in PyTorch:
+
+1.  the [shape](pytorch-basics.qmd#def-shape)s that `nn.RNN` takes and returns;
+2.  reading a digit one row at a time,
+    then one pixel at a time;
+3.  capping the size of the [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient);
+4.  [LSTM](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-lstm) layers and a lighter gated layer;
+5.  turning symbols such as letters into vectors that a network can learn.

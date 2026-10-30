@@ -1,0 +1,23 @@
+::: {#exm-embedding}
+
+#### `nn.Embedding`
+
+```{python}
+#| code-fold: show
+embed = nn.Embedding(len(alphabet), 4)
+word = torch.tensor([alphabet.index(ch) for ch in "deep"])
+vectors = embed(word)
+same_rows = torch.equal(vectors, embed.weight[word])
+print(word, vectors.shape, same_rows)
+```
+
+`nn.Embedding(27, 4)` is an [embedding layer](#def-embedding) for the 27 characters,
+with a $27 \times 4$ matrix `weight` [@pytorch_embedding].
+It takes a [tensor](pytorch-basics.qmd#def-tensor) of whole-number indices,
+here the indices of the letters of `"deep"`,
+and returns one row of `weight` for each.
+For the 4 letters the result has [shape](pytorch-basics.qmd#def-shape) $4 \times 4$.
+The two `"e"`s get the same vector.
+The returned rows `r if (py$same_rows) "equal" else "differ from"` the rows of `embed.weight` at those indices.
+
+:::

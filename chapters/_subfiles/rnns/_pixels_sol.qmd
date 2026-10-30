@@ -1,0 +1,21 @@
+::: {#sol-pixels}
+
+```{python}
+#| code-fold: show
+pixel_rnn = make_reader(nn.RNN, 1)
+rnn_norms = train(pixel_rnn, n_epochs=20)
+pixel_acc = accuracy(pixel_rnn)
+print(pixel_acc)
+# The prose below says this reader does worse; stop the render if it does not.
+assert pixel_acc < row_acc
+```
+
+It classifies only `r sprintf("%.1f%%", 100 * py$pixel_acc)` of the test digits correctly,
+against `r sprintf("%.1f%%", 100 * py$row_acc)` for the row reader of @sol-rows.
+Both see every pixel,
+and the pixel reader trains for twice as many [epochs](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-epoch).
+What differs is the length of each sequence:
+64 steps rather than 8.
+The DATA 471 notes [bound how fast](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#thm-jacobian-bound) a [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) can shrink or grow over that many steps.
+
+:::

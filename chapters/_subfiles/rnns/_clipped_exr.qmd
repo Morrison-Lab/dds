@@ -1,0 +1,11 @@
+::: {#exr-clipped}
+
+#### Clipping the gradient
+
+`train(net, max_norm=1)` applies [gradient clipping](https://morrison-lab.github.io/lds/chapters/backpropagation.html#def-gradient-clipping):
+before each step,
+`nn.utils.clip_grad_norm_` rescales any [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) with [norm](https://morrison-lab.github.io/mds/linear-algebra-inner-products.html#def-norm) above 1 to norm 1 [@pytorch_clip_grad_norm].
+Trained this way for 20 [epochs](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-epoch),
+does the pixel reader classify more test digits correctly than in @sol-pixels?
+
+:::

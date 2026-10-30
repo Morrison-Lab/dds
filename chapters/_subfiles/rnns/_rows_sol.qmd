@@ -1,0 +1,14 @@
+::: {#sol-rows}
+
+```{python}
+#| code-fold: show
+row_rnn = make_reader(nn.RNN, 8)
+_ = train(row_rnn)
+row_acc = accuracy(row_rnn)
+print(row_acc)
+```
+
+It classifies `r sprintf("%.1f%%", 100 * py$row_acc)` of the `r length(py$y_test)` test digits correctly,
+after reading each digit in 8 steps.
+
+:::

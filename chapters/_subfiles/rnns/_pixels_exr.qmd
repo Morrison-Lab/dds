@@ -1,0 +1,10 @@
+::: {#exr-pixels}
+
+#### Reading a digit pixel by pixel
+
+`make_reader(nn.RNN, 1)` reads each digit one pixel at a time,
+in 64 steps.
+Train it for 20 [epochs](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-epoch) with `train()`.
+What fraction of the test digits does it classify correctly?
+
+:::
