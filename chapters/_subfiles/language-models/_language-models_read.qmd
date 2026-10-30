@@ -1,0 +1,4 @@
+::: {.reading}
+*Deep Learning*'s [section 12.4](https://www.deeplearningbook.org/contents/applications.html) covers $n$-gram and neural language models [@goodfellow2016deep]. <!-- check-term-links: allow -->
+@karpathy2015unreasonable trains character-level recurrent language models on Shakespeare, Wikipedia and source code, and shows what they write. <!-- check-term-links: allow -->
+:::

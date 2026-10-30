@@ -1,0 +1,8 @@
+::: {#exr-sample}
+
+#### Writing new lines
+
+Draw 1,000 characters from the trained network of @sol-gru-lm with `sample(lm, "MENENIUS:\n", 1000)`.
+What share of the words in the result occur somewhere in the training text?
+
+:::

@@ -1,0 +1,23 @@
+::: {#sol-gru-lm}
+
+```{python}
+#| code-fold: show
+lm = make_lm()
+untrained_ppl = math.exp(-lm_log_probs(lm).mean().item())
+train_lm(lm, 400)
+gru_ppl = math.exp(-lm_log_probs(lm).mean().item())
+print(untrained_ppl, gru_ppl)
+# The prose below says the GRU beats the bigram model; stop the render if not.
+assert gru_ppl < bigram_ppl
+```
+
+Yes.
+After training,
+the network's [perplexity](#def-perplexity) on the validation text is `r sprintf("%.1f", py$gru_ppl)`,
+against `r sprintf("%.1f", py$bigram_ppl)` for the [bigram model](#def-bigram-model).
+Before training it was `r sprintf("%.1f", py$untrained_ppl)`,
+close to the `r py$n_chars` of the uniform model.
+The bigram model sees one earlier character;
+the network's [hidden state](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-hidden-state) can carry information from all of them.
+
+:::

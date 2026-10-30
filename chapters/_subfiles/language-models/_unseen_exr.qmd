@@ -1,0 +1,7 @@
+::: {#exr-unseen}
+
+#### Pairs the training text never shows
+
+How many of the pairs of neighbouring characters in the validation text never occur in the training text?
+
+:::

@@ -1,0 +1,10 @@
+::: {#exr-avg-log-prob}
+
+#### Scoring held-out text
+
+For each validation character after the first,
+take the natural log of the probability the [bigram model](#def-bigram-model) gives it,
+given the character before it.
+What is the average of the negatives of these logs?
+
+:::

@@ -1,0 +1,15 @@
+::: {#sol-unseen}
+
+```{python}
+#| code-fold: show
+seen = pair_counts > 1
+n_unseen = (~seen[val_ids[:-1], val_ids[1:]]).sum().item()
+print(n_unseen)
+```
+
+`r py$n_unseen` of the `r format(length(py$val_ids) - 1, big.mark = ",")` pairs never occur in the training text.
+Without the added ones,
+the [bigram model](#def-bigram-model) would give each of them probability 0,
+and so the whole validation text probability 0.
+
+:::

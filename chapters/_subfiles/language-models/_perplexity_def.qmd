@@ -1,0 +1,17 @@
+::: {#def-perplexity}
+
+#### Perplexity
+
+The **perplexity** of a [language model](#def-language-model) on a sequence $x_1, \dots, x_n$ is
+
+$$
+\expf{-\frac{1}{n} \sum_{t=1}^{n} \log \Pr(X_t = x_t \mid x_1, \dots, x_{t-1})},
+$$
+
+the exponential of the average negative log probability per symbol
+[@jurafsky2026slp, section 3.3].
+The DATA 471 notes define it for any classifier in [the same way](https://morrison-lab.github.io/lds/chapters/metrics.html#eq-perplexity),
+and find that a model which gives probability $1/K$ to each of $K$ symbols has perplexity $K$.
+Lower is better.
+
+:::

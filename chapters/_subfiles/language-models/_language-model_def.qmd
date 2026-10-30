@@ -1,0 +1,15 @@
+::: {#def-language-model}
+
+#### Language model
+
+A **language model** gives,
+for each position $t$ in a sequence of symbols $x_1, \dots, x_n$,
+a probability distribution $\Pr(X_t = x \mid x_1, \dots, x_{t-1})$ over the symbol $x$ at that position,
+given the symbols before it
+[@goodfellow2016deep, section 12.4].
+By the [chain rule of probability](https://morrison-lab.github.io/lds/chapters/probability.html#thm-chain-rule),
+the product of these probabilities over $t = 1, \dots, n$ is the probability of the whole sequence.
+The symbols can be characters or words;
+these notes use characters.
+
+:::

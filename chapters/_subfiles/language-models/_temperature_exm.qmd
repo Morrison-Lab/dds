@@ -1,0 +1,27 @@
+::: {#exm-temperature}
+
+#### Drawing at three temperatures
+
+```{python}
+#| code-fold: show
+temperatures = [0.5, 1.0, 1.5]
+draws = {t: sample(lm, "MENENIUS:\n", 1000, temperature=t) for t in temperatures}
+shares = [real_word_share(draws[t]) for t in temperatures]
+print(shares)
+# The prose below says the share falls as the temperature rises.
+assert shares[0] > shares[1] > shares[2]
+print(draws[0.5][:200])
+print(draws[1.5][:200])
+```
+
+| [Temperature](#def-temperature) | Share of words found in the training text |
+|--:|--:|
+| 0.5 | `r sprintf("%.0f%%", 100 * py$shares[[1]])` |
+| 1.0 | `r sprintf("%.0f%%", 100 * py$shares[[2]])` |
+| 1.5 | `r sprintf("%.0f%%", 100 * py$shares[[3]])` |
+
+At temperature 0.5 the network mostly writes words it has seen.
+At 1.5 most of its words are new,
+and the spelling breaks down.
+
+:::

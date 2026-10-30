@@ -1,0 +1,20 @@
+::: {#exm-teacher-forcing}
+
+#### Inputs and targets in `train_lm()`
+
+```{python}
+#| code-fold: show
+window_x = decode(train_ids[0:20])
+window_y = decode(train_ids[1:21])
+print(repr(window_x))
+print(repr(window_y))
+```
+
+`train_lm()` uses [teacher forcing](#def-teacher-forcing).
+The two printed lines are the input and the target for a window that starts at the first character:
+the target is the input moved one character on.
+At each position,
+the [cross-entropy loss](https://morrison-lab.github.io/lds/chapters/logistic-regression.html#def-cross-entropy-loss) compares the network's prediction with the next character of the true text,
+whatever the network predicted before.
+
+:::

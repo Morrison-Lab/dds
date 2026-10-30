@@ -1,0 +1,17 @@
+::: {#sol-avg-log-prob}
+
+```{python}
+#| code-fold: show
+bigram_log_probs = torch.log(bigram[val_ids[:-1], val_ids[1:]])
+bigram_nll = -bigram_log_probs.mean().item()
+uniform_nll = math.log(n_chars)
+print(bigram_nll, uniform_nll)
+```
+
+The average is `r sprintf("%.2f", py$bigram_nll)`.
+The uniform model of @exm-language-model gives every character probability $1 / `r py$n_chars`$,
+so its average is $\log `r py$n_chars` = `r sprintf("%.2f", py$uniform_nll)`$.
+The lower average means the [bigram model](#def-bigram-model) gives the validation text higher probability.
+This average is the [cross-entropy loss](https://morrison-lab.github.io/lds/chapters/logistic-regression.html#def-cross-entropy-loss) of the model's predictions of the validation characters.
+
+:::
