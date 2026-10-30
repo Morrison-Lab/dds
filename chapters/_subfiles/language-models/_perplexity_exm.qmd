@@ -10,9 +10,13 @@ print(bigram_ppl, uniform_ppl)
 ```
 
 On the validation text after its first character,
-the uniform model has [perplexity](#def-perplexity) `r sprintf("%.1f", py$uniform_ppl)`,
-the number of characters.
-The [bigram model](#def-bigram-model) has perplexity `r sprintf("%.1f", py$bigram_ppl)`:
+the uniform model of @exm-language-model has [perplexity](#def-perplexity) `r sprintf("%.1f", py$uniform_ppl)`,
+the number of distinct characters.
+The smoothed [bigram model](#def-bigram-model) has perplexity `r sprintf("%.1f", py$bigram_ppl)`:
 on average it is as unsure of the next character as a model choosing evenly among about `r round(py$bigram_ppl)` characters.
 
+:::
+
+::: {.reading}
+*Deep Learning*'s [section 12.4](https://www.deeplearningbook.org/contents/applications.html) covers $n$-gram and neural language models [@goodfellow2016deep]. <!-- check-term-links: allow -->
 :::

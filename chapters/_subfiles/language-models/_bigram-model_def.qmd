@@ -4,18 +4,15 @@
 
 A **bigram model** is a [language model](#def-language-model) in which the distribution of each symbol depends only on the symbol before it
 [@goodfellow2016deep, section 12.4.1].
-With $K$ possible symbols,
-it estimates
+Counting in a training text estimates it as
 
 $$
-\Pr(X_t = b \mid X_{t-1} = a) = \frac{N(a, b) + 1}{N(a) + K},
+\hPr{}\paren{X_t = b \given X_{t-1} = a} = \frac{N(a, b)}{N(a)},
 $$
 
-where $N(a, b)$ counts how often $a$ is followed by $b$ in a training text,
-and $N(a)$ counts how often $a$ is followed by any symbol.
-The added 1 in each count,
-called add-one or Laplace smoothing [@jurafsky2026slp, section 3.6],
-gives every pair a probability above 0,
-including pairs the training text never shows.
+where $N(a, b)$ counts how often $a$ is followed by $b$,
+and $N(a)$ counts how often $a$ is followed by any symbol
+[@jurafsky2026slp, section 3.1.2].
+An $n$-gram model conditions on the $n - 1$ symbols before each one in the same way.
 
 :::

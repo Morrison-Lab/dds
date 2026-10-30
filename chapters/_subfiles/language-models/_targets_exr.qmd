@@ -1,0 +1,11 @@
+::: {#exr-targets}
+
+#### What the network is asked to predict
+
+`train_lm()` asks the network,
+at each position of a window,
+for the character that comes next in the text.
+For a window holding the first 20 characters of the text,
+what are the 20 targets?
+
+:::

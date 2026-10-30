@@ -3,10 +3,10 @@
 The [chain rule of probability](https://morrison-lab.github.io/lds/chapters/probability.html#thm-chain-rule) conditions each character on the ones before it:
 
 $$\begin{aligned}
-&\Pr(X_1 = \texttt{t}, X_2 = \texttt{h}, X_3 = \texttt{e}) \\
-&\quad = \Pr(X_1 = \texttt{t})
-\Pr(X_2 = \texttt{h} \mid X_1 = \texttt{t})
-\Pr(X_3 = \texttt{e} \mid X_1 = \texttt{t}, X_2 = \texttt{h}).
+&\Prf{X_1 = \texttt{t}, X_2 = \texttt{h}, X_3 = \texttt{e}} \\
+&\quad = \Prf{X_1 = \texttt{t}}
+\condPr{X_2 = \texttt{h}}{X_1 = \texttt{t}}
+\condPr{X_3 = \texttt{e}}{X_1 = \texttt{t}, X_2 = \texttt{h}}.
 \end{aligned}$$
 
 Each factor is the probability of one character given the characters before it.

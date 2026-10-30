@@ -6,6 +6,8 @@ bigram_log_probs = torch.log(bigram[val_ids[:-1], val_ids[1:]])
 bigram_nll = -bigram_log_probs.mean().item()
 uniform_nll = math.log(n_chars)
 print(bigram_nll, uniform_nll)
+# The prose below says the bigram model's average is the lower one.
+assert bigram_nll < uniform_nll
 ```
 
 The average is `r sprintf("%.2f", py$bigram_nll)`.

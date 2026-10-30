@@ -4,25 +4,24 @@
 
 ```{python}
 #| code-fold: show
-pair_counts = torch.ones(n_chars, n_chars)
+pair_counts = torch.zeros(n_chars, n_chars)
 _ = pair_counts.index_put_(
     (train_ids[:-1], train_ids[1:]), torch.ones(n_train - 1), accumulate=True
 )
-bigram = pair_counts / pair_counts.sum(dim=1, keepdim=True)
-p_u_after_q = bigram[index["q"], index["u"]].item()
-after_t = bigram[index["t"]]
+row_totals = pair_counts.sum(dim=1, keepdim=True)
+counted = pair_counts / row_totals
+after_t = counted[index["t"]]
 top_after_t = chars[after_t.argmax().item()]
 p_top_after_t = after_t.max().item()
-print(p_u_after_q, repr(top_after_t), p_top_after_t)
+p_u_after_q = counted[index["q"], index["u"]].item()
+print(repr(top_after_t), p_top_after_t, p_u_after_q)
 ```
 
-`pair_counts` starts every count at 1 and adds the training pairs,
-so row $a$ of `bigram` is the [bigram model](#def-bigram-model)'s distribution of the character after $a$.
+Row $a$ of `pair_counts` holds $N(a, b)$ for every $b$,
+so row $a$ of `counted` is the [bigram model](#def-bigram-model)'s distribution of the character after $a$.
 Its most likely character after `t` is `r if (py$top_after_t == " ") "the space" else py$top_after_t`,
 with probability `r sprintf("%.2f", py$p_top_after_t)`.
 It gives a `u` after a `q` probability `r sprintf("%.2f", py$p_u_after_q)`,
-against the share of `r sprintf("%.2f", py$share_u)` in @sol-after-q.
-There are only `r py$n_q` `q`s to count,
-so the `r py$n_chars` added ones are a large part of the row.
+the share found in @sol-after-q.
 
 :::

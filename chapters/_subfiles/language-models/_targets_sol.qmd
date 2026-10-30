@@ -1,0 +1,15 @@
+::: {#sol-targets}
+
+```{python}
+#| code-fold: show
+window_x = decode(train_ids[0:20])
+window_y = decode(train_ids[1:21])
+print(repr(window_x))
+print(repr(window_y))
+```
+
+The targets are characters 2 to 21 of the text:
+the window moved one character on.
+The second printed line is the target for each character of the first.
+
+:::

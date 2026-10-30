@@ -1,20 +1,22 @@
 ::: {#exm-teacher-forcing}
 
-#### Inputs and targets in `train_lm()`
+#### The loss on one window
 
 ```{python}
 #| code-fold: show
-window_x = decode(train_ids[0:20])
-window_y = decode(train_ids[1:21])
-print(repr(window_x))
-print(repr(window_y))
+x = train_ids[0:seq_len].unsqueeze(0)
+y = train_ids[1:seq_len + 1].unsqueeze(0)
+logits, _ = lm(x)
+window_loss = nn.functional.cross_entropy(logits.reshape(-1, n_chars), y.reshape(-1)).item()
+print(logits.shape, y.shape, window_loss)
 ```
 
 `train_lm()` uses [teacher forcing](#def-teacher-forcing).
-The two printed lines are the input and the target for a window that starts at the first character:
-the target is the input moved one character on.
-At each position,
-the [cross-entropy loss](https://morrison-lab.github.io/lds/chapters/logistic-regression.html#def-cross-entropy-loss) compares the network's prediction with the next character of the true text,
-whatever the network predicted before.
+For one window of `r py$seq_len` characters,
+the network returns `r py$seq_len` rows of `r py$n_chars` [logits](feedforward-networks.qmd#def-logits),
+one row per position,
+and the [cross-entropy loss](https://morrison-lab.github.io/lds/chapters/logistic-regression.html#def-cross-entropy-loss) compares each row with the true next character.
+For the first window of the text,
+the trained network's average loss is `r sprintf("%.2f", py$window_loss)`.
 
 :::

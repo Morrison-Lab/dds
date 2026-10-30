@@ -1,0 +1,17 @@
+::: {#def-add-one-smoothing}
+
+#### Add-one smoothing (Laplace smoothing)
+
+**Add-one smoothing** (also called **Laplace smoothing**) adds 1 to every count before estimating a [bigram model](#def-bigram-model).
+With $K$ possible symbols,
+the estimate becomes
+
+$$
+\hPr{}\paren{X_t = b \given X_{t-1} = a} = \frac{N(a, b) + 1}{N(a) + K},
+$$
+
+so every pair gets a probability above 0,
+including pairs the training text never shows
+[@jurafsky2026slp, section 3.6.1].
+
+:::

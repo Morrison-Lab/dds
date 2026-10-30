@@ -84,6 +84,14 @@ The exercises are new.
 
 {{< include _subfiles/language-models/_unseen_sol.qmd >}}
 
+{{< slidebreak >}}
+
+{{< include _subfiles/language-models/_add-one-smoothing_def.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/language-models/_add-one-smoothing_exm.qmd >}}
+
 # Scoring a language model
 
 ## Average log probability
@@ -106,6 +114,10 @@ The exercises are new.
 
 # A recurrent language model
 
+## The network
+
+{{< include _subfiles/language-models/_model-setup_sec.qmd >}}
+
 ## Predicting every next character
 
 <!-- heading shares the slide; do not re-flag -->
@@ -115,6 +127,16 @@ The exercises are new.
 {{< slidebreak >}}
 
 {{< include _subfiles/language-models/_gru-lm_sol.qmd >}}
+
+## Inputs and targets
+
+<!-- heading shares the slide; do not re-flag -->
+
+{{< include _subfiles/language-models/_targets_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/language-models/_targets_sol.qmd >}}
 
 {{< slidebreak >}}
 
@@ -136,6 +158,16 @@ The exercises are new.
 
 {{< include _subfiles/language-models/_sample_sol.qmd >}}
 
+## Temperature
+
+<!-- heading shares the slide; do not re-flag -->
+
+{{< include _subfiles/language-models/_sharpen_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/language-models/_sharpen_sol.qmd >}}
+
 {{< slidebreak >}}
 
 {{< include _subfiles/language-models/_temperature_def.qmd >}}
@@ -143,10 +175,6 @@ The exercises are new.
 {{< slidebreak >}}
 
 {{< include _subfiles/language-models/_temperature_exm.qmd >}}
-
-## Further reading
-
-{{< include _subfiles/language-models/_language-models_read.qmd >}}
 
 # References
 

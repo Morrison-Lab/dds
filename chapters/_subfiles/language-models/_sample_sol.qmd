@@ -3,27 +3,33 @@
 ```{python}
 #| code-fold: show
 train_words = set(re.findall(r"[a-z]+", text[:n_train].lower()))
+prompt = "MENENIUS:\n"
 
 
 def real_word_share(s):
-    words = re.findall(r"[a-z]+", s.lower())
+    # Share of the words drawn after the prompt that occur in the training text.
+    words = re.findall(r"[a-z]+", s[len(prompt):].lower())
     return sum(w in train_words for w in words) / len(words)
 
 
-drawn = sample(lm, "MENENIUS:\n", 1000)
+drawn = sample(lm, prompt, 1000)
 drawn_share = real_word_share(drawn)
 # The prose below says the draw has speaker names on lines of their own.
-assert re.search(r"^[A-Z]+:$", drawn[10:], re.MULTILINE)
+assert re.search(r"^[A-Z]+:$", drawn[len(prompt):], re.MULTILINE)
 print(drawn[:300])
 print(drawn_share)
 ```
 
 Counting a word as a run of letters,
 ignoring case,
-`r sprintf("%.0f%%", 100 * py$drawn_share)` of the words drawn occur in the training text.
-The rest are made-up words.
+`r sprintf("%.0f%%", 100 * py$drawn_share)` of the drawn words occur in the training text.
+The rest do not occur there;
+many of them are not English words.
 Like the play,
-the draw puts names in capitals followed by a colon on lines of their own,
-beyond the one in the prompt.
+the draw puts names in capitals followed by a colon on lines of their own.
 
+:::
+
+::: {.reading}
+@karpathy2015unreasonable trains character-level recurrent language models on Shakespeare, Wikipedia and source code, and shows what they write. <!-- check-term-links: allow -->
 :::
