@@ -47,7 +47,7 @@ The exercises are new.
 
 {{< include _subfiles/cnns/_conv-shape_sol.qmd >}}
 
-# Receptive fields
+# What one output can see
 
 ## Two stacked layers
 

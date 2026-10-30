@@ -25,7 +25,8 @@ The MLP has a separate weight for each pixel.
 A stroke that moves to a new column meets weights trained on other strokes.
 The [convolutional layers](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-convolutional-layer) are [translation equivariant](#def-equivariance).
 They find the same strokes one column over.
-The [pooling](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-pooling) layer and the last linear layer are not translation equivariant,
-and the convolutional network still loses some accuracy.
+The [pooling](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-pooling) layer is not translation equivariant (@exm-equivariance).
+The last linear layer has a separate weight for each pooled position,
+as the MLP has for each pixel.
 
 :::

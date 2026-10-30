@@ -9,10 +9,11 @@ with torch.no_grad():
 gap = (out_of_shifted - shifted_out).abs()
 gap_inside = gap[..., 1:].max().item()
 gap_first_col = gap[..., 0].max().item()
+last_col_blank = digit[..., 7].abs().max().item() == 0
 print(gap_inside, gap_first_col)
 ```
 
-The output for the shifted digit is the original output shifted one pixel right.
+`conv(shift_right(digit))` is `conv(digit)` shifted one pixel right.
 Each output pixel is the same [filter](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-filter) applied to the patch around it,
 so moving every patch moves every output.
 In columns 1 to 7 of every [channel](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-channel) of `conv`,
@@ -20,5 +21,6 @@ In columns 1 to 7 of every [channel](https://morrison-lab.github.io/lds/chapters
 In column 0 they differ by up to `r sprintf("%.2f", py$gap_first_col)`.
 There `shift_right()` fills the shifted output with 0,
 while the layer applies its filter and bias to the new blank column.
+`r if (py$last_col_blank) "Column 7 agrees only because this digit's last column is blank." else "Column 7 differs too, because the shift drops the digit's last column."`
 
 :::

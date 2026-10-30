@@ -69,7 +69,8 @@ def n_params(net):
 print(x_train.shape, x_test.shape)
 ```
 
-The exercises use the digits split of the [feedforward networks chapter](feedforward-networks.qmd),
+The exercises use the UCI optical digits [@alpaydin1998optdigits],
+split as in the [feedforward networks chapter](feedforward-networks.qmd),
 with `r format(py$n_train, big.mark = ",")` training images,
 but keep each image as a grid:
 a [tensor](pytorch-basics.qmd#def-tensor) of [shape](pytorch-basics.qmd#def-shape) $1 \times 8 \times 8$,

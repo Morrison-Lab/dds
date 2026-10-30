@@ -22,8 +22,8 @@ print(before_pool, after_pool)
 `make_cnn()` stacks two $3 \times 3$ [convolutional layers](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-convolutional-layer),
 each followed by a [ReLU](feedforward-networks.qmd#def-relu),
 then $2 \times 2$ max [pooling](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-pooling).
-A [unit](feedforward-networks.qmd#def-unit) of the second convolutional layer has a [receptive field](#def-receptive-field) of `r py$before_pool[[1]]` by `r py$before_pool[[2]]` pixels.
-A unit after the pooling layer takes the largest of a $2 \times 2$ block of those units.
+A [unit](feedforward-networks.qmd#def-unit) of the second [convolutional layer](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-convolutional-layer) has a [receptive field](#def-receptive-field) of `r py$before_pool[[1]]` by `r py$before_pool[[2]]` pixels.
+A unit after the pooling layer takes the largest of a $2 \times 2$ block of those [units](feedforward-networks.qmd#def-unit).
 Its receptive field is `r py$after_pool[[1]]` by `r py$after_pool[[2]]` pixels.
 
 :::

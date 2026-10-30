@@ -6,7 +6,7 @@ A $k \times k$ [convolutional layer](https://morrison-lab.github.io/lds/chapters
 So $L$ such layers of $3 \times 3$ [filters](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-filter) give a receptive field of $(2L + 1) \times (2L + 1)$ pixels,
 away from the edges of the image.
 @sol-receptive-field found $L = 2$ layers and a $5 \times 5$ block.
-[Pooling](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-pooling) and [stride](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-stride) make it grow faster,
-since each step of a later layer then moves farther across the input [@dumoulin2016guide].
+[Pooling](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-pooling) and [stride](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-stride) make the receptive field grow faster,
+since each step of a later layer then moves farther across the input [@goodfellow2016deep, section 9.2].
 
 :::

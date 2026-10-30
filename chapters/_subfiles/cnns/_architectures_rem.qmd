@@ -2,16 +2,15 @@
 
 #### Some convolutional networks that changed the field
 
-- LeNet-5 read handwritten digits with two [convolutional layers](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-convolutional-layer),
-  each followed by subsampling,
-  then [fully connected](https://morrison-lab.github.io/lds/chapters/neural-nets.html#def-fully-connected) layers [@lecun1998gradient].
-  `make_cnn()` follows the same plan at a smaller size.
+- LeNet-5 read handwritten digits with three [convolutional layers](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-convolutional-layer),
+  the first two each followed by subsampling,
+  then one [fully connected](https://morrison-lab.github.io/lds/chapters/neural-nets.html#def-fully-connected) layer [@lecun1998gradient, section II.B].
 - AlexNet won the 2012 ImageNet competition with 5 convolutional layers,
   [ReLU](feedforward-networks.qmd#def-relu) activations,
   [dropout](regularization.qmd#def-dropout)
-  and training on GPUs [@krizhevsky2012imagenet].
+  and training on GPUs [@krizhevsky2012imagenet, section 3].
 - VGG networks stacked $3 \times 3$ convolutional layers,
-  16 or 19 weight layers in all [@simonyan2015vgg],
+  up to 19 weight layers deep [@simonyan2015vgg, section 2.3],
   for the reasons in @sol-two-small-filters.
 - ResNets added [residual connections](https://morrison-lab.github.io/lds/chapters/backpropagation.html#def-residual-connection) around pairs or triples of convolutional layers,
   and trained networks of more than 100 layers [@he2016resnet].

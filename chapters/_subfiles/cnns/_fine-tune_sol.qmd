@@ -22,7 +22,7 @@ assert tuned_acc > scratch_acc
 
 Training every layer gives a mean accuracy of `r sprintf("%.1f%%", 100 * py$tuned_acc)`,
 `r sprintf("%.1f", 100 * abs(py$tuned_acc - py$frozen_acc))` percentage points `r if (py$tuned_acc > py$frozen_acc) "above" else "below"` the network with fixed [convolutional layers](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-convolutional-layer).
-`r if (abs(py$tuned_acc - py$frozen_acc) < 0.01) "So it is about as accurate, not more." else if (py$tuned_acc > py$frozen_acc) "So it is more accurate." else "So it is less accurate."`
+`r if (abs(py$tuned_acc - py$frozen_acc) < 0.01) "So training every layer is about as accurate, not more." else if (py$tuned_acc > py$frozen_acc) "So training every layer is more accurate." else "So training every layer is less accurate."`
 Both start from the weights learned on the digits 0 to 4,
 and both beat the networks that start from random weights.
 
