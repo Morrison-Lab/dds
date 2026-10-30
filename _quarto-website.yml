@@ -40,6 +40,7 @@ project:
     - chapters/regularization.qmd
     - chapters/normalization.qmd
     - chapters/cnns.qmd
+    - chapters/rnns.qmd
     # The `latex-macros` git submodule provides macro definitions for include/
     # shortcode use, not standalone site pages.
     - "!latex-macros/"
@@ -87,6 +88,7 @@ website:
           - chapters/regularization.qmd
           - chapters/normalization.qmd
           - chapters/cnns.qmd
+          - chapters/rnns.qmd
 
   # The docked sidebar lists every page in the navbar's order, and that order
   # sets the previous/next links at the foot of each page. Add each new page
@@ -111,6 +113,7 @@ website:
           - chapters/regularization.qmd
           - chapters/normalization.qmd
           - chapters/cnns.qmd
+          - chapters/rnns.qmd
 
 # Top level rather than under format.html, so every format (the web page,
 # the slide deck and the PDF handout) shows the date.

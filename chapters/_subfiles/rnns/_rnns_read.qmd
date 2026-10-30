@@ -1,0 +1,4 @@
+::: {.reading}
+*Deep Learning*'s [chapter 10](https://www.deeplearningbook.org/contents/rnn.html) covers recurrent networks, LSTMs and gradient clipping [@goodfellow2016deep]. <!-- check-term-links: allow -->
+@cho2014gru introduced the GRU, and @chung2014empirical compared it with the LSTM. <!-- check-term-links: allow -->
+:::

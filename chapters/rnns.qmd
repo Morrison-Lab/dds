@@ -1,0 +1,151 @@
+---
+title: "Recurrent networks"
+format:
+  html: default
+  revealjs:
+    output-file: rnns-slides.html
+  pdf:
+    output-file: rnns-handout.pdf
+resources:
+  - data/optdigits-test.csv
+---
+
+```{r}
+# The Python chunks on this page import these; reticulate provisions them.
+# Attaching reticulate gives the inline R its `py` object.
+library(reticulate)
+source("../tools/use-torch.R")
+use_torch(c("numpy", "pandas", "matplotlib"))
+```
+
+::: notes
+Brian Hutchinson's CSCI 481/581 sets the order of topics in these notes,
+which follow it with his permission;
+this page covers the part of his module on recurrent networks
+that deals with training them,
+and with turning symbols into vectors.
+The exercises are new.
+:::
+
+# Welcome
+
+## Plan for this lecture
+
+{{< include _subfiles/rnns/_plan_sec.qmd >}}
+
+## The digits as sequences
+
+{{< include _subfiles/rnns/_digits-setup_sec.qmd >}}
+
+# Recurrent layers in PyTorch
+
+## What a recurrent layer returns
+
+<!-- heading shares the slide; do not re-flag -->
+
+{{< include _subfiles/rnns/_rnn-shape_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/rnns/_rnn-shape_sol.qmd >}}
+
+## Row by row
+
+<!-- heading shares the slide; do not re-flag -->
+
+{{< include _subfiles/rnns/_rows_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/rnns/_rows_sol.qmd >}}
+
+## Pixel by pixel
+
+<!-- heading shares the slide; do not re-flag -->
+
+{{< include _subfiles/rnns/_pixels_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/rnns/_pixels_sol.qmd >}}
+
+# Large gradients
+
+## The size of the gradient
+
+<!-- heading shares the slide; do not re-flag -->
+
+{{< include _subfiles/rnns/_grad-norms_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/rnns/_grad-norms_sol.qmd >}}
+
+## Clipping
+
+<!-- heading shares the slide; do not re-flag -->
+
+{{< include _subfiles/rnns/_clipped_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/rnns/_clipped_sol.qmd >}}
+
+# Gated layers
+
+## An LSTM
+
+<!-- heading shares the slide; do not re-flag -->
+
+{{< include _subfiles/rnns/_lstm-pixels_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/rnns/_lstm-pixels_sol.qmd >}}
+
+## Two gates instead of three
+
+{{< include _subfiles/rnns/_gru_def.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/rnns/_gru_exm.qmd >}}
+
+## Comparing the readers
+
+<!-- heading shares the slide; do not re-flag -->
+
+{{< include _subfiles/rnns/_gru-pixels_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/rnns/_gru-pixels_sol.qmd >}}
+
+# Symbols as vectors
+
+## A one-hot vector times a matrix
+
+<!-- heading shares the slide; do not re-flag -->
+
+{{< include _subfiles/rnns/_one-hot-product_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/rnns/_one-hot-product_sol.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/rnns/_embedding_def.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/rnns/_embedding_exm.qmd >}}
+
+## Further reading
+
+{{< include _subfiles/rnns/_rnns_read.qmd >}}
+
+# References
+
+::: {#refs}
+:::

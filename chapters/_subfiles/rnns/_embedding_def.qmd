@@ -1,0 +1,16 @@
+::: {#def-embedding}
+
+#### Embedding
+
+An **embedding** layer maps each of $K$ symbols,
+such as characters or words,
+to a vector in $\reals^d$.
+Symbol $k$ maps to row $k$ of a $K \times d$ matrix $\matr{E}$ of [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter),
+learned with the rest of the network
+[@goodfellow2016deep, section 12.4.2].
+Row $k$ is the **embedding** of symbol $k$,
+also called its **embedding vector**.
+The layer equals a linear layer with no bias applied to the [one-hot encoding](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-one-hot-encoding) of the symbol,
+computed by looking up the row.
+
+:::

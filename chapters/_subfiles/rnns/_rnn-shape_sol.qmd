@@ -1,0 +1,26 @@
+::: {#sol-rnn-shape}
+
+```{python}
+#| code-fold: show
+recurrent = nn.RNN(8, 32, batch_first=True)
+rows = x_train[:16].reshape(16, 8, 8)
+states, last_state = recurrent(rows)
+same_last = torch.equal(states[:, -1], last_state[0])
+print(rows.shape, states.shape, last_state.shape, same_last)
+```
+
+With `batch_first=True`,
+the input has [shape](pytorch-basics.qmd#def-shape) $16 \times 8 \times 8$:
+16 sequences of 8 steps,
+each step a row of 8 pixels.
+The first output holds the [hidden state](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-hidden-state) after every step,
+with shape $16 \times 8 \times 32$.
+The second holds the hidden state after the last step only,
+with shape $1 \times 16 \times 32$.
+Its first dimension counts stacked layers,
+of which there is 1 [@pytorch_rnn].
+Its entries `r if (py$same_last) "equal" else "differ from"` the last step of the first output.
+Without `batch_first=True`,
+PyTorch expects the steps first and the sequences second.
+
+:::

@@ -1,0 +1,80 @@
+```{python}
+#| code-fold: show
+import math
+
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
+import torch
+from torch import nn
+
+_ = torch.manual_seed(481)
+digits = pd.read_csv("data/optdigits-test.csv", header=None)
+pixels = torch.tensor(digits.iloc[:, :64].to_numpy(), dtype=torch.float32) / 16
+y = torch.tensor(digits[64].to_numpy())
+n_train = 1200
+order = torch.randperm(len(pixels))
+x_train, y_train = pixels[order[:n_train]], y[order[:n_train]]
+x_test, y_test = pixels[order[n_train:]], y[order[n_train:]]
+loss_fn = nn.CrossEntropyLoss()
+
+
+class Reader(nn.Module):
+    # Reads each image as a sequence of `step_size` pixels at a time,
+    # with the recurrent layer `layer`, and classifies it from the last state.
+
+    def __init__(self, layer, step_size, hidden_size=32):
+        super().__init__()
+        self.step_size = step_size
+        self.recurrent = layer(step_size, hidden_size, batch_first=True)
+        self.out = nn.Linear(hidden_size, 10)
+
+    def forward(self, images):
+        sequence = images.reshape(len(images), -1, self.step_size)
+        states, _ = self.recurrent(sequence)
+        return self.out(states[:, -1])
+
+
+def make_reader(layer, step_size, seed=1):
+    torch.manual_seed(seed)
+    return Reader(layer, step_size)
+
+
+def train(net, n_epochs=10, lr=0.01, batch_size=32, seed=0, max_norm=math.inf):
+    # Adam on the training digits; returns the gradient norm before each step.
+    # A finite `max_norm` rescales any larger gradient to that norm.
+    optimizer = torch.optim.Adam(net.parameters(), lr=lr)
+    generator = torch.Generator().manual_seed(seed)
+    norms = []
+    for epoch in range(n_epochs):
+        net.train()
+        shuffled = torch.randperm(n_train, generator=generator)
+        for start in range(0, n_train, batch_size):
+            batch = shuffled[start:start + batch_size]
+            optimizer.zero_grad()
+            loss_fn(net(x_train[batch]), y_train[batch]).backward()
+            norm = nn.utils.clip_grad_norm_(net.parameters(), max_norm)
+            norms.append(norm.item())
+            optimizer.step()
+    return norms
+
+
+def accuracy(net):
+    # Fraction of the test digits that `net` classifies correctly.
+    net.eval()
+    with torch.no_grad():
+        return (net(x_test).argmax(dim=1) == y_test).float().mean().item()
+
+
+print(make_reader(nn.RNN, 8))
+```
+
+The exercises use the UCI optical digits [@alpaydin1998optdigits],
+split as in the [feedforward networks chapter](feedforward-networks.qmd),
+with `r format(py$n_train, big.mark = ",")` training images.
+`Reader` reads each image as a sequence,
+`step_size` pixels at a time,
+and classifies it with a linear layer on the last [hidden state](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-hidden-state).
+With `step_size=8`,
+each step reads one row of the image.
+`train()` runs [Adam](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-adam) with [learning rate](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-learning-rate) 0.01 and batch size 32.

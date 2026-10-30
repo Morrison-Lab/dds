@@ -1,0 +1,21 @@
+::: {#def-gru}
+
+#### Gated recurrent unit (GRU)
+
+A **gated recurrent unit** (GRU) layer keeps only a [hidden state](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-hidden-state) $\vhidval_t \in \reals^{H}$,
+with no separate cell state,
+and two [gates](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-gate) [@cho2014gru]:
+
+$$\begin{aligned}
+\vecf{z}_t &= \sigmoidf{W_z \vx_t + U_z \vhidval_{t-1} + \vecf{b}_z}, &&\text{(update gate)} \\
+\vecf{r}_t &= \sigmoidf{W_r \vx_t + U_r \vhidval_{t-1} + \vecf{b}_r}, &&\text{(reset gate)} \\
+\vecf{u}_t &= \tanhf{W_u \vx_t + U_u \paren{\vecf{r}_t \odot \vhidval_{t-1}} + \vecf{b}_u}, &&\text{(candidate)} \\
+\vhidval_t &= \vecf{z}_t \odot \vhidval_{t-1} + \paren{1 - \vecf{z}_t} \odot \vecf{u}_t.
+\end{aligned}$$
+
+These notes follow PyTorch,
+in which $\vecf{z}_t$ multiplies the old state [@pytorch_gru].
+@cho2014gru and the [DATA 471 notes](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#rem-gru) put $1 - \vecf{z}_t$ there instead,
+which swaps the meaning of $\vecf{z}_t$ near 0 and near 1.
+
+:::

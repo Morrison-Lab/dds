@@ -64,9 +64,9 @@ The final's review session will be held during finals week, at a time TBD.
 |                          |                              | convolution arithmetic       | pooling, classic             |                              |
 | Apr 25 -- May 1          |                              |                              | architectures                |                              |
 +--------------------------+------------------------------+------------------------------+------------------------------+------------------------------+
-| **Week 6**               | [Convolutional networks][c]: | Sequence models: embeddings, | Sequence models: LSTMs and   | Lab session: Homework 3      |
-|                          | transfer learning            | recurrent networks           | GRUs                         |                              |
-| May 2 -- May 8           |                              |                              |                              | **Homework 2 due**           |
+| **Week 6**               | [Convolutional networks][c]: | [Sequence models][r]:        | [Sequence models][r]: LSTMs  | Lab session: Homework 3      |
+|                          | transfer learning            | embeddings, recurrent        | and GRUs                     |                              |
+| May 2 -- May 8           |                              | networks                     |                              | **Homework 2 due**           |
 +--------------------------+------------------------------+------------------------------+------------------------------+------------------------------+
 | **Week 7**               | Language modeling            | Attention: encoder-decoder   | Transformers:                | **Midterm 2 review**         |
 |                          |                              | attention                    | self-attention, positional   |                              |
@@ -115,4 +115,5 @@ The final's review session will be held during finals week, at a time TBD.
 [reg]: regularization.qmd
 [norm]: normalization.qmd
 [c]: cnns.qmd
+[r]: rnns.qmd
 [lds]: https://morrison-lab.github.io/lds/

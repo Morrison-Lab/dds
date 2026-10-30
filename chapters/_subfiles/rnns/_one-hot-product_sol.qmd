@@ -1,0 +1,17 @@
+::: {#sol-one-hot-product}
+
+```{python}
+#| code-fold: show
+one_hot_c = nn.functional.one_hot(torch.tensor(alphabet.index("c")), len(alphabet)).float()
+product = one_hot_c @ E
+print(product, E[2], torch.equal(product, E[2]))
+```
+
+Entry $j$ of $\tp{\vecf{e}_2} \matr{E}$ is $\sum_i (\vecf{e}_2)_i E_{ij} = E_{2j}$,
+since $(\vecf{e}_2)_i$ is 1 for $i = 2$ and 0 for every other $i$.
+So the product is row 2 of $\matr{E}$,
+the third row printed above.
+Multiplying by a [one-hot encoding](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-one-hot-encoding) only looks up a row.
+A network can skip multiplying by the 26 zeros and read the row directly.
+
+:::

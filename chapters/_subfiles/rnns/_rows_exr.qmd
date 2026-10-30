@@ -1,0 +1,8 @@
+::: {#exr-rows}
+
+#### Reading a digit row by row
+
+Train `make_reader(nn.RNN, 8)` for 10 [epochs](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-epoch) with `train()`.
+What fraction of the test digits does it classify correctly?
+
+:::

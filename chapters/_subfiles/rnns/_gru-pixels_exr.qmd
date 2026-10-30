@@ -1,0 +1,8 @@
+::: {#exr-gru-pixels}
+
+#### A GRU reading pixels
+
+Train `make_reader(nn.GRU, 1)` for 20 [epochs](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-epoch).
+Does the [GRU](#def-gru) reader classify more test digits correctly than the [LSTM](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-lstm) reader of @sol-lstm-pixels?
+
+:::

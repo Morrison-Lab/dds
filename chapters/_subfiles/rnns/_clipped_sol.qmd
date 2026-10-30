@@ -1,0 +1,21 @@
+::: {#sol-clipped}
+
+```{python}
+#| code-fold: show
+clipped_rnn = make_reader(nn.RNN, 1)
+_ = train(clipped_rnn, n_epochs=20, max_norm=1)
+clipped_acc = accuracy(clipped_rnn)
+print(clipped_acc)
+# The prose below says the reader is still below the row reader.
+assert clipped_acc < row_acc
+```
+
+With [gradient clipping](https://morrison-lab.github.io/lds/chapters/backpropagation.html#def-gradient-clipping),
+the pixel reader classifies `r sprintf("%.1f%%", 100 * py$clipped_acc)` of the test digits correctly,
+against `r sprintf("%.1f%%", 100 * py$pixel_acc)` without it.
+`r if (py$clipped_acc > py$pixel_acc) "So clipping helps" else "So clipping does not help"`.
+Clipping caps the size of each gradient.
+It does nothing for a [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) that has [vanished](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#thm-jacobian-bound) by the time it reaches the first rows.
+The reader is still `r sprintf("%.1f", 100 * (py$row_acc - py$clipped_acc))` percentage points below the row reader of @sol-rows.
+
+:::

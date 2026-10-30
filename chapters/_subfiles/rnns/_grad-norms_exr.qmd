@@ -1,0 +1,9 @@
+::: {#exr-grad-norms}
+
+#### The size of the gradient during training
+
+`train()` returned the [norm](https://morrison-lab.github.io/mds/linear-algebra-inner-products.html#def-norm) of the [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) before each step of training the pixel reader in @sol-pixels,
+as `rnn_norms`.
+How large does the gradient get?
+
+:::
