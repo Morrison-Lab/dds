@@ -321,7 +321,7 @@ The exercises use the UCI optical digits [\[1\]](#ref-alpaydin1998optdigits), sp
 > print(relu_gap, pool_shape, pool_gap, pool_shift_gap)
 > ```
 >
->     0.0 [4, 4] 0.4551493525505066 0.5029639601707458
+>     0.0 [4, 4] 0.45514941215515137 0.5029639601707458
 >
 > A [ReLU](../chapters/feedforward-networks.llms.md#def-relu) acts on each pixel separately. So a ReLU is [translation equivariant](#def-equivariance) with no edge effect. On the [feature maps](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-feature-map) of `conv` for a test digit, `relu(shift_right(maps))` and `shift_right(relu(maps))` agree exactly. A \\2 \times 2\\ max [pooling](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-pooling) layer is not translation equivariant. Its output is 4 by 4. A shift of one input pixel is half an output pixel, and no whole-pixel shift of the pooled maps matches a half-pixel shift. The pooled maps of the shifted input differ by up to 0.46 from those of the unshifted input, and by up to 0.50 from those maps shifted one pixel right.
 
@@ -369,7 +369,7 @@ The exercises use the UCI optical digits [\[1\]](#ref-alpaydin1998optdigits), sp
 > print(cnn_acc, cnn_shift_acc, mlp_acc, mlp_shift_acc)
 > ```
 >
->     0.9882746934890747 0.8090452551841736 0.9614740610122681 0.4438861012458801
+>     0.9882746934890747 0.8107202649116516 0.9614740610122681 0.4438861012458801
 >
 > Show code
 >
@@ -380,10 +380,10 @@ The exercises use the UCI optical digits [\[1\]](#ref-alpaydin1998optdigits), sp
 >
 > | Network | Test [accuracy](https://morrison-lab.github.io/lds/chapters/metrics.html#def-accuracy) | Shifted test accuracy |
 > |:---|---:|---:|
-> | Convolutional | 98.8% | 80.9% |
+> | Convolutional | 98.8% | 81.1% |
 > | [MLP](../chapters/feedforward-networks.llms.md#def-feedforward-network) | 96.1% | 44.4% |
 >
-> The MLP loses more: 51.8 percentage points, against 17.9 for the convolutional network. The MLP has a separate weight for each pixel. A stroke that moves to a new column meets weights trained on other strokes. The [convolutional layers](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-convolutional-layer) are [translation equivariant](#def-equivariance). They find the same strokes one column over. The [pooling](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-pooling) layer is not translation equivariant ([Example 2](#exm-equivariance)). The last linear layer has a separate weight for each pooled position, as the MLP has for each pixel.
+> The MLP loses more: 51.8 percentage points, against 17.8 for the convolutional network. The MLP has a separate weight for each pixel. A stroke that moves to a new column meets weights trained on other strokes. The [convolutional layers](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-convolutional-layer) are [translation equivariant](#def-equivariance). They find the same strokes one column over. The [pooling](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-pooling) layer is not translation equivariant ([Example 2](#exm-equivariance)). The last linear layer has a separate weight for each pooled position, as the MLP has for each pixel.
 
 # 5 Architectures
 
@@ -393,7 +393,7 @@ The exercises use the UCI optical digits [\[1\]](#ref-alpaydin1998optdigits), sp
 >
 > *Remark 2* (Some convolutional networks that changed the field).
 >
-> - LeNet-5 read handwritten digits with three [convolutional layers](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-convolutional-layer), the first two each followed by subsampling, then one [fully connected](https://morrison-lab.github.io/lds/chapters/neural-nets.html#def-fully-connected) layer [\[5, Sec. II.B\]](#ref-lecun1998gradient).
+> - LeNet-5 read handwritten digits with three [convolutional layers](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-convolutional-layer), the first two each followed by subsampling, then a [fully connected](https://morrison-lab.github.io/lds/chapters/neural-nets.html#def-fully-connected) layer and an output layer [\[5, Sec. II.B\]](#ref-lecun1998gradient).
 > - AlexNet won the 2012 ImageNet competition with 5 convolutional layers, [ReLU](../chapters/feedforward-networks.llms.md#def-relu) activations, [dropout](../chapters/regularization.llms.md#def-dropout) and training on GPUs [\[6, Sec. 3\]](#ref-krizhevsky2012imagenet).
 > - VGG networks stacked \\3 \times 3\\ convolutional layers, up to 19 weight layers deep [\[4, Sec. 2.3\]](#ref-simonyan2015vgg), for the reasons in [Solution 3](#sol-two-small-filters).
 > - ResNets added [residual connections](https://morrison-lab.github.io/lds/chapters/backpropagation.html#def-residual-connection) around pairs or triples of convolutional layers, and trained networks of more than 100 layers [\[7\]](#ref-he2016resnet). The [normalization chapter](../chapters/normalization.llms.md#rem-residual-block) used residual connections around single fully connected layers.
