@@ -17,7 +17,7 @@ group_lrs = [group["lr"] for group in optimizer.param_groups]
 print(group_lrs)
 ```
 
-@sol-fine-tune is [fine-tuning](#def-fine-tuning),
+@sol-fine-tune ran [fine-tuning](#def-fine-tuning)
 with one [learning rate](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-learning-rate) for every layer.
 A PyTorch optimizer also takes a list of groups of [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter),
 each with its own options [@pytorch_optim].
