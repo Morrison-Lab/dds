@@ -5,6 +5,7 @@
 A network that reads text needs each character as a vector.
 Number the 26 lowercase letters and the space from 0 to 26,
 so `"c"` is 2.
+Count vector entries and matrix rows from 0 as well.
 Let $\vecf{e}_2 \in \{0, 1\}^{27}$ be the [one-hot encoding](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-one-hot-encoding) of `"c"`,
 and let $\matr{E}$ be the $27 \times 4$ matrix printed below.
 What is $\tp{\vecf{e}_2} \matr{E}$?
