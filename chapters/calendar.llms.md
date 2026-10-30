@@ -4,7 +4,7 @@ Spring 2027
 
 Published
 
-Last modified: 2026-10-29
+Last modified: 2026-10-30
 
 The topics and dates of future lectures may change.
 

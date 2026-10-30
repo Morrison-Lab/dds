@@ -39,6 +39,42 @@
    "external": false
   },
   {
+   "id": "dds/cnns#def-equivariance",
+   "site": "dds",
+   "page": "cnns",
+   "div": "def-equivariance",
+   "kind": "def",
+   "title": "Translation equivariance",
+   "external": false
+  },
+  {
+   "id": "dds/cnns#def-fine-tuning",
+   "site": "dds",
+   "page": "cnns",
+   "div": "def-fine-tuning",
+   "kind": "def",
+   "title": "Fine-tuning",
+   "external": false
+  },
+  {
+   "id": "dds/cnns#def-receptive-field",
+   "site": "dds",
+   "page": "cnns",
+   "div": "def-receptive-field",
+   "kind": "def",
+   "title": "Receptive field",
+   "external": false
+  },
+  {
+   "id": "dds/cnns#def-transfer-learning",
+   "site": "dds",
+   "page": "cnns",
+   "div": "def-transfer-learning",
+   "kind": "def",
+   "title": "Transfer learning",
+   "external": false
+  },
+  {
    "id": "dds/course-overview#def-deep-learning",
    "site": "dds",
    "page": "course-overview",
@@ -341,6 +377,14 @@
   [
    "dds/backpropagation#thm-ce-logit-grad",
    "pds/expectation#def-cross-entropy"
+  ],
+  [
+   "dds/cnns#def-fine-tuning",
+   "dds/cnns#def-transfer-learning"
+  ],
+  [
+   "dds/cnns#def-receptive-field",
+   "dds/feedforward-networks#def-unit"
   ],
   [
    "dds/course-overview#def-deep-learning",
