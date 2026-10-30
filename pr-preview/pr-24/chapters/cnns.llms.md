@@ -393,7 +393,7 @@ The exercises use the UCI optical digits [\[1\]](#ref-alpaydin1998optdigits), sp
 >
 > *Remark 2* (Some convolutional networks that changed the field).
 >
-> - LeNet-5 read handwritten digits with three [convolutional layers](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-convolutional-layer), the first two each followed by subsampling, then one [fully connected](https://morrison-lab.github.io/lds/chapters/neural-nets.html#def-fully-connected) layer [\[5, Sec. II.B\]](#ref-lecun1998gradient).
+> - LeNet-5 read handwritten digits with three [convolutional layers](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-convolutional-layer), the first two each followed by subsampling, then a [fully connected](https://morrison-lab.github.io/lds/chapters/neural-nets.html#def-fully-connected) layer and an output layer [\[5, Sec. II.B\]](#ref-lecun1998gradient).
 > - AlexNet won the 2012 ImageNet competition with 5 convolutional layers, [ReLU](../chapters/feedforward-networks.llms.md#def-relu) activations, [dropout](../chapters/regularization.llms.md#def-dropout) and training on GPUs [\[6, Sec. 3\]](#ref-krizhevsky2012imagenet).
 > - VGG networks stacked \\3 \times 3\\ convolutional layers, up to 19 weight layers deep [\[4, Sec. 2.3\]](#ref-simonyan2015vgg), for the reasons in [Solution 3](#sol-two-small-filters).
 > - ResNets added [residual connections](https://morrison-lab.github.io/lds/chapters/backpropagation.html#def-residual-connection) around pairs or triples of convolutional layers, and trained networks of more than 100 layers [\[7\]](#ref-he2016resnet). The [normalization chapter](../chapters/normalization.llms.md#rem-residual-block) used residual connections around single fully connected layers.
