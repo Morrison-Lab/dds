@@ -1,0 +1,19 @@
+::: {#sol-few-labels}
+
+```{python}
+#| code-fold: show
+scratch_accs = []
+for draw in range(n_draws):
+    x_few, y_few = draw_few(draw)
+    net = train(make_cnn(n_classes=5, seed=2), x_few, y_few, n_epochs=30)
+    scratch_accs.append(accuracy(net, x_high_test, y_high_test))
+scratch_acc = np.mean(scratch_accs)
+print(np.round(scratch_accs, 3))
+```
+
+Averaged over the `r py$n_draws` draws,
+the network classifies `r sprintf("%.1f%%", 100 * py$scratch_acc)` of the `r length(py$y_high_test)` test images correctly.
+Its [accuracy](https://morrison-lab.github.io/lds/chapters/metrics.html#def-accuracy) ranges from `r sprintf("%.1f%%", 100 * min(unlist(py$scratch_accs)))` to `r sprintf("%.1f%%", 100 * max(unlist(py$scratch_accs)))`,
+depending on which 20 images it was given.
+
+:::

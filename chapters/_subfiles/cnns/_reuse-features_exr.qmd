@@ -1,0 +1,38 @@
+::: {#exr-reuse-features}
+
+#### Reusing the convolutional layers
+
+```{python}
+#| code-fold: show
+is_low = y_train < 5
+n_low = int(is_low.sum())
+low_net = train(make_cnn(n_classes=5), x_train[is_low], y_train[is_low])
+low_test = y_test < 5
+low_acc = accuracy(low_net, x_test[low_test], y_test[low_test])
+
+
+def new_head(train_all, seed=3):
+    # Copy low_net with a new last layer; return it and the parameters to train.
+    net = copy.deepcopy(low_net)
+    torch.manual_seed(seed)
+    net[-1] = nn.Linear(16 * 4 * 4, 5)
+    if train_all:
+        return net, net.parameters()
+    return net, net[-1].parameters()
+
+
+print(n_low, low_acc)
+```
+
+The [training set](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-training-set) has `r py$n_low` labelled images of the digits 0 to 4.
+`low_net` is `make_cnn(n_classes=5)` trained on them.
+`new_head()` copies `low_net`,
+replaces its last linear layer with a new one for the digits 5 to 9,
+and returns the copy with the [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter) to train.
+With `train_all=False`,
+those are only the new layer's.
+The [convolutional layers](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-convolutional-layer) keep the weights they learned on the digits 0 to 4.
+Trained this way on the 20 images of each draw,
+is the network more accurate than the networks of @sol-few-labels?
+
+:::

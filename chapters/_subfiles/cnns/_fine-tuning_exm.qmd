@@ -1,0 +1,27 @@
+::: {#exm-fine-tuning}
+
+#### A smaller learning rate for the reused layers
+
+```{python}
+#| code-fold: show
+tuned, _ = new_head(train_all=True)
+optimizer = torch.optim.SGD(
+    [
+        {"params": tuned[:-1].parameters(), "lr": 0.005},
+        {"params": tuned[-1].parameters()},
+    ],
+    lr=0.05,
+    momentum=0.9,
+)
+group_lrs = [group["lr"] for group in optimizer.param_groups]
+print(group_lrs)
+```
+
+@sol-fine-tune is [fine-tuning](#def-fine-tuning),
+with one [learning rate](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-learning-rate) for every layer.
+A PyTorch optimizer also takes a list of parameter groups,
+each with its own options [@pytorch_optim].
+`optimizer` here would move the reused [convolutional layers](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-convolutional-layer) with learning rate `r py$group_lrs[[1]]`
+and the new last layer with learning rate `r py$group_lrs[[2]]`.
+
+:::

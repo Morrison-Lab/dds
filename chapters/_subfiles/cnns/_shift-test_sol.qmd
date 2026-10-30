@@ -1,0 +1,31 @@
+::: {#sol-shift-test}
+
+```{python}
+#| code-fold: show
+cnn = train(make_cnn(), x_train, y_train)
+mlp = train(make_mlp(), x_train, y_train)
+cnn_acc = accuracy(cnn, x_test, y_test)
+cnn_shift_acc = accuracy(cnn, shift_right(x_test), y_test)
+mlp_acc = accuracy(mlp, x_test, y_test)
+mlp_shift_acc = accuracy(mlp, shift_right(x_test), y_test)
+print(cnn_acc, cnn_shift_acc, mlp_acc, mlp_shift_acc)
+# The prose below says the MLP loses more; stop the render if it does not.
+assert mlp_acc - mlp_shift_acc > cnn_acc - cnn_shift_acc
+```
+
+| Network | Test [accuracy](https://morrison-lab.github.io/lds/chapters/metrics.html#def-accuracy) | Shifted test accuracy |
+|:--|--:|--:|
+| Convolutional | `r sprintf("%.1f%%", 100 * py$cnn_acc)` | `r sprintf("%.1f%%", 100 * py$cnn_shift_acc)` |
+| [MLP](feedforward-networks.qmd#def-feedforward-network) | `r sprintf("%.1f%%", 100 * py$mlp_acc)` | `r sprintf("%.1f%%", 100 * py$mlp_shift_acc)` |
+
+The MLP loses more:
+`r sprintf("%.1f", 100 * (py$mlp_acc - py$mlp_shift_acc))` percentage points,
+against `r sprintf("%.1f", 100 * (py$cnn_acc - py$cnn_shift_acc))` for the convolutional network.
+The MLP has a separate weight for each pixel.
+A stroke that moves to a new column meets weights trained on other strokes.
+The [convolutional layers](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-convolutional-layer) are [translation equivariant](#def-equivariance).
+They find the same strokes one column over.
+The [pooling](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-pooling) layer and the last linear layer are not translation equivariant,
+and the convolutional network still loses some accuracy.
+
+:::

@@ -1,0 +1,14 @@
+::: {#def-transfer-learning}
+
+#### Transfer learning
+
+**Transfer learning** uses what a network learned on one task to start learning another task,
+usually one with far fewer labelled examples
+[@goodfellow2016deep, section 15.2].
+One common form keeps the early layers of a network trained on the first task,
+and trains a new last layer for the second.
+Networks trained on ImageNet are often reused this way:
+their first layers find edge-like patterns that are useful for many kinds of images
+[@yosinski2014transferable].
+
+:::

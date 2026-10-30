@@ -1,0 +1,19 @@
+::: {#sol-conv-shape}
+
+```{python}
+#| code-fold: show
+conv = nn.Conv2d(1, 8, 3, padding=1)
+conv_out = conv(x_train[:32])
+print(conv_out.shape)
+```
+
+The output has [shape](pytorch-basics.qmd#def-shape) $32 \times 8 \times 8 \times 8$:
+32 images,
+each with 8 [channels](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-channel) of 8 rows and 8 columns.
+With [padding](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-padding) 1 and [stride](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-stride) 1,
+each side is $\floor{(8 + 2 - 3) / 1} + 1 = 8$ pixels long,
+the same as the input's.
+PyTorch orders the dimensions as images, channels, rows and columns [@pytorch_conv2d].
+Some libraries put the channels last instead.
+
+:::

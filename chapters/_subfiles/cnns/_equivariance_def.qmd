@@ -1,0 +1,12 @@
+::: {#def-equivariance}
+
+#### Translation equivariance
+
+A function $f$ from images to images is **translation equivariant**
+when shifting its input shifts its output by the same amount:
+$f(\operatorname{shift}(x)) = \operatorname{shift}(f(x))$ for every image $x$ and every shift
+[@goodfellow2016deep, section 9.2].
+A [convolutional layer](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-convolutional-layer) with [stride](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-stride) 1 is translation equivariant,
+up to what happens at the edges of the image.
+
+:::

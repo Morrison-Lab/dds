@@ -1,0 +1,29 @@
+::: {#sol-fine-tune}
+
+```{python}
+#| code-fold: show
+tuned_accs = []
+for draw in range(n_draws):
+    x_few, y_few = draw_few(draw)
+    net, params = new_head(train_all=True)
+    _ = train(net, x_few, y_few, n_epochs=30, params=params)
+    tuned_accs.append(accuracy(net, x_high_test, y_high_test))
+tuned_acc = np.mean(tuned_accs)
+print(np.round(tuned_accs, 3))
+# The prose below says this beats random starting weights; stop the render if not.
+assert tuned_acc > scratch_acc
+```
+
+| Starting weights of the [convolutional layers](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-convolutional-layer) | Layers trained | Mean test [accuracy](https://morrison-lab.github.io/lds/chapters/metrics.html#def-accuracy) |
+|:--|:--|--:|
+| Random | All | `r sprintf("%.1f%%", 100 * py$scratch_acc)` |
+| Learned on the digits 0 to 4 | Last only | `r sprintf("%.1f%%", 100 * py$frozen_acc)` |
+| Learned on the digits 0 to 4 | All | `r sprintf("%.1f%%", 100 * py$tuned_acc)` |
+
+Training every layer gives a mean accuracy of `r sprintf("%.1f%%", 100 * py$tuned_acc)`,
+`r sprintf("%.1f", 100 * abs(py$tuned_acc - py$frozen_acc))` percentage points `r if (py$tuned_acc > py$frozen_acc) "above" else "below"` the network with fixed [convolutional layers](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-convolutional-layer).
+`r if (abs(py$tuned_acc - py$frozen_acc) < 0.01) "So it is about as accurate, not more." else if (py$tuned_acc > py$frozen_acc) "So it is more accurate." else "So it is less accurate."`
+Both start from the weights learned on the digits 0 to 4,
+and both beat the networks that start from random weights.
+
+:::

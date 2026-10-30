@@ -1,0 +1,24 @@
+::: {#sol-shift-conv}
+
+```{python}
+#| code-fold: show
+digit = x_test[:1]
+with torch.no_grad():
+    out_of_shifted = conv(shift_right(digit))
+    shifted_out = shift_right(conv(digit))
+gap = (out_of_shifted - shifted_out).abs()
+gap_inside = gap[..., 1:].max().item()
+gap_first_col = gap[..., 0].max().item()
+print(gap_inside, gap_first_col)
+```
+
+The output for the shifted digit is the original output shifted one pixel right.
+Each output pixel is the same [filter](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-filter) applied to the patch around it,
+so moving every patch moves every output.
+In columns 1 to 7 of every [channel](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-channel) of `conv`,
+`r if (py$gap_inside == 0) "the two agree exactly" else sprintf("the two differ by at most %.1e", py$gap_inside)`.
+In column 0 they differ by up to `r sprintf("%.2f", py$gap_first_col)`.
+There `shift_right()` fills the shifted output with 0,
+while the layer applies its filter and bias to the new blank column.
+
+:::

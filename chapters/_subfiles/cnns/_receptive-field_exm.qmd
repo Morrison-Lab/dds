@@ -1,0 +1,29 @@
+::: {#exm-receptive-field}
+
+#### Receptive fields in `make_cnn()`
+
+```{python}
+#| code-fold: show
+def field_size(layers, row, col):
+    # Rows and columns of the input that reach any channel of `layers` at (row, col),
+    # over 64 training images; one image can miss a pixel through a ReLU that is 0.
+    images = x_train[:64].clone().requires_grad_(True)
+    layers(images)[:, :, row, col].sum().backward()
+    reaches = (images.grad != 0).any(dim=0)[0]
+    return reaches.any(dim=1).sum().item(), reaches.any(dim=0).sum().item()
+
+
+conv_net = make_cnn()
+before_pool = field_size(conv_net[:4], row=4, col=4)
+after_pool = field_size(conv_net[:5], row=2, col=2)
+print(before_pool, after_pool)
+```
+
+`make_cnn()` stacks two $3 \times 3$ [convolutional layers](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-convolutional-layer),
+each followed by a [ReLU](feedforward-networks.qmd#def-relu),
+then $2 \times 2$ max [pooling](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-pooling).
+A [unit](feedforward-networks.qmd#def-unit) of the second convolutional layer has a [receptive field](#def-receptive-field) of `r py$before_pool[[1]]` by `r py$before_pool[[2]]` pixels.
+A unit after the pooling layer takes the largest of a $2 \times 2$ block of those units.
+Its receptive field is `r py$after_pool[[1]]` by `r py$after_pool[[2]]` pixels.
+
+:::
