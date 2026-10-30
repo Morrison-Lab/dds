@@ -7,7 +7,9 @@ where $\vz$ is the vector of the model's [logits](feedforward-networks.qmd#def-l
 @hinton2015distilling [section 2] use this softmax with temperature $T$,
 and note that a higher $T$ gives a softer distribution.
 At $T = 1$ sampling uses the model's own distribution.
-As $T$ falls toward 0 the distribution puts more of its weight on the most likely symbols,
-and as $T$ grows it approaches the uniform distribution.
+As $T$ falls toward 0,
+the distribution puts more of its weight on the most likely symbols,
+and as $T$ grows,
+the distribution approaches the uniform distribution.
 
 :::

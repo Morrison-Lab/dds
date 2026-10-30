@@ -2,7 +2,8 @@
 
 #### Bigram model
 
-A **bigram model** is a [language model](#def-language-model) in which the distribution of each symbol depends only on the symbol before it
+A **bigram model** is a [language model](#def-language-model)
+in which the distribution of each symbol depends only on the symbol before it
 [@goodfellow2016deep, section 12.4.1].
 Counting in a training text estimates it as
 

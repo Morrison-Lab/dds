@@ -24,10 +24,10 @@ print(text[:120])
 ```
 
 The exercises use a local copy, [`data/shakespeare.txt`](data/shakespeare.txt),
-of the first `r format(nchar(py$text), big.mark = ",")` characters of the [tiny Shakespeare text](https://raw.githubusercontent.com/karpathy/char-rnn/master/data/tinyshakespeare/input.txt),
-which @karpathy2015charrnn collected from Shakespeare's plays.
-`tools/get-shakespeare.py` rebuilds the copy;
-it keeps only the first `r format(nchar(py$text), big.mark = ",")` characters,
+of the first `r format(nchar(py$text), big.mark = ",")` characters of the [tiny Shakespeare text](https://raw.githubusercontent.com/karpathy/char-rnn/master/data/tinyshakespeare/input.txt).
+@karpathy2015charrnn collected that text from Shakespeare's plays.
+`tools/get-shakespeare.py` rebuilds the copy.
+The script keeps only the first `r format(nchar(py$text), big.mark = ",")` characters,
 the opening of *Coriolanus*,
 and changes nothing else.
 The copy has `r py$n_chars` distinct characters,

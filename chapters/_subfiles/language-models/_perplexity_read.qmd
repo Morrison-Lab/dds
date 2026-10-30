@@ -1,0 +1,3 @@
+::: {.reading}
+*Deep Learning*'s [section 12.4](https://www.deeplearningbook.org/contents/applications.html) covers $n$-gram and neural language models [@goodfellow2016deep]. <!-- check-term-links: allow -->
+:::

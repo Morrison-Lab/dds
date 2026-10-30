@@ -1,0 +1,3 @@
+::: {.reading}
+@karpathy2015unreasonable trains character-level recurrent language models on Shakespeare, Wikipedia and source code, and shows what they write. <!-- check-term-links: allow -->
+:::

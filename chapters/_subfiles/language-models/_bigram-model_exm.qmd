@@ -17,8 +17,8 @@ p_u_after_q = counted[index["q"], index["u"]].item()
 print(repr(top_after_t), p_top_after_t, p_u_after_q)
 ```
 
-Row $a$ of `pair_counts` holds $N(a, b)$ for every $b$,
-so row $a$ of `counted` is the [bigram model](#def-bigram-model)'s distribution of the character after $a$.
+Row $a$ of `pair_counts` holds $N(a, b)$ for every $b$.
+So row $a$ of `counted` is the [bigram model](#def-bigram-model)'s distribution of the character after $a$.
 Its most likely character after `t` is `r if (py$top_after_t == " ") "the space" else py$top_after_t`,
 with probability `r sprintf("%.2f", py$p_top_after_t)`.
 It gives a `u` after a `q` probability `r sprintf("%.2f", py$p_u_after_q)`,

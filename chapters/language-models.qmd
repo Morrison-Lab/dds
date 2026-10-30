@@ -112,6 +112,8 @@ The exercises are new.
 
 {{< include _subfiles/language-models/_perplexity_exm.qmd >}}
 
+{{< include _subfiles/language-models/_perplexity_read.qmd >}}
+
 # A recurrent language model
 
 ## The network
@@ -157,6 +159,8 @@ The exercises are new.
 {{< slidebreak >}}
 
 {{< include _subfiles/language-models/_sample_sol.qmd >}}
+
+{{< include _subfiles/language-models/_sample_read.qmd >}}
 
 ## Temperature
 
