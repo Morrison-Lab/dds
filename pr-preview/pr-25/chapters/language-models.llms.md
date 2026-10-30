@@ -367,7 +367,7 @@ print(make_lm())
 > print(untrained_ppl, gru_ppl)
 > ```
 >
->     62.06655063632067 5.192073376728205
+>     62.06655063632067 5.192072138841596
 >
 > Show code
 >
@@ -426,7 +426,7 @@ print(make_lm())
 > print(logits.shape, y.shape, window_loss)
 > ```
 >
->     torch.Size([1, 64, 61]) torch.Size([1, 64]) 1.252803087234497
+>     torch.Size([1, 64, 61]) torch.Size([1, 64]) 1.2528021335601807
 >
 > `train_lm()` uses [teacher forcing](#def-teacher-forcing). For one window of 64 characters, the network returns 64 rows of 61 [logits](../chapters/feedforward-networks.llms.md#def-logits), one row per position, and the [cross-entropy loss](https://morrison-lab.github.io/lds/chapters/logistic-regression.html#def-cross-entropy-loss) compares each row with the true next character. For the first window of the text, the trained network’s average loss is 1.25.
 
