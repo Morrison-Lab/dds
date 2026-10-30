@@ -17,7 +17,7 @@ A [GRU](#def-gru) layer has three blocks of weights,
 for $\vecf{z}_t$, $\vecf{r}_t$ and $\vecf{u}_t$,
 where an [LSTM](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-lstm) layer has four.
 PyTorch gives each block two bias vectors,
-one added to $W \vx_t$ and one to $U \vhidval_{t-1}$ [@pytorch_gru].
+one added to $\matr{W} \vx_t$ and one to $\matr{U} \vhidval_{t-1}$ [@pytorch_gru].
 So `nn.GRU(1, 32)` has $3 \times 32 \times (1 + 32 + 2) = `r py$gru_count`$ [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter),
 and `nn.LSTM(1, 32)` has $4 \times 32 \times (1 + 32 + 2) = `r py$lstm_count`$.
 

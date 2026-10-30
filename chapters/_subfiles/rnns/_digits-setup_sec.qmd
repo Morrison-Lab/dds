@@ -17,6 +17,8 @@ order = torch.randperm(len(pixels))
 x_train, y_train = pixels[order[:n_train]], y[order[:n_train]]
 x_test, y_test = pixels[order[n_train:]], y[order[n_train:]]
 loss_fn = nn.CrossEntropyLoss()
+LR = 0.01
+BATCH_SIZE = 32
 
 
 class Reader(nn.Module):
@@ -40,7 +42,7 @@ def make_reader(layer, step_size, seed=1):
     return Reader(layer, step_size)
 
 
-def train(net, n_epochs=10, lr=0.01, batch_size=32, seed=0, max_norm=math.inf):
+def train(net, n_epochs=10, lr=LR, batch_size=BATCH_SIZE, seed=0, max_norm=math.inf):
     # Adam on the training digits; returns the gradient norm before each step.
     # A finite `max_norm` rescales any larger gradient to that norm.
     optimizer = torch.optim.Adam(net.parameters(), lr=lr)
@@ -77,4 +79,4 @@ with `r format(py$n_train, big.mark = ",")` training images.
 and classifies it with a linear layer on the last [hidden state](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-hidden-state).
 With `step_size=8`,
 each step reads one row of the image.
-`train()` runs [Adam](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-adam) with [learning rate](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-learning-rate) 0.01 and batch size 32.
+`train()` runs [Adam](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-adam) with [learning rate](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-learning-rate) `r py$LR` and batch size `r py$BATCH_SIZE`.

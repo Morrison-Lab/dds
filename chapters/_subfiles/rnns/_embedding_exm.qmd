@@ -11,7 +11,7 @@ same_rows = torch.equal(vectors, embed.weight[word])
 print(word, vectors.shape, same_rows)
 ```
 
-`nn.Embedding(27, 4)` is an [embedding](#def-embedding) layer for the 27 characters,
+`nn.Embedding(27, 4)` is an [embedding layer](#def-embedding) for the 27 characters,
 with a $27 \times 4$ matrix `weight` [@pytorch_embedding].
 It takes a [tensor](pytorch-basics.qmd#def-tensor) of whole-number indices,
 here the indices of the letters of `"deep"`,

@@ -17,8 +17,8 @@ The first output holds the [hidden state](https://morrison-lab.github.io/lds/cha
 with shape $16 \times 8 \times 32$.
 The second holds the hidden state after the last step only,
 with shape $1 \times 16 \times 32$.
-Its first dimension counts stacked layers,
-of which there is 1 [@pytorch_rnn].
+Its first dimension counts stacked layers times directions,
+here 1 layer read in 1 direction [@pytorch_rnn].
 Its entries `r if (py$same_last) "equal" else "differ from"` the last step of the first output.
 Without `batch_first=True`,
 PyTorch expects the steps first and the sequences second.

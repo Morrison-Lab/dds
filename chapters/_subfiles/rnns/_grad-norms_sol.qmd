@@ -18,6 +18,8 @@ plt.show()
 median_norm = np.median(rnn_norms)
 max_norm_seen = max(rnn_norms)
 share_above_10 = np.mean(np.array(rnn_norms) > 10)
+last_steps = 100
+late_median = np.median(rnn_norms[-last_steps:])
 ```
 
 The [norm](https://morrison-lab.github.io/mds/linear-algebra-inner-products.html#def-norm) of the [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) before each [training step](pytorch-basics.qmd#def-training-step) of the pixel reader.
@@ -28,5 +30,9 @@ The median [gradient](https://morrison-lab.github.io/lds/chapters/linear-regress
 but the largest is `r sprintf("%.0f", py$max_norm_seen)`,
 `r sprintf("%.0f", py$max_norm_seen / py$median_norm)` times the median.
 `r sprintf("%.0f%%", 100 * py$share_above_10)` of the steps have a norm above 10.
+Over the last `r py$last_steps` steps the median norm is `r sprintf("%.1f", py$late_median)`,
+and the reader ends at `r sprintf("%.1f%%", 100 * py$pixel_acc)` test [accuracy](https://morrison-lab.github.io/lds/chapters/metrics.html#def-accuracy),
+near the 10% of guessing.
+So after the spikes the network sat in a state that training did not move it out of.
 
 :::

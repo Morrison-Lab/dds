@@ -7,7 +7,7 @@ product = one_hot_c @ E
 print(product, E[2], torch.equal(product, E[2]))
 ```
 
-Entry $j$ of $\tp{\vecf{e}_2} \matr{E}$ is $\sum_i (\vecf{e}_2)_i E_{ij} = E_{2j}$,
+Entry $j$ of $\tp{\vecf{e}_2} \matr{E}$ is $\sum_i (\vecf{e}_2)_i \matr{E}_{ij} = \matr{E}_{2j}$,
 since $(\vecf{e}_2)_i$ is 1 for $i = 2$ and 0 for every other $i$.
 So the product is row 2 of $\matr{E}$,
 the third row printed above.

@@ -14,7 +14,8 @@ It classifies only `r sprintf("%.1f%%", 100 * py$pixel_acc)` of the test digits 
 against `r sprintf("%.1f%%", 100 * py$row_acc)` for the row reader of @sol-rows.
 Both see every pixel,
 and the pixel reader trains for twice as many [epochs](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-epoch).
-But the pixel reader must carry what it saw in the first rows through 64 steps rather than 8.
-The DATA 471 notes [bound how fast](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#thm-jacobian-bound) a [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) can shrink or grow over those steps.
+What differs is the length of each sequence:
+64 steps rather than 8.
+The DATA 471 notes [bound how fast](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#thm-jacobian-bound) a [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) can shrink or grow over that many steps.
 
 :::
