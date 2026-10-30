@@ -1,0 +1,10 @@
+::: {#exr-two-small-filters}
+
+#### Two small filters or one large one
+
+Two stacked $3 \times 3$ [convolutional layers](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-convolutional-layer) and one $5 \times 5$ layer have the same [receptive field](#def-receptive-field).
+Suppose every layer has $C$ input [channels](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-channel) and $C$ output channels.
+Which of the two designs has fewer weights,
+not counting biases?
+
+:::

@@ -1,0 +1,27 @@
+::: {#sol-two-small-filters}
+
+A $k \times k$ layer from $C$ [channels](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-channel) to $C$ channels has one $k \times k \times C$ [filter](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-filter) per output [channel](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-channel),
+so $k^2 C^2$ weights.
+Two $3 \times 3$ layers have $2 \times 9 C^2 = 18 C^2$ weights,
+and one $5 \times 5$ layer has $25 C^2$.
+So the two small layers have fewer weights,
+`r sprintf("%.0f", 100 * 18 / 25)`% as many.
+They can also apply an [activation function](feedforward-networks.qmd#def-activation-function) between them,
+as `make_cnn()` does,
+so they can compute functions of the patch that one layer cannot.
+The VGG networks are built from stacks of $3 \times 3$ layers for these two reasons [@simonyan2015vgg, section 2.3].
+
+```{python}
+#| code-fold: show
+channels = 16
+small = nn.Sequential(nn.Conv2d(channels, channels, 3), nn.Conv2d(channels, channels, 3))
+large = nn.Conv2d(channels, channels, 5)
+small_weights = sum(layer.weight.numel() for layer in small)
+large_weights = large.weight.numel()
+print(small_weights, large_weights)
+```
+
+For $C = `r py$channels`$,
+PyTorch's layers have `r format(py$small_weights, big.mark = ",")` and `r format(py$large_weights, big.mark = ",")` weights.
+
+:::

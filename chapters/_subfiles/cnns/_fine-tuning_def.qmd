@@ -1,0 +1,10 @@
+::: {#def-fine-tuning}
+
+#### Fine-tuning
+
+**Fine-tuning** is [transfer learning](#def-transfer-learning) that trains every layer on the second task,
+starting from the weights learned on the first,
+rather than keeping the early layers fixed
+[@yosinski2014transferable].
+
+:::

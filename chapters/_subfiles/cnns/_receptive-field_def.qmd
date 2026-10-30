@@ -1,0 +1,8 @@
+::: {#def-receptive-field}
+
+#### Receptive field
+
+The **receptive field** of a [unit](feedforward-networks.qmd#def-unit) in a convolutional network is the set of input pixels whose values can change the unit's value
+[@goodfellow2016deep, section 9.2].
+
+:::

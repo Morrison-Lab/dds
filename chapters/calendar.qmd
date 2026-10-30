@@ -60,11 +60,11 @@ The final's review session will be held during finals week, at a time TBD.
 | Apr 18 -- Apr 24         |                              |                              | residual connections         | **Homework 1 self-grade      |
 |                          |                              |                              |                              | due**                        |
 +--------------------------+------------------------------+------------------------------+------------------------------+------------------------------+
-| **Week 5**               | **Midterm 1**                | Convolutional networks:      | Convolutional networks:      | Lab session: Homework 2      |
+| **Week 5**               | **Midterm 1**                | [Convolutional networks][c]: | [Convolutional networks][c]: | Lab session: Homework 2      |
 |                          |                              | convolution arithmetic       | pooling, classic             |                              |
 | Apr 25 -- May 1          |                              |                              | architectures                |                              |
 +--------------------------+------------------------------+------------------------------+------------------------------+------------------------------+
-| **Week 6**               | Convolutional networks:      | Sequence models: embeddings, | Sequence models: LSTMs and   | Lab session: Homework 3      |
+| **Week 6**               | [Convolutional networks][c]: | Sequence models: embeddings, | Sequence models: LSTMs and   | Lab session: Homework 3      |
 |                          | transfer learning            | recurrent networks           | GRUs                         |                              |
 | May 2 -- May 8           |                              |                              |                              | **Homework 2 due**           |
 +--------------------------+------------------------------+------------------------------+------------------------------+------------------------------+
@@ -114,4 +114,5 @@ The final's review session will be held during finals week, at a time TBD.
 [opt]: optimization.qmd
 [reg]: regularization.qmd
 [norm]: normalization.qmd
+[c]: cnns.qmd
 [lds]: https://morrison-lab.github.io/lds/

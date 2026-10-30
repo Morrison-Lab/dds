@@ -1,0 +1,29 @@
+::: {#sol-reuse-features}
+
+```{python}
+#| code-fold: show
+frozen_accs = []
+for draw in range(n_draws):
+    x_few, y_few = draw_few(draw)
+    net, params = new_head(train_all=False)
+    _ = train(net, x_few, y_few, n_epochs=30, params=params)
+    frozen_accs.append(accuracy(net, x_high_test, y_high_test))
+frozen_acc = np.mean(frozen_accs)
+n_wins = sum(f > s for f, s in zip(frozen_accs, scratch_accs))
+n_head = n_params(net[-1])
+print(np.round(frozen_accs, 3))
+# The prose below says the reused layers help; stop the render if they do not.
+assert frozen_acc > scratch_acc
+```
+
+`low_net` classifies `r sprintf("%.1f%%", 100 * py$low_acc)` of the test images of the digits 0 to 4 correctly.
+With its [convolutional layers](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-convolutional-layer) kept fixed and a new last layer,
+the network classifies `r sprintf("%.1f%%", 100 * py$frozen_acc)` of the digits 5 to 9 correctly,
+averaged over the `r py$n_draws` draws,
+against `r sprintf("%.1f%%", 100 * py$scratch_acc)` for the networks trained from random weights.
+So it is more accurate on average,
+by `r sprintf("%.1f", 100 * (py$frozen_acc - py$scratch_acc))` percentage points,
+and on `r py$n_wins` of the `r py$n_draws` draws.
+The new layer has only `r format(py$n_head, big.mark = ",")` [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter) to fit to the 20 images.
+
+:::

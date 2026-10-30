@@ -1,0 +1,34 @@
+::: {#exr-few-labels}
+
+#### Twenty labelled images
+
+Suppose we must classify the digits 5 to 9
+but have labels for only 20 images of them.
+`draw_few()` draws 20 such training images at random,
+and relabels the digits 5 to 9 as classes 0 to 4.
+Train `make_cnn(n_classes=5)` from its random starting weights on each draw,
+for 30 [epochs](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-epoch).
+How accurate is it on the test images of the digits 5 to 9,
+averaged over 10 draws of the 20 images?
+
+```{python}
+#| code-fold: show
+n_few = 20
+n_draws = 10
+is_high = y_train >= 5
+x_high, y_high = x_train[is_high], y_train[is_high] - 5
+x_high_test = x_test[y_test >= 5]
+y_high_test = y_test[y_test >= 5] - 5
+
+
+def draw_few(draw):
+    # Draw `n_few` labelled training images of the digits 5 to 9.
+    generator = torch.Generator().manual_seed(draw)
+    chosen = torch.randperm(len(x_high), generator=generator)[:n_few]
+    return x_high[chosen], y_high[chosen]
+
+
+print(len(x_high), len(x_high_test))
+```
+
+:::

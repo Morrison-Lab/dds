@@ -1,0 +1,85 @@
+```{python}
+#| code-fold: show
+import copy
+
+import numpy as np
+import pandas as pd
+import torch
+from torch import nn
+
+_ = torch.manual_seed(481)
+digits = pd.read_csv("data/optdigits-test.csv", header=None)
+pixels = torch.tensor(digits.iloc[:, :64].to_numpy(), dtype=torch.float32) / 16
+x = pixels.reshape(-1, 1, 8, 8)
+y = torch.tensor(digits[64].to_numpy())
+n_train = 1200
+order = torch.randperm(len(x))
+x_train, y_train = x[order[:n_train]], y[order[:n_train]]
+x_test, y_test = x[order[n_train:]], y[order[n_train:]]
+loss_fn = nn.CrossEntropyLoss()
+
+
+def train(net, xs, ys, n_epochs=10, lr=0.05, batch_size=32, seed=0, params=None):
+    # Minibatch SGD with momentum 0.9.
+    # `params` picks the tensors to update; by default, all of them.
+    if params is None:
+        params = net.parameters()
+    optimizer = torch.optim.SGD(params, lr=lr, momentum=0.9)
+    generator = torch.Generator().manual_seed(seed)
+    for epoch in range(n_epochs):
+        net.train()
+        shuffled = torch.randperm(len(xs), generator=generator)
+        for start in range(0, len(xs), batch_size):
+            batch = shuffled[start:start + batch_size]
+            optimizer.zero_grad()
+            loss_fn(net(xs[batch]), ys[batch]).backward()
+            optimizer.step()
+    return net
+
+
+def accuracy(net, xs, ys):
+    # Fraction of the images in `xs` that `net` classifies correctly.
+    net.eval()
+    with torch.no_grad():
+        return (net(xs).argmax(dim=1) == ys).float().mean().item()
+
+
+def make_cnn(n_classes=10, seed=1):
+    # Two 3-by-3 convolutional layers, 2-by-2 max pooling, then a linear layer.
+    torch.manual_seed(seed)
+    return nn.Sequential(
+        nn.Conv2d(1, 8, 3, padding=1), nn.ReLU(),
+        nn.Conv2d(8, 16, 3, padding=1), nn.ReLU(),
+        nn.MaxPool2d(2),
+        nn.Flatten(),
+        nn.Linear(16 * 4 * 4, n_classes),
+    )
+
+
+def make_mlp(seed=1):
+    # One hidden layer of 64 ReLU units, on the 64 pixels.
+    torch.manual_seed(seed)
+    return nn.Sequential(nn.Flatten(), nn.Linear(64, 64), nn.ReLU(), nn.Linear(64, 10))
+
+
+def n_params(net):
+    return sum(p.numel() for p in net.parameters())
+
+
+print(x_train.shape, x_test.shape)
+```
+
+The exercises use the UCI optical digits [@alpaydin1998optdigits],
+split as in the [feedforward networks chapter](feedforward-networks.qmd),
+with `r format(py$n_train, big.mark = ",")` training images,
+but keep each image as a grid:
+a [tensor](pytorch-basics.qmd#def-tensor) of [shape](pytorch-basics.qmd#def-shape) $1 \times 8 \times 8$,
+for one [channel](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-channel) of 8 rows and 8 columns.
+`train()` runs minibatch stochastic [gradient descent](https://morrison-lab.github.io/mds/optimization.html#def-gradient-descent)
+with [momentum](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-momentum) 0.9,
+[learning rate](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-learning-rate) 0.05
+and batch size 32.
+`make_cnn()` builds a small convolutional network,
+with `r format(py$n_params(py$make_cnn()), big.mark = ",")` [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter).
+`make_mlp()` builds an [MLP](feedforward-networks.qmd#def-feedforward-network) with one [hidden layer](feedforward-networks.qmd#def-hidden-layer) of 64 [ReLU](feedforward-networks.qmd#def-relu) [units](feedforward-networks.qmd#def-unit),
+with `r format(py$n_params(py$make_mlp()), big.mark = ",")` parameters.

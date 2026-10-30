@@ -1,0 +1,5 @@
+::: {.reading}
+*Deep Learning*'s [chapter 9](https://www.deeplearningbook.org/contents/convnets.html) covers convolutional networks [@goodfellow2016deep]. <!-- check-term-links: allow -->
+@dumoulin2016guide work through convolution arithmetic with diagrams.
+@yosinski2014transferable measure how well each layer of an ImageNet network transfers to a new task.
+:::

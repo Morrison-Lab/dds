@@ -1,0 +1,17 @@
+::: {#exr-conv-shape}
+
+#### The shape of a convolution's output
+
+`nn.Conv2d(1, 8, 3, padding=1)` is a [convolutional layer](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-convolutional-layer)
+with 1 input [channel](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-channel),
+8 output [channels](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-channel),
+$3 \times 3$ [filters](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-filter)
+and [padding](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-padding) 1.
+What [shape](pytorch-basics.qmd#def-shape) is its output for the first 32 training images?
+
+::: {.callout-tip}
+#### Hint
+The DATA 471 notes give the [output size of a convolution](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#thm-output-size).
+:::
+
+:::

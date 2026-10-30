@@ -1,0 +1,12 @@
+The DATA 471 notes built [convolutional layers](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-convolutional-layer) by hand,
+with [padding](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-padding),
+[stride](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-stride),
+[pooling](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-pooling)
+and [channels](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-channel).
+This lecture puts them to work in PyTorch:
+
+1.  the [shape](pytorch-basics.qmd#def-shape)s that `nn.Conv2d` takes and returns;
+2.  how far across the image one output of a stack of layers can see;
+3.  what happens to a convolutional network, and to an [MLP](feedforward-networks.qmd#def-feedforward-network), when a digit moves by one pixel;
+4.  a short history of the architectures built from these layers;
+5.  reusing a network trained on one task to start another.

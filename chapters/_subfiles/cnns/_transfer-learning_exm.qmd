@@ -1,0 +1,22 @@
+::: {#exm-transfer-learning}
+
+#### Fixing layers with `requires_grad`
+
+```{python}
+#| code-fold: show
+reused, _ = new_head(train_all=False)
+for param in reused[:-1].parameters():
+    _ = param.requires_grad_(False)
+n_trainable = sum(p.numel() for p in reused.parameters() if p.requires_grad)
+print(n_trainable, n_params(reused))
+```
+
+@sol-reuse-features is [transfer learning](#def-transfer-learning)
+from the digits 0 to 4 to the digits 5 to 9.
+It kept the [convolutional layers](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-convolutional-layer) fixed by handing the optimizer only the new layer's [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter).
+Another common way marks the reused parameters with `requires_grad_(False)`.
+Then [backpropagation](backpropagation.qmd#def-backpropagation) computes no [gradients](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) for them.
+Of the `r format(py$n_params(py$reused), big.mark = ",")` parameters of the copy,
+`r format(py$n_trainable, big.mark = ",")` still require gradients.
+
+:::

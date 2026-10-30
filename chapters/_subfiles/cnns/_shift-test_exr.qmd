@@ -1,0 +1,13 @@
+::: {#exr-shift-test}
+
+#### Shifted test digits
+
+Train `make_cnn()` and `make_mlp()` with `train()`.
+Which network loses more test [accuracy](https://morrison-lab.github.io/lds/chapters/metrics.html#def-accuracy) when every test digit is shifted one pixel right?
+
+```{python}
+#| code-fold: show
+print(make_cnn(), make_mlp(), sep="\n")
+```
+
+:::

@@ -1,0 +1,22 @@
+::: {#sol-receptive-field}
+
+```{python}
+#| code-fold: show
+blank = torch.zeros(1, 1, 8, 8, requires_grad=True)
+two_convs(blank)[0, 0, 4, 4].backward()
+reaches = (blank.grad[0, 0] != 0).int()
+rows_seen = reaches.any(dim=1).sum().item()
+cols_seen = reaches.any(dim=0).sum().item()
+print(reaches)
+```
+
+At $(4, 4)$, the second layer's output reads a $3 \times 3$ block of the first layer's output,
+rows and columns 3 to 5.
+Each of those 9 outputs of the first layer reads its own $3 \times 3$ block of the input,
+so together they read rows and columns 2 to 6.
+The [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) of that one output with respect to the input,
+printed as 1 where it is not 0,
+is not 0 on a block of `r py$rows_seen` rows by `r py$cols_seen` columns.
+Every other pixel leaves the output unchanged.
+
+:::

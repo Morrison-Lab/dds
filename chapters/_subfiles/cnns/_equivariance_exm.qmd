@@ -1,0 +1,30 @@
+::: {#exm-equivariance}
+
+#### ReLU and max pooling
+
+```{python}
+#| code-fold: show
+relu, pool = nn.ReLU(), nn.MaxPool2d(2)
+with torch.no_grad():
+    maps = conv(x_test[:1])
+    relu_gap = (relu(shift_right(maps)) - shift_right(relu(maps))).abs().max().item()
+    pooled_shift = pool(shift_right(maps))
+    pooled = pool(maps)
+pool_shape = list(pooled.shape[2:])
+pool_gap = (pooled_shift - pooled).abs().max().item()
+pool_shift_gap = (pooled_shift - shift_right(pooled)).abs().max().item()
+print(relu_gap, pool_shape, pool_gap, pool_shift_gap)
+```
+
+A [ReLU](feedforward-networks.qmd#def-relu) acts on each pixel separately.
+So a ReLU is [translation equivariant](#def-equivariance) with no edge effect.
+On the [feature maps](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-feature-map) of `conv` for a test digit,
+`relu(shift_right(maps))` and `shift_right(relu(maps))` `r if (py$relu_gap == 0) "agree exactly" else sprintf("differ by at most %.1e", py$relu_gap)`.
+A $2 \times 2$ max [pooling](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-pooling) layer is not translation equivariant.
+Its output is `r py$pool_shape[[1]]` by `r py$pool_shape[[2]]`.
+A shift of one input pixel is half an output pixel,
+and no whole-pixel shift of the pooled maps matches a half-pixel shift.
+The pooled maps of the shifted input differ by up to `r sprintf("%.2f", py$pool_gap)` from those of the unshifted input,
+and by up to `r sprintf("%.2f", py$pool_shift_gap)` from those maps shifted one pixel right.
+
+:::

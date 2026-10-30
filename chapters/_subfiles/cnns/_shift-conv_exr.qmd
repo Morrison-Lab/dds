@@ -1,0 +1,22 @@
+::: {#exr-shift-conv}
+
+#### Moving the input of a convolution
+
+`shift_right()` below moves each image one pixel to the right,
+filling the left column with 0.
+Apply a [convolutional layer](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-convolutional-layer) to a test digit and to its shifted copy.
+How does the output for the shifted copy compare with the output for the original?
+
+```{python}
+#| code-fold: show
+def shift_right(images):
+    # Move each image in a batch one pixel right; the left column becomes 0.
+    moved = torch.zeros_like(images)
+    moved[..., 1:] = images[..., :-1]
+    return moved
+
+
+print(x_test[0, 0, :3], shift_right(x_test[:1])[0, 0, :3], sep="\n")
+```
+
+:::

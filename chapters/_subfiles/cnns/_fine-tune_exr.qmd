@@ -1,0 +1,11 @@
+::: {#exr-fine-tune}
+
+#### Training every layer from the reused weights
+
+`new_head(train_all=True)` returns all the [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter) of the copy,
+so training changes the [convolutional layers](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-convolutional-layer) too,
+starting from the weights they learned on the digits 0 to 4.
+Trained this way on the 20 images of each draw,
+is the network more accurate than with the convolutional layers kept fixed?
+
+:::
