@@ -201,6 +201,60 @@
    "external": false
   },
   {
+   "id": "dds/language-models#def-add-one-smoothing",
+   "site": "dds",
+   "page": "language-models",
+   "div": "def-add-one-smoothing",
+   "kind": "def",
+   "title": "Add-one smoothing (Laplace smoothing)",
+   "external": false
+  },
+  {
+   "id": "dds/language-models#def-bigram-model",
+   "site": "dds",
+   "page": "language-models",
+   "div": "def-bigram-model",
+   "kind": "def",
+   "title": "Bigram model",
+   "external": false
+  },
+  {
+   "id": "dds/language-models#def-language-model",
+   "site": "dds",
+   "page": "language-models",
+   "div": "def-language-model",
+   "kind": "def",
+   "title": "Language model",
+   "external": false
+  },
+  {
+   "id": "dds/language-models#def-perplexity",
+   "site": "dds",
+   "page": "language-models",
+   "div": "def-perplexity",
+   "kind": "def",
+   "title": "Perplexity",
+   "external": false
+  },
+  {
+   "id": "dds/language-models#def-teacher-forcing",
+   "site": "dds",
+   "page": "language-models",
+   "div": "def-teacher-forcing",
+   "kind": "def",
+   "title": "Teacher forcing",
+   "external": false
+  },
+  {
+   "id": "dds/language-models#def-temperature",
+   "site": "dds",
+   "page": "language-models",
+   "div": "def-temperature",
+   "kind": "def",
+   "title": "Temperature",
+   "external": false
+  },
+  {
    "id": "dds/normalization#def-batch-norm",
    "site": "dds",
    "page": "normalization",
@@ -455,6 +509,26 @@
   [
    "dds/feedforward-networks#thm-universal-approximation",
    "mds/functions#def-logistic-function"
+  ],
+  [
+   "dds/language-models#def-add-one-smoothing",
+   "dds/language-models#def-bigram-model"
+  ],
+  [
+   "dds/language-models#def-bigram-model",
+   "dds/language-models#def-language-model"
+  ],
+  [
+   "dds/language-models#def-perplexity",
+   "dds/language-models#def-language-model"
+  ],
+  [
+   "dds/language-models#def-teacher-forcing",
+   "dds/language-models#def-language-model"
+  ],
+  [
+   "dds/language-models#def-temperature",
+   "dds/feedforward-networks#def-logits"
   ],
   [
    "dds/normalization#def-batch-norm",
