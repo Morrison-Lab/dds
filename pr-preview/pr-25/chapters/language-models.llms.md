@@ -77,7 +77,7 @@ print(text[:120])
     First Citizen:
     You are all resolved ra
 
-The exercises use a local copy, [`data/shakespeare.txt`](data/shakespeare.txt), of the first 100,000 characters of the [tiny Shakespeare text](https://raw.githubusercontent.com/karpathy/char-rnn/master/data/tinyshakespeare/input.txt), which Karpathy [\[1\]](#ref-karpathy2015charrnn) collected from Shakespeare’s plays. `tools/get-shakespeare.py` rebuilds the copy; it keeps only the first 100,000 characters, the opening of *Coriolanus*, and changes nothing else. The copy has 61 distinct characters, counting capitals, punctuation, the space and the line break separately. `ids` numbers each character by its place in the sorted list `chars`. The first 90,000 characters are for training, and the remaining 10,000 for validation.
+The exercises use a local copy, [`data/shakespeare.txt`](data/shakespeare.txt), of the first 100,000 characters of the [tiny Shakespeare text](https://raw.githubusercontent.com/karpathy/char-rnn/master/data/tinyshakespeare/input.txt). Karpathy [\[1\]](#ref-karpathy2015charrnn) collected that text from Shakespeare’s plays. `tools/get-shakespeare.py` rebuilds the copy. The script keeps only the first 100,000 characters, the opening of *Coriolanus*, and changes nothing else. The copy has 61 distinct characters, counting capitals, punctuation, the space and the line break separately. `ids` numbers each character by its place in the sorted list `chars`. The first 90,000 characters are for training, and the remaining 10,000 for validation.
 
 # 2 Counting
 
@@ -167,7 +167,7 @@ The exercises use a local copy, [`data/shakespeare.txt`](data/shakespeare.txt), 
 >
 >     'h' 0.33165013790130615 1.0
 >
-> Row \\a\\ of `pair_counts` holds \\N(a, b)\\ for every \\b\\, so row \\a\\ of `counted` is the [bigram model](#def-bigram-model)’s distribution of the character after \\a\\. Its most likely character after `t` is h, with probability 0.33. It gives a `u` after a `q` probability 1.00, the share found in [Solution 2](#sol-after-q).
+> Row \\a\\ of `pair_counts` holds \\N(a, b)\\ for every \\b\\. So row \\a\\ of `counted` is the [bigram model](#def-bigram-model)’s distribution of the character after \\a\\. Its most likely character after `t` is h, with probability 0.33. It gives a `u` after a `q` probability 1.00, the share found in [Solution 2](#sol-after-q).
 
 ## 2.3 Pairs never seen
 
@@ -252,7 +252,7 @@ The exercises use a local copy, [`data/shakespeare.txt`](data/shakespeare.txt), 
 >
 > **Definition 4 (Perplexity)** The **perplexity** of a [language model](#def-language-model) on a sequence \\x_1, \dots, x_n\\ is
 >
-> \\ \expf{-\frac{1}{n} \sum\_{t=1}^{n} \log \condPr{X_t = x_t}{x_1, \dots, x\_{t-1}}}, \\
+> \\ \expf{-\avgtof{t}{n}{\logf{\condPr{X_t = x_t}{x_1, \dots, x\_{t-1}}}}}, \\
 >
 > the exponential of the average negative log probability per symbol [\[3, Sec. 3.3\]](#ref-jurafsky2026slp). It equals the probability of the whole sequence raised to the power \\-1/n\\, and it is the same number when the logs are base 2 and the exponential is \\2^{(\cdot)}\\. The DATA 471 notes define it for any classifier in [the same way](https://morrison-lab.github.io/lds/chapters/metrics.html#eq-perplexity), and find that a model which gives probability \\1/K\\ to each of \\K\\ symbols has perplexity \\K\\. Lower is better.
 
@@ -270,7 +270,7 @@ The exercises use a local copy, [`data/shakespeare.txt`](data/shakespeare.txt), 
 >
 >     10.834133238705657 61.00000000000001
 >
-> On the validation text after its first character, the uniform model of [Example 1](#exm-language-model) has [perplexity](#def-perplexity) 61.0, the number of distinct characters. The smoothed [bigram model](#def-bigram-model) has perplexity 10.8: on average it is as unsure of the next character as a model choosing evenly among about 11 characters.
+> On the validation text after its first character, the uniform model of [Example 1](#exm-language-model) has [perplexity](#def-perplexity) 61.0, the number of distinct characters. The smoothed [bigram model](#def-bigram-model) has perplexity 10.8: on average the bigram model is as unsure of the next character as a model choosing evenly among about 11 characters.
 
 > **NOTE:**
 >
@@ -551,7 +551,7 @@ print(make_lm())
 
 > **NOTE:**
 >
-> **Definition 6 (Temperature)** Sampling at **temperature** \\T \> 0\\ draws the next symbol from the [softmax](https://morrison-lab.github.io/lds/chapters/multiclass-logistic-regression.html#def-softmax) of \\\vz / T\\, where \\\vz\\ is the vector of the model’s [logits](../chapters/feedforward-networks.llms.md#def-logits). Hinton et al. [\[5, Sec. 2\]](#ref-hinton2015distilling) use this softmax with temperature \\T\\, and note that a higher \\T\\ gives a softer distribution. At \\T = 1\\ sampling uses the model’s own distribution. As \\T\\ falls toward 0 the distribution puts more of its weight on the most likely symbols, and as \\T\\ grows it approaches the uniform distribution.
+> **Definition 6 (Temperature)** Sampling at **temperature** \\T \> 0\\ draws the next symbol from the [softmax](https://morrison-lab.github.io/lds/chapters/multiclass-logistic-regression.html#def-softmax) of \\\vz / T\\, where \\\vz\\ is the vector of the model’s [logits](../chapters/feedforward-networks.llms.md#def-logits). Hinton et al. [\[5, Sec. 2\]](#ref-hinton2015distilling) use this softmax with temperature \\T\\, and note that a higher \\T\\ gives a softer distribution. At \\T = 1\\ sampling uses the model’s own distribution. As \\T\\ falls toward 0, the distribution puts more of its weight on the most likely symbols, and as \\T\\ grows, the distribution approaches the uniform distribution.
 
 > **NOTE:**
 >
