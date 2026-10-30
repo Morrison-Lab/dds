@@ -1,0 +1,14 @@
+::: {#sol-after-q}
+
+```{python}
+#| code-fold: show
+after_q = train_ids[1:][train_ids[:-1] == index["q"]]
+n_q = len(after_q)
+share_u = (after_q == index["u"]).float().mean().item()
+print(n_q, decode(after_q))
+```
+
+`r sprintf("%.0f%%", 100 * py$share_u)` of the `r py$n_q` `q`s in the training text are followed by a `u`.
+So the share of `q`s followed by `u` estimates $\condPr{X_t = \texttt{u}}{X_{t-1} = \texttt{q}}$ as `r sprintf("%.2f", py$share_u)`.
+
+:::

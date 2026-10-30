@@ -1,0 +1,15 @@
+::: {#sol-unseen}
+
+```{python}
+#| code-fold: show
+seen = pair_counts > 0
+n_unseen = (~seen[val_ids[:-1], val_ids[1:]]).sum().item()
+print(n_unseen)
+```
+
+At `r py$n_unseen` of the `r format(length(py$val_ids) - 1, big.mark = ",")` positions after the first,
+the pair of characters never occurs in the training text.
+The counting estimate of @exm-bigram-model gives each of those `r py$n_unseen` pairs probability 0,
+and so the whole validation text probability 0.
+
+:::

@@ -1,0 +1,18 @@
+::: {#exm-language-model}
+
+#### A uniform language model
+
+```{python}
+#| code-fold: show
+uniform_the = (1 / n_chars) ** 3
+print(uniform_the)
+```
+
+The simplest [language model](#def-language-model) for this text gives each of the `r py$n_chars` characters probability $1 / `r py$n_chars`$ at every position,
+whatever came before.
+It gives `"the"` probability $(1 / `r py$n_chars`)^3$,
+or 1 in `r format(py$n_chars^3, big.mark = ",")`,
+the same as any other string of three characters,
+such as `"qzx"`.
+
+:::

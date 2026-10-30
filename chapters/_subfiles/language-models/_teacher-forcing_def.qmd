@@ -1,0 +1,11 @@
+::: {#def-teacher-forcing}
+
+#### Teacher forcing
+
+**Teacher forcing** trains a recurrent [language model](#def-language-model) on a text by feeding it the true text as input,
+and asking it at each position for the next symbol of the same text
+[@goodfellow2016deep, section 10.2.1].
+The targets are the inputs moved one position on.
+The model never reads its own predictions during training.
+
+:::

@@ -1,0 +1,9 @@
+::: {#exr-sharpen}
+
+#### Dividing the logits
+
+Take the [logits](feedforward-networks.qmd#def-logits) $\vz = (2, 1, 0)$.
+Of the [softmax](https://morrison-lab.github.io/lds/chapters/multiclass-logistic-regression.html#def-softmax)es of $\vz / 0.5$, $\vz$ and $\vz / 2$,
+which gives the first symbol the most probability?
+
+:::

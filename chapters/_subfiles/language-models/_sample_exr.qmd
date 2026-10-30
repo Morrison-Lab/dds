@@ -1,0 +1,34 @@
+::: {#exr-sample}
+
+#### Writing new lines
+
+Draw 1,000 characters from the trained network of @sol-gru-lm with `sample(lm, "MENENIUS:\n", 1000)`.
+What share of the drawn words occur somewhere in the training text?
+
+```{python}
+#| code-fold: show
+def sample(net, prompt, n, temperature=1.0, seed=0):
+    # Feeds `prompt`, then draws `n` characters one at a time,
+    # feeding each one back in.
+    generator = torch.Generator().manual_seed(seed)
+    x = torch.tensor([[index[ch] for ch in prompt]])
+    drawn = []
+    net.eval()
+    with torch.no_grad():
+        logits, state = net(x)
+        for _ in range(n):
+            p = torch.softmax(logits[0, -1] / temperature, dim=0)
+            nxt = torch.multinomial(p, 1, generator=generator)
+            drawn.append(nxt.item())
+            logits, state = net(nxt.view(1, 1), state)
+    return prompt + decode(torch.tensor(drawn))
+
+
+print(sample(make_lm(), "MENENIUS:\n", 40))
+```
+
+`sample()` draws each character from the network's distribution over the next character,
+given the prompt and the characters drawn so far;
+the untrained network above draws characters close to at random.
+
+:::

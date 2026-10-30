@@ -1,0 +1,9 @@
+The [recurrent networks chapter](rnns.qmd) read whole sequences and classified them,
+and ended by turning symbols into vectors with an [embedding layer](rnns.qmd#def-embedding).
+This lecture predicts text one character at a time:
+
+1.  the probability of a string, built from the probability of each next character;
+2.  a model that counts pairs of characters;
+3.  a number that scores how well a model predicts held-out text;
+4.  a recurrent network that predicts each next character;
+5.  drawing new text from that network.

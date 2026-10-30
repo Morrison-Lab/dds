@@ -1,0 +1,10 @@
+::: {#exr-chain}
+
+#### The probability of a word
+
+Let $X_1, X_2, X_3$ be the next three characters of a text.
+Use the [chain rule of probability](https://morrison-lab.github.io/lds/chapters/probability.html#thm-chain-rule) to write $\Prf{X_1 = \texttt{t}, X_2 = \texttt{h}, X_3 = \texttt{e}}$
+as a product of three probabilities,
+each about one character.
+
+:::

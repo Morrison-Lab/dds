@@ -1,0 +1,20 @@
+::: {#exm-perplexity}
+
+#### Perplexity of the two counting models
+
+```{python}
+#| code-fold: show
+bigram_ppl = math.exp(bigram_nll)
+uniform_ppl = math.exp(uniform_nll)
+print(bigram_ppl, uniform_ppl)
+```
+
+On the validation text after its first character,
+the uniform model of @exm-language-model
+has [perplexity](#def-perplexity) `r sprintf("%.1f", py$uniform_ppl)`,
+the number of distinct characters.
+The smoothed [bigram model](#def-bigram-model) has perplexity `r sprintf("%.1f", py$bigram_ppl)`:
+on average the bigram model is as unsure of the next character
+as a model choosing evenly among about `r round(py$bigram_ppl)` characters.
+
+:::

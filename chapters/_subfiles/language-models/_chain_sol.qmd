@@ -1,0 +1,16 @@
+::: {#sol-chain}
+
+The [chain rule of probability](https://morrison-lab.github.io/lds/chapters/probability.html#thm-chain-rule) conditions each character on the ones before it:
+
+$$\begin{aligned}
+&\Prf{X_1 = \texttt{t}, X_2 = \texttt{h}, X_3 = \texttt{e}} \\
+&\quad = \Prf{X_1 = \texttt{t}}
+\condPr{X_2 = \texttt{h}}{X_1 = \texttt{t}}
+\condPr{X_3 = \texttt{e}}{X_1 = \texttt{t}, X_2 = \texttt{h}}.
+\end{aligned}$$
+
+Each factor is the probability of one character given the characters before it.
+A model that gives these conditional probabilities for every string of earlier characters
+gives the probability of every string.
+
+:::

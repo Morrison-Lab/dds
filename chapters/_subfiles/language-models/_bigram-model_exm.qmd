@@ -1,0 +1,27 @@
+::: {#exm-bigram-model}
+
+#### A bigram model of the training text
+
+```{python}
+#| code-fold: show
+pair_counts = torch.zeros(n_chars, n_chars)
+_ = pair_counts.index_put_(
+    (train_ids[:-1], train_ids[1:]), torch.ones(n_train - 1), accumulate=True
+)
+row_totals = pair_counts.sum(dim=1, keepdim=True)
+counted = pair_counts / row_totals
+after_t = counted[index["t"]]
+top_after_t = chars[after_t.argmax().item()]
+p_top_after_t = after_t.max().item()
+p_u_after_q = counted[index["q"], index["u"]].item()
+print(repr(top_after_t), p_top_after_t, p_u_after_q)
+```
+
+Row $a$ of `pair_counts` holds $N(a, b)$ for every $b$.
+So row $a$ of `counted` is the [bigram model](#def-bigram-model)'s distribution of the character after $a$.
+Its most likely character after `t` is `r if (py$top_after_t == " ") "the space" else py$top_after_t`,
+with probability `r sprintf("%.2f", py$p_top_after_t)`.
+It gives a `u` after a `q` probability `r sprintf("%.2f", py$p_u_after_q)`,
+the share found in @sol-after-q.
+
+:::

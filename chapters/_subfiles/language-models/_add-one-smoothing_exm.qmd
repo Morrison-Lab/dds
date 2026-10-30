@@ -1,0 +1,19 @@
+::: {#exm-add-one-smoothing}
+
+#### The smoothed bigram model
+
+```{python}
+#| code-fold: show
+bigram = (pair_counts + 1) / (row_totals + n_chars)
+p_u_after_q_smoothed = bigram[index["q"], index["u"]].item()
+p_unseen_min = bigram[~seen].min().item()
+print(p_u_after_q_smoothed, p_unseen_min)
+```
+
+With [add-one smoothing](#def-add-one-smoothing),
+the [bigram model](#def-bigram-model) gives a `u` after a `q` probability `r sprintf("%.2f", py$p_u_after_q_smoothed)` rather than `r sprintf("%.2f", py$p_u_after_q)`.
+There are only `r py$n_q` `q`s to count,
+so the `r py$n_chars` added ones are a large part of the row.
+The pairs the training text never shows now get probabilities of at least 1 in `r format(round(1 / py$p_unseen_min), big.mark = ",")`.
+
+:::

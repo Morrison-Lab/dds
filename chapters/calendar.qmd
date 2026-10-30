@@ -68,9 +68,9 @@ The final's review session will be held during finals week, at a time TBD.
 |                          | transfer learning            | embeddings, recurrent        | and GRUs                     |                              |
 | May 2 -- May 8           |                              | networks                     |                              | **Homework 2 due**           |
 +--------------------------+------------------------------+------------------------------+------------------------------+------------------------------+
-| **Week 7**               | Language modeling            | Attention: encoder-decoder   | Transformers:                | **Midterm 2 review**         |
-|                          |                              | attention                    | self-attention, positional   |                              |
-| May 9 -- May 15          |                              |                              | encoding                     | **Homework 2 self-grade      |
+| **Week 7**               | [Language models][lm]:       | Attention: encoder-decoder   | Transformers:                | **Midterm 2 review**         |
+|                          | counting, recurrent          | attention                    | self-attention, positional   |                              |
+| May 9 -- May 15          | models, sampling             |                              | encoding                     | **Homework 2 self-grade      |
 |                          |                              |                              |                              | due**                        |
 +--------------------------+------------------------------+------------------------------+------------------------------+------------------------------+
 | **Week 8**               | **Midterm 2**                | Transformers: pretraining    | Generative models:           | Lab session: Homework 3 and  |
@@ -116,4 +116,5 @@ The final's review session will be held during finals week, at a time TBD.
 [norm]: normalization.qmd
 [c]: cnns.qmd
 [r]: rnns.qmd
+[lm]: language-models.qmd
 [lds]: https://morrison-lab.github.io/lds/

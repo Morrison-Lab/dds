@@ -1,0 +1,8 @@
+::: {#exr-after-q}
+
+#### What follows a q
+
+In the training text,
+what share of the `q`s are followed by a `u`?
+
+:::

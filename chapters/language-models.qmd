@@ -1,0 +1,186 @@
+---
+title: "Language models"
+format:
+  html: default
+  revealjs:
+    output-file: language-models-slides.html
+  pdf:
+    output-file: language-models-handout.pdf
+resources:
+  - data/shakespeare.txt
+---
+
+```{r}
+# The Python chunks on this page import these; reticulate provisions them.
+# Attaching reticulate gives the inline R its `py` object.
+library(reticulate)
+source("../tools/use-torch.R")
+use_torch(c("numpy"))
+```
+
+::: notes
+Brian Hutchinson's CSCI 481/581 sets the order of topics in these notes,
+which follow it with his permission;
+this page covers the part of his module on recurrent networks
+that deals with language modeling.
+The exercises are new.
+:::
+
+# Welcome
+
+## Plan for this lecture
+
+{{< include _subfiles/language-models/_plan_sec.qmd >}}
+
+## The text
+
+{{< include _subfiles/language-models/_text-setup_sec.qmd >}}
+
+# Counting
+
+## The probability of a string
+
+<!-- heading shares the slide; do not re-flag -->
+
+{{< include _subfiles/language-models/_chain_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/language-models/_chain_sol.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/language-models/_language-model_def.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/language-models/_language-model_exm.qmd >}}
+
+## Counting pairs
+
+<!-- heading shares the slide; do not re-flag -->
+
+{{< include _subfiles/language-models/_after-q_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/language-models/_after-q_sol.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/language-models/_bigram-model_def.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/language-models/_bigram-model_exm.qmd >}}
+
+## Pairs never seen
+
+<!-- heading shares the slide; do not re-flag -->
+
+{{< include _subfiles/language-models/_unseen_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/language-models/_unseen_sol.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/language-models/_add-one-smoothing_def.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/language-models/_add-one-smoothing_exm.qmd >}}
+
+# Scoring a language model
+
+## Average log probability
+
+<!-- heading shares the slide; do not re-flag -->
+
+{{< include _subfiles/language-models/_avg-log-prob_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/language-models/_avg-log-prob_sol.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/language-models/_perplexity_def.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/language-models/_perplexity_exm.qmd >}}
+
+{{< include _subfiles/language-models/_perplexity_read.qmd >}}
+
+# A recurrent language model
+
+## The network
+
+{{< include _subfiles/language-models/_model-setup_sec.qmd >}}
+
+## Predicting every next character
+
+<!-- heading shares the slide; do not re-flag -->
+
+{{< include _subfiles/language-models/_gru-lm_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/language-models/_gru-lm_sol.qmd >}}
+
+## Inputs and targets
+
+<!-- heading shares the slide; do not re-flag -->
+
+{{< include _subfiles/language-models/_targets_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/language-models/_targets_sol.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/language-models/_teacher-forcing_def.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/language-models/_teacher-forcing_exm.qmd >}}
+
+# Generating text
+
+## Sampling
+
+<!-- heading shares the slide; do not re-flag -->
+
+{{< include _subfiles/language-models/_sample_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/language-models/_sample_sol.qmd >}}
+
+{{< include _subfiles/language-models/_sample_read.qmd >}}
+
+## Temperature
+
+<!-- heading shares the slide; do not re-flag -->
+
+{{< include _subfiles/language-models/_sharpen_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/language-models/_sharpen_sol.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/language-models/_temperature_def.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/language-models/_temperature_exm.qmd >}}
+
+# References
+
+::: {#refs}
+:::

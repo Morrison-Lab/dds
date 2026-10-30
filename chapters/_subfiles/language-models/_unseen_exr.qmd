@@ -1,0 +1,7 @@
+::: {#exr-unseen}
+
+#### Pairs the training text never shows
+
+At how many positions in the validation text is a character followed by one that never follows it in the training text?
+
+:::

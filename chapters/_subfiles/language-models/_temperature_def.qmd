@@ -1,0 +1,15 @@
+::: {#def-temperature}
+
+#### Temperature
+
+Sampling at **temperature** $T > 0$ draws the next symbol from the [softmax](https://morrison-lab.github.io/lds/chapters/multiclass-logistic-regression.html#def-softmax) of $\vz / T$,
+where $\vz$ is the vector of the model's [logits](feedforward-networks.qmd#def-logits).
+@hinton2015distilling [section 2] use this softmax with temperature $T$,
+and note that a higher $T$ gives a softer distribution.
+At $T = 1$ sampling uses the model's own distribution.
+As $T$ falls toward 0,
+the distribution puts more of its weight on the most likely symbols,
+and as $T$ grows,
+the distribution approaches the uniform distribution.
+
+:::

@@ -1,0 +1,8 @@
+::: {#exr-gru-lm}
+
+#### A recurrent language model
+
+Train `make_lm()` for 400 steps with `train_lm()`.
+Is its [perplexity](#def-perplexity) on the validation text lower than the [bigram model](#def-bigram-model)'s?
+
+:::

@@ -1,0 +1,64 @@
+```{python}
+#| code-fold: show
+seq_len = 64
+batch_size = 32
+lm_lr = 0.005
+
+
+class CharModel(nn.Module):
+    # Embeds each character, reads the sequence with a GRU,
+    # and returns logits over the next character at every position.
+
+    def __init__(self, embed_size=16, hidden_size=128):
+        super().__init__()
+        self.embed = nn.Embedding(n_chars, embed_size)
+        self.recurrent = nn.GRU(embed_size, hidden_size, batch_first=True)
+        self.out = nn.Linear(hidden_size, n_chars)
+
+    def forward(self, x, state=None):
+        states, state = self.recurrent(self.embed(x), state)
+        return self.out(states), state
+
+
+def make_lm(seed=1):
+    torch.manual_seed(seed)
+    return CharModel()
+
+
+def train_lm(net, n_steps, seed=0):
+    # Adam on random windows of the training text, with gradient clipping to 1.
+    # Each window's targets are the same window moved one character on.
+    optimizer = torch.optim.Adam(net.parameters(), lr=lm_lr)
+    generator = torch.Generator().manual_seed(seed)
+    net.train()
+    for step in range(n_steps):
+        starts = torch.randint(0, n_train - seq_len - 1, (batch_size,), generator=generator)
+        x = torch.stack([train_ids[s:s + seq_len] for s in starts])
+        y = torch.stack([train_ids[s + 1:s + seq_len + 1] for s in starts])
+        logits, _ = net(x)
+        loss = nn.functional.cross_entropy(logits.reshape(-1, n_chars), y.reshape(-1))
+        optimizer.zero_grad()
+        loss.backward()
+        _ = nn.utils.clip_grad_norm_(net.parameters(), 1)
+        optimizer.step()
+
+
+def lm_log_probs(net):
+    # Natural log of the probability `net` gives each validation character
+    # after the first, given all the validation characters before it.
+    net.eval()
+    with torch.no_grad():
+        logits, _ = net(val_ids[:-1].unsqueeze(0))
+    log_p = torch.log_softmax(logits[0], dim=1)
+    return log_p[torch.arange(len(val_ids) - 1), val_ids[1:]]
+
+
+print(make_lm())
+```
+
+`CharModel` reads a sequence of character indices with an [embedding layer](rnns.qmd#def-embedding) and a [GRU](rnns.qmd#def-gru) layer,
+and maps the [hidden state](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-hidden-state) at each position to [logits](feedforward-networks.qmd#def-logits) over the next character.
+`train_lm()` runs [Adam](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-adam) with [learning rate](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-learning-rate) `r py$lm_lr` on batches of `r py$batch_size` windows of `r py$seq_len` characters,
+with [gradient clipping](https://morrison-lab.github.io/lds/chapters/backpropagation.html#def-gradient-clipping) to 1.
+`lm_log_probs()` returns the log of the probability the network gives each validation character,
+given the validation characters before it.
