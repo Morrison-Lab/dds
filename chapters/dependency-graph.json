@@ -327,6 +327,24 @@
    "external": false
   },
   {
+   "id": "dds/rnns#def-embedding",
+   "site": "dds",
+   "page": "rnns",
+   "div": "def-embedding",
+   "kind": "def",
+   "title": "Embedding layer",
+   "external": false
+  },
+  {
+   "id": "dds/rnns#def-gru",
+   "site": "dds",
+   "page": "rnns",
+   "div": "def-gru",
+   "kind": "def",
+   "title": "Gated recurrent unit (GRU)",
+   "external": false
+  },
+  {
    "id": "mds/functions#def-logistic-function",
    "site": "mds",
    "page": "functions",
