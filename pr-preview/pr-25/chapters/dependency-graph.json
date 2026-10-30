@@ -201,6 +201,15 @@
    "external": false
   },
   {
+   "id": "dds/language-models#def-add-one-smoothing",
+   "site": "dds",
+   "page": "language-models",
+   "div": "def-add-one-smoothing",
+   "kind": "def",
+   "title": "Add-one smoothing (Laplace smoothing)",
+   "external": false
+  },
+  {
    "id": "dds/language-models#def-bigram-model",
    "site": "dds",
    "page": "language-models",
@@ -500,6 +509,10 @@
   [
    "dds/feedforward-networks#thm-universal-approximation",
    "mds/functions#def-logistic-function"
+  ],
+  [
+   "dds/language-models#def-add-one-smoothing",
+   "dds/language-models#def-bigram-model"
   ],
   [
    "dds/language-models#def-bigram-model",
