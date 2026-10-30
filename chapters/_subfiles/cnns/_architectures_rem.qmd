@@ -4,7 +4,7 @@
 
 - LeNet-5 read handwritten digits with three [convolutional layers](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-convolutional-layer),
   the first two each followed by subsampling,
-  then one [fully connected](https://morrison-lab.github.io/lds/chapters/neural-nets.html#def-fully-connected) layer [@lecun1998gradient, section II.B].
+  then a [fully connected](https://morrison-lab.github.io/lds/chapters/neural-nets.html#def-fully-connected) layer and an output layer [@lecun1998gradient, section II.B].
 - AlexNet won the 2012 ImageNet competition with 5 convolutional layers,
   [ReLU](feedforward-networks.qmd#def-relu) activations,
   [dropout](regularization.qmd#def-dropout)
