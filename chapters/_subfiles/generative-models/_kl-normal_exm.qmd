@@ -1,0 +1,19 @@
+::: {#exm-kl-normal}
+
+#### Checking the formula
+
+```{python}
+#| code-fold: show
+from torch.distributions import Normal, kl_divergence
+
+kl_torch = kl_divergence(Normal(1.0, 0.5), Normal(0.0, 1.0)).item()
+kl_formula = 0.5 * (1.0**2 + 0.5**2 - 1 - math.log(0.5**2))
+print(kl_torch, kl_formula)
+```
+
+For $\mu = 1$ and $\sigma = 0.5$,
+@thm-kl-normal gives $\frac{1}{2} \paren{1 + 0.25 - 1 - \logf{0.25}} = `r sprintf("%.4f", py$kl_formula)`$,
+and `torch.distributions.kl_divergence` [@pytorch_distributions] gives the same value.
+The divergence is 0 only at $\mu = 0$ and $\sigma = 1$.
+
+:::

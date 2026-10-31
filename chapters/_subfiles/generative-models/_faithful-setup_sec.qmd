@@ -1,0 +1,49 @@
+```{python}
+#| code-fold: show
+faithful = pd.read_csv("data/faithful.csv")
+eruptions = torch.tensor(faithful.to_numpy(), dtype=torch.float32)
+center, scale = eruptions.mean(dim=0), eruptions.std(dim=0)
+standardized = (eruptions - center) / scale
+long_share = (eruptions[:, 0] > 3).float().mean().item()
+
+
+def long_wait_sd(points):
+    # Standard deviation of the wait, over the eruptions longer than 3 minutes.
+    return points[points[:, 0] > 3, 1].std().item()
+
+
+real_long_sd = long_wait_sd(eruptions)
+print(faithful.head())
+print(len(faithful), long_share, real_long_sd)
+```
+
+::: {#fig-faithful}
+
+```{python}
+#| fig-alt: "A scatter plot of 272 eruptions of Old Faithful, eruption length in minutes across and waiting time in minutes up. The points form two clusters: short eruptions near 2 minutes with waits near 55 minutes, and long eruptions near 4.5 minutes with waits near 80 minutes."
+def plot_eruptions(ax, points, title):
+    ax.scatter(points[:, 0], points[:, 1], s=6);
+    ax.set_xlabel("eruption (minutes)");
+    ax.set_ylabel("wait (minutes)");
+    ax.set_title(title);
+
+
+fig, ax = plt.subplots(figsize=(4, 3.5))
+plot_eruptions(ax, eruptions, "Old Faithful");
+fig.tight_layout();
+plt.show()
+```
+
+The length of each of the `r nrow(py$faithful)` eruptions and the wait until the next one.
+
+:::
+
+The rest of the lecture uses smaller data:
+a local copy, [`data/faithful.csv`](data/faithful.csv),
+of the `r nrow(py$faithful)` eruptions of the Old Faithful geyser in R's `faithful` data set [@r_faithful],
+from @azzalini1990look.
+`tools/get-faithful.R` writes the copy from R, unchanged.
+Each row gives an eruption's length and the wait until the next one, in minutes.
+The eruptions fall in two clusters,
+and `r sprintf("%.0f%%", 100 * py$long_share)` of them last longer than 3 minutes.
+`standardized` rescales each column to mean 0 and standard deviation 1.

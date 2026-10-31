@@ -1,0 +1,17 @@
+::: {#thm-kl-normal}
+
+#### KL divergence from the standard normal
+
+For $\mu \in \reals$ and $\sigma > 0$,
+
+$$
+\kldivf{\dNf{\mu, \sigma^2}}{\dNf{0, 1}} = \frac{1}{2} \paren{\mu^2 + \sigma^2 - 1 - \logf{\sigma^2}}
+$$
+
+@kingma2014auto derive it in their appendix B.
+
+:::
+
+::: proof
+By @sol-kl-normal.
+:::

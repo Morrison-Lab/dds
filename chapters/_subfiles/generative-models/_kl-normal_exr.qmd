@@ -1,0 +1,8 @@
+::: {#exr-kl-normal}
+
+#### How far is a normal distribution from the standard normal?
+
+Let $q = \dNf{\mu, \sigma^2}$ and $p = \dNf{0, 1}$.
+Find the [KL divergence](https://morrison-lab.github.io/pds/expectation.html#def-kl-divergence) $\kldivf{q}{p}$ as a formula in $\mu$ and $\sigma$.
+
+:::

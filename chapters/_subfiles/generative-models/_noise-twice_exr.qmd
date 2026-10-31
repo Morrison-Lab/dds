@@ -1,0 +1,17 @@
+::: {#exr-noise-twice}
+
+#### Adding noise twice
+
+Start from a data point $\vx_0$,
+and add noise twice:
+
+$$
+\vx_1 = \sqrt{1 - \beta_1} \, \vx_0 + \sqrt{\beta_1} \, \vnoise_1,
+\qquad
+\vx_2 = \sqrt{1 - \beta_2} \, \vx_1 + \sqrt{\beta_2} \, \vnoise_2,
+$$
+
+with $\vnoise_1$ and $\vnoise_2$ independent draws from $\dNf{\vzero, \idmat}$.
+What is the distribution of $\vx_2$ given $\vx_0$?
+
+:::

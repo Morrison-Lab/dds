@@ -1,0 +1,17 @@
+::: {#def-vae}
+
+#### Variational autoencoder
+
+A **variational autoencoder** has an encoder that maps an input $\vx$ to vectors $\vecf{\mu}(\vx)$ and $\vecf{\sigma}(\vx)$ in $\reals^k$,
+and a decoder that maps a code $\vz \in \reals^k$ back to the space of inputs.
+In training,
+the code is a draw $\vz = \vecf{\mu}(\vx) + \vecf{\sigma}(\vx) \odot \vnoise$ by the [reparameterization trick](#def-reparameterization),
+and the loss for $\vx$ is the reconstruction loss of the decoded $\vz$
+plus $\sumto{j}{k} \kldivf{\dNf{\mu_j(\vx), \sigma_j(\vx)^2}}{\dNf{0, 1}}$
+[@kingma2014auto, sections 2.3, 3].
+To make a new input,
+decode a draw from $\dNf{\vzero, \idmat}$.
+@kingma2014auto [section 2.2] call the negative of this loss the variational lower bound;
+many sources call it the evidence lower bound (ELBO).
+
+:::

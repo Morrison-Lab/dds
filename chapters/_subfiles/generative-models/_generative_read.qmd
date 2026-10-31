@@ -1,0 +1,4 @@
+::: {.reading}
+*Deep Learning*'s [chapter 20](https://www.deeplearningbook.org/contents/generative_models.html) covers variational autoencoders and GANs [@goodfellow2016deep, sections 20.10.3, 20.10.4]. <!-- check-term-links: allow -->
+@kingma2014auto introduced the variational autoencoder, @goodfellow2014generative the GAN, and @ho2020denoising the denoising diffusion model. <!-- check-term-links: allow -->
+:::

@@ -1,0 +1,61 @@
+```{python}
+#| code-fold: show
+import math
+
+import matplotlib.pyplot as plt
+import pandas as pd
+import torch
+import torch.nn.functional as F
+from torch import nn
+
+digits = pd.read_csv("data/optdigits-test.csv", header=None)
+x = torch.tensor(digits.iloc[:, :64].to_numpy(), dtype=torch.float32) / 16
+y = torch.tensor(digits[64].to_numpy())
+_ = torch.manual_seed(481)
+order = torch.randperm(len(x))
+n_train = 1200
+x_train, y_train = x[order[:n_train]], y[order[:n_train]]
+x_test = x[order[n_train:]]
+
+
+def mlp(*sizes):
+    # Linear layers of the given sizes, with a ReLU between each pair.
+    layers = []
+    for n_in, n_out in zip(sizes[:-1], sizes[1:]):
+        layers += [nn.Linear(n_in, n_out), nn.ReLU()]
+    return nn.Sequential(*layers[:-1])
+
+
+def train_model(model, loss_fn, n_epochs=100, lr=0.003, seed=0):
+    # Adam on minibatches of 64 training images; loss_fn(model, batch) is the loss.
+    optimizer = torch.optim.Adam(model.parameters(), lr=lr)
+    generator = torch.Generator().manual_seed(seed)
+    for epoch in range(n_epochs):
+        shuffled = torch.randperm(n_train, generator=generator)
+        for start in range(0, n_train, 64):
+            loss = loss_fn(model, x_train[shuffled[start:start + 64]])
+            optimizer.zero_grad()
+            loss.backward()
+            optimizer.step()
+
+
+def show_digits(images, n_cols=8):
+    # Draws each row of `images` as an 8 by 8 grayscale picture.
+    n_rows = math.ceil(len(images) / n_cols)
+    fig, axes = plt.subplots(n_rows, n_cols, figsize=(n_cols, n_rows))
+    for ax, image in zip(axes.flat, images):
+        ax.imshow(image.reshape(8, 8), cmap="gray_r", vmin=0, vmax=1);
+    for ax in axes.flat:
+        ax.axis("off");
+    plt.show()
+
+
+print(x_train.shape, x_test.shape)
+```
+
+The digits are the handwritten digits of the [feedforward networks chapter](feedforward-networks.qmd) [@alpaydin1998optdigits],
+8 by 8 images with pixel values scaled to lie between 0 and 1.
+`r format(py$n_train, big.mark = ",")` images are for training
+and the other `r py$x_test$shape[[1]]` for testing.
+`mlp()` builds an [MLP](feedforward-networks.qmd#def-feedforward-network) from a list of layer sizes,
+and `train_model()` runs [Adam](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-adam) on minibatches of 64 training images.

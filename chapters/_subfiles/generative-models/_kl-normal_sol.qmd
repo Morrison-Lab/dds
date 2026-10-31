@@ -1,0 +1,19 @@
+::: {#sol-kl-normal}
+
+Let $Z \sim q$.
+The log densities are $\logf{q(z)} = -\frac{1}{2} \logf{2 \pi \sigma^2} - \frac{(z - \mu)^2}{2 \sigma^2}$
+and $\logf{p(z)} = -\frac{1}{2} \logf{2 \pi} - \frac{z^2}{2}$.
+Then
+
+$$
+\begin{aligned}
+\kldivf{q}{p}
+&= \E{\logf{q(Z)} - \logf{p(Z)}} && \text{(cross-entropy minus entropy)} \\
+&= \E{-\frac{1}{2} \logf{\sigma^2} - \frac{(Z - \mu)^2}{2 \sigma^2} + \frac{Z^2}{2}} && \text{(the } \logf{2 \pi} \text{ terms cancel)} \\
+&= -\frac{1}{2} \logf{\sigma^2} - \frac{\E{(Z - \mu)^2}}{2 \sigma^2} + \frac{\E{Z^2}}{2} && \text{(linearity of expectation)} \\
+&= -\frac{1}{2} \logf{\sigma^2} - \frac{\sigma^2}{2 \sigma^2} + \frac{\sigma^2 + \mu^2}{2} && \text{(} \E{Z^2} = \sigma^2 + \mu^2 \text{)} \\
+&= \frac{1}{2} \paren{\mu^2 + \sigma^2 - 1 - \logf{\sigma^2}}. && \text{(collect terms)}
+\end{aligned}
+$$
+
+:::

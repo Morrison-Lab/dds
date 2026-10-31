@@ -1,0 +1,7 @@
+::: {#exr-vae-samples}
+
+#### New digits
+
+Decode 32 draws from $\dNf{\vzero, \idmat}$ with the trained `vae`.
+
+:::

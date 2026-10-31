@@ -1,0 +1,20 @@
+::: {#exm-reparameterization}
+
+#### Autograd through the draw
+
+```{python}
+#| code-fold: show
+mu = torch.tensor(1.0, requires_grad=True)
+sigma = torch.tensor(0.5, requires_grad=True)
+eps = torch.randn((), generator=torch.Generator().manual_seed(0))
+z = mu + sigma * eps
+z.backward()
+print(eps.item(), mu.grad.item(), sigma.grad.item())
+```
+
+With the [reparameterization trick](#def-reparameterization),
+autograd finds $\partial z / \partial \mu = `r sprintf("%.0f", py$mu$grad$item())`$
+and $\partial z / \partial \sigma = `r sprintf("%.3f", py$sigma$grad$item())`$,
+the value of $\noise$ drawn.
+
+:::

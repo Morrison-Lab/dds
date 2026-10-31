@@ -1,0 +1,20 @@
+::: {#thm-forward-marginal}
+
+#### Noise added in one step
+
+In a [forward diffusion process](#def-forward-process),
+$\vx_t$ given $\vx_0$ is $\dNf{\sqrt{\bar\alpha_t} \, \vx_0, (1 - \bar\alpha_t) \idmat}$,
+so $\vx_t = \sqrt{\bar\alpha_t} \, \vx_0 + \sqrt{1 - \bar\alpha_t} \, \vnoise$ with $\vnoise \sim \dNf{\vzero, \idmat}$
+[@ho2020denoising, section 2].
+
+:::
+
+::: proof
+By induction on $t$.
+For $t = 1$, $\bar\alpha_1 = 1 - \beta_1$ and the statement is the definition.
+If it holds for $t - 1$,
+then $\vx_t = \sqrt{1 - \beta_t} \paren{\sqrt{\bar\alpha_{t - 1}} \, \vx_0 + \sqrt{1 - \bar\alpha_{t - 1}} \, \vnoise'} + \sqrt{\beta_t} \, \vnoise_t$,
+and the steps of @sol-noise-twice,
+with $\bar\alpha_{t - 1}$ in place of $1 - \beta_1$ and $\beta_t$ in place of $\beta_2$,
+give mean $\sqrt{\bar\alpha_t} \, \vx_0$ and covariance $(1 - \bar\alpha_t) \idmat$.
+:::

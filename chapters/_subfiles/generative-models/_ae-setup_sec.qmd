@@ -1,0 +1,29 @@
+```{python}
+#| code-fold: show
+class Autoencoder(nn.Module):
+    # Encodes 64 pixels as `code_size` numbers,
+    # and decodes those numbers back to 64 pixels between 0 and 1.
+
+    def __init__(self, code_size=2):
+        super().__init__()
+        self.encoder = mlp(64, 128, code_size)
+        self.decoder = nn.Sequential(mlp(code_size, 128, 64), nn.Sigmoid())
+
+    def forward(self, x):
+        return self.decoder(self.encoder(x))
+
+
+def ae_loss(model, batch):
+    # Binary cross-entropy of each pixel against its reconstruction,
+    # summed over the pixels and averaged over the images.
+    return F.binary_cross_entropy(model(batch), batch, reduction="sum") / len(batch)
+
+
+_ = torch.manual_seed(1)
+autoencoder = Autoencoder()
+print(autoencoder)
+```
+
+`Autoencoder` is an [autoencoder](https://morrison-lab.github.io/lds/chapters/neural-nets.html#def-autoencoder) whose bottleneck has 2 [units](feedforward-networks.qmd#def-unit),
+so its encoder turns each image into a code of 2 numbers.
+`ae_loss()` treats each pixel value as the probability that the pixel is dark.

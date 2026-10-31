@@ -1,0 +1,25 @@
+::: {#exm-best-discriminator}
+
+#### Where the GAN's discriminator ended up
+
+```{python}
+#| code-fold: show
+with torch.no_grad():
+    d_real = torch.sigmoid(discriminator(standardized)).mean().item()
+    made_up = generator_net(torch.randn(1000, 2, generator=draws))
+    d_fake = torch.sigmoid(discriminator(made_up)).mean().item()
+print(d_real, d_fake)
+```
+
+If the generator of @exm-gan matched the data exactly,
+@thm-best-discriminator says the best discriminator would give $\frac{1}{2}$ to every point.
+The trained discriminator gives the real eruptions an average probability of `r sprintf("%.2f", py$d_real)` of being real,
+and the made-up ones `r sprintf("%.2f", py$d_fake)`.
+The generator does not match the data,
+as @fig-gan shows,
+so this is not the best discriminator:
+a small network, trained a step at a time against a moving generator,
+has stopped telling the two apart on average,
+though the theorem says a better one could.
+
+:::

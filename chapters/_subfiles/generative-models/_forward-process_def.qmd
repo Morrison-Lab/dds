@@ -1,0 +1,17 @@
+::: {#def-forward-process}
+
+#### Forward diffusion process
+
+A **forward diffusion process** with noise levels $\beta_1, \dots, \beta_T$ between 0 and 1
+turns a data point $\vx_0$ into $\vx_1, \dots, \vx_T$ by
+
+$$
+\vx_t = \sqrt{1 - \beta_t} \, \vx_{t - 1} + \sqrt{\beta_t} \, \vnoise_t,
+\qquad t = 1, \dots, T,
+$$
+
+with independent $\vnoise_t \sim \dNf{\vzero, \idmat}$
+[@ho2020denoising, section 2].
+We write $\bar\alpha_t = \prod_{s = 1}^{t} (1 - \beta_s)$.
+
+:::

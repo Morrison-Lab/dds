@@ -1,0 +1,27 @@
+::: {#sol-best-discriminator}
+
+Write $V$ as one integral over $\vx$:
+
+$$
+V(D, G) = \int \paren{p(\vx) \logf{D(\vx)} + p_g(\vx) \logf{1 - D(\vx)}} \, d\vx.
+$$
+
+The integral is largest when $D(\vx)$ maximizes the integrand at each $\vx$ separately.
+With $a = p(\vx)$, $b = p_g(\vx)$ and $u = D(\vx)$,
+the integrand is $f(u) = a \logf{u} + b \logf{1 - u}$ on $0 < u < 1$, and
+
+$$
+\begin{aligned}
+f'(u) &= \frac{a}{u} - \frac{b}{1 - u} && \text{(differentiate)} \\
+0 &= a (1 - u) - b u && \text{(set } f'(u) = 0 \text{, multiply by } u (1 - u) \text{)} \\
+u &= \frac{a}{a + b}. && \text{(solve for } u \text{)}
+\end{aligned}
+$$
+
+$f''(u) = -a / u^2 - b / (1 - u)^2 < 0$,
+so that $u$ is the maximum.
+The best discriminator is $D(\vx) = p(\vx) / \paren{p(\vx) + p_g(\vx)}$.
+Where the generator's density equals the data's,
+it is $\frac{1}{2}$.
+
+:::

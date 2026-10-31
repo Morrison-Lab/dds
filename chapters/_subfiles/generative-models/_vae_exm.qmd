@@ -1,0 +1,53 @@
+::: {#exm-vae}
+
+#### A variational autoencoder for the digits
+
+```{python}
+#| code-fold: show
+class VAE(nn.Module):
+    # The encoder's 2 * code_size outputs are the means and the log variances.
+
+    def __init__(self, code_size=2):
+        super().__init__()
+        self.encoder = mlp(64, 128, 2 * code_size)
+        self.decoder = nn.Sequential(mlp(code_size, 128, 64), nn.Sigmoid())
+
+    def forward(self, x):
+        mu, log_var = self.encoder(x).chunk(2, dim=1)
+        z = mu + torch.exp(0.5 * log_var) * torch.randn_like(mu)
+        return self.decoder(z), mu, log_var
+
+
+def vae_loss(model, batch):
+    reconstruction, mu, log_var = model(batch)
+    fit = F.binary_cross_entropy(reconstruction, batch, reduction="sum")
+    kl = 0.5 * (mu**2 + log_var.exp() - 1 - log_var).sum()
+    return (fit + kl) / len(batch)
+
+
+_ = torch.manual_seed(1)
+vae = VAE()
+train_model(vae, vae_loss)
+with torch.no_grad():
+    vae_codes = vae.encoder(x_train).chunk(2, dim=1)[0]
+    vae_mse = F.mse_loss(vae.decoder(vae.encoder(x_test).chunk(2, dim=1)[0]), x_test).item()
+vae_code_mean = vae_codes.mean(dim=0).tolist()
+vae_code_sd = vae_codes.std(dim=0).tolist()
+print(vae_code_mean, vae_code_sd, vae_mse)
+```
+
+`VAE` is a [variational autoencoder](#def-vae) with codes of 2 numbers,
+the same layers as `Autoencoder`,
+and the KL term of @thm-kl-normal added to `ae_loss()`.
+Its encoder outputs $\logf{\sigma^2}$ rather than $\sigma$,
+so that any real output gives a valid $\sigma$.
+After the same training,
+the means $\vecf{\mu}(\vx)$ of the training images have means
+`r sprintf("%.2f", py$vae_code_mean[[1]])` and `r sprintf("%.2f", py$vae_code_mean[[2]])`
+and standard deviations
+`r sprintf("%.2f", py$vae_code_sd[[1]])` and `r sprintf("%.2f", py$vae_code_sd[[2]])`,
+close to the standard normal that new codes are drawn from.
+Decoding $\vecf{\mu}(\vx)$ gives a test mean squared error of `r sprintf("%.3f", py$vae_mse)`,
+against `r sprintf("%.3f", py$ae_mse)` for the [autoencoder](https://morrison-lab.github.io/lds/chapters/neural-nets.html#def-autoencoder) of @sol-reconstruct.
+
+:::

@@ -1,0 +1,19 @@
+::: {#def-diffusion-model}
+
+#### Denoising diffusion model
+
+A **denoising diffusion model** for a [forward diffusion process](#def-forward-process) trains a network $\vnoise_{\vth}(\vx_t, t)$ to predict the noise in $\vx_t$,
+by minimizing $\norm{\vnoise - \vnoise_{\vth}\paren{\sqrt{\bar\alpha_t} \, \vx_0 + \sqrt{1 - \bar\alpha_t} \, \vnoise, t}}^2$
+over data points $\vx_0$, steps $t$ drawn uniformly from $1, \dots, T$, and $\vnoise \sim \dNf{\vzero, \idmat}$.
+To make a new point,
+it draws $\vx_T \sim \dNf{\vzero, \idmat}$ and steps back,
+for $t = T, \dots, 1$:
+
+$$
+\vx_{t - 1} = \frac{1}{\sqrt{1 - \beta_t}} \paren{\vx_t - \frac{\beta_t}{\sqrt{1 - \bar\alpha_t}} \, \vnoise_{\vth}(\vx_t, t)} + \sqrt{\beta_t} \, \vz_t,
+$$
+
+with $\vz_t \sim \dNf{\vzero, \idmat}$ for $t > 1$ and $\vz_1 = \vzero$
+[@ho2020denoising, sections 3.2, 3.4].
+
+:::

@@ -1,0 +1,9 @@
+::: {#exr-best-discriminator}
+
+#### The best discriminator
+
+Fix the generator,
+and let $p_g$ be the density of its made-up points and $p$ that of the real ones.
+Which $D(\vx)$ maximizes $V(D, G)$ of @def-gan?
+
+:::

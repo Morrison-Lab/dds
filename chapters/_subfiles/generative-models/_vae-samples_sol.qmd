@@ -1,0 +1,22 @@
+::: {#sol-vae-samples}
+
+::: {#fig-vae-samples}
+
+```{python}
+#| fig-alt: "Four rows of eight small grayscale images made by the variational autoencoder from random codes. Most are blurred shapes of handwritten digits such as 0, 1, 2, 4 and 9; a few are smudges between two digits."
+with torch.no_grad():
+    new_digits = vae.decoder(torch.randn(32, 2, generator=torch.Generator().manual_seed(4)))
+show_digits(new_digits)
+```
+
+Images decoded from 32 codes drawn from the standard normal distribution.
+
+:::
+
+The [variational autoencoder](#def-vae) never saw these images.
+Each is the decoder's output for a code drawn from the distribution that the KL term pulled the training codes toward.
+They are blurrier than real digits:
+the decoder's output is a probability for each pixel,
+and @fig-vae-samples shows those probabilities rather than a draw of dark and light pixels.
+
+:::

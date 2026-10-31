@@ -1,0 +1,9 @@
+::: {#exr-reconstruct}
+
+#### Two numbers per image
+
+Train `autoencoder` with `train_model()` and `ae_loss()`.
+Is its mean squared error on the test images lower than that of the mean training image,
+used as the reconstruction of every test image?
+
+:::

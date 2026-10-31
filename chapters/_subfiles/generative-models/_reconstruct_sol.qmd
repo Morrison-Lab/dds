@@ -1,0 +1,18 @@
+::: {#sol-reconstruct}
+
+```{python}
+#| code-fold: show
+train_model(autoencoder, ae_loss)
+with torch.no_grad():
+    ae_mse = F.mse_loss(autoencoder(x_test), x_test).item()
+    ae_codes = autoencoder.encoder(x_train)
+mean_mse = F.mse_loss(x_train.mean(dim=0).expand_as(x_test), x_test).item()
+print(ae_mse, mean_mse)
+```
+
+Yes.
+Its mean squared error per pixel is `r sprintf("%.3f", py$ae_mse)`,
+against `r sprintf("%.3f", py$mean_mse)` for the mean image.
+Two numbers per image carry about half of what separates the test images from the mean image.
+
+:::

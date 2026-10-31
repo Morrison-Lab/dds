@@ -1,0 +1,9 @@
+::: {#exr-forger}
+
+#### Real or made up?
+
+A network turns random noise into made-up eruptions.
+We have the `r nrow(py$faithful)` real eruptions but no formula for their density.
+How could a second network tell the first one how to make its eruptions look more real?
+
+:::

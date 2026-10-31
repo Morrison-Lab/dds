@@ -1,0 +1,8 @@
+::: {#sol-forger}
+
+Train the second network as a classifier that tells real eruptions from made-up ones.
+The first network then changes its weights to make the classifier call its eruptions real.
+As each network improves,
+the other has a harder task.
+
+:::
