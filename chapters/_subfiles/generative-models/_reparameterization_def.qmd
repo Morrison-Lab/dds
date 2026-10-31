@@ -1,0 +1,14 @@
+::: {#def-reparameterization}
+
+#### Reparameterization trick
+
+The **reparameterization trick** writes a draw $\vz$ from a distribution with [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter) $\vth$
+as $\vz = g_{\vth}(\vnoise)$,
+where $\vnoise$ is drawn from a fixed distribution
+and $g_{\vth}$ is differentiable in $\vth$
+[@kingma2014auto, section 2.4].
+For a normal distribution with mean $\vecf{\mu}$ and standard deviations $\vecf{\sigma}$,
+$\vz = \vecf{\mu} + \vecf{\sigma} \odot \vnoise$ with $\vnoise \sim \dNf{\vzero, \idmat}$,
+where $\odot$ multiplies entry by entry.
+
+:::

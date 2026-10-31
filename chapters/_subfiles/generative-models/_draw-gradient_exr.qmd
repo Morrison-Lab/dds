@@ -1,0 +1,9 @@
+::: {#exr-draw-gradient}
+
+#### A gradient through a random draw
+
+An encoder outputs $\mu$ and $\sigma$,
+and the next layer gets a draw $z$ from $\dNf{\mu, \sigma^2}$.
+How can we write $z$ so that the [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) of the loss reaches $\mu$ and $\sigma$?
+
+:::

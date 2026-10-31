@@ -1,0 +1,28 @@
+::: {#sol-noise-twice}
+
+Substitute $\vx_1$ into $\vx_2$:
+
+$$
+\begin{aligned}
+\vx_2
+&= \sqrt{1 - \beta_2} \paren{\sqrt{1 - \beta_1} \, \vx_0 + \sqrt{\beta_1} \, \vnoise_1} + \sqrt{\beta_2} \, \vnoise_2 && \text{(substitute } \vx_1 \text{)} \\
+&= \sqrt{1 - \beta_2} \sqrt{1 - \beta_1} \, \vx_0 + \sqrt{1 - \beta_2} \sqrt{\beta_1} \, \vnoise_1 + \sqrt{\beta_2} \, \vnoise_2 && \text{(distribute)} \\
+&= \sqrt{(1 - \beta_1)(1 - \beta_2)} \, \vx_0 + \sqrt{(1 - \beta_2) \beta_1} \, \vnoise_1 + \sqrt{\beta_2} \, \vnoise_2. && \text{(} \sqrt{a} \sqrt{b} = \sqrt{a b} \text{)}
+\end{aligned}
+$$
+
+The last two terms are independent normal vectors with mean $\vzero$,
+so their sum is normal with mean $\vzero$ and covariance
+
+$$
+\begin{aligned}
+\paren{(1 - \beta_2) \beta_1 + \beta_2} \idmat
+&= \paren{\beta_1 - \beta_1 \beta_2 + \beta_2} \idmat && \text{(expand)} \\
+&= \paren{1 - (1 - \beta_1)(1 - \beta_2)} \idmat. && \text{(factor)}
+\end{aligned}
+$$
+
+So $\vx_2$ given $\vx_0$ is $\dNf{\sqrt{\bar\alpha_2} \, \vx_0, (1 - \bar\alpha_2) \idmat}$,
+where $\bar\alpha_2 = (1 - \beta_1)(1 - \beta_2)$.
+
+:::

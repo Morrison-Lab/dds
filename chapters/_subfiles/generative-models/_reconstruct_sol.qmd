@@ -1,0 +1,21 @@
+::: {#sol-reconstruct}
+
+```{python}
+#| code-fold: show
+train_model(autoencoder, ae_loss)
+with torch.no_grad():
+    ae_mse = F.mse_loss(autoencoder(x_test), x_test).item()
+    ae_codes = autoencoder.encoder(x_train)
+mean_mse = F.mse_loss(x_train.mean(dim=0).expand_as(x_test), x_test).item()
+error_removed = 1 - ae_mse / mean_mse
+print(ae_mse, mean_mse, error_removed)
+# The prose below answers "yes"; stop the render if the autoencoder loses.
+assert ae_mse < mean_mse
+```
+
+Yes.
+Its mean squared error per pixel is `r sprintf("%.3f", py$ae_mse)`,
+against `r sprintf("%.3f", py$mean_mse)` for the mean image.
+Two numbers per image remove `r sprintf("%.0f%%", 100 * py$error_removed)` of the mean image's squared error.
+
+:::

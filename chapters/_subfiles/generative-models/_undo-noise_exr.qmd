@@ -1,0 +1,8 @@
+::: {#exr-undo-noise}
+
+#### Undoing the noise
+
+A network looks at $\vx_t$ and guesses the noise $\est{\vnoise}$ that @thm-forward-marginal added to $\vx_0$.
+What estimate of $\vx_0$ follows from its guess?
+
+:::

@@ -1,0 +1,236 @@
+---
+title: "Generative Models"
+format:
+  html: default
+  revealjs:
+    output-file: generative-models-slides.html
+  pdf:
+    output-file: generative-models-handout.pdf
+resources:
+  - data/optdigits-test.csv
+  - data/faithful.csv
+---
+
+```{r}
+# The Python chunks on this page import these; reticulate provisions them.
+# Attaching reticulate gives the inline R its `py` object.
+library(reticulate)
+source("../tools/use-torch.R")
+use_torch(c("numpy", "pandas", "matplotlib"))
+```
+
+::: notes
+Brian Hutchinson's CSCI 481/581 sets the order of topics in these notes,
+which follow it with his permission;
+this page covers his module on [generative models](https://morrison-lab.github.io/lds/chapters/learning-problems.html#def-generative-model).
+The exercises are new.
+:::
+
+# Welcome
+
+## Plan for this lecture
+
+{{< include _subfiles/generative-models/_plan_sec.qmd >}}
+
+## The digits
+
+{{< include _subfiles/generative-models/_digits-setup_sec.qmd >}}
+
+# Autoencoders
+
+## A two-number code
+
+{{< include _subfiles/generative-models/_ae-setup_sec.qmd >}}
+
+## Reconstruction
+
+<!-- heading shares the slide; do not re-flag -->
+
+{{< include _subfiles/generative-models/_reconstruct_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/generative-models/_reconstruct_sol.qmd >}}
+
+## The codes
+
+<!-- heading shares the slide; do not re-flag -->
+
+{{< include _subfiles/generative-models/_ae-codes_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/generative-models/_ae-codes_sol.qmd >}}
+
+# Drawing new codes
+
+## A distribution for the codes
+
+<!-- heading shares the slide; do not re-flag -->
+
+{{< include _subfiles/generative-models/_vae-idea_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/generative-models/_vae-idea_sol.qmd >}}
+
+## Distance from a standard normal
+
+<!-- heading shares the slide; do not re-flag -->
+
+{{< include _subfiles/generative-models/_kl-normal_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/generative-models/_kl-normal_sol.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/generative-models/_kl-normal_thm.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/generative-models/_kl-normal_exm.qmd >}}
+
+## Differentiating through a draw
+
+<!-- heading shares the slide; do not re-flag -->
+
+{{< include _subfiles/generative-models/_draw-gradient_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/generative-models/_draw-gradient_sol.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/generative-models/_reparameterization_def.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/generative-models/_reparameterization_exm.qmd >}}
+
+## The model
+
+<!-- heading shares the slide; do not re-flag -->
+
+{{< include _subfiles/generative-models/_vae_def.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/generative-models/_vae_exm.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/generative-models/_elbo_rem.qmd >}}
+
+## Sampling
+
+<!-- heading shares the slide; do not re-flag -->
+
+{{< include _subfiles/generative-models/_vae-samples_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/generative-models/_vae-samples_sol.qmd >}}
+
+# Two networks against each other
+
+## Old Faithful
+
+{{< include _subfiles/generative-models/_faithful-setup_sec.qmd >}}
+
+## A forger and a detective
+
+<!-- heading shares the slide; do not re-flag -->
+
+{{< include _subfiles/generative-models/_forger_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/generative-models/_forger_sol.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/generative-models/_gan_def.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/generative-models/_gan_exm.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/generative-models/_gan-loss_rem.qmd >}}
+
+## The best detective
+
+<!-- heading shares the slide; do not re-flag -->
+
+{{< include _subfiles/generative-models/_best-discriminator_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/generative-models/_best-discriminator_sol.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/generative-models/_best-discriminator_thm.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/generative-models/_best-discriminator_exm.qmd >}}
+
+# Adding and removing noise
+
+## Adding noise
+
+<!-- heading shares the slide; do not re-flag -->
+
+{{< include _subfiles/generative-models/_noise-twice_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/generative-models/_noise-twice_sol.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/generative-models/_forward-process_def.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/generative-models/_forward-process_exm.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/generative-models/_forward-marginal_thm.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/generative-models/_forward-marginal_exm.qmd >}}
+
+## Removing noise
+
+<!-- heading shares the slide; do not re-flag -->
+
+{{< include _subfiles/generative-models/_undo-noise_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/generative-models/_undo-noise_sol.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/generative-models/_diffusion-model_def.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/generative-models/_diffusion-model_exm.qmd >}}
+
+## Further reading
+
+{{< include _subfiles/generative-models/_generative_read.qmd >}}
+
+# References
+
+::: {#refs}
+:::

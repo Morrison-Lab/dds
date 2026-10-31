@@ -1,0 +1,7 @@
+::: {#exr-ae-codes}
+
+#### Where the codes lie
+
+Do the trained [autoencoder](https://morrison-lab.github.io/lds/chapters/neural-nets.html#def-autoencoder)'s codes of the training images follow a distribution we could draw new codes from?
+
+:::

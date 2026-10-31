@@ -1,0 +1,19 @@
+::: {#thm-best-discriminator}
+
+#### The optimal discriminator
+
+For a fixed generator whose points have density $p_g$,
+and data with density $p$,
+the discriminator that maximizes $V(D, G)$ is
+
+$$
+D^*(\vx) = \frac{p(\vx)}{p(\vx) + p_g(\vx)}
+$$
+
+@goodfellow2014generative [section 4.1] prove it as their proposition 1.
+
+:::
+
+::: proof
+By @sol-best-discriminator.
+:::

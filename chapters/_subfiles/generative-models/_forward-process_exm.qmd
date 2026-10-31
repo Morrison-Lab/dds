@@ -1,0 +1,20 @@
+::: {#exm-forward-process}
+
+#### A noise schedule
+
+```{python}
+#| code-fold: show
+n_steps = 100
+betas = torch.linspace(1e-4, 0.1, n_steps)
+alpha_bars = torch.cumprod(1 - betas, dim=0)
+print(alpha_bars[[9, 49, 99]])
+```
+
+With $T = `r py$n_steps`$ steps and $\beta_t$ rising evenly from 0.0001 to 0.1,
+$\bar\alpha_t$ is `r sprintf("%.2f", py$alpha_bars$tolist()[[10]])` after 10 steps,
+`r sprintf("%.3f", py$alpha_bars$tolist()[[50]])` after 50
+and `r sprintf("%.4f", py$alpha_bars$tolist()[[100]])` after 100.
+@ho2020denoising [section 4] use $T = 1000$ steps,
+with $\beta_t$ from 0.0001 to 0.02.
+
+:::

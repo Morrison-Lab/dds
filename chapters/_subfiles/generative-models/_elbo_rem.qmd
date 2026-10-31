@@ -1,0 +1,12 @@
+::: {#rem-elbo}
+
+#### The loss as a bound
+
+When the reconstruction loss is the negative log probability that the decoder gives $\vx$,
+as the binary [cross-entropy](https://morrison-lab.github.io/pds/expectation.html#def-cross-entropy) of `vae_loss()` would be for pixels that are each 0 or 1,
+the negative of the [variational autoencoder](#def-vae)'s loss is a one-draw estimate [@kingma2014auto, section 2.3]
+of what @kingma2014auto [section 2.2] call the variational lower bound,
+a lower bound on the log probability of $\vx$.
+Many sources call it the evidence lower bound (ELBO).
+
+:::

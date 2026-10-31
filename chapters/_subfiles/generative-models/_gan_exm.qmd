@@ -1,0 +1,77 @@
+::: {#exm-gan}
+
+#### A GAN for Old Faithful
+
+```{python}
+#| code-fold: show
+_ = torch.manual_seed(0)
+generator_net = mlp(2, 64, 64, 2)
+discriminator = mlp(2, 64, 64, 1)
+adam = dict(lr=1e-3, betas=(0.5, 0.999))
+g_optimizer = torch.optim.Adam(generator_net.parameters(), **adam)
+d_optimizer = torch.optim.Adam(discriminator.parameters(), **adam)
+draws = torch.Generator().manual_seed(0)
+real_label, fake_label = torch.ones(64, 1), torch.zeros(64, 1)
+for step in range(3000):
+    real = standardized[torch.randint(0, len(standardized), (64,), generator=draws)]
+    fake = generator_net(torch.randn(64, 2, generator=draws))
+    # The discriminator's step: logits, so the loss is cross-entropy on D.
+    d_loss = (
+        F.binary_cross_entropy_with_logits(discriminator(real), real_label)
+        + F.binary_cross_entropy_with_logits(discriminator(fake.detach()), fake_label)
+    )
+    d_optimizer.zero_grad()
+    d_loss.backward()
+    d_optimizer.step()
+    # The generator's step: make D call the fakes real.
+    g_loss = F.binary_cross_entropy_with_logits(discriminator(fake), real_label)
+    g_optimizer.zero_grad()
+    g_loss.backward()
+    g_optimizer.step()
+with torch.no_grad():
+    gan_points = generator_net(torch.randn(1000, 2, generator=draws)) * scale + center
+gan_long_share = (gan_points[:, 0] > 3).float().mean().item()
+gan_long_sd = long_wait_sd(gan_points)
+print(gan_long_share, gan_long_sd, real_long_sd)
+# Stop the render if the generator's waits spread as much as the real ones,
+# since the prose says they spread less.
+assert gan_long_sd < real_long_sd
+```
+
+::: {#fig-gan}
+
+```{python}
+#| fig-alt: "Two scatter plots side by side, the 272 real eruptions on the left and 1,000 made-up ones on the right, eruption length across and wait up. The real points form two round clusters. The made-up points lie along one thin curve that runs from short eruptions with short waits to long eruptions with long waits, bunched at its two ends."
+fig, axes = plt.subplots(1, 2, figsize=(8, 3.5), sharex=True, sharey=True)
+plot_eruptions(axes[0], eruptions, "real");
+plot_eruptions(axes[1], gan_points, "GAN");
+fig.tight_layout();
+plt.show()
+```
+
+The real eruptions and 1,000 made by the [GAN](#def-gan)'s generator.
+
+:::
+
+Both networks are [MLPs](feedforward-networks.qmd#def-feedforward-network) with two [hidden layers](feedforward-networks.qmd#def-hidden-layer) of 64 [units](feedforward-networks.qmd#def-unit),
+trained for 3,000 steps on the `standardized` eruptions.
+The discriminator returns a [logit](feedforward-networks.qmd#def-logits),
+so `binary_cross_entropy_with_logits`,
+with label 1 for the real points and 0 for the made-up ones,
+is $-V(D, G)$ for a minibatch.
+The generator's loss is $-\logf{D(G(\vz))}$,
+rather than $V(D, G)$.
+Of the made-up eruptions,
+`r sprintf("%.0f%%", 100 * py$gan_long_share)` last longer than 3 minutes,
+against `r sprintf("%.0f%%", 100 * py$long_share)` of the real ones.
+But the made-up points lie along one thin curve.
+Along the long end of that curve,
+the generator gives each eruption length nearly one wait;
+along the short end,
+it gives nearly one length for a range of waits.
+Among the eruptions longer than 3 minutes,
+the waits have standard deviation `r sprintf("%.1f", py$gan_long_sd)` minutes,
+against `r sprintf("%.1f", py$real_long_sd)` for the real ones.
+The generator matches where the data lie better than how they spread.
+
+:::

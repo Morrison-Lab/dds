@@ -1,0 +1,73 @@
+::: {#exm-diffusion-model}
+
+#### A diffusion model for Old Faithful
+
+```{python}
+#| code-fold: show
+class NoisePredictor(nn.Module):
+    # Predicts the noise in a 2-number point x_t, given t / T as a third input.
+
+    def __init__(self):
+        super().__init__()
+        self.net = mlp(3, 128, 128, 2)
+
+    def forward(self, x, t):
+        return self.net(torch.cat([x, (t / n_steps).unsqueeze(1)], dim=1))
+
+
+_ = torch.manual_seed(0)
+predictor = NoisePredictor()
+optimizer = torch.optim.Adam(predictor.parameters(), lr=1e-3)
+for step in range(4000):
+    x0 = standardized[torch.randint(0, len(standardized), (128,), generator=draws)]
+    t = torch.randint(1, n_steps + 1, (128,), generator=draws)
+    noise = torch.randn(128, 2, generator=draws)
+    alpha_bar = alpha_bars[t - 1].unsqueeze(1)
+    noised = alpha_bar.sqrt() * x0 + (1 - alpha_bar).sqrt() * noise
+    loss = F.mse_loss(predictor(noised, t.float()), noise)
+    optimizer.zero_grad()
+    loss.backward()
+    optimizer.step()
+
+with torch.no_grad():
+    points = torch.randn(1000, 2, generator=draws)
+    for t in range(n_steps, 0, -1):
+        beta, alpha_bar = betas[t - 1], alpha_bars[t - 1]
+        guess = predictor(points, torch.full((1000,), float(t)))
+        points = (points - beta / (1 - alpha_bar).sqrt() * guess) / (1 - beta).sqrt()
+        if t > 1:
+            points = points + beta.sqrt() * torch.randn(1000, 2, generator=draws)
+diffusion_points = points * scale + center
+diffusion_long_share = (diffusion_points[:, 0] > 3).float().mean().item()
+diffusion_long_sd = long_wait_sd(diffusion_points)
+print(diffusion_long_share, diffusion_long_sd)
+```
+
+::: {#fig-diffusion-model}
+
+```{python}
+#| fig-alt: "Two scatter plots side by side, the 272 real eruptions on the left and 1,000 made by the diffusion model on the right. Both show a cluster of short eruptions and a cluster of long ones."
+fig, axes = plt.subplots(1, 2, figsize=(8, 3.5), sharex=True, sharey=True)
+plot_eruptions(axes[0], eruptions, "real");
+plot_eruptions(axes[1], diffusion_points, "diffusion");
+fig.tight_layout();
+plt.show()
+```
+
+The real eruptions and 1,000 made by the [denoising diffusion model](#def-diffusion-model).
+
+:::
+
+`NoisePredictor` is an [MLP](feedforward-networks.qmd#def-feedforward-network) that takes the noised point and $t / T$,
+trained for 4,000 steps of the [denoising diffusion model](#def-diffusion-model)'s loss on the noise schedule of @exm-forward-process.
+Sampling starts from 1,000 draws of pure noise and takes all `r py$n_steps` steps back.
+Of the points it makes,
+`r sprintf("%.0f%%", 100 * py$diffusion_long_share)` last longer than 3 minutes,
+against `r sprintf("%.0f%%", 100 * py$long_share)` of the real eruptions.
+Unlike the [GAN](#def-gan)'s points,
+they spread around each cluster:
+among the eruptions longer than 3 minutes,
+the waits have standard deviation `r sprintf("%.1f", py$diffusion_long_sd)` minutes,
+against `r sprintf("%.1f", py$real_long_sd)` for the real ones.
+
+:::

@@ -1,0 +1,10 @@
+::: {#sol-draw-gradient}
+
+Draw $\noise \sim \dNf{0, 1}$ first,
+with no [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter) involved,
+and set $z = \mu + \sigma \noise$.
+Then $z \sim \dNf{\mu, \sigma^2}$,
+and $z$ is a differentiable function of $\mu$ and $\sigma$,
+with $\derivf{z}{\mu} = 1$ and $\derivf{z}{\sigma} = \noise$.
+
+:::

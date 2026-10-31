@@ -1,0 +1,12 @@
+::: {#sol-undo-noise}
+
+Solve $\vx_t = \sqrt{\bar\alpha_t} \, \vx_0 + \sqrt{1 - \bar\alpha_t} \, \est{\vnoise}$ for $\vx_0$:
+
+$$
+\est{\vx}_0 = \frac{\vx_t - \sqrt{1 - \bar\alpha_t} \, \est{\vnoise}}{\sqrt{\bar\alpha_t}}.
+$$
+
+A network that predicts the noise well can remove it,
+so predicting the noise is a way to predict the data.
+
+:::
