@@ -1,6 +1,6 @@
 ::: {#sol-best-discriminator}
 
-The made-up point $G(\vecf{Z})$ has density $p_g$,
+A point $G(\vecf{Z})$ made up by the generator has density $p_g$,
 so $\E{\logf{1 - D(G(\vecf{Z}))}} = \int p_g(\vx) \logf{1 - D(\vx)} \, d\vx$.
 Writing the first expectation the same way puts $V$ in one integral over $\vx$:
 
