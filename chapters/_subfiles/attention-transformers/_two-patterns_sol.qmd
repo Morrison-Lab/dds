@@ -1,6 +1,6 @@
 ::: {#sol-two-patterns}
 
-No, unless the two are the same character.
+No, unless the two are the same position.
 The weights in a row are positive and sum to 1,
 so 0.9 on one position leaves at most 0.1 for every other position.
 Looking at both needs two rows of weights for each query,

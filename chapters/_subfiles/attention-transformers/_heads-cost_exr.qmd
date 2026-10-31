@@ -2,6 +2,6 @@
 
 #### Do more heads cost more?
 
-How many [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter) does `nn.MultiheadAttention(64, num_heads)` have with 1 head, and with 16?
+Does `nn.MultiheadAttention(64, num_heads)` have more [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter) with 16 heads than with 1?
 
 :::

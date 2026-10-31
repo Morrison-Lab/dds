@@ -6,7 +6,8 @@ head_counts = {str(h): n_params(nn.MultiheadAttention(64, h)) for h in [1, 16]}
 print(head_counts)
 ```
 
-`r format(py$head_counts[["1"]], big.mark = ",")` with 1 head,
+No.
+It has `r format(py$head_counts[["1"]], big.mark = ",")` with 1 head,
 and `r format(py$head_counts[["16"]], big.mark = ",")` with 16.
 The count is the same as with 4 heads in @exm-multi-head-attention,
 because each of $h$ heads projects to $d / h$ columns,
