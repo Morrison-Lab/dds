@@ -8,4 +8,4 @@ This lecture builds a network that looks back at every earlier character directl
 4.  a block that stacks them with the layers of the earlier chapters;
 5.  a [language model](language-models.qmd#def-language-model) built from those blocks, trained on the same text as the [GRU](rnns.qmd#def-gru).
 
-The [attention chapter](https://morrison-lab.github.io/lds/chapters/attention.html) of the DATA 371/471 notes builds the same idea from word vectors, without code.
+A [chapter of the DATA 371/471 notes](https://morrison-lab.github.io/lds/chapters/attention.html) builds the same weighted averages from word vectors, without code.

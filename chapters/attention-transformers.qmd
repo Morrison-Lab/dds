@@ -35,7 +35,7 @@ The exercises are new.
 
 {{< include _subfiles/attention-transformers/_text-setup_sec.qmd >}}
 
-# Attention
+# Weighted averages
 
 ## A weighted average
 
@@ -87,7 +87,7 @@ The exercises are new.
 
 {{< include _subfiles/attention-transformers/_cross-attention_exm.qmd >}}
 
-# Self-attention
+# Within one sequence
 
 ## One step from any position
 
@@ -161,11 +161,19 @@ The exercises are new.
 
 {{< include _subfiles/attention-transformers/_causal-mask_exm.qmd >}}
 
-# Transformers
+# Stacking
 
 ## Several heads
 
 <!-- heading shares the slide; do not re-flag -->
+
+{{< include _subfiles/attention-transformers/_two-patterns_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/attention-transformers/_two-patterns_sol.qmd >}}
+
+{{< slidebreak >}}
 
 {{< include _subfiles/attention-transformers/_multi-head-attention_def.qmd >}}
 
@@ -225,9 +233,9 @@ The exercises are new.
 
 {{< include _subfiles/attention-transformers/_attention-map_sol.qmd >}}
 
-# Pretraining
+# Targets from text
 
-## Targets from the text
+## Two objectives
 
 <!-- heading shares the slide; do not re-flag -->
 

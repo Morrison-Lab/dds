@@ -2,7 +2,7 @@
 
 #### Multi-head attention
 
-**Multi-head attention** with $h$ heads runs $h$ copies of [self-attention](#def-self-attention) side by side,
+**Multi-head attention** with $h$ heads runs $h$ copies of [scaled dot-product attention](#def-attention) side by side,
 head $i$ with its own matrices $\matr{W}_Q^{(i)}$, $\matr{W}_K^{(i)}$ and $\matr{W}_V^{(i)}$ of size $d \times d / h$.
 It joins the $h$ outputs,
 each $n \times d / h$,

@@ -15,10 +15,10 @@ print(top_raw, top_scaled)
 
 With $d_k = `r py$d_k`$ and `r py$n_keys` keys drawn as in @exr-dot-variance,
 the unscaled [softmax](https://morrison-lab.github.io/lds/chapters/multiclass-logistic-regression.html#def-softmax) gives its largest weight an average of `r sprintf("%.2f", py$top_raw)`,
-so each query copies one value and ignores the rest.
+so each query mostly copies one value.
 After dividing by $\sqrt{d_k}$,
 the largest weight averages `r sprintf("%.2f", py$top_scaled)`.
-@vaswani2017attention [section 3.2.1] give the reason for scaling:
+@vaswani2017attention [section 3.2.1] suggest why the scaling helps:
 where one weight is near 1,
 the softmax's [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) is near 0,
 and training slows.
