@@ -5,7 +5,7 @@
 ::: {#fig-forward-process}
 
 ```{python}
-#| fig-alt: "Four scatter plots of the standardized eruptions after 0, 10, 50 and 100 steps of added noise. The two clusters are clear at step 0, blurred at step 10, and gone by step 50; at step 100 the points form one round cloud centred at 0."
+#| fig-alt: "Four scatter plots of the standardized eruptions after 0, 10, 50 and 100 steps of added noise. The two clusters are clear at step 0, slightly spread at step 10, and mostly merged at step 50; at step 100 the points form one round cloud centred at 0."
 fig, axes = plt.subplots(1, 4, figsize=(12, 3), sharex=True, sharey=True)
 noise = torch.randn(standardized.shape, generator=torch.Generator().manual_seed(5))
 for ax, t in zip(axes, [0, 10, 50, 100]):
@@ -13,6 +13,8 @@ for ax, t in zip(axes, [0, 10, 50, 100]):
     noised = math.sqrt(alpha_bar) * standardized + math.sqrt(1 - alpha_bar) * noise
     ax.scatter(noised[:, 0], noised[:, 1], s=4);
     ax.set_title(f"step {t}");
+    ax.set_xlabel("eruption (standardized)");
+axes[0].set_ylabel("wait (standardized)");
 fig.tight_layout();
 plt.show()
 ```

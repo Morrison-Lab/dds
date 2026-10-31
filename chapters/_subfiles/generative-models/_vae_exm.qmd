@@ -29,11 +29,17 @@ _ = torch.manual_seed(1)
 vae = VAE()
 train_model(vae, vae_loss)
 with torch.no_grad():
-    vae_codes = vae.encoder(x_train).chunk(2, dim=1)[0]
-    vae_mse = F.mse_loss(vae.decoder(vae.encoder(x_test).chunk(2, dim=1)[0]), x_test).item()
+    train_mu, train_log_var = vae.encoder(x_train).chunk(2, dim=1)
+    noise = torch.randn(train_mu.shape, generator=torch.Generator().manual_seed(2))
+    vae_codes = train_mu + torch.exp(0.5 * train_log_var) * noise
+    test_mu = vae.encoder(x_test).chunk(2, dim=1)[0]
+    vae_mse = F.mse_loss(vae.decoder(test_mu), x_test).item()
 vae_code_mean = vae_codes.mean(dim=0).tolist()
 vae_code_sd = vae_codes.std(dim=0).tolist()
 print(vae_code_mean, vae_code_sd, vae_mse)
+# Stop the render if the codes are far from standard normal, as the prose says they are close.
+assert all(abs(m) < 0.2 for m in vae_code_mean)
+assert all(abs(s - 1) < 0.2 for s in vae_code_sd)
 ```
 
 `VAE` is a [variational autoencoder](#def-vae) with codes of 2 numbers,
@@ -42,11 +48,11 @@ and the KL term of @thm-kl-normal added to `ae_loss()`.
 Its encoder outputs $\logf{\sigma^2}$ rather than $\sigma$,
 so that any real output gives a valid $\sigma$.
 After the same training,
-the means $\vecf{\mu}(\vx)$ of the training images have means
+one draw of the code for each training image gives codes with means
 `r sprintf("%.2f", py$vae_code_mean[[1]])` and `r sprintf("%.2f", py$vae_code_mean[[2]])`
 and standard deviations
 `r sprintf("%.2f", py$vae_code_sd[[1]])` and `r sprintf("%.2f", py$vae_code_sd[[2]])`,
-close to the standard normal that new codes are drawn from.
+close to the means of 0 and standard deviations of 1 of the standard normal that new codes are drawn from.
 Decoding $\vecf{\mu}(\vx)$ gives a test mean squared error of `r sprintf("%.3f", py$vae_mse)`,
 against `r sprintf("%.3f", py$ae_mse)` for the [autoencoder](https://morrison-lab.github.io/lds/chapters/neural-nets.html#def-autoencoder) of @sol-reconstruct.
 

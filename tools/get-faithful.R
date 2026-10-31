@@ -8,5 +8,6 @@
 # Usage: Rscript tools/get-faithful.R
 
 out <- file.path("chapters", "data", "faithful.csv")
-utils::write.csv(datasets::faithful, out, row.names = FALSE)
-message("wrote ", nrow(datasets::faithful), " eruptions to ", out)
+n_rows <- nrow(datasets::faithful)
+readr::write_csv(datasets::faithful, out)
+message("wrote ", n_rows, " eruptions to ", out)

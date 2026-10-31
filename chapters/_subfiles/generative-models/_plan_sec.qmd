@@ -1,6 +1,6 @@
 The [language models chapter](language-models.qmd) drew new text one character at a time from a model of the next character.
 This lecture draws new images and new data points,
-with [generative models](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-generative-model) built from neural networks:
+with [generative models](https://morrison-lab.github.io/lds/chapters/learning-problems.html#def-generative-model) made of neural networks:
 
 1.  an [autoencoder](https://morrison-lab.github.io/lds/chapters/neural-nets.html#def-autoencoder), and why it does not say how to make a new image;
 2.  a variant whose codes follow a known distribution, so that a new image is a decoded draw from it;

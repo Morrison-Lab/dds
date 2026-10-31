@@ -33,7 +33,8 @@ with torch.no_grad():
 gan_long_share = (gan_points[:, 0] > 3).float().mean().item()
 gan_long_sd = long_wait_sd(gan_points)
 print(gan_long_share, gan_long_sd, real_long_sd)
-# The prose below says the generator's waits spread less than the real ones.
+# Stop the render if the generator's waits spread as much as the real ones,
+# since the prose says they spread less.
 assert gan_long_sd < real_long_sd
 ```
 
@@ -55,13 +56,19 @@ The real eruptions and 1,000 made by the [GAN](#def-gan)'s generator.
 Both networks are [MLPs](feedforward-networks.qmd#def-feedforward-network) with two [hidden layers](feedforward-networks.qmd#def-hidden-layer) of 64 [units](feedforward-networks.qmd#def-unit),
 trained for 3,000 steps on the `standardized` eruptions.
 The discriminator returns a [logit](feedforward-networks.qmd#def-logits),
-so `binary_cross_entropy_with_logits` with label 1 for the real points and 0 for the made-up ones is $-V(D, G)$ for a minibatch.
-The generator's loss is $-\logf{D(G(\vz))}$.
+so `binary_cross_entropy_with_logits`,
+with label 1 for the real points and 0 for the made-up ones,
+is $-V(D, G)$ for a minibatch.
+The generator's loss is $-\logf{D(G(\vz))}$,
+rather than $V(D, G)$.
 Of the made-up eruptions,
 `r sprintf("%.0f%%", 100 * py$gan_long_share)` last longer than 3 minutes,
 against `r sprintf("%.0f%%", 100 * py$long_share)` of the real ones.
-But the made-up points lie along one thin curve,
-so the generator gives each eruption length nearly one wait.
+But the made-up points lie along one thin curve.
+Above about 2.5 minutes,
+the generator gives each eruption length nearly one wait;
+near 2 minutes,
+it gives nearly one length for every wait.
 Among the eruptions longer than 3 minutes,
 the waits have standard deviation `r sprintf("%.1f", py$gan_long_sd)` minutes,
 against `r sprintf("%.1f", py$real_long_sd)` for the real ones.

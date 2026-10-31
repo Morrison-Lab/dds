@@ -1,9 +1,11 @@
 ::: {#sol-ae-codes}
 
+No.
+
 ::: {#fig-ae-codes}
 
 ```{python}
-#| fig-alt: "A scatter plot of 1,200 points in the plane, coloured by digit from 0 to 9. Points of the same digit cluster together, the clusters have different sizes and shapes, and there are empty gaps between them."
+#| fig-alt: "A scatter plot of 1,200 points in the plane, coloured by digit from 0 to 9. Points of the same digit cluster together. The clusters of 0, 2 and 6 stand apart, while those of 3, 5, 7, 8 and 9 overlap near the middle."
 fig, ax = plt.subplots(figsize=(5, 4))
 points = ax.scatter(ae_codes[:, 0], ae_codes[:, 1], c=y_train, cmap="tab10", s=6);
 fig.colorbar(points, ax=ax, label="digit");
@@ -27,7 +29,8 @@ print(ae_code_mean, ae_code_sd)
 The codes have means `r sprintf("%.2f", py$ae_code_mean[[1]])` and `r sprintf("%.2f", py$ae_code_mean[[2]])`,
 and standard deviations `r sprintf("%.2f", py$ae_code_sd[[1]])` and `r sprintf("%.2f", py$ae_code_sd[[2]])`.
 Images of the same digit get nearby codes,
-with gaps between the clusters.
+and some digits, such as 0, 2 and 6, stand apart,
+while others, such as 3, 5, 7, 8 and 9, overlap.
 Nothing in `ae_loss()` says where the codes should lie,
 so these numbers come out of training,
 and a different seed would move them.

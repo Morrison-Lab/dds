@@ -3,7 +3,7 @@
 ::: {#fig-vae-samples}
 
 ```{python}
-#| fig-alt: "Four rows of eight small grayscale images made by the variational autoencoder from random codes. Most are blurred shapes of handwritten digits such as 0, 1, 2, 4 and 9; a few are smudges between two digits."
+#| fig-alt: "Four rows of eight small grayscale images made by the variational autoencoder from random codes. About half are recognisable blurred digits such as 0, 2, 4, 6 and 7; the rest are smudges between digits such as 1, 8 and 9."
 with torch.no_grad():
     new_digits = vae.decoder(torch.randn(32, 2, generator=torch.Generator().manual_seed(4)))
 show_digits(new_digits)

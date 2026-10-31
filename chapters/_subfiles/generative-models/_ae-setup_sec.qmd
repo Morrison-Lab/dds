@@ -26,4 +26,5 @@ print(autoencoder)
 
 `Autoencoder` is an [autoencoder](https://morrison-lab.github.io/lds/chapters/neural-nets.html#def-autoencoder) whose bottleneck has 2 [units](feedforward-networks.qmd#def-unit),
 so its encoder turns each image into a code of 2 numbers.
+Other sources call the code a latent representation or latent variable.
 `ae_loss()` treats each pixel value as the probability that the pixel is dark.

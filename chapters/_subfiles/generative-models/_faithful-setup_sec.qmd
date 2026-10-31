@@ -40,8 +40,9 @@ The length of each of the `r nrow(py$faithful)` eruptions and the wait until the
 
 The rest of the lecture uses smaller data:
 a local copy, [`data/faithful.csv`](data/faithful.csv),
-of the `r nrow(py$faithful)` eruptions of the Old Faithful geyser in R's `faithful` data set [@r_faithful],
-from @azzalini1990look.
+of the `r nrow(py$faithful)` eruptions of the Old Faithful geyser in R's `faithful` data set [@r_faithful].
+R's documentation gives its source as @hardle1991smoothing;
+@azzalini1990look analyse a more complete version.
 `tools/get-faithful.R` writes the copy from R, unchanged.
 Each row gives an eruption's length and the wait until the next one, in minutes.
 The eruptions fall in two clusters,

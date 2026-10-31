@@ -1,0 +1,10 @@
+::: {#rem-gan-loss}
+
+#### The generator's loss in practice
+
+@exm-gan follows @goodfellow2014generative [section 3], who train $G$ to maximize $\logf{D(G(\vecf{Z}))}$
+instead of minimizing $V(D, G)$.
+This gives larger [gradients](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) early in training,
+when $D$ rejects the made-up points easily.
+
+:::

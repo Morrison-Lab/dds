@@ -6,7 +6,8 @@ $$
 \begin{aligned}
 \vx_2
 &= \sqrt{1 - \beta_2} \paren{\sqrt{1 - \beta_1} \, \vx_0 + \sqrt{\beta_1} \, \vnoise_1} + \sqrt{\beta_2} \, \vnoise_2 && \text{(substitute } \vx_1 \text{)} \\
-&= \sqrt{(1 - \beta_1)(1 - \beta_2)} \, \vx_0 + \sqrt{(1 - \beta_2) \beta_1} \, \vnoise_1 + \sqrt{\beta_2} \, \vnoise_2. && \text{(expand)}
+&= \sqrt{1 - \beta_2} \sqrt{1 - \beta_1} \, \vx_0 + \sqrt{1 - \beta_2} \sqrt{\beta_1} \, \vnoise_1 + \sqrt{\beta_2} \, \vnoise_2 && \text{(distribute)} \\
+&= \sqrt{(1 - \beta_1)(1 - \beta_2)} \, \vx_0 + \sqrt{(1 - \beta_2) \beta_1} \, \vnoise_1 + \sqrt{\beta_2} \, \vnoise_2. && \text{(} \sqrt{a} \sqrt{b} = \sqrt{a b} \text{)}
 \end{aligned}
 $$
 

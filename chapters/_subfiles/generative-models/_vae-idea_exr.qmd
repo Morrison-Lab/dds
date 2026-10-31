@@ -1,0 +1,9 @@
+::: {#exr-vae-idea}
+
+#### Codes we can draw
+
+The codes of @sol-ae-codes follow no distribution we know.
+What could the encoder output, and the loss add,
+so that the codes of the training images follow $\dNf{\vzero, \idmat}$?
+
+:::

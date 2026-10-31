@@ -1,0 +1,13 @@
+::: {#sol-vae-idea}
+
+Let the encoder output a normal distribution for each image,
+with a mean and a standard deviation for each coordinate of the code,
+and train the decoder on draws from it.
+Then add to the loss the [KL divergence](https://morrison-lab.github.io/pds/expectation.html#def-kl-divergence) of each of those distributions from $\dNf{0, 1}$.
+The penalty pulls every image's distribution toward the standard normal,
+so a draw from $\dNf{\vzero, \idmat}$ lands where the decoder has seen codes.
+This needs two results:
+the KL divergence between two normal distributions,
+and a way to differentiate through a random draw.
+
+:::

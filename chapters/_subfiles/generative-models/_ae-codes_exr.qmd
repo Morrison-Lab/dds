@@ -2,7 +2,6 @@
 
 #### Where the codes lie
 
-Plot the codes of the training images, coloured by digit.
-What are their mean and standard deviation in each coordinate?
+Do the trained [autoencoder](https://morrison-lab.github.io/lds/chapters/neural-nets.html#def-autoencoder)'s codes of the training images follow a distribution we could draw new codes from?
 
 :::

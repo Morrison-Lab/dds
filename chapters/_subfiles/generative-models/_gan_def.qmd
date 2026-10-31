@@ -12,13 +12,10 @@ They are trained in turn,
 $D$ to maximize and $G$ to minimize
 
 $$
-V(D, G) = \E{\logf{D(X)}} + \E{\logf{1 - D(G(\vecf{Z}))}},
+V(D, G) = \E{\logf{D(\vecf{X})}} + \E{\logf{1 - D(G(\vecf{Z}))}},
 $$
 
-where $X$ is a real data point and $\vecf{Z}$ is the noise
+where $\vecf{X}$ is a real data point and $\vecf{Z}$ is the noise
 [@goodfellow2014generative, section 3].
-@goodfellow2014generative [section 3] train $G$ to maximize $\logf{D(G(\vecf{Z}))}$ instead,
-which gives larger [gradients](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) early in training,
-when $D$ rejects the made-up points easily.
 
 :::
