@@ -49,7 +49,7 @@ The average weight that each query puts on the character just before it is
 `r py$previous_text`
 for heads 1 to 4.
 Of the four heads, `r py$n_previous_heads` put more than 0.9 of their weight there,
-so they pass each position information about the character before it.
+so those heads pass each position information about the character before it.
 No one taught the network to do that;
 training on the next character found it.
 
