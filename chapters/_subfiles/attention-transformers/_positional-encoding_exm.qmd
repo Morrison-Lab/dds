@@ -16,7 +16,7 @@ pos_gap = (pos_reversed - pos_out.flip(1)).abs().max().item()
 print(pos_gap)
 ```
 
-With a learned [positional encoding](#def-positional-encoding) added to each character's vector,
+With a learnable (here untrained) [positional encoding](#def-positional-encoding) added to each character's vector,
 the outputs for the reversed line are no longer the old outputs reversed:
 the largest difference is `r sprintf("%.2f", py$pos_gap)`,
 against `r sprintf("%.1g", py$reverse_gap)` without it.

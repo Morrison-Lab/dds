@@ -18,7 +18,8 @@ print(self_out.shape, self_weights.shape)
 
 The first line of the text begins with the `r py$n_line` characters `"First Citizen"`.
 An [embedding layer](rnns.qmd#def-embedding) turns each into a vector of 8 numbers,
-and passing the same [tensor](pytorch-basics.qmd#def-tensor) as queries, keys and values makes `nn.MultiheadAttention` compute [self-attention](#def-self-attention).
+and passing the same [tensor](pytorch-basics.qmd#def-tensor) as queries, keys and values makes `nn.MultiheadAttention` compute [self-attention](#def-self-attention),
+followed by a linear layer.
 The weights form a $`r py$n_line` \times `r py$n_line`$ matrix:
 one row of weights over all `r py$n_line` characters for each character.
 

@@ -1,8 +1,21 @@
 ::: {#sol-dot-variance}
 
-Each term $q_j k_j$ has mean $\E{q_j} \E{k_j} = 0$,
-and variance $\E{q_j^2 k_j^2} = \E{q_j^2} \E{k_j^2} = 1$.
-The $d_k$ terms are independent, so their variances add:
+Since $q_j$ and $k_j$ are independent,
+each term $q_j k_j$ has mean $\E{q_j k_j} = \E{q_j} \E{k_j} = 0$.
+Its variance is
+
+$$
+\begin{aligned}
+\Var{q_j k_j}
+&= \E{q_j^2 k_j^2} - \paren{\E{q_j k_j}}^2 \\
+&= \E{q_j^2} \E{k_j^2} - 0 && \text{(independence)} \\
+&= 1 \cdot 1 && \text{(mean 0 and variance 1)} \\
+&= 1.
+\end{aligned}
+$$
+
+The $d_k$ terms are independent,
+so their variances add:
 
 $$
 \begin{aligned}
@@ -12,6 +25,8 @@ $$
 &= d_k. && \text{(each variance is 1)}
 \end{aligned}
 $$
+
+@vaswani2017attention [section 3.2.1, footnote 4] give the same argument.
 
 ```{python}
 #| code-fold: show
@@ -31,7 +46,8 @@ the sample variances for $d_k = 4$, 64 and 1024 are
 `r sprintf("%.1f", py$dot_vars[[1]])`,
 `r sprintf("%.1f", py$dot_vars[[2]])` and
 `r sprintf("%.0f", py$dot_vars[[3]])`.
-Dividing by $\sqrt{d_k}$ brings the variance back to 1,
+Dividing a quantity by a constant $c$ divides its variance by $c^2$,
+so dividing the [dot product](https://morrison-lab.github.io/mds/linear-algebra-vectors.html#def-dot-product) by $\sqrt{d_k}$ gives variance $d_k / d_k = 1$,
 whatever $d_k$ is.
 
 :::

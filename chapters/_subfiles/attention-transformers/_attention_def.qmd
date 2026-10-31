@@ -19,7 +19,8 @@ with the [softmax](https://morrison-lab.github.io/lds/chapters/multiclass-logist
 Row $i$ of the softmax holds weights $\attnweight_{i1}, \dots, \attnweight_{in}$,
 which are positive and sum to 1,
 so row $i$ of the output is a weighted average of the rows of $\matr{V}$.
-@bahdanau2015neural scored each key with a small network instead of a [dot product](https://morrison-lab.github.io/mds/linear-algebra-vectors.html#def-dot-product),
-and some sources call that form additive attention.
+@bahdanau2015neural scored each key with a small network
+instead of a [dot product](https://morrison-lab.github.io/mds/linear-algebra-vectors.html#def-dot-product).
+@vaswani2017attention [section 3.2.1] call that form additive attention.
 
 :::

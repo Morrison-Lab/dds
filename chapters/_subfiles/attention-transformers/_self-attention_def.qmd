@@ -16,7 +16,9 @@ $$
 $$
 
 and returns $\operatorname{Attention}\paren{\matr{Q}, \matr{K}, \matr{V}}$,
-where the matrices $\matr{W}_Q$, $\matr{W}_K$ and $\matr{W}_V$ are [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter) learned in training
+where the matrices $\matr{W}_Q$, $\matr{W}_K$ and $\matr{W}_V$,
+of size $d \times d_k$, $d \times d_k$ and $d \times d_v$,
+are [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter) learned in training
 [@vaswani2017attention, section 3.2.3].
 Each position's output is a weighted average over every position of the sequence,
 itself included.

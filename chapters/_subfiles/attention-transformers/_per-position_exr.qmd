@@ -2,7 +2,7 @@
 
 #### Mixing, then transforming
 
-[Self-attention](#def-self-attention) outputs weighted averages of linear functions of its inputs.
+[Self-attention](#def-self-attention) applies no nonlinear function to each position's vector on its own.
 Which layer from the [feedforward networks chapter](feedforward-networks.qmd) could then apply a nonlinear function to each position's vector?
 
 :::

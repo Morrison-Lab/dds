@@ -15,5 +15,9 @@ The Transformer.
 Its validation [perplexity](language-models.qmd#def-perplexity) is `r sprintf("%.2f", py$transformer_ppl)`,
 against `r sprintf("%.2f", py$gru_ppl)` for the [GRU](rnns.qmd#def-gru),
 after the same number of steps on the same windows.
+The Transformer also has about
+`r sprintf("%.1f", py$n_params(py$transformer) / py$n_params(py$gru_lm))`
+times as many [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter),
+so this comparison does not separate the architecture from the size.
 
 :::
