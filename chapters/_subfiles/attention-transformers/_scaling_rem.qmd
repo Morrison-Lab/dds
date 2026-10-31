@@ -1,0 +1,26 @@
+::: {#rem-scaling}
+
+#### What the scaling prevents
+
+```{python}
+#| code-fold: show
+d_k, n_keys = 512, 64
+q_draws = torch.randn(1_000, 1, d_k, generator=generator)
+k_draws = torch.randn(1_000, n_keys, d_k, generator=generator)
+raw_scores = (q_draws @ k_draws.transpose(1, 2)).squeeze(1)
+top_raw = torch.softmax(raw_scores, dim=1).max(dim=1).values.mean().item()
+top_scaled = torch.softmax(raw_scores / math.sqrt(d_k), dim=1).max(dim=1).values.mean().item()
+print(top_raw, top_scaled)
+```
+
+With $d_k = `r py$d_k`$ and `r py$n_keys` keys drawn as in @exr-dot-variance,
+the unscaled [softmax](https://morrison-lab.github.io/lds/chapters/multiclass-logistic-regression.html#def-softmax) gives its largest weight an average of `r sprintf("%.2f", py$top_raw)`,
+so each query copies one value and ignores the rest.
+After dividing by $\sqrt{d_k}$,
+the largest weight averages `r sprintf("%.2f", py$top_scaled)`.
+@vaswani2017attention [section 3.2.1] give the reason for scaling:
+where one weight is near 1,
+the softmax's [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) is near 0,
+and training slows.
+
+:::

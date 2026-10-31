@@ -1,0 +1,7 @@
+::: {#sol-where-am-i}
+
+Add to each character's vector a second vector that depends only on its position.
+The letter `i` at positions 2 and 9 of `"First Citizen"` then enters the layer as two different vectors,
+and reordering the characters changes the inputs as well as their order.
+
+:::

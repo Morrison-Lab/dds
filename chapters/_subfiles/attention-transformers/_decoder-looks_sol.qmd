@@ -1,0 +1,10 @@
+::: {#sol-decoder-looks}
+
+All of them,
+weighted by how relevant each French word is to the English word being written.
+Earlier translation networks passed only the last French [hidden state](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-hidden-state) to the second network,
+so one vector had to hold the whole sentence.
+@bahdanau2015neural [section 3.1] let the second network compute weights over every French hidden state at each step instead,
+and translation of long sentences improved [@bahdanau2015neural, section 5.1].
+
+:::

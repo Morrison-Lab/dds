@@ -1,0 +1,17 @@
+::: {#exr-weights}
+
+#### A weighted average chosen by the input
+
+Take the query $\vq = (1, 0)$ and three keys with one value each:
+
+| Key | Value |
+|-----|------:|
+| $(2, 0)$ | 10 |
+| $(0, 2)$ | 20 |
+| $(1, 1)$ | 30 |
+
+Score each key by its [dot product](https://morrison-lab.github.io/mds/linear-algebra-vectors.html#def-dot-product) with $\vq$,
+turn the three scores into weights with the [softmax](https://morrison-lab.github.io/lds/chapters/multiclass-logistic-regression.html#def-softmax),
+and give the weighted average of the values.
+
+:::

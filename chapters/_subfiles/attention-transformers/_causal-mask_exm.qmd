@@ -1,0 +1,22 @@
+::: {#exm-causal-mask}
+
+#### Masked weights for five characters
+
+```{python}
+#| code-fold: show
+mask = nn.Transformer.generate_square_subsequent_mask(5)
+with torch.no_grad():
+    x5 = embed(line[:, :5])
+    _, masked_weights = attend(x5, x5, x5, attn_mask=mask)
+print(mask)
+print(masked_weights[0].numpy().round(2))
+```
+
+`nn.Transformer.generate_square_subsequent_mask(5)` builds the [causal mask](#def-causal-mask) for 5 positions,
+with $-\infty$ above the diagonal and 0 elsewhere,
+and `attn_mask` adds it to the scores.
+In the weights for `"First"`,
+row 1 puts all its weight on `"F"`,
+and every entry above the diagonal is 0.
+
+:::

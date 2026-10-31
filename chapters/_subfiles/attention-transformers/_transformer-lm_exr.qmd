@@ -1,0 +1,9 @@
+::: {#exr-transformer-lm}
+
+#### A Transformer against a GRU
+
+Train `transformer` and `gru_lm` with `train_lm()` for 1,500 steps each,
+at [learning rate](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-learning-rate) 0.005.
+Which has the lower [perplexity](language-models.qmd#def-perplexity) on the validation text?
+
+:::

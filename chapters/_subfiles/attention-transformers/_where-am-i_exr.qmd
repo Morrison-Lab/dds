@@ -1,0 +1,8 @@
+::: {#exr-where-am-i}
+
+#### Telling positions apart
+
+How could we change the input vectors of @exm-self-attention
+so that the same character at two different positions gets two different vectors?
+
+:::

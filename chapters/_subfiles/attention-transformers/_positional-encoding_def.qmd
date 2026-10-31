@@ -1,0 +1,12 @@
+::: {#def-positional-encoding}
+
+#### Positional encoding
+
+A **positional encoding** is a vector $\vp_t \in \reals^d$ added to the [embedding](rnns.qmd#def-embedding) of the symbol at position $t$,
+before the first [self-attention](#def-self-attention) layer.
+@vaswani2017attention [section 3.5] fix $\vp_t$ as sines and cosines of $t$ at different frequencies;
+@radford2018improving [section 4.1] learn $\vp_t$ instead,
+as row $t$ of a second embedding matrix.
+These notes learn them.
+
+:::

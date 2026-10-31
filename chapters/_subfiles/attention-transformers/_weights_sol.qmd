@@ -1,0 +1,27 @@
+::: {#sol-weights}
+
+```{python}
+#| code-fold: show
+q = torch.tensor([1.0, 0.0])
+keys = torch.tensor([[2.0, 0.0], [0.0, 2.0], [1.0, 1.0]])
+values = torch.tensor([10.0, 20.0, 30.0])
+scores = keys @ q
+weights = torch.softmax(scores, dim=0)
+average = weights @ values
+weight_list = weights.tolist()
+print(scores, weights, average)
+```
+
+The scores are 2, 0 and 1.
+The [softmax](https://morrison-lab.github.io/lds/chapters/multiclass-logistic-regression.html#def-softmax) turns them into the weights
+`r sprintf("%.3f", py$weight_list[[1]])`,
+`r sprintf("%.3f", py$weight_list[[2]])` and
+`r sprintf("%.3f", py$weight_list[[3]])`,
+which sum to 1.
+The weighted average of the values is `r sprintf("%.2f", py$average$item())`.
+The first key points the same way as the query,
+so its value gets the largest weight,
+and the second key is at right angles to the query,
+so its value gets the smallest.
+
+:::

@@ -1,0 +1,18 @@
+::: {#sol-reverse}
+
+```{python}
+#| code-fold: show
+with torch.no_grad():
+    x_reversed = embed(line.flip(1))
+    reversed_out, _ = attend(x_reversed, x_reversed, x_reversed)
+reverse_gap = (reversed_out - self_out.flip(1)).abs().max().item()
+print(reverse_gap)
+```
+
+The outputs come out in reverse order and are otherwise unchanged:
+the largest difference between the new outputs and the old ones reversed is `r sprintf("%.1g", py$reverse_gap)`,
+a rounding error.
+Each character's output is a weighted average whose weights depend on the vectors and not on where they sit,
+so [self-attention](#def-self-attention) on its own cannot tell `"First Citizen"` from `"nezitiC tsriF"`.
+
+:::

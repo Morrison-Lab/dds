@@ -1,0 +1,9 @@
+::: {#exr-decoder-looks}
+
+#### Where should a translator look?
+
+A recurrent network reads a French sentence and keeps a [hidden state](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-hidden-state) for each French word.
+A second recurrent network then writes the English sentence one word at a time.
+Which of the French hidden states should the second network use when it writes each English word?
+
+:::

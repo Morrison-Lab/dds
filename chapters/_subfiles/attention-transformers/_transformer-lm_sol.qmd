@@ -1,0 +1,19 @@
+::: {#sol-transformer-lm}
+
+```{python}
+#| code-fold: show
+train_lm(transformer, 1500, lr=0.005)
+train_lm(gru_lm, 1500, lr=0.005)
+transformer_ppl = val_perplexity(transformer)
+gru_ppl = val_perplexity(gru_lm)
+print(transformer_ppl, gru_ppl)
+# The prose below says the Transformer wins; stop the render if not.
+assert transformer_ppl < gru_ppl
+```
+
+The Transformer.
+Its validation [perplexity](language-models.qmd#def-perplexity) is `r sprintf("%.2f", py$transformer_ppl)`,
+against `r sprintf("%.2f", py$gru_ppl)` for the [GRU](rnns.qmd#def-gru),
+after the same number of steps on the same windows.
+
+:::

@@ -1,0 +1,56 @@
+::: {#sol-attention-map}
+
+```{python}
+#| code-fold: show
+first = transformer.blocks[0]
+window = val_ids[:32].unsqueeze(0)
+_ = transformer.eval()
+with torch.no_grad():
+    h = transformer.embed(window) + transformer.position(torch.arange(32))
+    normed = first.norm1(h)
+    _, head_weights = first.self_attn(
+        normed, normed, normed,
+        attn_mask=nn.Transformer.generate_square_subsequent_mask(32),
+        need_weights=True, average_attn_weights=False,
+    )
+head_weights = head_weights[0]
+previous_share = [head_weights[i].diagonal(-1).mean().item() for i in range(4)]
+previous_text = ", ".join(f"{share:.2f}" for share in previous_share)
+n_previous_heads = sum(share > 0.9 for share in previous_share)
+print(previous_share)
+# The prose below says at least one head looks at the previous character.
+assert n_previous_heads >= 1
+```
+
+::: {#fig-attention-map}
+
+```{python}
+#| fig-alt: "Four heat maps, one per attention head, each 32 by 32, with the query position down the side and the key position across. Every map is dark above the diagonal. The heads differ in where along and below the diagonal their weight sits."
+labels = [repr(ch)[1:-1] for ch in text[n_train:n_train + 32]]
+fig, axes = plt.subplots(1, 4, figsize=(12, 3.4))
+for i, ax in enumerate(axes):
+    ax.imshow(head_weights[i], cmap="viridis", vmin=0, vmax=1);
+    ax.set_title(f"head {i + 1}");
+    ax.set_xticks(range(32), labels, fontsize=5);
+    ax.set_yticks(range(32), labels, fontsize=5);
+fig.tight_layout();
+plt.show()
+```
+
+The weights of the four heads of the first block over the first 32 validation characters.
+Row $i$ shows the weights that the query at character $i$ puts on each character $j$.
+
+:::
+
+Every map is 0 above the diagonal,
+from the [causal mask](#def-causal-mask).
+The heads differ.
+The average weight that each query puts on the character just before it is
+`r py$previous_text`
+for heads 1 to 4.
+`r py$n_previous_heads` of the four heads put more than 0.9 of their weight there,
+so they pass each position information about the character before it.
+No one taught the network to do that;
+training on the next character found it.
+
+:::

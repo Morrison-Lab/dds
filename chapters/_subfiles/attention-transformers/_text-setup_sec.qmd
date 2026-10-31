@@ -1,0 +1,26 @@
+```{python}
+#| code-fold: show
+import math
+
+import matplotlib.pyplot as plt
+import torch
+import torch.nn.functional as F
+from torch import nn
+
+text = open("data/shakespeare.txt").read()
+chars = sorted(set(text))
+n_chars = len(chars)
+index = {ch: i for i, ch in enumerate(chars)}
+ids = torch.tensor([index[ch] for ch in text])
+n_train = 90_000
+train_ids, val_ids = ids[:n_train], ids[n_train:]
+print(n_chars, len(text))
+print(text[:60])
+```
+
+The exercises use the text of the [language models chapter](language-models.qmd),
+a local copy, [`data/shakespeare.txt`](data/shakespeare.txt),
+of the first `r format(nchar(py$text), big.mark = ",")` characters of the [tiny Shakespeare text](https://raw.githubusercontent.com/karpathy/char-rnn/master/data/tinyshakespeare/input.txt) [@karpathy2015charrnn].
+`ids` numbers each of its `r py$n_chars` distinct characters by its place in the sorted list `chars`.
+The first `r format(py$n_train, big.mark = ",")` characters are for training,
+and the rest for validation.

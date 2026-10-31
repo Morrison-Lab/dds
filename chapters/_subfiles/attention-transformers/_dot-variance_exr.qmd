@@ -1,0 +1,8 @@
+::: {#exr-dot-variance}
+
+#### Why divide by $\sqrt{d_k}$?
+
+Draw a query $\vq$ and a key $\vecf{k}$ in $\reals^{d_k}$ with independent standard normal entries.
+How does the variance of $\dprod{\vq}{\vecf{k}}$ depend on $d_k$?
+
+:::

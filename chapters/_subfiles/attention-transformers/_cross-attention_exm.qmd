@@ -1,0 +1,23 @@
+::: {#exm-cross-attention}
+
+#### Three queries and five keys
+
+```{python}
+#| code-fold: show
+_ = torch.manual_seed(0)
+cross = nn.MultiheadAttention(embed_dim=8, num_heads=1, batch_first=True)
+writer = torch.randn(1, 3, 8)
+reader = torch.randn(1, 5, 8)
+cross_out, cross_weights = cross(writer, reader, reader)
+print(cross_out.shape, cross_weights.shape)
+print(cross_weights.sum(dim=2))
+```
+
+`nn.MultiheadAttention` [@pytorch_multiheadattention] takes the queries' sequence first,
+then the keys' and the values'.
+Here the queries come from a sequence of 3 vectors
+and the keys and values from a different sequence of 5,
+so the [cross-attention](#def-cross-attention) output has one row for each of the 3 queries,
+and the weights form a $3 \times 5$ matrix whose rows each sum to 1.
+
+:::

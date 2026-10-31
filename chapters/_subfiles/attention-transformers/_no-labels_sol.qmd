@@ -1,0 +1,7 @@
+::: {#sol-no-labels}
+
+From the text itself.
+Each window's targets are the same window moved one character on,
+so any text at all gives as many targets as it has characters.
+
+:::

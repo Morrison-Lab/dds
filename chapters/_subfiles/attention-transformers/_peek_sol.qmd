@@ -1,0 +1,10 @@
+::: {#sol-peek}
+
+Nothing stops it.
+The character it must predict at position $t$ is the input at position $t + 1$,
+so the model can learn to copy it.
+That model is useless for generating text,
+where the next character does not exist yet.
+The weights on every key after the query have to be 0.
+
+:::

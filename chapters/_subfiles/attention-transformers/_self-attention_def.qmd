@@ -1,0 +1,24 @@
+::: {#def-self-attention}
+
+#### Self-attention
+
+**Self-attention** is [scaled dot-product attention](#def-attention) whose queries, keys and values all come from the same sequence.
+For a sequence of $n$ vectors in $\reals^d$,
+the rows of an $n \times d$ matrix $\matr{X}$,
+it computes
+
+$$
+\matr{Q} = \matr{X} \matr{W}_Q,
+\qquad
+\matr{K} = \matr{X} \matr{W}_K,
+\qquad
+\matr{V} = \matr{X} \matr{W}_V,
+$$
+
+and returns $\operatorname{Attention}\paren{\matr{Q}, \matr{K}, \matr{V}}$,
+where the matrices $\matr{W}_Q$, $\matr{W}_K$ and $\matr{W}_V$ are [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter) learned in training
+[@vaswani2017attention, section 3.2.3].
+Each position's output is a weighted average over every position of the sequence,
+itself included.
+
+:::

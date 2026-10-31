@@ -1,0 +1,20 @@
+::: {#exm-pretraining}
+
+#### Hiding characters
+
+```{python}
+#| code-fold: show
+generator = torch.Generator().manual_seed(2)
+first_line = text[:text.index("\n", 20)]
+hidden = torch.rand(len(first_line), generator=generator) < 0.15
+masked_line = "".join("_" if h else ch for ch, h in zip(first_line, hidden.tolist()))
+print(first_line)
+print(masked_line)
+```
+
+Hiding each character with probability 0.15 turns the opening line of the text into the input `r paste0('"', py$masked_line, '"')`.
+A network [pretrained](#def-pretraining) in the second way learns to fill each gap from the characters on both sides of it.
+The `train_lm()` of this lecture is [pretraining](#def-pretraining) in the first way,
+on `r format(py$n_train, big.mark = ",")` characters rather than the billions of tokens of real [language models](language-models.qmd#def-language-model).
+
+:::

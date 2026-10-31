@@ -1,0 +1,94 @@
+```{python}
+#| code-fold: show
+seq_len = 64
+batch_size = 32
+
+
+class CharTransformer(nn.Module):
+    # Embeds each character and its position, applies `n_blocks` causal
+    # Transformer blocks, and returns logits over the next character.
+
+    def __init__(self, d_model=64, n_heads=4, n_blocks=2):
+        super().__init__()
+        self.embed = nn.Embedding(n_chars, d_model)
+        self.position = nn.Embedding(seq_len, d_model)
+        self.blocks = nn.ModuleList([
+            nn.TransformerEncoderLayer(
+                d_model, n_heads, dim_feedforward=4 * d_model,
+                dropout=0.0, batch_first=True, norm_first=True,
+            )
+            for _ in range(n_blocks)
+        ])
+        self.norm = nn.LayerNorm(d_model)
+        self.out = nn.Linear(d_model, n_chars)
+
+    def forward(self, x):
+        n = x.shape[1]
+        h = self.embed(x) + self.position(torch.arange(n))
+        mask = nn.Transformer.generate_square_subsequent_mask(n)
+        for block in self.blocks:
+            h = block(h, src_mask=mask, is_causal=True)
+        return self.out(self.norm(h))
+
+
+class CharGRU(nn.Module):
+    # The GRU language model of the language models chapter.
+
+    def __init__(self, embed_size=16, hidden_size=128):
+        super().__init__()
+        self.embed = nn.Embedding(n_chars, embed_size)
+        self.recurrent = nn.GRU(embed_size, hidden_size, batch_first=True)
+        self.out = nn.Linear(hidden_size, n_chars)
+
+    def forward(self, x):
+        states, _ = self.recurrent(self.embed(x))
+        return self.out(states)
+
+
+def train_lm(net, n_steps, lr, seed=0):
+    # Adam on random windows of the training text, with gradient clipping to 1.
+    # Each window's targets are the same window moved one character on.
+    optimizer = torch.optim.Adam(net.parameters(), lr=lr)
+    generator = torch.Generator().manual_seed(seed)
+    net.train()
+    for step in range(n_steps):
+        starts = torch.randint(0, n_train - seq_len - 1, (batch_size,), generator=generator)
+        x = torch.stack([train_ids[s:s + seq_len] for s in starts])
+        y = torch.stack([train_ids[s + 1:s + seq_len + 1] for s in starts])
+        loss = F.cross_entropy(net(x).reshape(-1, n_chars), y.reshape(-1))
+        optimizer.zero_grad()
+        loss.backward()
+        _ = nn.utils.clip_grad_norm_(net.parameters(), 1)
+        optimizer.step()
+
+
+def val_perplexity(net):
+    # Perplexity on the validation text, read in windows of `seq_len` characters.
+    n = (len(val_ids) - 1) // seq_len * seq_len
+    x = val_ids[:n].reshape(-1, seq_len)
+    y = val_ids[1:n + 1].reshape(-1, seq_len)
+    net.eval()
+    with torch.no_grad():
+        loss = F.cross_entropy(net(x).reshape(-1, n_chars), y.reshape(-1))
+    return math.exp(loss.item())
+
+
+_ = torch.manual_seed(1)
+transformer = CharTransformer()
+_ = torch.manual_seed(1)
+gru_lm = CharGRU()
+print(n_params(transformer), n_params(gru_lm))
+```
+
+`CharTransformer` adds a learned [positional encoding](#def-positional-encoding) to each character's [embedding](rnns.qmd#def-embedding),
+applies two [Transformer blocks](#def-transformer-block) with 4 heads and a [causal mask](#def-causal-mask),
+and maps each position's vector to [logits](feedforward-networks.qmd#def-logits) over the next character.
+`CharGRU` is the [GRU](rnns.qmd#def-gru) model of the [language models chapter](language-models.qmd).
+The two have
+`r format(py$n_params(py$transformer), big.mark = ",")` and
+`r format(py$n_params(py$gru_lm), big.mark = ",")` [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter).
+`train_lm()` runs [Adam](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-adam) on batches of `r py$batch_size` windows of `r py$seq_len` characters,
+with [gradient clipping](https://morrison-lab.github.io/lds/chapters/backpropagation.html#def-gradient-clipping) to 1.
+`val_perplexity()` reads the validation text in windows of `r py$seq_len` characters,
+the longest the positional encoding covers,
+and returns the [perplexity](language-models.qmd#def-perplexity).

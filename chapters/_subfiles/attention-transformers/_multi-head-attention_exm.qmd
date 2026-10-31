@@ -1,0 +1,21 @@
+::: {#exm-multi-head-attention}
+
+#### Counting the parameters
+
+```{python}
+#| code-fold: show
+def n_params(module):
+    return sum(p.numel() for p in module.parameters())
+
+
+heads4 = nn.MultiheadAttention(embed_dim=64, num_heads=4, batch_first=True)
+print([(name, tuple(p.shape)) for name, p in heads4.named_parameters()])
+print(n_params(heads4))
+```
+
+`nn.MultiheadAttention(64, 4)` is [multi-head attention](#def-multi-head-attention) with $d = 64$ and 4 heads.
+It stores the three projections of all heads in one $192 \times 64$ matrix with 192 biases,
+and $\matr{W}_O$ as a $64 \times 64$ linear layer with 64 biases.
+That is $3 \times 64^2 + 192 + 64^2 + 64 = `r format(py$n_params(py$heads4), big.mark = ",")`$ [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter).
+
+:::

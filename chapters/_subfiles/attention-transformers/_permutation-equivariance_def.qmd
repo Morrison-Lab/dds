@@ -1,0 +1,12 @@
+::: {#def-permutation-equivariance}
+
+#### Permutation equivariance
+
+A function $f$ from sequences of vectors to sequences of vectors of the same length is **permutation equivariant**
+when reordering its input reorders its output the same way:
+$f(\pi(\matr{X})) = \pi(f(\matr{X}))$ for every sequence $\matr{X}$ and every reordering $\pi$ of its positions
+[@zaheer2017deep, section 2].
+[Self-attention](#def-self-attention) is permutation equivariant,
+as @sol-reverse found for one reordering.
+
+:::

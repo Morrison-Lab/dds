@@ -1,0 +1,8 @@
+::: {#exr-reverse}
+
+#### Reading backwards
+
+Feed the `r py$n_line` characters of @exm-self-attention to the same [self-attention](#def-self-attention) layer in reverse order.
+How do its outputs change?
+
+:::
