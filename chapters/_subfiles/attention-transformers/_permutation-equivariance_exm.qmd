@@ -1,0 +1,22 @@
+::: {#exm-permutation-equivariance}
+
+#### A GRU is not permutation equivariant
+
+```{python}
+#| code-fold: show
+_ = torch.manual_seed(0)
+gru = nn.GRU(8, 8, batch_first=True)
+with torch.no_grad():
+    gru_out, _ = gru(x)
+    gru_reversed, _ = gru(x_reversed)
+gru_gap = (gru_reversed - gru_out.flip(1)).abs().max().item()
+print(gru_gap)
+```
+
+A [GRU](rnns.qmd#def-gru) layer given the same `r py$n_line` vectors forwards and backwards does not just reverse its outputs:
+the largest difference between the two is `r sprintf("%.2f", py$gru_gap)`,
+against `r sprintf("%.1g", py$reverse_gap)` for [self-attention](#def-self-attention) in @sol-reverse.
+Each [hidden state](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-hidden-state) depends on the vectors before it,
+so the GRU is not [permutation equivariant](#def-permutation-equivariance).
+
+:::

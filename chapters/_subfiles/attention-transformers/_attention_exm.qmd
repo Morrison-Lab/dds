@@ -1,0 +1,22 @@
+::: {#exm-attention}
+
+#### Attention in PyTorch
+
+```{python}
+#| code-fold: show
+torch_output = F.scaled_dot_product_attention(
+    q.reshape(1, 2), keys, values.reshape(3, 1)
+)
+by_hand = torch.softmax(keys @ q / math.sqrt(2), dim=0) @ values
+print(torch_output, by_hand)
+```
+
+The query and keys of @exr-weights have $d_k = 2$,
+so [scaled dot-product attention](#def-attention) divides the scores by $\sqrt{2}$ before the [softmax](https://morrison-lab.github.io/lds/chapters/multiclass-logistic-regression.html#def-softmax).
+`F.scaled_dot_product_attention` [@pytorch_sdpa] returns `r sprintf("%.2f", py$torch_output$item())`,
+the same as the formula computed by hand.
+The scaled scores are closer together,
+so the average is nearer the plain mean of the values, 20,
+than the unscaled average of @sol-weights, `r sprintf("%.2f", py$average$item())`.
+
+:::

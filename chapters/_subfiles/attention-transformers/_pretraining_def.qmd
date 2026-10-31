@@ -1,0 +1,12 @@
+::: {#def-pretraining}
+
+#### Pretraining
+
+**Pretraining** trains a network on unlabelled data,
+using targets that come from the data itself.
+@radford2018improving [section 3.1] pretrain a Transformer with a [causal mask](#def-causal-mask) to predict each next token.
+@devlin2019bert [section 3.1] pretrain one without a [causal mask](#def-causal-mask) to predict tokens hidden from its input,
+choosing 15% of the positions at random.
+Both then [fine-tune](cnns.qmd#def-fine-tuning) the pretrained network on tasks with labels.
+
+:::

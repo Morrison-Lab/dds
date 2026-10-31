@@ -1,0 +1,11 @@
+::: {#def-cross-attention}
+
+#### Cross-attention (encoder-decoder attention)
+
+**Cross-attention** is [scaled dot-product attention](#def-attention) whose queries are computed from one sequence,
+and whose keys and values are computed from another.
+@vaswani2017attention [section 3.2.3] call it **encoder-decoder attention**,
+since its queries come from the network that writes the output
+and its keys and values from the network that read the input.
+
+:::

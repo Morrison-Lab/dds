@@ -1,0 +1,8 @@
+::: {#exr-attention-map}
+
+#### What the heads look at
+
+Plot the attention weights of each head of the first block of the trained `transformer`,
+for the first 32 characters of the validation text.
+
+:::

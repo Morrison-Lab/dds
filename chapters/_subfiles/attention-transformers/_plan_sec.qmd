@@ -1,0 +1,11 @@
+The [language models chapter](language-models.qmd) predicted each next character with a [GRU](rnns.qmd#def-gru),
+which carries everything it knows about the earlier characters in one [hidden state](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-hidden-state).
+This lecture builds a network that looks back at every earlier character directly:
+
+1.  a weighted average whose weights the network computes from the inputs;
+2.  that average applied within one sequence, and the order information it loses;
+3.  several such averages side by side;
+4.  a block that stacks them with the layers of the earlier chapters;
+5.  a [language model](language-models.qmd#def-language-model) built from those blocks, trained on the same text as the [GRU](rnns.qmd#def-gru).
+
+A [chapter of the DATA 371/471 notes](https://morrison-lab.github.io/lds/chapters/attention.html) builds the same weighted averages from word vectors, without code.

@@ -1,0 +1,9 @@
+::: {#exr-peek}
+
+#### Peeking at the answer
+
+A [language model](language-models.qmd#def-language-model) trained with [teacher forcing](language-models.qmd#def-teacher-forcing) predicts the next character at every position of a window at once.
+Suppose its [self-attention](#def-self-attention) lets position $t$ attend to position $t + 1$.
+What stops the model from reaching a training loss near 0?
+
+:::

@@ -1,0 +1,26 @@
+::: {#def-attention}
+
+#### Scaled dot-product attention
+
+**Scaled dot-product attention** takes $m$ queries,
+the rows of an $m \times d_k$ matrix $\matr{Q}$,
+and $n$ keys and $n$ values,
+the rows of an $n \times d_k$ matrix $\matr{K}$ and an $n \times d_v$ matrix $\matr{V}$.
+It returns the $m \times d_v$ matrix
+
+$$
+\operatorname{Attention}\paren{\matr{Q}, \matr{K}, \matr{V}}
+\eqdef
+\operatorname{softmax}\paren{\frac{\matr{Q} \tp{\matr{K}}}{\sqrt{d_k}}} \matr{V},
+$$
+
+with the [softmax](https://morrison-lab.github.io/lds/chapters/multiclass-logistic-regression.html#def-softmax) taken across each row
+[@vaswani2017attention, section 3.2.1].
+Row $i$ of the softmax holds weights $\attnweight_{i1}, \dots, \attnweight_{in}$,
+which are positive and sum to 1,
+so row $i$ of the output is a weighted average of the rows of $\matr{V}$.
+@bahdanau2015neural scored each key with a small network
+instead of a [dot product](https://morrison-lab.github.io/mds/linear-algebra-vectors.html#def-dot-product).
+@vaswani2017attention [section 3.2.1] call that form additive attention.
+
+:::

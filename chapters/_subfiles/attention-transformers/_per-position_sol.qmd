@@ -1,0 +1,9 @@
+::: {#sol-per-position}
+
+An [MLP](feedforward-networks.qmd#def-feedforward-network),
+applied to each position's vector separately,
+with the same weights at every position.
+The [self-attention](#def-self-attention) mixes information across positions,
+and the MLP transforms each position's vector on its own.
+
+:::

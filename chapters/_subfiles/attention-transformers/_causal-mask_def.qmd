@@ -1,0 +1,12 @@
+::: {#def-causal-mask}
+
+#### Causal mask
+
+A **causal mask** sets the score of key $j$ for query $i$ to $-\infty$
+whenever $j > i$,
+before the [softmax](https://morrison-lab.github.io/lds/chapters/multiclass-logistic-regression.html#def-softmax) in [self-attention](#def-self-attention).
+The softmax then gives those keys weight 0,
+so each position attends only to itself and the positions before it
+[@vaswani2017attention, section 3.2.3].
+
+:::

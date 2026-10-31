@@ -1,0 +1,7 @@
+::: {#exr-heads-cost}
+
+#### Do more heads cost more?
+
+Does `nn.MultiheadAttention(64, num_heads)` have more [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter) with 16 heads than with 1?
+
+:::

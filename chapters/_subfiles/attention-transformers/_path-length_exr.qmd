@@ -1,0 +1,8 @@
+::: {#exr-path-length}
+
+#### How far does information travel?
+
+A [GRU](rnns.qmd#def-gru) [language model](language-models.qmd#def-language-model) reads 64 characters.
+How many times does it apply its recurrent update between reading the first character and predicting the character after the 64th?
+
+:::

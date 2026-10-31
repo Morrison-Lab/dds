@@ -1,0 +1,24 @@
+::: {#def-transformer-block}
+
+#### Transformer block
+
+A **Transformer block** maps an $n \times d$ matrix $\matr{H}$ to another $n \times d$ matrix in two steps,
+each wrapped in a [residual connection](https://morrison-lab.github.io/lds/chapters/backpropagation.html#def-residual-connection):
+
+$$
+\begin{aligned}
+\matr{H}' &= \matr{H} + \operatorname{MultiHead}\paren{\operatorname{LN}\paren{\matr{H}}}, \\
+\operatorname{Block}\paren{\matr{H}} &= \matr{H}' + \operatorname{MLP}\paren{\operatorname{LN}\paren{\matr{H}'}},
+\end{aligned}
+$$
+
+where $\operatorname{MultiHead}$ is [multi-head attention](#def-multi-head-attention),
+$\operatorname{LN}$ is [layer normalization](normalization.qmd#def-layer-norm) of each row,
+and $\operatorname{MLP}$ is an [MLP](feedforward-networks.qmd#def-feedforward-network) with one [hidden layer](feedforward-networks.qmd#def-hidden-layer),
+applied to each row.
+@vaswani2017attention [sections 3.1, 3.3] build each step this way,
+but normalize after each sum instead of before each step.
+The order here is the Pre-LN Transformer of @xiong2020layer [section 3],
+which they find trains without a warm-up of the [learning rate](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-learning-rate).
+
+:::

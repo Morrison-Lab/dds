@@ -1,0 +1,24 @@
+::: {#exm-positional-encoding}
+
+#### Order matters once positions are added
+
+```{python}
+#| code-fold: show
+_ = torch.manual_seed(0)
+position = nn.Embedding(13, 8)
+where = torch.arange(13)
+with torch.no_grad():
+    x_pos = embed(line) + position(where)
+    x_pos_reversed = embed(line.flip(1)) + position(where)
+    pos_out, _ = attend(x_pos, x_pos, x_pos)
+    pos_reversed, _ = attend(x_pos_reversed, x_pos_reversed, x_pos_reversed)
+pos_gap = (pos_reversed - pos_out.flip(1)).abs().max().item()
+print(pos_gap)
+```
+
+With a learnable (here untrained) [positional encoding](#def-positional-encoding) added to each character's vector,
+the outputs for the reversed line are no longer the old outputs reversed:
+the largest difference is `r sprintf("%.2f", py$pos_gap)`,
+against `r sprintf("%.1g", py$reverse_gap)` without it.
+
+:::

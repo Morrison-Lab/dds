@@ -1,0 +1,28 @@
+::: {#exm-transformer-block}
+
+#### One block in PyTorch
+
+```{python}
+#| code-fold: show
+block = nn.TransformerEncoderLayer(
+    d_model=64, nhead=4, dim_feedforward=256,
+    dropout=0.0, batch_first=True, norm_first=True,
+)
+block_parts = {
+    "attention": n_params(block.self_attn),
+    "mlp": n_params(block.linear1) + n_params(block.linear2),
+    "norms": n_params(block.norm1) + n_params(block.norm2),
+}
+print(block_parts, n_params(block))
+print(block(torch.randn(1, 10, 64)).shape)
+```
+
+`nn.TransformerEncoderLayer` [@pytorch_transformerencoderlayer] with `norm_first=True` is the [Transformer block](#def-transformer-block) above,
+with a [hidden layer](feedforward-networks.qmd#def-hidden-layer) of 256 [units](feedforward-networks.qmd#def-unit) in its [MLP](feedforward-networks.qmd#def-feedforward-network).
+Its `r format(py$n_params(py$block), big.mark = ",")` [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter) are
+`r format(py$block_parts$attention, big.mark = ",")` in the attention,
+`r format(py$block_parts$mlp, big.mark = ",")` in the [MLP](feedforward-networks.qmd#def-feedforward-network) and
+`r py$block_parts$norms` in the two [layer normalization](normalization.qmd#def-layer-norm) layers.
+A sequence of 10 vectors of 64 numbers comes out as 10 vectors of 64 numbers.
+
+:::

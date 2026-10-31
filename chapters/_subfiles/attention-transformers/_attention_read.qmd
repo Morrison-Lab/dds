@@ -1,0 +1,5 @@
+::: {.reading}
+@vaswani2017attention introduced the Transformer. <!-- check-term-links: allow -->
+@bahdanau2015neural introduced attention for translation. <!-- check-term-links: allow -->
+The draft of @jurafsky2026slp has chapters on Transformers and large language models. <!-- check-term-links: allow -->
+:::

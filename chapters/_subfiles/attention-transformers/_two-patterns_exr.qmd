@@ -1,0 +1,9 @@
+::: {#exr-two-patterns}
+
+#### Two things to look at
+
+A [self-attention](#def-self-attention) layer gives each query one row of weights over the positions.
+Can that one row put more than 0.9 of its weight on the previous character
+and also more than 0.9 on the first character of the current word?
+
+:::

@@ -1,0 +1,11 @@
+::: {#sol-path-length}
+
+63 times,
+once for each of characters 2 to 64.
+Whatever the network keeps about the first character has to survive all 63 updates,
+and the [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) of the loss with respect to that character has to pass back through all of them in training,
+where it can [vanish](backpropagation.qmd#def-vanishing-gradient).
+Attention can connect the last position to the first in one step,
+if the queries come from the same sequence as the keys.
+
+:::

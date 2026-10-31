@@ -1,0 +1,26 @@
+::: {#exm-self-attention}
+
+#### Self-attention over "First Citizen"
+
+```{python}
+#| code-fold: show
+_ = torch.manual_seed(0)
+embed = nn.Embedding(n_chars, 8)
+attend = nn.MultiheadAttention(embed_dim=8, num_heads=1, batch_first=True)
+line = ids[:13].unsqueeze(0)
+n_line = line.shape[1]
+with torch.no_grad():
+    x = embed(line)
+    self_out, self_weights = attend(x, x, x)
+print(repr(text[:13]))
+print(self_out.shape, self_weights.shape)
+```
+
+The first line of the text begins with the `r py$n_line` characters `"First Citizen"`.
+An [embedding layer](rnns.qmd#def-embedding) turns each into a vector of 8 numbers,
+and passing the same [tensor](pytorch-basics.qmd#def-tensor) as queries, keys and values makes `nn.MultiheadAttention` compute [self-attention](#def-self-attention),
+followed by a linear layer.
+The weights form a $`r py$n_line` \times `r py$n_line`$ matrix:
+one row of weights over all `r py$n_line` characters for each character.
+
+:::
