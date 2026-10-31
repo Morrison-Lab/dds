@@ -65,10 +65,10 @@ Of the made-up eruptions,
 `r sprintf("%.0f%%", 100 * py$gan_long_share)` last longer than 3 minutes,
 against `r sprintf("%.0f%%", 100 * py$long_share)` of the real ones.
 But the made-up points lie along one thin curve.
-Above about 2.5 minutes,
+Along the long end of that curve,
 the generator gives each eruption length nearly one wait;
-near 2 minutes,
-it gives nearly one length for every wait.
+along the short end,
+it gives nearly one length for a range of waits.
 Among the eruptions longer than 3 minutes,
 the waits have standard deviation `r sprintf("%.1f", py$gan_long_sd)` minutes,
 against `r sprintf("%.1f", py$real_long_sd)` for the real ones.
