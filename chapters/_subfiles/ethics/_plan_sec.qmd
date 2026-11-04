@@ -6,6 +6,6 @@ This lecture asks four other questions about a trained network:
 3.  what training it costs;
 4.  what its users should be told about it.
 
-[Ethics and Fairness](https://morrison-lab.github.io/lds/chapters/ethics.html) in the DATA 571 notes covers bias,
+[Ethics and Fairness](https://morrison-lab.github.io/lds/chapters/ethics.html) in the DATA 471 notes covers bias,
 definitions of fairness and the result that they cannot all hold at once;
 this lecture links to it rather than repeating it.

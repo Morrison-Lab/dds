@@ -1,0 +1,13 @@
+::: {#exr-carbon}
+
+#### Carbon from training GPT-3
+
+Table 4 of @patterson2021carbon also gives:
+
+- a [PUE](#def-pue) of 1.10 for the datacenter that trained GPT-3;
+- 0.429 kilograms of carbon dioxide equivalent per kilowatt-hour,
+  the average for electricity in the United States that they use for GPT-3.
+
+How many tonnes of carbon dioxide equivalent did training GPT-3 emit?
+
+:::

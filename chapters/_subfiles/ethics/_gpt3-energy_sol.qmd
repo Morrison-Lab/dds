@@ -23,7 +23,7 @@ print(seconds_text, gpu_years, days_on_10k, joules_text, gpu_mwh)
 Dividing the operations by the rate gives `r py$seconds_text` GPU-seconds,
 about `r sprintf("%.0f", py$gpu_years)` GPU-years,
 or `r sprintf("%.1f", py$days_on_10k)` days on 10,000 GPUs.
-At 330 watts each,
+At `r py$watts` watts each,
 the GPUs used `r py$joules_text` joules.
 A megawatt-hour is $3.6 \times 10^9$ joules,
 so that is `r format(round(py$gpu_mwh), big.mark = ",")` megawatt-hours.

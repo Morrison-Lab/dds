@@ -2,9 +2,11 @@
 
 #### The same failure with people
 
-A [training set](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-training-set) with few eights is a small case of what [Ethics and Fairness](https://morrison-lab.github.io/lds/chapters/ethics.html#sec-bias-sources) in the DATA 571 notes calls representation bias:
-a group that appears less often in the [training set](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-training-set) gets less of the network's [accuracy](https://morrison-lab.github.io/lds/chapters/metrics.html#def-accuracy).
-The commercial face-analysis systems among [its documented cases](https://morrison-lab.github.io/lds/chapters/ethics.html#sec-documented-cases) failed in this way,
-and evaluating them separately on groups of faces is what showed it [@buolamwini2018gender].
+A [training set](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-training-set) with few eights is a small case of what [Ethics and Fairness](https://morrison-lab.github.io/lds/chapters/ethics.html#sec-bias-sources) in the DATA 471 notes calls representation bias:
+a group that appears less often in the [training set](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-training-set) can get less of the network's [accuracy](https://morrison-lab.github.io/lds/chapters/metrics.html#def-accuracy).
+Among [its documented cases](https://morrison-lab.github.io/lds/chapters/ethics.html#sec-documented-cases),
+@buolamwini2018gender evaluated commercial face-analysis systems separately on groups of faces
+and found [error rate](https://morrison-lab.github.io/lds/chapters/metrics.html#def-error-rate)s far higher for darker-skinned women than for lighter-skinned men;
+the benchmarks that the systems' accuracy was usually reported on held mostly lighter-skinned faces.
 
 :::

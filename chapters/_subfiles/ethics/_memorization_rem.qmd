@@ -10,13 +10,8 @@ and `r sprintf("%.0f%%", 100 * py$outsider_acc)` of the others,
 so that guess is right `r sprintf("%.0f%%", 50 * (1 + py$member_acc - py$outsider_acc))` of the time on a half-and-half set.
 A network that [overfits](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-overfitting) gives away more about its [training set](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-training-set).
 
-[Large language model](applications.qmd#def-large-language-model)s can give away the training text itself.
-@carlini2021extracting generated text from GPT-2
-and found 604 passages copied word for word from its [training data](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-training-set),
-including names, phone numbers and email addresses,
-even text that appeared in only one document of the training data.
-[Ethics and Fairness](https://morrison-lab.github.io/lds/chapters/ethics.html#misinformation-and-privacy) in the DATA 571 notes covers the privacy risk,
-and differential privacy,
-a way to train that limits it.
+[Large language model](applications.qmd#def-large-language-model)s can give away the training text itself,
+as [Ethics and Fairness](https://morrison-lab.github.io/lds/chapters/ethics.html#misinformation-and-privacy) in the DATA 471 notes describes;
+@carlini2021extracting found text that appeared in only one document of GPT-2's [training data](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-training-set) among its outputs.
 
 :::

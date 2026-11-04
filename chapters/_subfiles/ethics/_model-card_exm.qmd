@@ -5,14 +5,14 @@
 ```{python}
 #| code-fold: show
 n_params = sum(p.numel() for p in full_net.parameters())
-print(n_params, full_acc, full_by_digit.min(), full_by_digit.max())
+print(n_params, full_acc, full_by_digit.min(), full_by_digit.max(), most_images)
 ```
 
 A [model card](#def-model-card) for the network of @sol-few-eights trained on every eight:
 
-- **Model details:** a network with one [hidden layer](feedforward-networks.qmd#def-hidden-layer) of 64 [ReLU](feedforward-networks.qmd#def-relu) [units](feedforward-networks.qmd#def-unit),
+- **Model details:** a network with one [hidden layer](feedforward-networks.qmd#def-hidden-layer) of `r py$default_width` [ReLU](feedforward-networks.qmd#def-relu) [units](feedforward-networks.qmd#def-unit),
   `r format(py$n_params, big.mark = ",")` [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter),
-  trained by full-batch [Adam](https://morrison-lab.github.io/mds/optimization-gradient-descent.html#def-adam) for 300 steps, for these notes.
+  trained by full-batch [Adam](https://morrison-lab.github.io/mds/optimization-gradient-descent.html#def-adam) for `r py$default_steps` steps, for these notes.
 - **Intended use:** teaching.
   It is not meant for reading real handwriting, such as on forms or checks.
 - **Factors:** the digit, and the writer, which the data do not record.
@@ -25,7 +25,7 @@ A [model card](#def-model-card) for the network of @sol-few-eights trained on ev
   and from `r sprintf("%.0f%%", 100 * py$full_by_digit[[as.character(py$worst_digit)]])` on `r py$worst_digit`s to `r sprintf("%.0f%%", 100 * py$full_by_digit[[as.character(py$best_digit)]])` on `r py$best_digit`s (@tbl-by-digit).
 - **Ethical considerations:** the images record the handwriting of 13 people and nothing else about them.
 - **Caveats and recommendations:** untested on other writers' handwriting;
-  each digit has fewer than 100 validation images,
+  each digit has at most `r py$most_images` validation images,
   so the accuracy for each digit could move by a few percentage points with a different split.
 
 :::

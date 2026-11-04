@@ -1,31 +1,14 @@
 ::: {#exm-membership-inference}
 
-#### A threshold from a shadow network
+#### Attacks on machine learning services
 
-```{python}
-#| code-fold: show
-shadow_rows = order[1000:1100]
-shadow = fit(shadow_rows, width=256, seed=1)
-threshold = losses(shadow, shadow_rows).max()
-hit_rate = (member_loss <= threshold).float().mean().item()
-false_alarm = (outsider_loss <= threshold).float().mean().item()
-attack_acc = (hit_rate + 1 - false_alarm) / 2
-print(threshold.item(), hit_rate, false_alarm, attack_acc)
-# Stop the render if the prose below stops being true.
-assert attack_acc > 0.6
-```
-
-The attacker of @exr-membership does not know which [loss](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-loss-function) counts as small for the target network.
-So the attacker trains a shadow network of the same kind on `r py$n_members` digits of their own,
-and takes the largest loss of the shadow network on those digits as a threshold.
-The attack guesses that an image was in the target's [training set](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-training-set) if the target's loss on it is below the threshold.
-This [membership inference attack](#def-membership-inference) flags `r sprintf("%.0f%%", 100 * py$hit_rate)` of the target's training digits
-and `r sprintf("%.0f%%", 100 * py$false_alarm)` of the other digits.
-On a set of images half of which were in the training set,
-it guesses right `r sprintf("%.0f%%", 100 * py$attack_acc)` of the time,
-where a coin would guess right 50% of the time.
-@shokri2017membership train many shadow models and a classifier on their outputs,
-and @yeom2018privacy guess from the loss alone;
-this example joins the two ideas in the simplest way.
+@shokri2017membership [section I] ran [membership inference attack](#def-membership-inference)s
+on classifiers trained by Google's and Amazon's [machine learning](https://morrison-lab.github.io/lds/chapters/course-overview.html#def-machine-learning) services,
+which do not reveal the models they train.
+Against those models,
+their attacks guessed membership with a median [accuracy](https://morrison-lab.github.io/lds/chapters/metrics.html#def-accuracy) of 94% and 74%.
+On a data set of hospital stays in Texas,
+where knowing that a record was in the [training set](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-training-set) is itself sensitive,
+their attack was right over 70% of the time.
 
 :::

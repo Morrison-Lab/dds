@@ -1,25 +1,11 @@
 ::: {#exm-pue}
 
-#### The datacenter that trained GPT-3
+#### Two datacenters
 
-```{python}
-#| code-fold: show
-pue, kg_co2e_per_kwh = 1.10, 0.429
-total_mwh = gpu_mwh * pue
-tonnes_co2e = total_mwh * 1000 * kg_co2e_per_kwh / 1000
-round_trips = tonnes_co2e / 180
-print(total_mwh, tonnes_co2e, round_trips)
-```
-
-The datacenter where GPT-3 was trained had a [PUE](#def-pue) of `r sprintf("%.2f", py$pue)`,
-according to the same table:
-for each kilowatt-hour its computers used,
-it used `r sprintf("%.2f", py$pue)` in all,
-the rest going to cooling and power conversion.
-The `r format(round(py$gpu_mwh), big.mark = ",")` megawatt-hours of @sol-gpt3-energy become `r format(round(py$total_mwh), big.mark = ",")` in all,
-the figure @patterson2021carbon report.
-At the `r py$kg_co2e_per_kwh` kilograms of carbon dioxide equivalent per kilowatt-hour that they use for United States electricity,
-training emitted `r format(round(py$tonnes_co2e), big.mark = ",")` tonnes,
-about `r sprintf("%.0f", py$round_trips)` times the 180 tonnes they give for a jet's round trip between San Francisco and New York.
+@patterson2021carbon [section 2.3] give 1.58 as the average [PUE](#def-pue) of datacenters in the United States in 2018,
+and 1.11 for the Google datacenter in Iowa where they trained one of their models.
+For each kilowatt-hour its computers used,
+the Iowa datacenter used 1.11 in all;
+the other 0.11 was overhead beyond powering the computing equipment.
 
 :::

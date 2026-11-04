@@ -1,0 +1,34 @@
+::: {#sol-threshold}
+
+Train a shadow network of the same kind on 100 digits of the attacker's own,
+and take the largest [loss](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-loss-function) of the shadow network on those digits as the threshold.
+Then guess that an image was in the target's [training set](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-training-set) when the target's loss on it is at most the threshold.
+
+```{python}
+#| code-fold: show
+shadow_rows = order[1000:1100]
+shadow = fit(shadow_rows, width=target_width, seed=1)
+threshold = losses(shadow, shadow_rows).max()
+flagged_members = (member_loss <= threshold).sum().item()
+flagged_outsiders = (outsider_loss <= threshold).sum().item()
+attack_acc = (flagged_members + n_members - flagged_outsiders) / (2 * n_members)
+flagged_share_members = flagged_members / (flagged_members + flagged_outsiders)
+print(threshold.item(), flagged_members, flagged_outsiders, attack_acc, flagged_share_members)
+# Stop the render if the prose below stops being true.
+assert 0.6 < attack_acc < 0.8
+```
+
+This [membership inference attack](#def-membership-inference) flags `r py$flagged_members` of the target's `r py$n_members` training digits
+and `r py$flagged_outsiders` of the `r py$n_members` others.
+On the `r 2 * py$n_members` digits together it guesses right `r sprintf("%.0f%%", 100 * py$attack_acc)` of the time,
+where a coin would guess right 50% of the time,
+but only `r sprintf("%.0f%%", 100 * py$flagged_share_members)` of the digits it flags were in the training set.
+It works because the target [overfits](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-overfitting):
+it was trained on only `r py$n_members` digits,
+is right on `r sprintf("%.0f%%", 100 * py$member_acc)` of them and on `r sprintf("%.0f%%", 100 * py$outsider_acc)` of the others,
+and the attacker knew how it was trained and had digits from the same 13 writers.
+@shokri2017membership train many shadow models and a classifier on their outputs,
+and @yeom2018privacy guess from the loss alone;
+this solution joins the two ideas in the simplest way.
+
+:::

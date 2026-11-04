@@ -3,7 +3,7 @@
 #### Disaggregated evaluation
 
 A **disaggregated evaluation** reports a model's performance separately for each group of its inputs,
-such as each class or each group of people,
+such as each group of people or each condition the inputs were recorded under,
 as well as over the whole evaluation set [@mitchell2019model, section 4.7].
 
 :::

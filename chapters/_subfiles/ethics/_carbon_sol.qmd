@@ -1,0 +1,18 @@
+::: {#sol-carbon}
+
+```{python}
+#| code-fold: show
+pue, kg_co2e_per_kwh = 1.10, 0.429
+total_mwh = gpu_mwh * pue
+tonnes_co2e = total_mwh * 1000 * kg_co2e_per_kwh / 1000
+round_trips = tonnes_co2e / 180
+print(total_mwh, tonnes_co2e, round_trips)
+```
+
+Multiplying the `r format(round(py$gpu_mwh), big.mark = ",")` megawatt-hours of @sol-gpt3-energy by the [PUE](#def-pue) gives `r format(round(py$total_mwh), big.mark = ",")` megawatt-hours for the whole datacenter,
+the estimate @patterson2021carbon report.
+At `r py$kg_co2e_per_kwh` kilograms per kilowatt-hour,
+that is `r format(round(py$tonnes_co2e), big.mark = ",")` tonnes of carbon dioxide equivalent,
+about `r sprintf("%.0f", py$round_trips)` times the 180 tonnes they give for a jet's round trip between San Francisco and New York.
+
+:::

@@ -81,6 +81,14 @@ so this page is new, exercises included.
 
 {{< slidebreak >}}
 
+{{< include _subfiles/ethics/_threshold_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/ethics/_threshold_sol.qmd >}}
+
+{{< slidebreak >}}
+
 {{< include _subfiles/ethics/_memorization_rem.qmd >}}
 
 # What training costs
@@ -102,6 +110,14 @@ so this page is new, exercises included.
 {{< slidebreak >}}
 
 {{< include _subfiles/ethics/_pue_exm.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/ethics/_carbon_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/ethics/_carbon_sol.qmd >}}
 
 {{< slidebreak >}}
 
@@ -129,7 +145,11 @@ so this page is new, exercises included.
 
 {{< slidebreak >}}
 
-{{< include _subfiles/ethics/_datasheet_rem.qmd >}}
+{{< include _subfiles/ethics/_datasheet_def.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/ethics/_datasheet_exm.qmd >}}
 
 ## Further reading
 
