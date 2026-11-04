@@ -245,7 +245,12 @@ The exercises use the 1,797 digits of [`data/optdigits-test.csv`](data/optdigits
 > ``` python
 > # Stop the render if the prose below stops being true.
 > assert best_rate[8] < best_rate[512] < max(rates)
-> assert 0 < gap_at_best < gap_at_01
+> assert 2 * seed_sd < gap_at_best < gap_at_01
+> # Stop the render if the figure's alt text stops being true.
+> assert best_rate[8] == 0.3 and best_rate[512] == 1
+> assert abs(best_accuracy[512] - 0.95) < 0.015
+> assert abs(best_accuracy[8] - 0.88) < 0.015
+> assert mean_accuracy.loc[3].max() < 0.15
 > ```
 >
 > > **NOTE:**
@@ -366,6 +371,9 @@ The exercises use the 1,797 digits of [`data/optdigits-test.csv`](data/optdigits
 > # Stop the render if the prose below stops being true.
 > assert best_long - at_20 < seed_high - seed_low
 > assert min(long_run[19:]) > at_20 - 0.01
+> # Stop the render if the figure's alt text stops being true.
+> assert abs(at_20 - 0.95) < 0.015
+> assert all(abs(score - at_20) < 0.015 for score in long_run[19:])
 > ```
 >
 > > **NOTE:**
@@ -416,6 +424,9 @@ The exercises use the 1,797 digits of [`data/optdigits-test.csv`](data/optdigits
 > assert slow_run[-1] < at_20
 > assert all(s < l for s, l in zip(slow_run[19:], long_run[19:]))
 > assert best_long_tuned - at_20 < seed_high - seed_low
+> # Stop the render if the figure's alt text stops being true.
+> assert abs(slow_run[19] - 0.88) < 0.015
+> assert abs(slow_run[-1] - 0.91) < 0.015
 > ```
 >
 > > **NOTE:**
