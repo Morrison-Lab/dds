@@ -12,7 +12,10 @@ water => eau
 bread =>
 ```
 
-The three translated examples make it few-shot [in-context learning](#def-in-context-learning).
+@brown2020language call a prompt with no examples zero-shot,
+one with one example one-shot,
+and one with a few examples few-shot,
+so the three translated examples make this prompt few-shot [in-context learning](#def-in-context-learning).
 The model's continuation after the last arrow is its answer.
 The English and French words here are ours, not Brown and colleagues'.
 

@@ -45,7 +45,7 @@ Trained for 30 [epochs](https://morrison-lab.github.io/lds/chapters/gradient-des
 it classifies `r sprintf("%.0f%%", 100 * py$vit_acc)` of the validation digits correctly.
 @dosovitskiy2021image [section 4.3] find that ResNets,
 convolutional networks,
-do better than [ViT](#def-vision-transformer)s when [pretrained](attention-transformers.qmd#def-pretraining) on small data sets,
-and ViTs do better when pretrained on the 303 million images of JFT-300M.
+do better than [ViT](#def-vision-transformer)s when both are first trained on small sets of labelled images,
+and ViTs do better after first training on the 303 million labelled images of JFT-300M.
 
 :::

@@ -6,8 +6,5 @@
 or a few examples of it,
 written into its input,
 with no change to its [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter) [@brown2020language, sections 1, 2].
-With no examples the prompt is *zero-shot*,
-with one it is *one-shot*,
-and with a few it is *few-shot*.
 
 :::

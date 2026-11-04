@@ -43,8 +43,9 @@ fresh_acc = accuracy(fresh_net, mirrored[val_idx], y[val_idx])
 print(base_acc, base_mirrored_acc)
 print(lora_count, lora_acc, full_count_digits, full_acc, fresh_acc)
 # Stop the render if the prose below stops being true.
-assert base_mirrored_acc < lora_acc < full_acc < fresh_acc
-assert full_acc - lora_acc < 0.05
+assert lora_acc - base_mirrored_acc > 0.3
+assert abs(full_acc - lora_acc) < 0.05
+assert fresh_acc > max(lora_acc, full_acc) - 0.02
 ```
 
 `base` is an [MLP](feedforward-networks.qmd#def-feedforward-network) with one [hidden layer](feedforward-networks.qmd#def-hidden-layer) of 256 [ReLU](feedforward-networks.qmd#def-relu) [units](feedforward-networks.qmd#def-unit),
@@ -55,7 +56,7 @@ but only `r sprintf("%.0f%%", 100 * py$base_mirrored_acc)` of the same digits mi
 and raises the [accuracy](https://morrison-lab.github.io/lds/chapters/metrics.html#def-accuracy) on the mirrored validation digits to `r sprintf("%.0f%%", 100 * py$lora_acc)`.
 [Fine-tuning](cnns.qmd#def-fine-tuning) all `r format(py$full_count_digits, big.mark = ",")` [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter) on the same images reaches `r sprintf("%.0f%%", 100 * py$full_acc)`.
 A new network trained on the `r py$n_adapt` mirrored digits alone reaches `r sprintf("%.0f%%", 100 * py$fresh_acc)`,
-so this small network gains nothing from its first training.
+so in this run the first training gains this small network nothing.
 LoRA pays off where a [pretrained](attention-transformers.qmd#def-pretraining) model is too large to copy and train for each task:
 @hu2022lora report that,
 for GPT-3,

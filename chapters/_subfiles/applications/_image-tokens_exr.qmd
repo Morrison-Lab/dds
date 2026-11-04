@@ -4,8 +4,7 @@
 
 A Transformer takes a sequence of vectors.
 Cut each 8 by 8 digit into 2 by 2 squares of pixels,
-and treat each square as one vector of the sequence.
-How many vectors does a digit become,
-and how long is each?
+and treat the 4 pixels of each square as one vector of the sequence.
+How many vectors does a digit become?
 
 :::

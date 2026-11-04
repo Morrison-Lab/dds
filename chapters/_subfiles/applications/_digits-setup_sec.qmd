@@ -35,7 +35,7 @@ def accuracy(net, inputs, targets):
 print(n_train, n_adapt, n_val)
 ```
 
-Two of the exercises use the `r format(nrow(py$digits), big.mark = ",")` digits of [`data/optdigits-test.csv`](data/optdigits-test.csv) [@alpaydin1998optdigits],
+One exercise and two examples use the `r format(nrow(py$digits), big.mark = ",")` digits of [`data/optdigits-test.csv`](data/optdigits-test.csv) [@alpaydin1998optdigits],
 each an 8 by 8 image.
 `r format(py$n_train, big.mark = ",")` random images form a [training set](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-training-set),
 another `r py$n_adapt` are kept for adapting a trained network,

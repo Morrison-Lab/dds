@@ -5,8 +5,8 @@
 A **large language model**,
 or **LLM**,
 is a [language model](language-models.qmd#def-language-model) made of [Transformer block](attention-transformers.qmd#def-transformer-block)s,
-with billions of [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter) or more,
+with far more [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter) than the networks of earlier chapters,
 [pretrained](attention-transformers.qmd#def-pretraining) to predict the next token of a large collection of text.
-The line between large and small is not fixed.
+No agreed size makes a language model large.
 
 :::

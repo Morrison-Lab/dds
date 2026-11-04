@@ -17,6 +17,6 @@ each holding the `r py$token_length` pixels of one square.
 The second print checks that the sixth vector holds the square in rows 3 and 4 and columns 3 and 4,
 since the squares run along each row of squares before moving down.
 `reshape` and `permute` group the rows and columns into squares,
-without copying pixels between digits.
+and no pixel moves from one digit to another.
 
 :::

@@ -6,7 +6,12 @@ The smallest GPT-2 [language model](language-models.qmd#def-language-model) has 
 a context of 1,024 positions,
 [width](https://morrison-lab.github.io/lds/chapters/neural-nets.html#def-width) $d = 768$,
 and 12 [Transformer block](attention-transformers.qmd#def-transformer-block)s,
-each with 12 heads and an [MLP](feedforward-networks.qmd#def-feedforward-network) whose [hidden layer](feedforward-networks.qmd#def-hidden-layer) has $4d$ [units](feedforward-networks.qmd#def-unit) [@hf_gpt2].
+each with 12 heads and an [MLP](feedforward-networks.qmd#def-feedforward-network) whose [hidden layer](feedforward-networks.qmd#def-hidden-layer) has $4d$ [units](feedforward-networks.qmd#def-unit)
+[@hf_gpt2; @hf_gpt2_code].
+Every linear layer has a bias,
+each block has two [layer normalization](normalization.qmd#def-layer-norm)s,
+one more follows the last block,
+and each layer normalization holds $2d$ numbers.
 Its output layer reuses the token [embedding](rnns.qmd#def-embedding) as its weights [@hf_gpt2_code].
 How many [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter) does it have?
 
