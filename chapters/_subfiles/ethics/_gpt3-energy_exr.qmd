@@ -1,0 +1,12 @@
+::: {#exr-gpt3-energy}
+
+#### Energy to train GPT-3
+
+Training GPT-3 took $3.14 \times 10^{23}$ floating-point operations.
+Its V100 GPUs each did $24.6 \times 10^{12}$ of them a second,
+and each drew 330 watts,
+counting its share of the memory, fans and host computer,
+according to table 4 of @patterson2021carbon.
+How much electrical energy did the GPUs use?
+
+:::

@@ -1,0 +1,20 @@
+::: {#def-model-card}
+
+#### Model card
+
+A **model card** is a short document released with a trained model
+that reports its intended uses and its performance,
+including [disaggregated evaluation](#def-disaggregated-evaluation)s over the groups that matter for those uses [@mitchell2019model].
+@mitchell2019model [section 4] suggest nine sections:
+
+- model details;
+- intended use;
+- factors, the groups or conditions the performance may depend on;
+- metrics;
+- evaluation data;
+- training data; <!-- check-term-links: allow -->
+- quantitative analyses;
+- ethical considerations;
+- caveats and recommendations.
+
+:::

@@ -1,0 +1,9 @@
+::: {#def-disaggregated-evaluation}
+
+#### Disaggregated evaluation
+
+A **disaggregated evaluation** reports a model's performance separately for each group of its inputs,
+such as each class or each group of people,
+as well as over the whole evaluation set [@mitchell2019model, section 4.7].
+
+:::

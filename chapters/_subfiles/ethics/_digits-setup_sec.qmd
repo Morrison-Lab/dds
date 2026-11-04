@@ -1,0 +1,56 @@
+```{python}
+#| code-fold: show
+import numpy as np
+import pandas as pd
+import torch
+from torch import nn
+import matplotlib.pyplot as plt
+
+digits = pd.read_csv("data/optdigits-test.csv", header=None)
+x = torch.tensor(digits.iloc[:, :64].to_numpy(), dtype=torch.float32) / 16
+y = torch.tensor(digits[64].to_numpy())
+order = torch.randperm(len(x), generator=torch.Generator().manual_seed(481))
+train_idx, val_idx = order[:1000], order[1000:]
+n_train, n_val = len(train_idx), len(val_idx)
+loss_fn = nn.CrossEntropyLoss()
+
+
+def fit(rows, width=64, seed=0, n_steps=300):
+    # A network with one hidden layer, trained by full-batch Adam on the given rows.
+    torch.manual_seed(seed)
+    net = nn.Sequential(nn.Linear(64, width), nn.ReLU(), nn.Linear(width, 10))
+    optimizer = torch.optim.Adam(net.parameters(), lr=0.01)
+    for step in range(n_steps):
+        optimizer.zero_grad()
+        loss_fn(net(x[rows]), y[rows]).backward()
+        optimizer.step()
+    return net
+
+
+def correct(net, rows):
+    with torch.no_grad():
+        return (net(x[rows]).argmax(dim=1) == y[rows]).float()
+
+
+def accuracy(net, rows):
+    return correct(net, rows).mean().item()
+
+
+def digit_accuracy(net, rows):
+    # The share of each digit's images that the network classifies correctly.
+    return pd.Series(correct(net, rows).numpy()).groupby(y[rows].numpy()).mean()
+
+
+print(n_train, n_val)
+```
+
+The examples use the `r format(nrow(py$digits), big.mark = ",")` digits of [`data/optdigits-test.csv`](data/optdigits-test.csv),
+each an 8 by 8 image,
+written by 13 people [@alpaydin1998optdigits].
+`r format(py$n_train, big.mark = ",")` random images form a [training set](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-training-set),
+and the other `r py$n_val` form a [validation set](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-validation-set).
+`fit()` trains a network with one [hidden layer](feedforward-networks.qmd#def-hidden-layer) of [ReLU](feedforward-networks.qmd#def-relu) [units](feedforward-networks.qmd#def-unit),
+64 of them unless `width` says otherwise,
+on the given rows by full-batch [Adam](https://morrison-lab.github.io/mds/optimization-gradient-descent.html#def-adam).
+`accuracy()` gives the share of the rows that a network classifies correctly,
+and `digit_accuracy()` gives that share for each digit separately.

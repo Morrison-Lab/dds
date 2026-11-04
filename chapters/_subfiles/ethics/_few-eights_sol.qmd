@@ -1,0 +1,32 @@
+::: {#sol-few-eights}
+
+```{python}
+#| code-fold: show
+train_y = y[train_idx]
+eights = train_idx[train_y == 8]
+few_rows = torch.cat([train_idx[train_y != 8], eights[:10]])
+full_net = fit(train_idx)
+few_net = fit(few_rows)
+full_acc, few_acc = accuracy(full_net, val_idx), accuracy(few_net, val_idx)
+full_eights = digit_accuracy(full_net, val_idx)[8]
+few_eights = digit_accuracy(few_net, val_idx)[8]
+n_eights_train = len(eights)
+n_eights_val = (y[val_idx] == 8).sum().item()
+print(full_acc, few_acc, full_eights, few_eights)
+# Stop the render if the prose below stops being true.
+assert full_acc - few_acc < 0.03
+assert full_eights - few_eights > 0.15
+```
+
+Hardly.
+The [training set](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-training-set) holds `r py$n_eights_train` eights.
+Trained on all of them,
+the network classifies `r sprintf("%.1f%%", 100 * py$full_acc)` of the validation digits correctly;
+trained on 10 of them,
+`r sprintf("%.1f%%", 100 * py$few_acc)`.
+On the `r py$n_eights_val` eights of the [validation set](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-validation-set) alone,
+its [accuracy](https://morrison-lab.github.io/lds/chapters/metrics.html#def-accuracy) falls from `r sprintf("%.0f%%", 100 * py$full_eights)` to `r sprintf("%.0f%%", 100 * py$few_eights)`.
+Eights are only `r sprintf("%.0f%%", 100 * py$n_eights_val / py$n_val)` of the validation set,
+so a large drop on them is a small drop overall.
+
+:::

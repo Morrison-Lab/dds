@@ -1,0 +1,59 @@
+::: {#sol-membership}
+
+Compute the network's [loss](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-loss-function) on the image.
+Training pushes the loss down on the training images themselves,
+so an image with an unusually small loss was probably one of them.
+
+```{python}
+#| code-fold: show
+members, outsiders = order[:100], order[100:200]
+target = fit(members, width=256)
+per_image_loss = nn.CrossEntropyLoss(reduction="none")
+
+
+def losses(net, rows):
+    with torch.no_grad():
+        return per_image_loss(net(x[rows]), y[rows])
+
+
+member_loss, outsider_loss = losses(target, members), losses(target, outsiders)
+member_acc, outsider_acc = accuracy(target, members), accuracy(target, outsiders)
+n_members = len(members)
+loss_ratio = (outsider_loss.median() / member_loss.median()).item()
+outsiders_above = (outsider_loss > member_loss.max()).float().mean().item()
+member_log = member_loss.clamp(min=1e-8).log10()
+outsider_log = outsider_loss.clamp(min=1e-8).log10()
+print(member_loss.median().item(), outsider_loss.median().item(), member_acc, outsider_acc)
+# Stop the render if the figure's alt text stops being true.
+assert -3.5 < member_log.max().item() < -2.5
+assert 0.3 < outsiders_above < 0.5
+assert outsider_log.max().item() < 2
+```
+
+::: {#fig-member-loss}
+
+```{python}
+#| fig-alt: "Two overlapping histograms of the base-10 logarithm of the loss, on an axis from minus 8 to 2. The losses on the 100 digits the network was trained on all lie between about minus 7 and minus 3. The losses on the 100 other digits spread from minus 8 to about 1; most of them overlap the first histogram, and about two fifths lie to its right, above minus 3."
+bins = np.linspace(-8, 2, 41)
+fig, ax = plt.subplots(figsize=(6, 3))
+ax.hist(member_log.numpy(), bins=bins, alpha=0.6, label="trained on");
+ax.hist(outsider_log.numpy(), bins=bins, alpha=0.6, label="not trained on");
+ax.set_xlabel("log10 of the cross-entropy loss");
+ax.set_ylabel("images");
+ax.legend();
+fig.tight_layout();
+plt.show()
+```
+
+The [loss](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-loss-function) of one network on the `r py$n_members` digits it was trained on and on `r py$n_members` digits it was not.
+Losses below $10^{-8}$ are drawn at $-8$.
+
+:::
+
+Here a network with a [hidden layer](feedforward-networks.qmd#def-hidden-layer) of 256 [units](feedforward-networks.qmd#def-unit) is trained on `r py$n_members` digits,
+and compared on those and on `r py$n_members` others.
+Its median [cross-entropy loss](https://morrison-lab.github.io/lds/chapters/logistic-regression.html#def-cross-entropy-loss) is `r format(py$loss_ratio, big.mark = ",", digits = 2)` times larger on the digits it was not trained on.
+`r sprintf("%.0f%%", 100 * py$outsiders_above)` of those have a larger [loss](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-loss-function) than any digit it was trained on,
+as @fig-member-loss shows.
+
+:::
