@@ -1,0 +1,18 @@
+Every chapter so far has trained networks with settings picked for it:
+a [learning rate](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-learning-rate),
+a [width](https://morrison-lab.github.io/lds/chapters/neural-nets.html#def-width),
+a number of [epochs](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-epoch).
+This lecture is about choosing such settings with experiments,
+and trusting what the experiments say:
+
+1.  how much a score changes when only the random seed changes;
+2.  how to compare two [widths](https://morrison-lab.github.io/lds/chapters/neural-nets.html#def-width) fairly when the best [learning rate](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-learning-rate) depends on the [width](https://morrison-lab.github.io/lds/chapters/neural-nets.html#def-width);
+3.  how to lay out a sweep of [learning rates](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-learning-rate), and check that it was wide enough;
+4.  when training longer would help;
+5.  what it takes to run the same experiment twice and get the same numbers.
+
+[lds's chapter on machine learning experiments](https://morrison-lab.github.io/lds/chapters/ml-experimentation.html) covers the parts that hold for any model: <!-- check-term-links: allow -->
+the training, validation and [test sets](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-test-set),
+data snooping,
+and grid and random search.
+This lecture adds what is particular to training deep networks.

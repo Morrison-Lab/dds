@@ -1,0 +1,8 @@
+::: {#exr-log-scale}
+
+#### Spacing the rates
+
+Each [learning rate](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-learning-rate) in @exr-rate-sweep is about 3 times the one before it.
+What would go wrong with seven rates spread evenly from 0.003 to 3?
+
+:::

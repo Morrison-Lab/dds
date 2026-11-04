@@ -1,0 +1,46 @@
+::: {#exm-compute-bound}
+
+#### A slow rate is not the problem
+
+```{python}
+#| code-fold: show
+slow_run = train_and_score(512, 0.03, 0, n_epochs=100)
+print(slow_run[19], slow_run[-1])
+# Stop the render if the prose below stops being true.
+assert slow_run[-1] - slow_run[19] > seed_high - seed_low
+assert slow_run[-1] < at_20
+```
+
+::: {#fig-compute-bound}
+
+```{python}
+#| fig-alt: "Validation accuracy against epoch, from 1 to 100, for width 512 at learning rates 0.03 and the best rate from the sweep. The best-rate curve is flat near 0.95 after epoch 20. The 0.03 curve starts lower, rises slowly from about 0.88 at epoch 20 to about 0.91 at epoch 100, below the other curve throughout."
+fig, ax = plt.subplots(figsize=(6, 3))
+ax.plot(range(1, 101), long_run, label=f"learning rate {best_rate[512]}");
+ax.plot(range(1, 101), slow_run, label="learning rate 0.03");
+ax.axvline(20, linestyle="--", color="gray");
+ax.set_xlabel("epoch");
+ax.set_ylabel("validation accuracy");
+ax.legend();
+fig.tight_layout();
+plt.show()
+```
+
+Validation [accuracy](https://morrison-lab.github.io/lds/chapters/metrics.html#def-accuracy) after each [epoch](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-epoch) of 100-epoch runs of [width](https://morrison-lab.github.io/lds/chapters/neural-nets.html#def-width) 512 at two [learning rates](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-learning-rate);
+the dashed line marks epoch 20.
+
+:::
+
+At [learning rate](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-learning-rate) 0.03,
+[width](https://morrison-lab.github.io/lds/chapters/neural-nets.html#def-width) 512's validation [accuracy](https://morrison-lab.github.io/lds/chapters/metrics.html#def-accuracy) rises from `r sprintf("%.3f", py$slow_run[[20]])` after 20 [epochs](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-epoch)
+to `r sprintf("%.3f", py$slow_run[[100]])` after 100.
+That run alone would suggest that 20 epochs hold the model back.
+But at its best learning rate the network gets `r sprintf("%.3f", py$at_20)` in 20 epochs,
+more than the slow run gets in 100.
+With the learning rate tuned,
+longer training does not help,
+so training this network on these `r py$n_train` images is not [compute-bound](#def-compute-bound).
+Something other than training time limits it,
+such as the number of training images.
+
+:::

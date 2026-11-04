@@ -1,0 +1,24 @@
+::: {#sol-choices}
+
+[SGD](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-sgd) changes only the weights and biases of the two `nn.Linear` layers.
+These numbers are set before training starts, and stay as set:
+
+-   the [width](https://morrison-lab.github.io/lds/chapters/neural-nets.html#def-width) of the [hidden layer](feedforward-networks.qmd#def-hidden-layer), `width`;
+-   the [learning rate](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-learning-rate), `lr`;
+-   the number of [epochs](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-epoch), `n_epochs`;
+-   the [minibatch](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-minibatch) size, `batch_size`;
+-   the random seed, `seed`;
+-   the sizes of the training and [validation sets](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-validation-set), `r py$n_train` and `r py$n_val`.
+
+The first four are [hyperparameters](https://morrison-lab.github.io/lds/chapters/model-selection.html#sec-hyperparameters):
+settings that we choose,
+rather than learn from the data.
+So are choices that are not numbers,
+such as SGD itself,
+the [ReLU](feedforward-networks.qmd#def-relu) activation and the single hidden layer.
+The seed is not a setting of that kind.
+No seed suits new data better than another,
+so a seed chosen for its validation score has been fitted to noise.
+The set sizes are a choice about the data, not the model.
+
+:::

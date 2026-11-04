@@ -1,0 +1,9 @@
+::: {#def-fixed-hyperparameter}
+
+#### Fixed hyperparameter
+
+A **fixed hyperparameter** of an experiment is a [hyperparameter](https://morrison-lab.github.io/lds/chapters/model-selection.html#sec-hyperparameters) that keeps one value throughout the experiment [@godbole2023playbook].
+The experiment's conclusions hold for that value,
+and may not hold for others.
+
+:::

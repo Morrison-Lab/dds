@@ -1,0 +1,18 @@
+::: {#rem-budget}
+
+#### Spending a fixed budget
+
+The sweep in @sol-rate-sweep trained `r nrow(py$sweep)` networks for 20 [epochs](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-epoch) each,
+`r nrow(py$sweep) * 20` epochs in all.
+One 100-epoch run costs as much as 5 of those trials.
+Here, where training is not [compute-bound](#def-compute-bound),
+the extra 80 epochs in @sol-longer bought nothing,
+and would have paid for 4 more trials,
+such as more seeds or more [learning rates](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-learning-rate).
+When training is compute-bound,
+@godbole2023playbook still advise against making every trial as long as the budget allows.
+They tune in rounds,
+starting with many short runs to find good settings
+and ending with a few long runs at the best of them.
+
+:::

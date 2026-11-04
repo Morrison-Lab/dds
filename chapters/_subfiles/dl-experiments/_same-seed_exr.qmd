@@ -1,0 +1,7 @@
+::: {#exr-same-seed}
+
+#### The same run twice
+
+Does calling `train_and_score(64, 0.1, 0)` twice give the same validation [accuracies](https://morrison-lab.github.io/lds/chapters/metrics.html#def-accuracy)?
+
+:::

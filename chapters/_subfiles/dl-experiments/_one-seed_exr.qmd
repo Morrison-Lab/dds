@@ -1,0 +1,17 @@
+::: {#exr-one-seed}
+
+#### One run of each
+
+```{python}
+#| code-fold: show
+narrow_seed0 = train_and_score(32, 0.1, 0)[-1]
+wide_seed0 = wide_scores[0].item()
+print(narrow_seed0, wide_seed0)
+```
+
+With seed 0 and [learning rate](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-learning-rate) 0.1,
+a network of [width](https://morrison-lab.github.io/lds/chapters/neural-nets.html#def-width) 32 reaches validation [accuracy](https://morrison-lab.github.io/lds/chapters/metrics.html#def-accuracy) `r sprintf("%.3f", py$narrow_seed0)`,
+and one of width 64 reaches `r sprintf("%.3f", py$wide_seed0)`.
+Does this show that width 64 is better at this learning rate?
+
+:::

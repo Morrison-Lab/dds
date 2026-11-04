@@ -1,0 +1,9 @@
+::: {#exr-longer}
+
+#### More epochs
+
+Would [width](https://morrison-lab.github.io/lds/chapters/neural-nets.html#def-width) 512,
+at the [learning rate](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-learning-rate) that suited it best in @sol-rate-sweep,
+reach a higher validation [accuracy](https://morrison-lab.github.io/lds/chapters/metrics.html#def-accuracy) with 100 [epochs](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-epoch) of training instead of 20?
+
+:::

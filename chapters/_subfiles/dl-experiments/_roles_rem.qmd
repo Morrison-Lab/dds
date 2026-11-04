@@ -1,0 +1,13 @@
+::: {#rem-roles}
+
+#### A role belongs to an experiment
+
+One [hyperparameter](https://morrison-lab.github.io/lds/chapters/model-selection.html#sec-hyperparameters) can play a different role in each experiment.
+The [learning rate](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-learning-rate) is a [nuisance hyperparameter](#def-nuisance-hyperparameter) in @sol-rate-sweep.
+An experiment that asks whether [learning-rate warmup](optimization.qmd#def-warmup) helps
+makes the [warmup](optimization.qmd#def-warmup)'s length a [scientific hyperparameter](#def-scientific-hyperparameter),
+and still tunes the learning rate as a nuisance.
+An experiment that cannot afford to tune the learning rate makes it a [fixed hyperparameter](#def-fixed-hyperparameter),
+and its conclusions then come with that caveat [@godbole2023playbook].
+
+:::

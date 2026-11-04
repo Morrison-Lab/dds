@@ -1,0 +1,7 @@
+::: {#exr-random-draws}
+
+#### Where the randomness comes from
+
+List every random draw that a run of `train_and_score()` depends on.
+
+:::

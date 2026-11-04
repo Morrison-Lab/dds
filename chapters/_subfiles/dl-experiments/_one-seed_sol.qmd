@@ -1,0 +1,24 @@
+::: {#sol-one-seed}
+
+```{python}
+#| code-fold: show
+narrow_scores = torch.tensor([train_and_score(32, 0.1, seed)[-1] for seed in range(10)])
+mean_gap = (wide_scores.mean() - narrow_scores.mean()).item()
+gap_se = ((wide_scores.var() + narrow_scores.var()) / 10).sqrt().item()
+print(narrow_scores.mean().item(), wide_scores.mean().item(), mean_gap, gap_se)
+# Stop the render if the prose below stops being true.
+assert abs(wide_seed0 - narrow_seed0) < seed_high - seed_low
+assert abs(mean_gap) < 2 * gap_se
+```
+
+No.
+The two runs differ by `r sprintf("%.3f", abs(py$wide_seed0 - py$narrow_seed0))`,
+less than the `r sprintf("%.3f", py$seed_high - py$seed_low)` that the seed alone moved [width](https://morrison-lab.github.io/lds/chapters/neural-nets.html#def-width) 64 in @sol-seed-spread.
+With ten seeds of each,
+the mean [accuracy](https://morrison-lab.github.io/lds/chapters/metrics.html#def-accuracy) of width 64 is higher by `r sprintf("%.4f", py$mean_gap)`.
+That difference has [standard error](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-standard-error) `r sprintf("%.4f", py$gap_se)`,
+so it is less than two standard errors from 0,
+and ten seeds each do not settle the question either.
+A comparison of single runs measures the two seeds as much as the two [widths](https://morrison-lab.github.io/lds/chapters/neural-nets.html#def-width).
+
+:::

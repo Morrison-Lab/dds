@@ -1,0 +1,18 @@
+::: {#sol-random-draws}
+
+-   **The starting weights.**
+    `torch.manual_seed(seed)` seeds PyTorch's global random number generator,
+    and each `nn.Linear` draws its starting weights and biases from it.
+-   **The order of the [minibatches](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-minibatch).**
+    `shuffler`, a generator of its own seeded with `seed`,
+    draws a new order of the training images in each [epoch](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-epoch).
+-   **The split.**
+    `order`, drawn once outside the function from a generator seeded with 481,
+    decides which images are for training and which for validation.
+    Every run shares it,
+    so the runs differ in their seeds and settings but not in their data.
+
+A network with [dropout](regularization.qmd#def-dropout) would draw one more random mask at each step,
+from the global generator.
+
+:::

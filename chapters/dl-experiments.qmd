@@ -1,0 +1,201 @@
+---
+title: "Running Deep Learning Experiments"
+format:
+  html: default
+  revealjs:
+    output-file: dl-experiments-slides.html
+  pdf:
+    output-file: dl-experiments-handout.pdf
+resources:
+  - data/optdigits-test.csv
+---
+
+```{r}
+# The Python chunks on this page import these; reticulate provisions them.
+# Attaching reticulate gives the inline R its `py` object.
+library(reticulate)
+source("../tools/use-torch.R")
+use_torch(c("numpy", "pandas", "matplotlib"))
+```
+
+::: notes
+Brian Hutchinson's CSCI 481/581 sets the order of topics in these notes,
+which follow it with his permission;
+this page covers his module on running [deep learning](course-overview.qmd#def-deep-learning) experiments.
+The exercises are new.
+:::
+
+# Welcome
+
+## Plan for this lecture
+
+{{< include _subfiles/dl-experiments/_plan_sec.qmd >}}
+
+## The digits
+
+{{< include _subfiles/dl-experiments/_digits-setup_sec.qmd >}}
+
+# Settings and seeds
+
+## What training does not learn
+
+<!-- heading shares the slide; do not re-flag -->
+
+{{< include _subfiles/dl-experiments/_choices_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/dl-experiments/_choices_sol.qmd >}}
+
+## The same settings, ten seeds
+
+<!-- heading shares the slide; do not re-flag -->
+
+{{< include _subfiles/dl-experiments/_seed-spread_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/dl-experiments/_seed-spread_sol.qmd >}}
+
+## One run of each
+
+<!-- heading shares the slide; do not re-flag -->
+
+{{< include _subfiles/dl-experiments/_one-seed_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/dl-experiments/_one-seed_sol.qmd >}}
+
+# Comparing settings fairly
+
+## Two widths
+
+<!-- heading shares the slide; do not re-flag -->
+
+{{< include _subfiles/dl-experiments/_fixed-rate_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/dl-experiments/_fixed-rate_sol.qmd >}}
+
+## A sweep for each width
+
+<!-- heading shares the slide; do not re-flag -->
+
+{{< include _subfiles/dl-experiments/_rate-sweep_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/dl-experiments/_rate-sweep_sol.qmd >}}
+
+## Three roles
+
+<!-- heading shares the slide; do not re-flag -->
+
+{{< include _subfiles/dl-experiments/_scientific-hyperparameter_def.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/dl-experiments/_scientific-hyperparameter_exm.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/dl-experiments/_nuisance-hyperparameter_def.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/dl-experiments/_nuisance-hyperparameter_exm.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/dl-experiments/_fixed-hyperparameter_def.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/dl-experiments/_fixed-hyperparameter_exm.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/dl-experiments/_roles_rem.qmd >}}
+
+# Laying out a sweep
+
+## Spacing the rates
+
+<!-- heading shares the slide; do not re-flag -->
+
+{{< include _subfiles/dl-experiments/_log-scale_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/dl-experiments/_log-scale_sol.qmd >}}
+
+## The edge of the sweep
+
+<!-- heading shares the slide; do not re-flag -->
+
+{{< include _subfiles/dl-experiments/_boundary_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/dl-experiments/_boundary_sol.qmd >}}
+
+# How long to train
+
+## More epochs
+
+<!-- heading shares the slide; do not re-flag -->
+
+{{< include _subfiles/dl-experiments/_longer_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/dl-experiments/_longer_sol.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/dl-experiments/_compute-bound_def.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/dl-experiments/_compute-bound_exm.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/dl-experiments/_budget_rem.qmd >}}
+
+# Running it again
+
+## Where the randomness comes from
+
+<!-- heading shares the slide; do not re-flag -->
+
+{{< include _subfiles/dl-experiments/_random-draws_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/dl-experiments/_random-draws_sol.qmd >}}
+
+## The same run twice
+
+<!-- heading shares the slide; do not re-flag -->
+
+{{< include _subfiles/dl-experiments/_same-seed_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/dl-experiments/_same-seed_sol.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/dl-experiments/_reproducibility_rem.qmd >}}
+
+## Further reading
+
+{{< include _subfiles/dl-experiments/_experiments_read.qmd >}}
+
+# References
+
+::: {#refs}
+:::

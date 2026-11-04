@@ -1,0 +1,8 @@
+::: {#exr-boundary}
+
+#### The edge of the sweep
+
+Suppose the sweep in @sol-rate-sweep had stopped at [learning rate](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-learning-rate) 1.
+What would its result for [width](https://morrison-lab.github.io/lds/chapters/neural-nets.html#def-width) 512 leave unknown?
+
+:::

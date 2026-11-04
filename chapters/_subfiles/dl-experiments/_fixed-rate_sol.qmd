@@ -1,0 +1,12 @@
+::: {#sol-fixed-rate}
+
+Nothing says that one [learning rate](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-learning-rate) is best for both [widths](https://morrison-lab.github.io/lds/chapters/neural-nets.html#def-width).
+If 0.1 suits [width](https://morrison-lab.github.io/lds/chapters/neural-nets.html#def-width) 512 and is too small for width 8,
+the comparison measures how well each width suits 0.1,
+as well as the width itself.
+A fair comparison tunes the learning rate for each width on its own,
+and compares each width at its own best rate.
+One run of each has the problem of @sol-one-seed too,
+so each setting gets several seeds.
+
+:::

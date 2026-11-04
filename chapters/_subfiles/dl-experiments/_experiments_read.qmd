@@ -1,0 +1,5 @@
+::: {.reading}
+The [Deep Learning Tuning Playbook](https://github.com/google-research/tuning_playbook) [@godbole2023playbook] is the source of this lecture's vocabulary, <!-- check-term-links: allow -->
+and covers choosing a batch size and a starting configuration as well.
+*Deep Learning*'s [chapter 11](https://www.deeplearningbook.org/contents/guidelines.html) covers manual and automatic hyperparameter search [@goodfellow2016deep, section 11.4]. <!-- check-term-links: allow -->
+:::

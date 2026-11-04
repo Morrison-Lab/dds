@@ -1,0 +1,13 @@
+::: {#exm-fixed-hyperparameter}
+
+#### What the sweep held fixed
+
+In @sol-rate-sweep,
+the [fixed hyperparameters](#def-fixed-hyperparameter) include the [minibatch](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-minibatch) size of 50,
+the 20 [epochs](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-epoch),
+the single [hidden layer](feedforward-networks.qmd#def-hidden-layer) and the choice of [SGD](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-sgd).
+So the sweep shows that [width](https://morrison-lab.github.io/lds/chapters/neural-nets.html#def-width) 512 beats width 8 after 20 epochs of SGD with [minibatches](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-minibatch) of 50.
+It does not show it for 5 epochs,
+or for [Adam](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-adam).
+
+:::
