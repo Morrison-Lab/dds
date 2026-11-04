@@ -30,3 +30,7 @@ Learned while writing the dl-experiments, applications and ethics chapters.
   check-definite-antecedents gained a bare-demonstrative rule ("Of these,", "That is")
   that a copy fetched hours earlier did not have (dds#36, 2026-11-04).
   The script is `check-definite-antecedents/check-definite-antecedents.py` in gha at `v3`.
+- Before saying a term is undefined on lds, mds, pds or sds, search for its `def-` anchor (2026-11-04, dds#36).
+  **Do:** grep the lds checkout and search the other sites for `def-<term>` first.
+  **Don't:** answer a "link this term" finding from memory; mds defines `def-rank` and lds `def-reinforcement` (on anatomy.html).
+  Mechanism: https://github.com/Morrison-Lab/ai-config/issues/4949
