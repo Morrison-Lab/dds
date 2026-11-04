@@ -6,7 +6,7 @@ The sweep in @sol-rate-sweep trained `r nrow(py$sweep)` networks for 20 [epochs]
 `r nrow(py$sweep) * 20` epochs in all.
 One 100-epoch run of one network takes as many epochs as 5 of those trials.
 Here, where training is not [compute-bound](#def-compute-bound),
-the extra 80 epochs in @sol-longer bought nothing,
+the extra 80 epochs in @sol-longer gained less than a change of seed moves the score,
 and the same 80 epochs would have paid for 4 more trials of the same [width](https://morrison-lab.github.io/lds/chapters/neural-nets.html#def-width),
 such as more seeds or more [learning rates](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-learning-rate).
 When training is compute-bound,
