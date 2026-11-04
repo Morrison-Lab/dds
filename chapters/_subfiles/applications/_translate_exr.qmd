@@ -1,0 +1,9 @@
+::: {#exr-translate}
+
+#### Translation without training
+
+A [pretrained](attention-transformers.qmd#def-pretraining) [language model](language-models.qmd#def-language-model) has learned only to continue text.
+Without changing any of its [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter),
+how could you get it to translate English words into French?
+
+:::

@@ -85,11 +85,11 @@ The final's review session will be held during finals week, at a time TBD.
 |                          |                              |                              |                              | **Homework 3 self-grade      |
 |                          |                              |                              |                              | due**                        |
 +--------------------------+------------------------------+------------------------------+------------------------------+------------------------------+
-| **Week 10**              | **No class: Memorial Day**   | **Midterm 3**                | Applications and current     | Lab session: Homework 5      |
-|                          |                              |                              | topics: large language       |                              |
-| May 30 -- Jun 5          |                              |                              | models, fine-tuning, speech  | **Homework 5 due**           |
-|                          |                              |                              | and vision; ethics           |                              |
-|                          |                              |                              |                              | **Homework 4 self-grade      |
+| **Week 10**              | **No class: Memorial Day**   | **Midterm 3**                | [Applications][app] and      | Lab session: Homework 5      |
+|                          |                              |                              | current topics: large        |                              |
+| May 30 -- Jun 5          |                              |                              | language models,             | **Homework 5 due**           |
+|                          |                              |                              | fine-tuning, speech and      |                              |
+|                          |                              |                              | vision; ethics               | **Homework 4 self-grade      |
 |                          |                              |                              |                              | due**                        |
 |                          |                              |                              |                              |                              |
 |                          |                              |                              |                              | **Course evaluations**       |
@@ -118,4 +118,5 @@ The final's review session will be held during finals week, at a time TBD.
 [r]: rnns.qmd
 [lm]: language-models.qmd
 [exp]: dl-experiments.qmd
+[app]: applications.qmd
 [lds]: https://morrison-lab.github.io/lds/

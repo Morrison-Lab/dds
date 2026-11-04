@@ -1,0 +1,6 @@
+::: {.reading}
+@brown2020language introduced few-shot prompting with GPT-3, <!-- check-term-links: allow -->
+@hu2022lora LoRA, <!-- check-term-links: allow -->
+@radford2023robust Whisper, <!-- check-term-links: allow -->
+and @dosovitskiy2021image the vision Transformer. <!-- check-term-links: allow -->
+:::

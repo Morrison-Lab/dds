@@ -1,0 +1,17 @@
+::: {#def-lora}
+
+#### Low-rank adaptation (LoRA)
+
+**Low-rank adaptation**,
+or **LoRA**,
+adapts a [pretrained](attention-transformers.qmd#def-pretraining) layer with weight matrix $\matr{W}_0$ by keeping $\matr{W}_0$ fixed
+and learning a $d \times r$ matrix $\matr{B}$ and an $r \times k$ matrix $\matr{A}$,
+with the rank $r$ much smaller than $d$ and $k$.
+The adapted layer maps $\vx$ to $\matr{W}_0 \vx + \matr{B}\matr{A}\vx$
+[@hu2022lora, section 4.1].
+$\matr{B}$ starts at zero,
+so the adapted network starts as the pretrained one.
+@hu2022lora also scale $\matr{B}\matr{A}\vx$ by a constant;
+the example below leaves it unscaled.
+
+:::

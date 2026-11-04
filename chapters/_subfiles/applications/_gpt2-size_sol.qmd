@@ -1,0 +1,31 @@
+::: {#sol-gpt2-size}
+
+```{python}
+#| code-fold: show
+d_model, vocab_size, context, n_blocks = 768, 50_257, 1_024, 12
+block = nn.ModuleList([
+    nn.LayerNorm(d_model),
+    nn.MultiheadAttention(d_model, num_heads=12),
+    nn.LayerNorm(d_model),
+    nn.Linear(d_model, 4 * d_model),
+    nn.Linear(4 * d_model, d_model),
+])
+per_block = sum(p.numel() for p in block.parameters())
+embeddings = vocab_size * d_model + context * d_model
+final_norm = 2 * d_model
+gpt2_params = embeddings + n_blocks * per_block + final_norm
+print(per_block, embeddings, gpt2_params)
+```
+
+Building one block from PyTorch's layers and counting its [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter) gives `r format(py$per_block, big.mark = ",")` per block.
+Of these, the attention's four $d \times d$ weight matrices hold $4d^2$,
+and the [MLP](feedforward-networks.qmd#def-feedforward-network)'s two weight matrices hold $8d^2$.
+The token and position [embedding](rnns.qmd#def-embedding)s hold `r format(py$embeddings, big.mark = ",")`,
+and a last [layer normalization](normalization.qmd#def-layer-norm) holds $2d$.
+In all,
+GPT-2 has `r format(py$gpt2_params, big.mark = ",")` parameters,
+the 124 million of its model card [@hf_gpt2].
+The output layer adds none,
+since it reuses the token embedding.
+
+:::

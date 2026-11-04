@@ -1,0 +1,44 @@
+```{python}
+#| code-fold: show
+import copy
+import wave
+
+import numpy as np
+import pandas as pd
+import torch
+from torch import nn
+import matplotlib.pyplot as plt
+
+digits = pd.read_csv("data/optdigits-test.csv", header=None)
+x = torch.tensor(digits.iloc[:, :64].to_numpy(), dtype=torch.float32) / 16
+y = torch.tensor(digits[64].to_numpy())
+order = torch.randperm(len(x), generator=torch.Generator().manual_seed(481))
+train_idx, adapt_idx, val_idx = order[:1000], order[1000:1200], order[1200:]
+n_train, n_adapt, n_val = len(train_idx), len(adapt_idx), len(val_idx)
+loss_fn = nn.CrossEntropyLoss()
+
+
+def fit(net, params, inputs, targets, n_steps=300):
+    # Full-batch Adam on the given parameters only.
+    optimizer = torch.optim.Adam(params, lr=0.01)
+    for step in range(n_steps):
+        optimizer.zero_grad()
+        loss_fn(net(inputs), targets).backward()
+        optimizer.step()
+
+
+def accuracy(net, inputs, targets):
+    with torch.no_grad():
+        return (net(inputs).argmax(dim=1) == targets).float().mean().item()
+
+
+print(n_train, n_adapt, n_val)
+```
+
+Two of the exercises use the `r format(nrow(py$digits), big.mark = ",")` digits of [`data/optdigits-test.csv`](data/optdigits-test.csv) [@alpaydin1998optdigits],
+each an 8 by 8 image.
+`r format(py$n_train, big.mark = ",")` random images form a [training set](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-training-set),
+another `r py$n_adapt` are kept for adapting a trained network,
+and the other `r py$n_val` form a [validation set](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-validation-set).
+`fit()` trains the [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter) it is given by full-batch [Adam](https://morrison-lab.github.io/mds/optimization-gradient-descent.html#def-adam),
+and `accuracy()` gives the share of images whose largest [logit](feedforward-networks.qmd#def-logits) is the true digit.

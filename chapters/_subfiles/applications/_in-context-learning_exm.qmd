@@ -1,0 +1,19 @@
+::: {#exm-in-context-learning}
+
+#### A few-shot prompt
+
+Here is a prompt in the few-shot format of @brown2020language [figure 2.1]:
+
+```text
+Translate English to French:
+cat => chat
+house => maison
+water => eau
+bread =>
+```
+
+The three translated examples make it few-shot [in-context learning](#def-in-context-learning).
+The model's continuation after the last arrow is its answer.
+The English and French words here are ours, not Brown and colleagues'.
+
+:::

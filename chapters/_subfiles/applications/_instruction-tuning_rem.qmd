@@ -1,0 +1,14 @@
+::: {#rem-instruction-tuning}
+
+#### From predicting text to following instructions
+
+A [pretrained](attention-transformers.qmd#def-pretraining) [language model](language-models.qmd#def-language-model) continues text;
+it does not answer a question just because it is asked one.
+@ouyang2022training [fine-tune](cnns.qmd#def-fine-tuning) GPT-3 in two stages to follow instructions.
+First they train it on prompts paired with answers that people wrote.
+Then people rank several of the model's answers to each prompt,
+a second network learns to predict those rankings,
+and reinforcement learning trains the model toward answers that the second network rates highly.
+The second stage is reinforcement learning from human feedback, or RLHF.
+
+:::

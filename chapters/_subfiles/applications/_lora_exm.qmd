@@ -1,0 +1,64 @@
+::: {#exm-lora}
+
+#### Adapting to mirrored digits
+
+```{python}
+#| code-fold: show
+class LoRALinear(nn.Module):
+    # A frozen nn.Linear plus a trainable update B @ A of rank `rank`.
+    def __init__(self, linear, rank):
+        super().__init__()
+        self.linear = linear
+        self.A = nn.Parameter(torch.randn(rank, linear.in_features) * 0.01)
+        self.B = nn.Parameter(torch.zeros(linear.out_features, rank))
+
+    def forward(self, inputs):
+        return self.linear(inputs) + inputs @ self.A.T @ self.B.T
+
+
+_ = torch.manual_seed(0)
+base = nn.Sequential(nn.Linear(64, 256), nn.ReLU(), nn.Linear(256, 10))
+fit(base, base.parameters(), x[train_idx], y[train_idx])
+mirrored = x.reshape(-1, 8, 8).flip(-1).reshape(-1, 64)
+base_acc = accuracy(base, x[val_idx], y[val_idx])
+base_mirrored_acc = accuracy(base, mirrored[val_idx], y[val_idx])
+
+lora_net = copy.deepcopy(base)
+_ = lora_net.requires_grad_(False)
+lora_net[0] = LoRALinear(lora_net[0], rank=8)
+lora_params = [p for p in lora_net.parameters() if p.requires_grad]
+fit(lora_net, lora_params, mirrored[adapt_idx], y[adapt_idx])
+lora_count = sum(p.numel() for p in lora_params)
+lora_acc = accuracy(lora_net, mirrored[val_idx], y[val_idx])
+
+full_net = copy.deepcopy(base)
+fit(full_net, full_net.parameters(), mirrored[adapt_idx], y[adapt_idx])
+full_count_digits = sum(p.numel() for p in full_net.parameters())
+full_acc = accuracy(full_net, mirrored[val_idx], y[val_idx])
+
+_ = torch.manual_seed(0)
+fresh_net = nn.Sequential(nn.Linear(64, 256), nn.ReLU(), nn.Linear(256, 10))
+fit(fresh_net, fresh_net.parameters(), mirrored[adapt_idx], y[adapt_idx])
+fresh_acc = accuracy(fresh_net, mirrored[val_idx], y[val_idx])
+print(base_acc, base_mirrored_acc)
+print(lora_count, lora_acc, full_count_digits, full_acc, fresh_acc)
+# Stop the render if the prose below stops being true.
+assert base_mirrored_acc < lora_acc < full_acc < fresh_acc
+assert full_acc - lora_acc < 0.05
+```
+
+`base` is an [MLP](feedforward-networks.qmd#def-feedforward-network) with one [hidden layer](feedforward-networks.qmd#def-hidden-layer) of 256 [ReLU](feedforward-networks.qmd#def-relu) [units](feedforward-networks.qmd#def-unit),
+trained on the `r format(py$n_train, big.mark = ",")` training digits.
+It classifies `r sprintf("%.0f%%", 100 * py$base_acc)` of the validation digits correctly,
+but only `r sprintf("%.0f%%", 100 * py$base_mirrored_acc)` of the same digits mirrored left to right.
+[LoRA](#def-lora) with rank 8 on its first layer trains `r format(py$lora_count, big.mark = ",")` numbers on `r py$n_adapt` mirrored digits,
+and raises the [accuracy](https://morrison-lab.github.io/lds/chapters/metrics.html#def-accuracy) on the mirrored validation digits to `r sprintf("%.0f%%", 100 * py$lora_acc)`.
+[Fine-tuning](cnns.qmd#def-fine-tuning) all `r format(py$full_count_digits, big.mark = ",")` [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter) on the same images reaches `r sprintf("%.0f%%", 100 * py$full_acc)`.
+A new network trained on the `r py$n_adapt` mirrored digits alone reaches `r sprintf("%.0f%%", 100 * py$fresh_acc)`,
+so this small network gains nothing from its first training.
+LoRA pays off where a [pretrained](attention-transformers.qmd#def-pretraining) model is too large to copy and train for each task:
+@hu2022lora report that,
+for GPT-3,
+it cuts the trainable parameters by a factor of 10,000.
+
+:::

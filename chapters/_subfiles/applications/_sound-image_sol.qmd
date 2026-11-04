@@ -1,0 +1,11 @@
+::: {#sol-sound-image}
+
+Turn the recording into a picture of which frequencies are loud at each moment.
+Cut the recording into short, overlapping windows,
+and measure how much of each frequency each window holds.
+Laid side by side,
+one column per window and one row per frequency,
+the measurements form a two-dimensional array,
+which a network for images can read.
+
+:::

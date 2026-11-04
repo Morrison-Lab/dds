@@ -1,0 +1,18 @@
+::: {#sol-training-flops}
+
+```{python}
+#| code-fold: show
+chinchilla_params, chinchilla_tokens = 70e9, 1.4e12
+chinchilla_flops = 6 * chinchilla_params * chinchilla_tokens
+tokens_per_param = chinchilla_tokens / chinchilla_params
+print(f"{chinchilla_flops:.2e}", tokens_per_param)
+```
+
+About $`r sprintf("%.1f", py$chinchilla_flops / 1e23)` \times 10^{23}$ FLOPs.
+Each token costs about 6 operations per [parameter](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter):
+2 for the multiply and add of the forward pass,
+and about 4 for the backward pass,
+which takes about twice the computation of the forward pass [@kaplan2020scaling, section 2.1].
+Chinchilla saw `r py$tokens_per_param` tokens for each of its [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter).
+
+:::

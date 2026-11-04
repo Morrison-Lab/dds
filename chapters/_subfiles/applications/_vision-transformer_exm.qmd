@@ -1,0 +1,51 @@
+::: {#exm-vision-transformer}
+
+#### A small ViT for the digits
+
+```{python}
+#| code-fold: show
+class TinyViT(nn.Module):
+    def __init__(self, n_patches=16, patch_size=4, width=32):
+        super().__init__()
+        self.embed = nn.Linear(patch_size, width)
+        self.position = nn.Parameter(torch.zeros(n_patches, width))
+        layer = nn.TransformerEncoderLayer(
+            width, nhead=4, dim_feedforward=64, dropout=0.0,
+            batch_first=True, norm_first=True)
+        self.blocks = nn.TransformerEncoder(
+            layer, num_layers=2, enable_nested_tensor=False)
+        self.head = nn.Linear(width, 10)
+
+    def forward(self, patch_seq):
+        hidden = self.blocks(self.embed(patch_seq) + self.position)
+        return self.head(hidden.mean(dim=1))
+
+
+_ = torch.manual_seed(0)
+vit = TinyViT()
+optimizer = torch.optim.Adam(vit.parameters(), lr=3e-3)
+shuffler = torch.Generator().manual_seed(0)
+for epoch in range(30):
+    for batch in torch.randperm(n_train, generator=shuffler).split(50):
+        rows = train_idx[batch]
+        optimizer.zero_grad()
+        loss_fn(vit(patches[rows]), y[rows]).backward()
+        optimizer.step()
+_ = vit.eval()
+vit_count = sum(p.numel() for p in vit.parameters())
+vit_acc = accuracy(vit, patches[val_idx], y[val_idx])
+print(vit_count, vit_acc)
+```
+
+`TinyViT` is a [vision Transformer](#def-vision-transformer) with 2 [Transformer block](attention-transformers.qmd#def-transformer-block)s of [width](https://morrison-lab.github.io/lds/chapters/neural-nets.html#def-width) 32,
+`r format(py$vit_count, big.mark = ",")` [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter) in all.
+It averages the block outputs over the sequence before its last linear layer,
+rather than reading a special extra vector as @dosovitskiy2021image do.
+Trained for 30 [epochs](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-epoch) on the `r format(py$n_train, big.mark = ",")` training digits,
+it classifies `r sprintf("%.0f%%", 100 * py$vit_acc)` of the validation digits correctly.
+@dosovitskiy2021image [section 4.3] find that ResNets,
+convolutional networks,
+do better than [ViT](#def-vision-transformer)s when [pretrained](attention-transformers.qmd#def-pretraining) on small data sets,
+and ViTs do better when pretrained on the 303 million images of JFT-300M.
+
+:::

@@ -1,0 +1,13 @@
+::: {#exr-gpt2-size}
+
+#### Counting GPT-2's parameters
+
+The smallest GPT-2 [language model](language-models.qmd#def-language-model) has a vocabulary of 50,257 tokens,
+a context of 1,024 positions,
+[width](https://morrison-lab.github.io/lds/chapters/neural-nets.html#def-width) $d = 768$,
+and 12 [Transformer block](attention-transformers.qmd#def-transformer-block)s,
+each with 12 heads and an [MLP](feedforward-networks.qmd#def-feedforward-network) whose [hidden layer](feedforward-networks.qmd#def-hidden-layer) has $4d$ [units](feedforward-networks.qmd#def-unit) [@hf_gpt2].
+Its output layer reuses the token [embedding](rnns.qmd#def-embedding) as its weights [@hf_gpt2_code].
+How many [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter) does it have?
+
+:::

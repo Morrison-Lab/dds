@@ -1,0 +1,11 @@
+::: {#sol-translate}
+
+Write the start of a document in which translations are the natural next text,
+such as a few English words,
+each followed by an arrow and its French translation,
+and then one more English word followed by an arrow.
+A model that has learned to continue such lists from its training text
+will continue this one with a French word.
+The task is described only by the input.
+
+:::
