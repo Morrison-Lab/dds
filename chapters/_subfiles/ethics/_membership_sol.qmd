@@ -56,7 +56,7 @@ Losses below $10^{-8}$ are drawn at $-8$.
 Here a network with a [hidden layer](feedforward-networks.qmd#def-hidden-layer) of `r py$target_width` [units](feedforward-networks.qmd#def-unit) is trained on `r py$n_members` digits,
 and compared on those and on `r py$n_members` others.
 Its median [cross-entropy loss](https://morrison-lab.github.io/lds/chapters/logistic-regression.html#def-cross-entropy-loss) is `r format(py$loss_ratio, big.mark = ",", digits = 2)` times larger on the digits it was not trained on.
-`r sprintf("%.0f%%", 100 * py$outsiders_above)` of those have a larger [loss](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-loss-function) than any digit it was trained on,
+`r sprintf("%.0f%%", 100 * py$outsiders_above)` of those other digits have a larger [loss](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-loss-function) than any digit it was trained on,
 as @fig-member-loss shows.
 
 :::
