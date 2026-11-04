@@ -52,7 +52,7 @@ assert fresh_acc > max(lora_acc, full_acc) - 0.02
 trained on the `r format(py$n_train, big.mark = ",")` training digits.
 It classifies `r sprintf("%.0f%%", 100 * py$base_acc)` of the validation digits correctly,
 but only `r sprintf("%.0f%%", 100 * py$base_mirrored_acc)` of the same digits mirrored left to right.
-[LoRA](#def-lora) with rank 8 on its first layer trains `r format(py$lora_count, big.mark = ",")` numbers on `r py$n_adapt` mirrored digits,
+[LoRA](#def-lora) with [rank](https://morrison-lab.github.io/mds/linear-algebra-subspaces.html#def-rank) 8 on its first layer trains `r format(py$lora_count, big.mark = ",")` numbers on `r py$n_adapt` mirrored digits,
 and raises the [accuracy](https://morrison-lab.github.io/lds/chapters/metrics.html#def-accuracy) on the mirrored validation digits to `r sprintf("%.0f%%", 100 * py$lora_acc)`.
 [Fine-tuning](cnns.qmd#def-fine-tuning) all `r format(py$full_count_digits, big.mark = ",")` [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter) on the same images reaches `r sprintf("%.0f%%", 100 * py$full_acc)`.
 A new network trained on the `r py$n_adapt` mirrored digits alone reaches `r sprintf("%.0f%%", 100 * py$fresh_acc)`,
