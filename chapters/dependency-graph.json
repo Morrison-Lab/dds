@@ -183,6 +183,42 @@
    "external": false
   },
   {
+   "id": "dds/dl-experiments#def-compute-bound",
+   "site": "dds",
+   "page": "dl-experiments",
+   "div": "def-compute-bound",
+   "kind": "def",
+   "title": "Compute-bound",
+   "external": false
+  },
+  {
+   "id": "dds/dl-experiments#def-fixed-hyperparameter",
+   "site": "dds",
+   "page": "dl-experiments",
+   "div": "def-fixed-hyperparameter",
+   "kind": "def",
+   "title": "Fixed hyperparameter",
+   "external": false
+  },
+  {
+   "id": "dds/dl-experiments#def-nuisance-hyperparameter",
+   "site": "dds",
+   "page": "dl-experiments",
+   "div": "def-nuisance-hyperparameter",
+   "kind": "def",
+   "title": "Nuisance hyperparameter",
+   "external": false
+  },
+  {
+   "id": "dds/dl-experiments#def-scientific-hyperparameter",
+   "site": "dds",
+   "page": "dl-experiments",
+   "div": "def-scientific-hyperparameter",
+   "kind": "def",
+   "title": "Scientific hyperparameter",
+   "external": false
+  },
+  {
    "id": "dds/feedforward-networks#def-activation-function",
    "site": "dds",
    "page": "feedforward-networks",
@@ -680,6 +716,10 @@
   [
    "dds/course-overview#def-deep-learning",
    "dds/course-overview#def-representation-learning"
+  ],
+  [
+   "dds/dl-experiments#def-nuisance-hyperparameter",
+   "dds/dl-experiments#def-scientific-hyperparameter"
   ],
   [
    "dds/feedforward-networks#def-activation-function",
