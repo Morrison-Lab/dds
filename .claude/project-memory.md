@@ -26,3 +26,7 @@ Learned while writing the dl-experiments, applications and ethics chapters.
   rather than asking for extra branches (2026-11-04, dds#34 then dds#36).
 - gpt-oss:120b on Ollama cloud misreads reshapes and R indexing of `py$` values;
   answer with the shape or value the render printed, then re-run it.
+- Fetch the gha checkers fresh before a push; a scratch copy goes stale.
+  check-definite-antecedents gained a bare-demonstrative rule ("Of these,", "That is")
+  that a copy fetched hours earlier did not have (dds#36, 2026-11-04).
+  The script is `check-definite-antecedents/check-definite-antecedents.py` in gha at `v3`.
