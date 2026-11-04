@@ -5,6 +5,7 @@ The repo-wide instructions for every agent are in
 with file-scoped ones in `.github/instructions/`;
 the course's lecture conventions are in [`AUTHORING.md`](AUTHORING.md).
 Read all three before changing anything under `chapters/`.
+Working notes from earlier sessions, such as chapter-writing pitfalls, are in [`.claude/project-memory.md`](.claude/project-memory.md).
 
 ## Project Overview
 
