@@ -718,6 +718,10 @@
    "dds/feedforward-networks#def-hidden-layer"
   ],
   [
+   "dds/feedforward-networks#thm-log-softmax",
+   "dds/feedforward-networks#def-log-sum-exp"
+  ],
+  [
    "dds/feedforward-networks#thm-universal-approximation",
    "dds/feedforward-networks#def-activation-function"
   ],

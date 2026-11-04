@@ -85,19 +85,24 @@ The exercises use a local copy, [`data/shakespeare.txt`](data/shakespeare.txt), 
 
 > **NOTE:**
 >
-> **Exercise 1 (The probability of a word)** Let \\X_1, X_2, X_3\\ be the next three characters of a text. Use the [chain rule of probability](https://morrison-lab.github.io/lds/chapters/probability.html#thm-chain-rule) to write \\\Prf{X_1 = \texttt{t}, X_2 = \texttt{h}, X_3 = \texttt{e}}\\ as a product of three probabilities, each about one character.
+> **Exercise 1 (The probability of a word)** Let $X_1, X_2, X_3$ be the next three characters of a text. Use the [chain rule of probability](https://morrison-lab.github.io/lds/chapters/probability.html#thm-chain-rule) to write $\Prf{X_1 = \texttt{t}, X_2 = \texttt{h}, X_3 = \texttt{e}}$ as a product of three probabilities, each about one character.
 
 > **NOTE:**
 >
 > *Solution 1*. The [chain rule of probability](https://morrison-lab.github.io/lds/chapters/probability.html#thm-chain-rule) conditions each character on the ones before it:
 >
-> \\\begin{aligned} &\Prf{X_1 = \texttt{t}, X_2 = \texttt{h}, X_3 = \texttt{e}} \\ &\quad = \Prf{X_1 = \texttt{t}} \condPr{X_2 = \texttt{h}}{X_1 = \texttt{t}} \condPr{X_3 = \texttt{e}}{X_1 = \texttt{t}, X_2 = \texttt{h}}. \end{aligned}\\
+> $$\begin{aligned}
+> &\Prf{X_1 = \texttt{t}, X_2 = \texttt{h}, X_3 = \texttt{e}} \\
+> &\quad = \Prf{X_1 = \texttt{t}}
+> \condPr{X_2 = \texttt{h}}{X_1 = \texttt{t}}
+> \condPr{X_3 = \texttt{e}}{X_1 = \texttt{t}, X_2 = \texttt{h}}.
+> \end{aligned}$$
 >
 > Each factor is the probability of one character given the characters before it. A model that gives these conditional probabilities for every string of earlier characters gives the probability of every string.
 
 > **NOTE:**
 >
-> **Definition 1 (Language model)** A **language model** gives, for each position \\t\\ in a sequence of symbols \\x_1, \dots, x_n\\, a probability distribution \\\condPr{X_t = x}{x_1, \dots, x\_{t-1}}\\ over the symbol \\x\\ at that position, given the symbols before it [\[2, Sec. 12.4\]](#ref-goodfellow2016deep). By the [chain rule of probability](https://morrison-lab.github.io/lds/chapters/probability.html#thm-chain-rule), the product of these probabilities over \\t = 1, \dots, n\\ is the probability of the whole sequence. The symbols, often called tokens, can be characters or words; these notes use characters.
+> **Definition 1 (Language model)** A **language model** gives, for each position $t$ in a sequence of symbols $x_1, \dots, x_n$, a probability distribution $\condPr{X_t = x}{x_1, \dots, x_{t-1}}$ over the symbol $x$ at that position, given the symbols before it [\[2, Sec. 12.4\]](#ref-goodfellow2016deep). By the [chain rule of probability](https://morrison-lab.github.io/lds/chapters/probability.html#thm-chain-rule), the product of these probabilities over $t = 1, \dots, n$ is the probability of the whole sequence. The symbols, often called tokens, can be characters or words; these notes use characters.
 
 > **NOTE:**
 >
@@ -112,7 +117,7 @@ The exercises use a local copy, [`data/shakespeare.txt`](data/shakespeare.txt), 
 >
 >     4.40565509888493e-06
 >
-> The simplest [language model](#def-language-model) for this text gives each of the 61 characters probability \\1 / 61\\ at every position, whatever came before. It gives `"the"` probability \\(1 / 61)^3\\, or 1 in 226,981, the same as any other string of three characters, such as `"qzx"`.
+> The simplest [language model](#def-language-model) for this text gives each of the 61 characters probability $1 / 61$ at every position, whatever came before. It gives `"the"` probability $(1 / 61)^3$, or 1 in 226,981, the same as any other string of three characters, such as `"qzx"`.
 
 ## 2.2 Counting pairs
 
@@ -135,15 +140,15 @@ The exercises use a local copy, [`data/shakespeare.txt`](data/shakespeare.txt), 
 >
 >     32 uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu
 >
-> 100% of the 32 `q`s in the training text are followed by a `u`. So the share of `q`s followed by `u` estimates \\\condPr{X_t = \texttt{u}}{X\_{t-1} = \texttt{q}}\\ as 1.00.
+> 100% of the 32 `q`s in the training text are followed by a `u`. So the share of `q`s followed by `u` estimates $\condPr{X_t = \texttt{u}}{X_{t-1} = \texttt{q}}$ as 1.00.
 
 > **NOTE:**
 >
 > **Definition 2 (Bigram model)** A **bigram model** is a [language model](#def-language-model) in which the distribution of each symbol depends only on the symbol before it [\[2, Sec. 12.4.1\]](#ref-goodfellow2016deep). Counting in a training text estimates it as
 >
-> \\ \hPr{}\paren{X_t = b \given X\_{t-1} = a} = \frac{N(a, b)}{N(a)}, \\
+> $$\hPr{}\paren{X_t = b \given X_{t-1} = a} = \frac{N(a, b)}{N(a)},$$
 >
-> where \\N(a, b)\\ counts how often \\a\\ is followed by \\b\\, and \\N(a)\\ counts how often \\a\\ is followed by any symbol [\[3, Sec. 3.1.2\]](#ref-jurafsky2026slp). An \\n\\-gram model conditions on the \\n - 1\\ symbols before each one in the same way.
+> where $N(a, b)$ counts how often $a$ is followed by $b$, and $N(a)$ counts how often $a$ is followed by any symbol [\[3, Sec. 3.1.2\]](#ref-jurafsky2026slp). An $n$-gram model conditions on the $n - 1$ symbols before each one in the same way.
 
 > **NOTE:**
 >
@@ -167,7 +172,7 @@ The exercises use a local copy, [`data/shakespeare.txt`](data/shakespeare.txt), 
 >
 >     'h' 0.33165013790130615 1.0
 >
-> Row \\a\\ of `pair_counts` holds \\N(a, b)\\ for every \\b\\. So row \\a\\ of `counted` is the [bigram model](#def-bigram-model)’s distribution of the character after \\a\\. Its most likely character after `t` is h, with probability 0.33. It gives a `u` after a `q` probability 1.00, the share found in [Solution 2](#sol-after-q).
+> Row $a$ of `pair_counts` holds $N(a, b)$ for every $b$. So row $a$ of `counted` is the [bigram model](#def-bigram-model)’s distribution of the character after $a$. Its most likely character after `t` is h, with probability 0.33. It gives a `u` after a `q` probability 1.00, the share found in [Solution 2](#sol-after-q).
 
 ## 2.3 Pairs never seen
 
@@ -193,9 +198,9 @@ The exercises use a local copy, [`data/shakespeare.txt`](data/shakespeare.txt), 
 
 > **NOTE:**
 >
-> **Definition 3 (Add-one smoothing (Laplace smoothing))** **Add-one smoothing** (also called **Laplace smoothing**) adds 1 to every count before estimating a [bigram model](#def-bigram-model). With \\K\\ possible symbols, the estimate becomes
+> **Definition 3 (Add-one smoothing (Laplace smoothing))** **Add-one smoothing** (also called **Laplace smoothing**) adds 1 to every count before estimating a [bigram model](#def-bigram-model). With $K$ possible symbols, the estimate becomes
 >
-> \\ \hPr{}\paren{X_t = b \given X\_{t-1} = a} = \frac{N(a, b) + 1}{N(a) + K}, \\
+> $$\hPr{}\paren{X_t = b \given X_{t-1} = a} = \frac{N(a, b) + 1}{N(a) + K},$$
 >
 > so every pair gets a probability above 0, including pairs the training text never shows [\[3, Sec. 3.6.1\]](#ref-jurafsky2026slp).
 
@@ -246,15 +251,15 @@ The exercises use a local copy, [`data/shakespeare.txt`](data/shakespeare.txt), 
 > assert bigram_nll < uniform_nll
 > ```
 >
-> The average is 2.38. The uniform model of [Example 1](#exm-language-model) gives every character probability \\1 / 61\\, so its average is \\\log 61 = 4.11\\. The lower average means the [bigram model](#def-bigram-model) gives the validation text higher probability. This average is the [cross-entropy loss](https://morrison-lab.github.io/lds/chapters/logistic-regression.html#def-cross-entropy-loss) of the model’s predictions of the validation characters.
+> The average is 2.38. The uniform model of [Example 1](#exm-language-model) gives every character probability $1 / 61$, so its average is $\log 61 = 4.11$. The lower average means the [bigram model](#def-bigram-model) gives the validation text higher probability. This average is the [cross-entropy loss](https://morrison-lab.github.io/lds/chapters/logistic-regression.html#def-cross-entropy-loss) of the model’s predictions of the validation characters.
 
 > **NOTE:**
 >
-> **Definition 4 (Perplexity)** The **perplexity** of a [language model](#def-language-model) on a sequence \\x_1, \dots, x_n\\ is
+> **Definition 4 (Perplexity)** The **perplexity** of a [language model](#def-language-model) on a sequence $x_1, \dots, x_n$ is
 >
-> \\ \expf{-\avgtof{t}{n}{\logf{\condPr{X_t = x_t}{x_1, \dots, x\_{t-1}}}}}, \\
+> $$\expf{-\avgtof{t}{n}{\logf{\condPr{X_t = x_t}{x_1, \dots, x_{t-1}}}}},$$
 >
-> the exponential of the average negative log probability per symbol [\[3, Sec. 3.3\]](#ref-jurafsky2026slp). It equals the probability of the whole sequence raised to the power \\-1/n\\, and it is the same number when the logs are base 2 and the exponential is \\2^{(\cdot)}\\. The DATA 471 notes define it for any classifier in [the same way](https://morrison-lab.github.io/lds/chapters/metrics.html#eq-perplexity), and find that a model which gives probability \\1/K\\ to each of \\K\\ symbols has perplexity \\K\\. Lower is better.
+> the exponential of the average negative log probability per symbol [\[3, Sec. 3.3\]](#ref-jurafsky2026slp). It equals the probability of the whole sequence raised to the power $-1/n$, and it is the same number when the logs are base 2 and the exponential is $2^{(\cdot)}$. The DATA 471 notes define it for any classifier in [the same way](https://morrison-lab.github.io/lds/chapters/metrics.html#eq-perplexity), and find that a model which gives probability $1/K$ to each of $K$ symbols has perplexity $K$. Lower is better.
 
 > **NOTE:**
 >
@@ -274,7 +279,7 @@ The exercises use a local copy, [`data/shakespeare.txt`](data/shakespeare.txt), 
 
 > **NOTE:**
 >
-> *Deep Learning*’s [section 12.4](https://www.deeplearningbook.org/contents/applications.html) covers \\n\\-gram and neural language models [\[2\]](#ref-goodfellow2016deep).
+> *Deep Learning*’s [section 12.4](https://www.deeplearningbook.org/contents/applications.html) covers $n$-gram and neural language models [\[2\]](#ref-goodfellow2016deep).
 
 # 4 A recurrent language model
 
@@ -522,7 +527,7 @@ print(make_lm())
 
 > **NOTE:**
 >
-> **Exercise 8 (Dividing the logits)** Take the [logits](../chapters/feedforward-networks.llms.md#def-logits) \\\vz = (2, 1, 0)\\. Of the [softmax](https://morrison-lab.github.io/lds/chapters/multiclass-logistic-regression.html#def-softmax)es of \\\vz / 0.5\\, \\\vz\\ and \\\vz / 2\\, which gives the first symbol the most probability?
+> **Exercise 8 (Dividing the logits)** Take the [logits](../chapters/feedforward-networks.llms.md#def-logits) $\vz = (2, 1, 0)$. Of the [softmax](https://morrison-lab.github.io/lds/chapters/multiclass-logistic-regression.html#def-softmax)es of $\vz / 0.5$, $\vz$ and $\vz / 2$, which gives the first symbol the most probability?
 
 > **NOTE:**
 >
@@ -547,11 +552,11 @@ print(make_lm())
 > assert first[0] > first[1] > first[2]
 > ```
 >
-> Dividing by 0.5 gives the first symbol probability 0.87, against 0.67 for \\\vz\\ itself and 0.51 for \\\vz / 2\\. Dividing by a number below 1 spreads the [logits](../chapters/feedforward-networks.llms.md#def-logits) apart, which moves probability to the largest; dividing by a number above 1 brings them together, which moves the probabilities toward \\1/3\\ each.
+> Dividing by 0.5 gives the first symbol probability 0.87, against 0.67 for $\vz$ itself and 0.51 for $\vz / 2$. Dividing by a number below 1 spreads the [logits](../chapters/feedforward-networks.llms.md#def-logits) apart, which moves probability to the largest; dividing by a number above 1 brings them together, which moves the probabilities toward $1/3$ each.
 
 > **NOTE:**
 >
-> **Definition 6 (Temperature)** Sampling at **temperature** \\T \> 0\\ draws the next symbol from the [softmax](https://morrison-lab.github.io/lds/chapters/multiclass-logistic-regression.html#def-softmax) of \\\vz / T\\, where \\\vz\\ is the vector of the model’s [logits](../chapters/feedforward-networks.llms.md#def-logits). Hinton et al. [\[5, Sec. 2\]](#ref-hinton2015distilling) use this softmax with temperature \\T\\, and note that a higher \\T\\ gives a softer distribution. At \\T = 1\\ sampling uses the model’s own distribution. As \\T\\ falls toward 0, the distribution puts more of its weight on the most likely symbols, and as \\T\\ grows, the distribution approaches the uniform distribution.
+> **Definition 6 (Temperature)** Sampling at **temperature** $T > 0$ draws the next symbol from the [softmax](https://morrison-lab.github.io/lds/chapters/multiclass-logistic-regression.html#def-softmax) of $\vz / T$, where $\vz$ is the vector of the model’s [logits](../chapters/feedforward-networks.llms.md#def-logits). Hinton et al. [\[5, Sec. 2\]](#ref-hinton2015distilling) use this softmax with temperature $T$, and note that a higher $T$ gives a softer distribution. At $T = 1$ sampling uses the model’s own distribution. As $T$ falls toward 0, the distribution puts more of its weight on the most likely symbols, and as $T$ grows, the distribution approaches the uniform distribution.
 
 > **NOTE:**
 >

@@ -137,13 +137,13 @@ Course grades are letter grades, based on:
 
 I will assign final letter grades based on the weighted average of assignment scores, by the standard scale:
 
-| Cumulative score       | Letter grade |
-|:-----------------------|:-------------|
-| \\90\\ \le x\\         | A range      |
-| \\80\\ \le x \< 90\\\\ | B range      |
-| \\70\\ \le x \< 80\\\\ | C range      |
-| \\60\\ \le x \< 70\\\\ | D range      |
-| \\x \< 60\\\\          | F            |
+| Cumulative score    | Letter grade |
+|:--------------------|:-------------|
+| $90\% \le x$        | A range      |
+| $80\% \le x < 90\%$ | B range      |
+| $70\% \le x < 80\%$ | C range      |
+| $60\% \le x < 70\%$ | D range      |
+| $x < 60\%$          | F            |
 
 ### Homework
 

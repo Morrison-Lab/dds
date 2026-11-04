@@ -76,19 +76,19 @@ The exercises use the text of the [language models chapter](../chapters/language
 
 > **NOTE:**
 >
-> **Exercise 1 (A weighted average chosen by the input)** Take the query \\\vq = (1, 0)\\ and three keys with one value each:
+> **Exercise 1 (A weighted average chosen by the input)** Take the query $\vq = (1, 0)$ and three keys with one value each:
 >
-> | Key        | Value |
-> |------------|------:|
-> | \\(2, 0)\\ |    10 |
-> | \\(0, 2)\\ |    20 |
-> | \\(1, 1)\\ |    30 |
+> | Key      | Value |
+> |----------|------:|
+> | $(2, 0)$ |    10 |
+> | $(0, 2)$ |    20 |
+> | $(1, 1)$ |    30 |
 >
-> What weighted average of the values do you get when the weights are the [softmax](https://morrison-lab.github.io/lds/chapters/multiclass-logistic-regression.html#def-softmax) of the keys’ [dot products](https://morrison-lab.github.io/mds/linear-algebra-vectors.html#def-dot-product) with \\\vq\\?
+> What weighted average of the values do you get when the weights are the [softmax](https://morrison-lab.github.io/lds/chapters/multiclass-logistic-regression.html#def-softmax) of the keys’ [dot products](https://morrison-lab.github.io/mds/linear-algebra-vectors.html#def-dot-product) with $\vq$?
 >
 > > **TIP:**
 > >
-> > Score each key by its dot product with \\\vq\\, then take the softmax of the three scores.
+> > Score each key by its dot product with $\vq$, then take the softmax of the three scores.
 
 > **NOTE:**
 >
@@ -113,11 +113,13 @@ The exercises use the text of the [language models chapter](../chapters/language
 
 > **NOTE:**
 >
-> **Definition 1 (Scaled dot-product attention)** **Scaled dot-product attention** takes \\m\\ queries, the rows of an \\m \times d_k\\ matrix \\\matr{Q}\\, and \\n\\ keys and \\n\\ values, the rows of an \\n \times d_k\\ matrix \\\matr{K}\\ and an \\n \times d_v\\ matrix \\\matr{V}\\. It returns the \\m \times d_v\\ matrix
+> **Definition 1 (Scaled dot-product attention)** **Scaled dot-product attention** takes $m$ queries, the rows of an $m \times d_k$ matrix $\matr{Q}$, and $n$ keys and $n$ values, the rows of an $n \times d_k$ matrix $\matr{K}$ and an $n \times d_v$ matrix $\matr{V}$. It returns the $m \times d_v$ matrix
 >
-> \\ \operatorname{Attention}\paren{\matr{Q}, \matr{K}, \matr{V}} \eqdef \operatorname{softmax}\paren{\frac{\matr{Q} \tp{\matr{K}}}{\sqrt{d_k}}} \matr{V}, \\
+> $$\operatorname{Attention}\paren{\matr{Q}, \matr{K}, \matr{V}}
+> \eqdef
+> \operatorname{softmax}\paren{\frac{\matr{Q} \tp{\matr{K}}}{\sqrt{d_k}}} \matr{V},$$
 >
-> with the [softmax](https://morrison-lab.github.io/lds/chapters/multiclass-logistic-regression.html#def-softmax) taken across each row [\[2, Sec. 3.2.1\]](#ref-vaswani2017attention). Row \\i\\ of the softmax holds weights \\\attnweight\_{i1}, \dots, \attnweight\_{in}\\, which are positive and sum to 1, so row \\i\\ of the output is a weighted average of the rows of \\\matr{V}\\. Bahdanau et al. [\[3\]](#ref-bahdanau2015neural) scored each key with a small network instead of a [dot product](https://morrison-lab.github.io/mds/linear-algebra-vectors.html#def-dot-product). Vaswani et al. [\[2, Sec. 3.2.1\]](#ref-vaswani2017attention) call that form additive attention.
+> with the [softmax](https://morrison-lab.github.io/lds/chapters/multiclass-logistic-regression.html#def-softmax) taken across each row [\[2, Sec. 3.2.1\]](#ref-vaswani2017attention). Row $i$ of the softmax holds weights $\attnweight_{i1}, \dots, \attnweight_{in}$, which are positive and sum to 1, so row $i$ of the output is a weighted average of the rows of $\matr{V}$. Bahdanau et al. [\[3\]](#ref-bahdanau2015neural) scored each key with a small network instead of a [dot product](https://morrison-lab.github.io/mds/linear-algebra-vectors.html#def-dot-product). Vaswani et al. [\[2, Sec. 3.2.1\]](#ref-vaswani2017attention) call that form additive attention.
 
 > **NOTE:**
 >
@@ -135,23 +137,34 @@ The exercises use the text of the [language models chapter](../chapters/language
 >
 >     tensor([[17.0802]]) tensor(17.0802)
 >
-> The query and keys of [Exercise 1](#exr-weights) have \\d_k = 2\\, so [scaled dot-product attention](#def-attention) divides the scores by \\\sqrt{2}\\ before the [softmax](https://morrison-lab.github.io/lds/chapters/multiclass-logistic-regression.html#def-softmax). `F.scaled_dot_product_attention` [\[4\]](#ref-pytorch_sdpa) returns 17.08, the same as the formula computed by hand. The scaled scores are closer together, so the average is nearer the plain mean of the values, 20, than the unscaled average of [Solution 1](#sol-weights), 15.79.
+> The query and keys of [Exercise 1](#exr-weights) have $d_k = 2$, so [scaled dot-product attention](#def-attention) divides the scores by $\sqrt{2}$ before the [softmax](https://morrison-lab.github.io/lds/chapters/multiclass-logistic-regression.html#def-softmax). `F.scaled_dot_product_attention` [\[4\]](#ref-pytorch_sdpa) returns 17.08, the same as the formula computed by hand. The scaled scores are closer together, so the average is nearer the plain mean of the values, 20, than the unscaled average of [Solution 1](#sol-weights), 15.79.
 
 ## 2.2 Scaling the scores
 
 > **NOTE:**
 >
-> **Exercise 2 (Why divide by \\\sqrt{d_k}\\?)** Draw a query \\\vq\\ and a key \\\vecf{k}\\ in \\\reals^{d_k}\\ with independent standard normal entries. How does the variance of \\\dprod{\vq}{\vecf{k}}\\ depend on \\d_k\\?
+> **Exercise 2 (Why divide by** $\sqrt{d_k}$?) Draw a query $\vq$ and a key $\vecf{k}$ in $\reals^{d_k}$ with independent standard normal entries. How does the variance of $\dprod{\vq}{\vecf{k}}$ depend on $d_k$?
 
 > **NOTE:**
 >
-> *Solution 2*. Since \\q_j\\ and \\k_j\\ are independent, each term \\q_j k_j\\ has mean \\\E{q_j k_j} = \E{q_j} \E{k_j} = 0\\. Its variance is
+> *Solution 2*. Since $q_j$ and $k_j$ are independent, each term $q_j k_j$ has mean $\E{q_j k_j} = \E{q_j} \E{k_j} = 0$. Its variance is
 >
-> \\ \begin{aligned} \Var{q_j k_j} &= \E{q_j^2 k_j^2} - \paren{\E{q_j k_j}}^2 \\ &= \E{q_j^2} \E{k_j^2} - 0 && \text{(independence)} \\ &= 1 \cdot 1 && \text{(mean 0 and variance 1)} \\ &= 1. \end{aligned} \\
+> $$\begin{aligned}
+> \Var{q_j k_j}
+> &= \E{q_j^2 k_j^2} - \paren{\E{q_j k_j}}^2 \\
+> &= \E{q_j^2} \E{k_j^2} - 0 && \text{(independence)} \\
+> &= 1 \cdot 1 && \text{(mean 0 and variance 1)} \\
+> &= 1.
+> \end{aligned}$$
 >
-> The \\d_k\\ terms are independent, so their variances add:
+> The $d_k$ terms are independent, so their variances add:
 >
-> \\ \begin{aligned} \Var{\dprod{\vq}{\vecf{k}}} &= \Var{\sumto{j}{d_k} q_j k_j} \\ &= \sumto{j}{d_k} \Var{q_j k_j} && \text{(independent terms)} \\ &= d_k. && \text{(each variance is 1)} \end{aligned} \\
+> $$\begin{aligned}
+> \Var{\dprod{\vq}{\vecf{k}}}
+> &= \Var{\sumto{j}{d_k} q_j k_j} \\
+> &= \sumto{j}{d_k} \Var{q_j k_j} && \text{(independent terms)} \\
+> &= d_k. && \text{(each variance is 1)}
+> \end{aligned}$$
 >
 > Vaswani et al. [\[2, Sec. 3.2.1\]](#ref-vaswani2017attention), footnote 4 give the same argument.
 >
@@ -170,7 +183,7 @@ The exercises use the text of the [language models chapter](../chapters/language
 >
 >     [3.969802141189575, 64.14726257324219, 1031.2110595703125]
 >
-> The variance grows in proportion to \\d_k\\. From 10,000 draws, the sample variances for \\d_k = 4\\, 64 and 1024 are 4.0, 64.1 and 1031. Dividing a quantity by a constant \\c\\ divides its variance by \\c^2\\, so dividing the [dot product](https://morrison-lab.github.io/mds/linear-algebra-vectors.html#def-dot-product) by \\\sqrt{d_k}\\ gives variance \\d_k / d_k = 1\\, whatever \\d_k\\ is.
+> The variance grows in proportion to $d_k$. From 10,000 draws, the sample variances for $d_k = 4$, 64 and 1024 are 4.0, 64.1 and 1031. Dividing a quantity by a constant $c$ divides its variance by $c^2$, so dividing the [dot product](https://morrison-lab.github.io/mds/linear-algebra-vectors.html#def-dot-product) by $\sqrt{d_k}$ gives variance $d_k / d_k = 1$, whatever $d_k$ is.
 
 > **NOTE:**
 >
@@ -190,7 +203,7 @@ The exercises use the text of the [language models chapter](../chapters/language
 >
 >     0.9229199290275574 0.10691015422344208
 >
-> With \\d_k = 512\\ and 64 keys drawn as in [Exercise 2](#exr-dot-variance), the unscaled [softmax](https://morrison-lab.github.io/lds/chapters/multiclass-logistic-regression.html#def-softmax) gives its largest weight an average of 0.92, so each query mostly copies one value. After dividing by \\\sqrt{d_k}\\, the largest weight averages 0.11. Vaswani et al. [\[2, Sec. 3.2.1\]](#ref-vaswani2017attention) suggest why the scaling helps: where one weight is near 1, the softmax’s [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) is near 0, and training slows.
+> With $d_k = 512$ and 64 keys drawn as in [Exercise 2](#exr-dot-variance), the unscaled [softmax](https://morrison-lab.github.io/lds/chapters/multiclass-logistic-regression.html#def-softmax) gives its largest weight an average of 0.92, so each query mostly copies one value. After dividing by $\sqrt{d_k}$, the largest weight averages 0.11. Vaswani et al. [\[2, Sec. 3.2.1\]](#ref-vaswani2017attention) suggest why the scaling helps: where one weight is near 1, the softmax’s [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) is near 0, and training slows.
 
 ## 2.3 Attending to another sequence
 
@@ -231,7 +244,7 @@ The exercises use the text of the [language models chapter](../chapters/language
 >
 >     tensor([[1.0000, 1.0000, 1.0000]], grad_fn=<SumBackward1>)
 >
-> `nn.MultiheadAttention` [\[5\]](#ref-pytorch_multiheadattention) takes the queries’ sequence first, then the keys’ and the values’. Here the queries come from a sequence of 3 vectors and the keys and values from a different sequence of 5, so the [cross-attention](#def-cross-attention) output has one row for each of the 3 queries, and the weights form a \\3 \times 5\\ matrix whose rows each sum to 1.
+> `nn.MultiheadAttention` [\[5\]](#ref-pytorch_multiheadattention) takes the queries’ sequence first, then the keys’ and the values’. Here the queries come from a sequence of 3 vectors and the keys and values from a different sequence of 5, so the [cross-attention](#def-cross-attention) output has one row for each of the 3 queries, and the weights form a $3 \times 5$ matrix whose rows each sum to 1.
 
 # 3 Within one sequence
 
@@ -247,11 +260,15 @@ The exercises use the text of the [language models chapter](../chapters/language
 
 > **NOTE:**
 >
-> **Definition 3 (Self-attention)** **Self-attention** is [scaled dot-product attention](#def-attention) whose queries, keys and values all come from the same sequence. For a sequence of \\n\\ vectors in \\\reals^d\\, the rows of an \\n \times d\\ matrix \\\matr{X}\\, it computes
+> **Definition 3 (Self-attention)** **Self-attention** is [scaled dot-product attention](#def-attention) whose queries, keys and values all come from the same sequence. For a sequence of $n$ vectors in $\reals^d$, the rows of an $n \times d$ matrix $\matr{X}$, it computes
 >
-> \\ \matr{Q} = \matr{X} \matr{W}\_Q, \qquad \matr{K} = \matr{X} \matr{W}\_K, \qquad \matr{V} = \matr{X} \matr{W}\_V, \\
+> $$\matr{Q} = \matr{X} \matr{W}_Q,
+> \qquad
+> \matr{K} = \matr{X} \matr{W}_K,
+> \qquad
+> \matr{V} = \matr{X} \matr{W}_V,$$
 >
-> and returns \\\operatorname{Attention}\paren{\matr{Q}, \matr{K}, \matr{V}}\\, where the matrices \\\matr{W}\_Q\\, \\\matr{W}\_K\\ and \\\matr{W}\_V\\, of size \\d \times d_k\\, \\d \times d_k\\ and \\d \times d_v\\, are [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter) learned in training [\[2, Sec. 3.2.3\]](#ref-vaswani2017attention). Each position’s output is a weighted average over every position of the sequence, itself included.
+> and returns $\operatorname{Attention}\paren{\matr{Q}, \matr{K}, \matr{V}}$, where the matrices $\matr{W}_Q$, $\matr{W}_K$ and $\matr{W}_V$, of size $d \times d_k$, $d \times d_k$ and $d \times d_v$, are [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter) learned in training [\[2, Sec. 3.2.3\]](#ref-vaswani2017attention). Each position’s output is a weighted average over every position of the sequence, itself included.
 
 > **NOTE:**
 >
@@ -281,7 +298,7 @@ The exercises use the text of the [language models chapter](../chapters/language
 >
 >     torch.Size([1, 13, 8]) torch.Size([1, 13, 13])
 >
-> The first line of the text begins with the 13 characters `"First Citizen"`. An [embedding layer](../chapters/rnns.llms.md#def-embedding) turns each into a vector of 8 numbers, and passing the same [tensor](../chapters/pytorch-basics.llms.md#def-tensor) as queries, keys and values makes `nn.MultiheadAttention` compute [self-attention](#def-self-attention), followed by a linear layer. The weights form a \\13 \times 13\\ matrix: one row of weights over all 13 characters for each character.
+> The first line of the text begins with the 13 characters `"First Citizen"`. An [embedding layer](../chapters/rnns.llms.md#def-embedding) turns each into a vector of 8 numbers, and passing the same [tensor](../chapters/pytorch-basics.llms.md#def-tensor) as queries, keys and values makes `nn.MultiheadAttention` compute [self-attention](#def-self-attention), followed by a linear layer. The weights form a $13 \times 13$ matrix: one row of weights over all 13 characters for each character.
 
 ## 3.2 Order
 
@@ -309,7 +326,7 @@ The exercises use the text of the [language models chapter](../chapters/language
 
 > **NOTE:**
 >
-> **Definition 4 (Permutation equivariance)** A function \\f\\ from sequences of vectors to sequences of vectors of the same length is **permutation equivariant** when reordering its input reorders its output the same way: \\f(\pi(\matr{X})) = \pi(f(\matr{X}))\\ for every sequence \\\matr{X}\\ and every reordering \\\pi\\ of its positions [\[6, Sec. 2\]](#ref-zaheer2017deep). [Self-attention](#def-self-attention) is permutation equivariant, as [Solution 5](#sol-reverse) found for one reordering.
+> **Definition 4 (Permutation equivariance)** A function $f$ from sequences of vectors to sequences of vectors of the same length is **permutation equivariant** when reordering its input reorders its output the same way: $f(\pi(\matr{X})) = \pi(f(\matr{X}))$ for every sequence $\matr{X}$ and every reordering $\pi$ of its positions [\[6, Sec. 2\]](#ref-zaheer2017deep). [Self-attention](#def-self-attention) is permutation equivariant, as [Solution 5](#sol-reverse) found for one reordering.
 
 > **NOTE:**
 >
@@ -343,7 +360,7 @@ The exercises use the text of the [language models chapter](../chapters/language
 
 > **NOTE:**
 >
-> **Definition 5 (Positional encoding)** A **positional encoding** is a vector \\\vp_t \in \reals^d\\ added to the [embedding](../chapters/rnns.llms.md#def-embedding) of the symbol at position \\t\\, before the first [self-attention](#def-self-attention) layer. Vaswani et al. [\[2, Sec. 3.5\]](#ref-vaswani2017attention) fix \\\vp_t\\ as sines and cosines of \\t\\ at different frequencies; Radford et al. [\[7, Sec. 4.1\]](#ref-radford2018improving) learn \\\vp_t\\ instead, as row \\t\\ of a second embedding matrix. These notes learn them.
+> **Definition 5 (Positional encoding)** A **positional encoding** is a vector $\vp_t \in \reals^d$ added to the [embedding](../chapters/rnns.llms.md#def-embedding) of the symbol at position $t$, before the first [self-attention](#def-self-attention) layer. Vaswani et al. [\[2, Sec. 3.5\]](#ref-vaswani2017attention) fix $\vp_t$ as sines and cosines of $t$ at different frequencies; Radford et al. [\[7, Sec. 4.1\]](#ref-radford2018improving) learn $\vp_t$ instead, as row $t$ of a second embedding matrix. These notes learn them.
 
 > **NOTE:**
 >
@@ -372,15 +389,15 @@ The exercises use the text of the [language models chapter](../chapters/language
 
 > **NOTE:**
 >
-> **Exercise 7 (Peeking at the answer)** A [language model](../chapters/language-models.llms.md#def-language-model) trained with [teacher forcing](../chapters/language-models.llms.md#def-teacher-forcing) predicts the next character at every position of a window at once. Suppose its [self-attention](#def-self-attention) lets position \\t\\ attend to position \\t + 1\\. What stops the model from reaching a training loss near 0?
+> **Exercise 7 (Peeking at the answer)** A [language model](../chapters/language-models.llms.md#def-language-model) trained with [teacher forcing](../chapters/language-models.llms.md#def-teacher-forcing) predicts the next character at every position of a window at once. Suppose its [self-attention](#def-self-attention) lets position $t$ attend to position $t + 1$. What stops the model from reaching a training loss near 0?
 
 > **NOTE:**
 >
-> *Solution 7*. Nothing stops it. The character it must predict at position \\t\\ is the input at position \\t + 1\\, so the model can learn to copy it. That model is useless for generating text, where the next character does not exist yet. The weights on every key after the query have to be 0.
+> *Solution 7*. Nothing stops it. The character it must predict at position $t$ is the input at position $t + 1$, so the model can learn to copy it. That model is useless for generating text, where the next character does not exist yet. The weights on every key after the query have to be 0.
 
 > **NOTE:**
 >
-> **Definition 6 (Causal mask)** A **causal mask** sets the score of key \\j\\ for query \\i\\ to \\-\infty\\ whenever \\j \> i\\, before the [softmax](https://morrison-lab.github.io/lds/chapters/multiclass-logistic-regression.html#def-softmax) in [self-attention](#def-self-attention). The softmax then gives those keys weight 0, so each position attends only to itself and the positions before it [\[2, Sec. 3.2.3\]](#ref-vaswani2017attention).
+> **Definition 6 (Causal mask)** A **causal mask** sets the score of key $j$ for query $i$ to $-\infty$ whenever $j > i$, before the [softmax](https://morrison-lab.github.io/lds/chapters/multiclass-logistic-regression.html#def-softmax) in [self-attention](#def-self-attention). The softmax then gives those keys weight 0, so each position attends only to itself and the positions before it [\[2, Sec. 3.2.3\]](#ref-vaswani2017attention).
 
 > **NOTE:**
 >
@@ -414,7 +431,7 @@ The exercises use the text of the [language models chapter](../chapters/language
 >      [0.22 0.09 0.31 0.38 0.  ]
 >      [0.17 0.51 0.1  0.15 0.08]]
 >
-> `nn.Transformer.generate_square_subsequent_mask(5)` builds the [causal mask](#def-causal-mask) for 5 positions, with \\-\infty\\ above the diagonal and 0 elsewhere, and `attn_mask` adds it to the scores. In the weights for `"First"`, row 1 puts all its weight on `"F"`, and every entry above the diagonal is 0.
+> `nn.Transformer.generate_square_subsequent_mask(5)` builds the [causal mask](#def-causal-mask) for 5 positions, with $-\infty$ above the diagonal and 0 elsewhere, and `attn_mask` adds it to the scores. In the weights for `"First"`, row 1 puts all its weight on `"F"`, and every entry above the diagonal is 0.
 
 # 4 Stacking
 
@@ -430,7 +447,7 @@ The exercises use the text of the [language models chapter](../chapters/language
 
 > **NOTE:**
 >
-> **Definition 7 (Multi-head attention)** **Multi-head attention** with \\h\\ heads runs \\h\\ copies of [scaled dot-product attention](#def-attention) side by side, head \\i\\ with its own matrices \\\matr{W}\_Q^{(i)}\\, \\\matr{W}\_K^{(i)}\\ and \\\matr{W}\_V^{(i)}\\ of size \\d \times d / h\\. It joins the \\h\\ outputs, each \\n \times d / h\\, into one \\n \times d\\ matrix, and multiplies that by a \\d \times d\\ matrix \\\matr{W}\_O\\ of [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter) [\[2, Sec. 3.2.2\]](#ref-vaswani2017attention). Each head can weight the positions in its own way.
+> **Definition 7 (Multi-head attention)** **Multi-head attention** with $h$ heads runs $h$ copies of [scaled dot-product attention](#def-attention) side by side, head $i$ with its own matrices $\matr{W}_Q^{(i)}$, $\matr{W}_K^{(i)}$ and $\matr{W}_V^{(i)}$ of size $d \times d / h$. It joins the $h$ outputs, each $n \times d / h$, into one $n \times d$ matrix, and multiplies that by a $d \times d$ matrix $\matr{W}_O$ of [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter) [\[2, Sec. 3.2.2\]](#ref-vaswani2017attention). Each head can weight the positions in its own way.
 
 > **NOTE:**
 >
@@ -457,7 +474,7 @@ The exercises use the text of the [language models chapter](../chapters/language
 >
 >     16640
 >
-> `nn.MultiheadAttention(64, 4)` is [multi-head attention](#def-multi-head-attention) with \\d = 64\\ and 4 heads. It stores the three projections of all heads in one \\192 \times 64\\ matrix with 192 biases, and \\\matr{W}\_O\\ as a \\64 \times 64\\ linear layer with 64 biases. That is \\3 \times 64^2 + 192 + 64^2 + 64 = 16,640\\ [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter).
+> `nn.MultiheadAttention(64, 4)` is [multi-head attention](#def-multi-head-attention) with $d = 64$ and 4 heads. It stores the three projections of all heads in one $192 \times 64$ matrix with 192 biases, and $\matr{W}_O$ as a $64 \times 64$ linear layer with 64 biases. That is $3 \times 64^2 + 192 + 64^2 + 64 = 16,640$ [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter).
 
 > **NOTE:**
 >
@@ -476,7 +493,7 @@ The exercises use the text of the [language models chapter](../chapters/language
 >
 >     {'1': 16640, '16': 16640}
 >
-> No. It has 16,640 with 1 head, and 16,640 with 16. The count is the same as with 4 heads in [Example 7](#exm-multi-head-attention), because each of \\h\\ heads projects to \\d / h\\ columns, so the projections always have \\d\\ columns in all.
+> No. It has 16,640 with 1 head, and 16,640 with 16. The count is the same as with 4 heads in [Example 7](#exm-multi-head-attention), because each of $h$ heads projects to $d / h$ columns, so the projections always have $d$ columns in all.
 
 ## 4.2 The block
 
@@ -490,11 +507,14 @@ The exercises use the text of the [language models chapter](../chapters/language
 
 > **NOTE:**
 >
-> **Definition 8 (Transformer block)** A **Transformer block** maps an \\n \times d\\ matrix \\\matr{H}\\ to another \\n \times d\\ matrix in two steps, each wrapped in a [residual connection](https://morrison-lab.github.io/lds/chapters/backpropagation.html#def-residual-connection):
+> **Definition 8 (Transformer block)** A **Transformer block** maps an $n \times d$ matrix $\matr{H}$ to another $n \times d$ matrix in two steps, each wrapped in a [residual connection](https://morrison-lab.github.io/lds/chapters/backpropagation.html#def-residual-connection):
 >
-> \\ \begin{aligned} \matr{H}' &= \matr{H} + \operatorname{MultiHead}\paren{\operatorname{LN}\paren{\matr{H}}}, \\ \operatorname{Block}\paren{\matr{H}} &= \matr{H}' + \operatorname{MLP}\paren{\operatorname{LN}\paren{\matr{H}'}}, \end{aligned} \\
+> $$\begin{aligned}
+> \matr{H}' &= \matr{H} + \operatorname{MultiHead}\paren{\operatorname{LN}\paren{\matr{H}}}, \\
+> \operatorname{Block}\paren{\matr{H}} &= \matr{H}' + \operatorname{MLP}\paren{\operatorname{LN}\paren{\matr{H}'}},
+> \end{aligned}$$
 >
-> where \\\operatorname{MultiHead}\\ is [multi-head attention](#def-multi-head-attention), \\\operatorname{LN}\\ is [layer normalization](../chapters/normalization.llms.md#def-layer-norm) of each row, and \\\operatorname{MLP}\\ is an [MLP](../chapters/feedforward-networks.llms.md#def-feedforward-network) with one [hidden layer](../chapters/feedforward-networks.llms.md#def-hidden-layer), applied to each row. Vaswani et al. [\[2, Secs. 3.1, 3.3\]](#ref-vaswani2017attention) build each step this way, but normalize after each sum instead of before each step. The order here is the Pre-LN Transformer of Xiong et al. [\[8, Sec. 3\]](#ref-xiong2020layer), which they find trains without a warm-up of the [learning rate](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-learning-rate).
+> where $\operatorname{MultiHead}$ is [multi-head attention](#def-multi-head-attention), $\operatorname{LN}$ is [layer normalization](../chapters/normalization.llms.md#def-layer-norm) of each row, and $\operatorname{MLP}$ is an [MLP](../chapters/feedforward-networks.llms.md#def-feedforward-network) with one [hidden layer](../chapters/feedforward-networks.llms.md#def-hidden-layer), applied to each row. Vaswani et al. [\[2, Secs. 3.1, 3.3\]](#ref-vaswani2017attention) build each step this way, but normalize after each sum instead of before each step. The order here is the Pre-LN Transformer of Xiong et al. [\[8, Sec. 3\]](#ref-xiong2020layer), which they find trains without a warm-up of the [learning rate](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-learning-rate).
 
 > **NOTE:**
 >
@@ -707,7 +727,7 @@ print(n_params(transformer), n_params(gru_lm))
 > >
 > > [![Four heat maps, one per attention head, each 32 by 32, with the query position down the side and the key position across. Every map is dark above the diagonal. The heads differ in where along and below the diagonal their weight sits.](attention-transformers_files/figure-html/unnamed-chunk-19-1.png)](attention-transformers_files/figure-html/unnamed-chunk-19-1.png "Figure 1: The weights of the four heads of the first block over the first 32 validation characters. Row i shows the weights that the query at character i puts on each character j.")
 > >
-> > Figure 1: The weights of the four heads of the first block over the first 32 validation characters. Row \\i\\ shows the weights that the query at character \\i\\ puts on each character \\j\\.
+> > Figure 1: The weights of the four heads of the first block over the first 32 validation characters. Row $i$ shows the weights that the query at character $i$ puts on each character $j$.
 >
 > Every map is 0 above the diagonal, from the [causal mask](#def-causal-mask). The heads differ. The average weight that each query puts on the character just before it is 0.18, 0.02, 0.96, 0.98 for heads 1 to 4. Of the four heads, 2 put more than 0.9 of their weight there, so those heads pass each position information about the character before it. No one taught the network to do that; training on the next character found it.
 

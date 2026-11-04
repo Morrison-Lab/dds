@@ -140,7 +140,7 @@ The exercises use the UCI optical digits [\[1\]](#ref-alpaydin1998optdigits), sp
 >
 >     torch.Size([16, 8, 8]) torch.Size([16, 8, 32]) torch.Size([1, 16, 32]) True
 >
-> With `batch_first=True`, the input has [shape](../chapters/pytorch-basics.llms.md#def-shape) \\16 \times 8 \times 8\\: 16 sequences of 8 steps, each step a row of 8 pixels. The first output holds the [hidden state](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-hidden-state) after every step, with shape \\16 \times 8 \times 32\\. The second holds the hidden state after the last step only, with shape \\1 \times 16 \times 32\\. Its first dimension counts stacked layers times directions, here 1 layer read in 1 direction [\[2\]](#ref-pytorch_rnn). Its entries equal the last step of the first output. Without `batch_first=True`, PyTorch expects the steps first and the sequences second.
+> With `batch_first=True`, the input has [shape](../chapters/pytorch-basics.llms.md#def-shape) $16 \times 8 \times 8$: 16 sequences of 8 steps, each step a row of 8 pixels. The first output holds the [hidden state](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-hidden-state) after every step, with shape $16 \times 8 \times 32$. The second holds the hidden state after the last step only, with shape $1 \times 16 \times 32$. Its first dimension counts stacked layers times directions, here 1 layer read in 1 direction [\[2\]](#ref-pytorch_rnn). Its entries equal the last step of the first output. Without `batch_first=True`, PyTorch expects the steps first and the sequences second.
 
 ## 2.2 Row by row
 
@@ -296,17 +296,22 @@ The exercises use the UCI optical digits [\[1\]](#ref-alpaydin1998optdigits), sp
 > assert lstm_acc > max(clipped_acc, pixel_acc)
 > ```
 >
-> Yes. The [LSTM](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-lstm) classifies 82.1% of the test digits correctly, against 61.6% for the clipped pixel reader. Its [cell state](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-lstm) \\\vecf{c}\_t\\ changes only by the [gates’](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-gate) products and sums, with no squashing activation between one step and the next. So a [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) can pass back along the cell state through many steps when the [forget gate](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-lstm) stays near 1 [\[4, Sec. 10.10.1\]](#ref-goodfellow2016deep). The LSTM’s largest gradient [norm](https://morrison-lab.github.io/mds/linear-algebra-inner-products.html#def-norm) during training was 12.2, against 43 for the pixel reader of [Solution 3](#sol-pixels).
+> Yes. The [LSTM](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-lstm) classifies 82.1% of the test digits correctly, against 61.6% for the clipped pixel reader. Its [cell state](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-lstm) $\vecf{c}_t$ changes only by the [gates’](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-gate) products and sums, with no squashing activation between one step and the next. So a [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) can pass back along the cell state through many steps when the [forget gate](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-lstm) stays near 1 [\[4, Sec. 10.10.1\]](#ref-goodfellow2016deep). The LSTM’s largest gradient [norm](https://morrison-lab.github.io/mds/linear-algebra-inner-products.html#def-norm) during training was 12.2, against 43 for the pixel reader of [Solution 3](#sol-pixels).
 
 ## 4.2 Two gates instead of three
 
 > **NOTE:**
 >
-> **Definition 1 (Gated recurrent unit (GRU))** A **gated recurrent unit** (GRU) layer keeps only a [hidden state](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-hidden-state) \\\vhidval_t \in \reals^{H}\\, with no separate [cell state](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-lstm), and two [gates](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-gate) [\[5\]](#ref-cho2014gru). In the form PyTorch computes [\[6\]](#ref-pytorch_gru),
+> **Definition 1 (Gated recurrent unit (GRU))** A **gated recurrent unit** (GRU) layer keeps only a [hidden state](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-hidden-state) $\vhidval_t \in \reals^{H}$, with no separate [cell state](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-lstm), and two [gates](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-gate) [\[5\]](#ref-cho2014gru). In the form PyTorch computes [\[6\]](#ref-pytorch_gru),
 >
-> \\\begin{aligned} \vecf{z}\_t &= \sigmoidf{\matr{W}\_z \vx_t + \matr{U}\_z \vhidval\_{t-1} + \vecf{b}\_z}, &&\text{(update gate)} \\ \vecf{r}\_t &= \sigmoidf{\matr{W}\_r \vx_t + \matr{U}\_r \vhidval\_{t-1} + \vecf{b}\_r}, &&\text{(reset gate)} \\ \vecf{u}\_t &= \tanhf{\matr{W}\_u \vx_t + \vecf{b}\_u + \vecf{r}\_t \odot \paren{\matr{U}\_u \vhidval\_{t-1} + \vecf{c}\_u}}, &&\text{(candidate)} \\ \vhidval_t &= \vecf{z}\_t \odot \vhidval\_{t-1} + \paren{1 - \vecf{z}\_t} \odot \vecf{u}\_t. \end{aligned}\\
+> $$\begin{aligned}
+> \vecf{z}_t &= \sigmoidf{\matr{W}_z \vx_t + \matr{U}_z \vhidval_{t-1} + \vecf{b}_z}, &&\text{(update gate)} \\
+> \vecf{r}_t &= \sigmoidf{\matr{W}_r \vx_t + \matr{U}_r \vhidval_{t-1} + \vecf{b}_r}, &&\text{(reset gate)} \\
+> \vecf{u}_t &= \tanhf{\matr{W}_u \vx_t + \vecf{b}_u + \vecf{r}_t \odot \paren{\matr{U}_u \vhidval_{t-1} + \vecf{c}_u}}, &&\text{(candidate)} \\
+> \vhidval_t &= \vecf{z}_t \odot \vhidval_{t-1} + \paren{1 - \vecf{z}_t} \odot \vecf{u}_t.
+> \end{aligned}$$
 >
-> Here \\\vecf{c}\_u\\ is a second bias vector, and PyTorch also adds one to \\\matr{U}\_z \vhidval\_{t-1}\\ and to \\\matr{U}\_r \vhidval\_{t-1}\\. Cho et al. [\[5\]](#ref-cho2014gru) apply the reset gate before the matrix, writing \\\matr{U}\_u \paren{\vecf{r}\_t \odot \vhidval\_{t-1}}\\ in the candidate, and also put \\\vecf{z}\_t\\ on the old state. Chung et al. [\[7\]](#ref-chung2014empirical) and the [DATA 471 notes](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#rem-gru) put \\1 - \vecf{z}\_t\\ on the old state instead, which swaps the meaning of \\\vecf{z}\_t\\ near 0 and near 1.
+> Here $\vecf{c}_u$ is a second bias vector, and PyTorch also adds one to $\matr{U}_z \vhidval_{t-1}$ and to $\matr{U}_r \vhidval_{t-1}$. Cho et al. [\[5\]](#ref-cho2014gru) apply the reset gate before the matrix, writing $\matr{U}_u \paren{\vecf{r}_t \odot \vhidval_{t-1}}$ in the candidate, and also put $\vecf{z}_t$ on the old state. Chung et al. [\[7\]](#ref-chung2014empirical) and the [DATA 471 notes](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#rem-gru) put $1 - \vecf{z}_t$ on the old state instead, which swaps the meaning of $\vecf{z}_t$ near 0 and near 1.
 
 > **NOTE:**
 >
@@ -326,7 +331,7 @@ The exercises use the UCI optical digits [\[1\]](#ref-alpaydin1998optdigits), sp
 >
 >     3360 4480
 >
-> A [GRU](#def-gru) layer has three blocks of weights, for \\\vecf{z}\_t\\, \\\vecf{r}\_t\\ and \\\vecf{u}\_t\\, where an [LSTM](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-lstm) layer has four. PyTorch gives each block two bias vectors, one added to \\\matr{W} \vx_t\\ and one to \\\matr{U} \vhidval\_{t-1}\\ [\[6\]](#ref-pytorch_gru). So `nn.GRU(1, 32)` has \\3 \times 32 \times (1 + 32 + 2) = 3360\\ [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter), and `nn.LSTM(1, 32)` has \\4 \times 32 \times (1 + 32 + 2) = 4480\\.
+> A [GRU](#def-gru) layer has three blocks of weights, for $\vecf{z}_t$, $\vecf{r}_t$ and $\vecf{u}_t$, where an [LSTM](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-lstm) layer has four. PyTorch gives each block two bias vectors, one added to $\matr{W} \vx_t$ and one to $\matr{U} \vhidval_{t-1}$ [\[6\]](#ref-pytorch_gru). So `nn.GRU(1, 32)` has $3 \times 32 \times (1 + 32 + 2) = 3360$ [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter), and `nn.LSTM(1, 32)` has $4 \times 32 \times (1 + 32 + 2) = 4480$.
 
 ## 4.3 Comparing the readers
 
@@ -372,7 +377,7 @@ The exercises use the UCI optical digits [\[1\]](#ref-alpaydin1998optdigits), sp
 
 > **NOTE:**
 >
-> **Exercise 8 (Multiplying a one-hot vector by a matrix)** A network that reads text needs each character as a vector. Number the 26 lowercase letters and the space from 0 to 26, so `"c"` is 2. Count vector entries and matrix rows from 0 as well. Let \\\vecf{e}\_2 \in \\0, 1\\^{27}\\ be the [one-hot encoding](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-one-hot-encoding) of `"c"`, and let \\\matr{E}\\ be the \\27 \times 4\\ matrix printed below. What is \\\tp{\vecf{e}\_2} \matr{E}\\?
+> **Exercise 8 (Multiplying a one-hot vector by a matrix)** A network that reads text needs each character as a vector. Number the 26 lowercase letters and the space from 0 to 26, so `"c"` is 2. Count vector entries and matrix rows from 0 as well. Let $\vecf{e}_2 \in \{0, 1\}^{27}$ be the [one-hot encoding](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-one-hot-encoding) of `"c"`, and let $\matr{E}$ be the $27 \times 4$ matrix printed below. What is $\tp{\vecf{e}_2} \matr{E}$?
 >
 > Show code
 >
@@ -402,11 +407,11 @@ The exercises use the UCI optical digits [\[1\]](#ref-alpaydin1998optdigits), sp
 >
 >     tensor([-0.9100,  0.3500, -0.5700, -0.2400]) tensor([-0.9100,  0.3500, -0.5700, -0.2400]) True
 >
-> Entry \\j\\ of \\\tp{\vecf{e}\_2} \matr{E}\\ is \\\sum_i (\vecf{e}\_2)\_i \matr{E}\_{ij} = \matr{E}\_{2j}\\, since \\(\vecf{e}\_2)\_i\\ is 1 for \\i = 2\\ and 0 for every other \\i\\. So the product is row 2 of \\\matr{E}\\, the third row printed above. Multiplying by a [one-hot encoding](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-one-hot-encoding) only looks up a row. A network can skip multiplying by the 26 zeros and read the row directly.
+> Entry $j$ of $\tp{\vecf{e}_2} \matr{E}$ is $\sum_i (\vecf{e}_2)_i \matr{E}_{ij} = \matr{E}_{2j}$, since $(\vecf{e}_2)_i$ is 1 for $i = 2$ and 0 for every other $i$. So the product is row 2 of $\matr{E}$, the third row printed above. Multiplying by a [one-hot encoding](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-one-hot-encoding) only looks up a row. A network can skip multiplying by the 26 zeros and read the row directly.
 
 > **NOTE:**
 >
-> **Definition 2 (Embedding layer)** An **embedding layer** maps each of \\K\\ symbols, such as characters or words, to a vector in \\\reals^d\\. Symbol \\k\\ maps to row \\k\\ of a \\K \times d\\ matrix \\\matr{E}\\ of [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter), learned with the rest of the network [\[4, Sec. 12.4.2\]](#ref-goodfellow2016deep). Row \\k\\ is the vector that represents symbol \\k\\. The layer equals a linear layer with no bias applied to the [one-hot encoding](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-one-hot-encoding) of the symbol, computed by looking up the row.
+> **Definition 2 (Embedding layer)** An **embedding layer** maps each of $K$ symbols, such as characters or words, to a vector in $\reals^d$. Symbol $k$ maps to row $k$ of a $K \times d$ matrix $\matr{E}$ of [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter), learned with the rest of the network [\[4, Sec. 12.4.2\]](#ref-goodfellow2016deep). Row $k$ is the vector that represents symbol $k$. The layer equals a linear layer with no bias applied to the [one-hot encoding](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-one-hot-encoding) of the symbol, computed by looking up the row.
 
 > **NOTE:**
 >
@@ -424,7 +429,7 @@ The exercises use the UCI optical digits [\[1\]](#ref-alpaydin1998optdigits), sp
 >
 >     tensor([ 3,  4,  4, 15]) torch.Size([4, 4]) True
 >
-> `nn.Embedding(27, 4)` is an [embedding layer](#def-embedding) for the 27 characters, with a \\27 \times 4\\ matrix `weight` [\[8\]](#ref-pytorch_embedding). It takes a [tensor](../chapters/pytorch-basics.llms.md#def-tensor) of whole-number indices, here the indices of the letters of `"deep"`, and returns one row of `weight` for each. For the 4 letters the result has [shape](../chapters/pytorch-basics.llms.md#def-shape) \\4 \times 4\\. The two `"e"`s get the same vector. The returned rows equal the rows of `embed.weight` at those indices.
+> `nn.Embedding(27, 4)` is an [embedding layer](#def-embedding) for the 27 characters, with a $27 \times 4$ matrix `weight` [\[8\]](#ref-pytorch_embedding). It takes a [tensor](../chapters/pytorch-basics.llms.md#def-tensor) of whole-number indices, here the indices of the letters of `"deep"`, and returns one row of `weight` for each. For the 4 letters the result has [shape](../chapters/pytorch-basics.llms.md#def-shape) $4 \times 4$. The two `"e"`s get the same vector. The returned rows equal the rows of `embed.weight` at those indices.
 
 ## 5.2 Further reading
 

@@ -457,15 +457,15 @@ All code in these notes, and in the homework, uses PyTorch [\[1\]](#ref-paszke20
 
 ## 3.1 The soft 0-or-1 rule
 
-The rest of this page differentiates the [soft 0-or-1 rule](../chapters/ml-review.llms.md#exr-log-loss-curve) of the [machine learning review](../chapters/ml-review.llms.md). Among the images of 0s and 1s, it gives each image the probability \\\hprob = \sigmoidf{\predvar - \param}\\ of being a 1, where \\\predvar\\ is the image’s [center ink](../chapters/course-overview.llms.md#sol-zero-or-one), its average pixel over rows 2 to 5 and columns 3 and 4, and \\\param\\ is the rule’s cutoff. Its mean [log loss](https://morrison-lab.github.io/lds/chapters/logistic-regression.html#def-log-loss) over those \\\nobs\\ images, its [empirical risk](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-empirical-risk) under that loss, is
+The rest of this page differentiates the [soft 0-or-1 rule](../chapters/ml-review.llms.md#exr-log-loss-curve) of the [machine learning review](../chapters/ml-review.llms.md). Among the images of 0s and 1s, it gives each image the probability $\hprob = \sigmoidf{\predvar - \param}$ of being a 1, where $\predvar$ is the image’s [center ink](../chapters/course-overview.llms.md#sol-zero-or-one), its average pixel over rows 2 to 5 and columns 3 and 4, and $\param$ is the rule’s cutoff. Its mean [log loss](https://morrison-lab.github.io/lds/chapters/logistic-regression.html#def-log-loss) over those $\nobs$ images, its [empirical risk](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-empirical-risk) under that loss, is
 
-\\ \empriskf{\param} = -\avgin \sb{\outvar_i \log \hprob_i + (1 - \outvar_i) \log (1 - \hprob_i)}, \\
+$$\empriskf{\param} = -\avgin \sb{\outvar_i \log \hprob_i + (1 - \outvar_i) \log (1 - \hprob_i)},$$
 
-where \\\outvar_i\\ is 1 if image \\i\\ is a 1 and 0 if it is a 0.
+where $\outvar_i$ is 1 if image $i$ is a 1 and 0 if it is a 0.
 
 > **NOTE:**
 >
-> **Exercise 10 (The data for the soft rule)** From `images` and `labels`, make a [tensor](#def-tensor) of the center ink \\\predvar_i\\ of each image of a 0 or a 1, stored as 64-bit floating-point numbers, and a tensor of the matching \\\outvar_i\\.
+> **Exercise 10 (The data for the soft rule)** From `images` and `labels`, make a [tensor](#def-tensor) of the center ink $\predvar_i$ of each image of a 0 or a 1, stored as 64-bit floating-point numbers, and a tensor of the matching $\outvar_i$.
 
 > **NOTE:**
 >
@@ -500,47 +500,59 @@ where \\\outvar_i\\ is 1 if image \\i\\ is a 1 and 0 if it is a 0.
 >
 >     tensor([0., 1., 0., 1., 0.], dtype=torch.float64)
 >
-> `images[:, 2:6, 3:5]` keeps rows 2 to 5 and columns 3 and 4 of every image, and `.mean(dim=(1, 2))` averages over those rows and columns, leaving one number per image. `.double()` converts to 64-bit floats, `torch.float64`, so that later comparisons of derivatives are not limited by 32-bit rounding. There are \\\nobs\\ = 360 images of 0s and 1s.
+> `images[:, 2:6, 3:5]` keeps rows 2 to 5 and columns 3 and 4 of every image, and `.mean(dim=(1, 2))` averages over those rows and columns, leaving one number per image. `.double()` converts to 64-bit floats, `torch.float64`, so that later comparisons of derivatives are not limited by 32-bit rounding. There are $\nobs$ = 360 images of 0s and 1s.
 
 ## 3.2 The slope by hand
 
 > **NOTE:**
 >
-> **Exercise 11 (The slope of the log loss)** Find the derivative \\\dif{\emprisk}{\param}\\ of the mean [log loss](https://morrison-lab.github.io/lds/chapters/logistic-regression.html#def-log-loss) with respect to the cutoff.
+> **Exercise 11 (The slope of the log loss)** Find the derivative $\dif{\emprisk}{\param}$ of the mean [log loss](https://morrison-lab.github.io/lds/chapters/logistic-regression.html#def-log-loss) with respect to the cutoff.
 >
 > > **TIP:**
 > >
-> > The [logistic function](https://morrison-lab.github.io/lds/chapters/logistic-regression.html#exm-logistic-function) has derivative \\\sigmoid'(z) = \sigmoidf{z}\paren{1 - \sigmoidf{z}}\\ ([lds](https://morrison-lab.github.io/lds/chapters/logistic-regression.html#thm-logistic-derivative)).
+> > The [logistic function](https://morrison-lab.github.io/lds/chapters/logistic-regression.html#exm-logistic-function) has derivative $\sigmoid'(z) = \sigmoidf{z}\paren{1 - \sigmoidf{z}}$ ([lds](https://morrison-lab.github.io/lds/chapters/logistic-regression.html#thm-logistic-derivative)).
 
 > **NOTE:**
 >
-> *Solution 11*. Write \\\obsloss{i}\\ for image \\i\\’s [log loss](https://morrison-lab.github.io/lds/chapters/logistic-regression.html#def-log-loss), \\\obsloss{i} = -\outvar_i \log \hprob_i - (1 - \outvar_i) \log (1 - \hprob_i)\\. Its derivative with respect to \\\hprob_i\\ is
+> *Solution 11*. Write $\obsloss{i}$ for image $i$’s [log loss](https://morrison-lab.github.io/lds/chapters/logistic-regression.html#def-log-loss), $\obsloss{i} = -\outvar_i \log \hprob_i - (1 - \outvar_i) \log (1 - \hprob_i)$. Its derivative with respect to $\hprob_i$ is
 >
-> \\ \dif{\obsloss{i}}{\hprob_i} = -\frac{\outvar_i}{\hprob_i} + \frac{1 - \outvar_i}{1 - \hprob_i}. \\
+> $$\dif{\obsloss{i}}{\hprob_i} = -\frac{\outvar_i}{\hprob_i} + \frac{1 - \outvar_i}{1 - \hprob_i}.$$
 >
-> Since \\\hprob_i = \sigmoidf{\predvar_i - \param}\\, the chain rule and the derivative of the logistic function give
+> Since $\hprob_i = \sigmoidf{\predvar_i - \param}$, the chain rule and the derivative of the logistic function give
 >
-> \\ \begin{aligned} \dif{\hprob_i}{\param} &= \sigmoid'(\predvar_i - \param) \cdot \dif{}{\param} (\predvar_i - \param) \\ &= \hprob_i (1 - \hprob_i) \cdot (-1) \\ &= -\hprob_i (1 - \hprob_i). \end{aligned} \\
+> $$\begin{aligned}
+> \dif{\hprob_i}{\param}
+> &= \sigmoid'(\predvar_i - \param) \cdot \dif{}{\param} (\predvar_i - \param) \\
+> &= \hprob_i (1 - \hprob_i) \cdot (-1) \\
+> &= -\hprob_i (1 - \hprob_i).
+> \end{aligned}$$
 >
 > Multiplying the two,
 >
-> \\ \begin{aligned} \dif{\obsloss{i}}{\param} &= \dif{\obsloss{i}}{\hprob_i} \cdot \dif{\hprob_i}{\param} \\ &= \paren{-\frac{\outvar_i}{\hprob_i} + \frac{1 - \outvar_i}{1 - \hprob_i}} \cdot \paren{-\hprob_i (1 - \hprob_i)} \\ &= \outvar_i (1 - \hprob_i) - (1 - \outvar_i) \hprob_i \\ &= \outvar_i - \outvar_i \hprob_i - \hprob_i + \outvar_i \hprob_i \\ &= \outvar_i - \hprob_i. \end{aligned} \\
+> $$\begin{aligned}
+> \dif{\obsloss{i}}{\param}
+> &= \dif{\obsloss{i}}{\hprob_i} \cdot \dif{\hprob_i}{\param} \\
+> &= \paren{-\frac{\outvar_i}{\hprob_i} + \frac{1 - \outvar_i}{1 - \hprob_i}} \cdot \paren{-\hprob_i (1 - \hprob_i)} \\
+> &= \outvar_i (1 - \hprob_i) - (1 - \outvar_i) \hprob_i \\
+> &= \outvar_i - \outvar_i \hprob_i - \hprob_i + \outvar_i \hprob_i \\
+> &= \outvar_i - \hprob_i.
+> \end{aligned}$$
 >
-> \\\emprisk\\ is the mean of the \\\obsloss{i}\\, so its derivative is the mean of theirs:
+> $\emprisk$ is the mean of the $\obsloss{i}$, so its derivative is the mean of theirs:
 >
-> \\ \dif{\emprisk}{\param} = \avgin (\outvar_i - \hprob_i). \\
+> $$\dif{\emprisk}{\param} = \avgin (\outvar_i - \hprob_i).$$
 
 > **NOTE:**
 >
-> **Theorem 1 (The slope of the soft rule’s log loss)** The mean [log loss](https://morrison-lab.github.io/lds/chapters/logistic-regression.html#def-log-loss) \\\emprisk\\ of the [soft 0-or-1 rule](../chapters/ml-review.llms.md#exr-log-loss-curve) has derivative
+> **Theorem 1 (The slope of the soft rule’s log loss)** The mean [log loss](https://morrison-lab.github.io/lds/chapters/logistic-regression.html#def-log-loss) $\emprisk$ of the [soft 0-or-1 rule](../chapters/ml-review.llms.md#exr-log-loss-curve) has derivative
 >
-> \\ \dif{\emprisk}{\param} = \avgin (\outvar_i - \hprob_i) \\
+> $$\dif{\emprisk}{\param} = \avgin (\outvar_i - \hprob_i)$$
 >
-> with respect to its cutoff \\\param\\.
+> with respect to its cutoff $\param$.
 
 > **NOTE:**
 >
-> *Proof*. By [Solution 11](#sol-log-loss-slope). The rule is a [logistic regression](https://morrison-lab.github.io/lds/chapters/logistic-regression.html#def-logistic-regression) whose coefficient on \\\predvar\\ is fixed at 1 and whose intercept is \\-\param\\, so the formula is also the negative of the intercept component of [lds’s gradient of the log loss](https://morrison-lab.github.io/lds/chapters/logistic-regression.html#thm-logistic-gradient), divided by \\\nobs\\ to give the mean.
+> *Proof*. By [Solution 11](#sol-log-loss-slope). The rule is a [logistic regression](https://morrison-lab.github.io/lds/chapters/logistic-regression.html#def-logistic-regression) whose coefficient on $\predvar$ is fixed at 1 and whose intercept is $-\param$, so the formula is also the negative of the intercept component of [lds’s gradient of the log loss](https://morrison-lab.github.io/lds/chapters/logistic-regression.html#thm-logistic-gradient), divided by $\nobs$ to give the mean.
 
 > **NOTE:**
 >
@@ -559,13 +571,13 @@ where \\\outvar_i\\ is 1 if image \\i\\ is a 1 and 0 if it is a 0.
 >
 >     0.5055555555555555 0.5473628863066621 -0.04180733075110654
 >
-> By [Theorem 1](#thm-log-loss-slope), the slope is the share of 1s among the images minus the average probability the rule gives them. The 1s make up a share of 0.506 of the 360 images, and at \\\param = 5\\ the rule’s average probability of a 1 is 0.547. So the slope at \\\param = 5\\ is -0.0418. It is negative, so raising the cutoff from 5 lowers the [log loss](https://morrison-lab.github.io/lds/chapters/logistic-regression.html#def-log-loss). The slope is 0 at the cutoff where the average probability equals the share of 1s.
+> By [Theorem 1](#thm-log-loss-slope), the slope is the share of 1s among the images minus the average probability the rule gives them. The 1s make up a share of 0.506 of the 360 images, and at $\param = 5$ the rule’s average probability of a 1 is 0.547. So the slope at $\param = 5$ is -0.0418. It is negative, so raising the cutoff from 5 lowers the [log loss](https://morrison-lab.github.io/lds/chapters/logistic-regression.html#def-log-loss). The slope is 0 at the cutoff where the average probability equals the share of 1s.
 
 ## 3.3 The slope by autograd
 
 > **NOTE:**
 >
-> **Exercise 12 (Asking PyTorch for the slope)** Write a function that computes \\\empriskf{\param}\\ with PyTorch operations. Make \\\param = 5\\ a [tensor](#def-tensor) created with `requires_grad=True`, compute \\\empriskf{5}\\, and pass both to [`torch.autograd.grad`](https://docs.pytorch.org/docs/stable/generated/torch.autograd.grad.html).
+> **Exercise 12 (Asking PyTorch for the slope)** Write a function that computes $\empriskf{\param}$ with PyTorch operations. Make $\param = 5$ a [tensor](#def-tensor) created with `requires_grad=True`, compute $\empriskf{5}$, and pass both to [`torch.autograd.grad`](https://docs.pytorch.org/docs/stable/generated/torch.autograd.grad.html).
 
 > **NOTE:**
 >
@@ -595,7 +607,7 @@ where \\\outvar_i\\ is 1 if image \\i\\ is a 1 and 0 if it is a 0.
 >
 >     tensor(-0.0418, dtype=torch.float64)
 >
-> `torch.autograd.grad` returns -0.0418. The code for \\\emprisk\\ says nothing about its derivative. Because `theta` was made with `requires_grad=True`, PyTorch recorded each operation that turned it into `loss` (the subtraction `ink_01 - theta`, the logistic function, and each operation after them, down to the mean and its change of sign), and `torch.autograd.grad` applied the chain rule to those operations, one at a time. The `grad_fn` that `loss` prints is the record of its last operation.
+> `torch.autograd.grad` returns -0.0418. The code for $\emprisk$ says nothing about its derivative. Because `theta` was made with `requires_grad=True`, PyTorch recorded each operation that turned it into `loss` (the subtraction `ink_01 - theta`, the logistic function, and each operation after them, down to the mean and its change of sign), and `torch.autograd.grad` applied the chain rule to those operations, one at a time. The `grad_fn` that `loss` prints is the record of its last operation.
 
 > **NOTE:**
 >
@@ -624,13 +636,13 @@ where \\\outvar_i\\ is 1 if image \\i\\ is a 1 and 0 if it is a 0.
 
 > **NOTE:**
 >
-> **Example 7 (The cutoff’s slope by autodiff)** [Solution 12](#sol-autograd-slope) is [automatic differentiation](#def-automatic-differentiation): PyTorch was given only the code for \\\emprisk\\, and returned its derivative at \\\param = 5\\, which matches the formula of [Theorem 1](#thm-log-loss-slope) to within 2.1e-17, as [Solution 13](#sol-autograd-vs-hand) found.
+> **Example 7 (The cutoff’s slope by autodiff)** [Solution 12](#sol-autograd-slope) is [automatic differentiation](#def-automatic-differentiation): PyTorch was given only the code for $\emprisk$, and returned its derivative at $\param = 5$, which matches the formula of [Theorem 1](#thm-log-loss-slope) to within 2.1e-17, as [Solution 13](#sol-autograd-vs-hand) found.
 
 ## 3.4 Gradient descent with autograd
 
 > **NOTE:**
 >
-> **Exercise 14 (Finding the cutoff by gradient descent)** Run 100 steps of [gradient descent](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#the-algorithm) on \\\emprisk\\, starting from \\\param = 0\\ with learning rate \\\learnrate = 4\\, with each step’s derivative from `torch.autograd.grad`. Where does \\\param\\ end up?
+> **Exercise 14 (Finding the cutoff by gradient descent)** Run 100 steps of [gradient descent](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#the-algorithm) on $\emprisk$, starting from $\param = 0$ with learning rate $\learnrate = 4$, with each step’s derivative from `torch.autograd.grad`. Where does $\param$ end up?
 
 > **NOTE:**
 >
@@ -652,9 +664,9 @@ where \\\outvar_i\\ is 1 if image \\i\\ is a 1 and 0 if it is a 0.
 >
 >     6.59960743783184 -6.833215346312323e-06
 >
-> [Gradient descent](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#the-algorithm) ends at \\\param\\ = 6.5996, where the slope is -6.8e-06.
+> [Gradient descent](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#the-algorithm) ends at $\param$ = 6.5996, where the slope is -6.8e-06.
 >
-> The update runs inside `torch.no_grad()`, which tells PyTorch not to record it: the step is a change to \\\param\\, not part of the loss. Without it, PyTorch would record the in-place subtraction on `theta`, and it raises an error for a recorded in-place change to a [tensor](#def-tensor) that was created with `requires_grad=True`.
+> The update runs inside `torch.no_grad()`, which tells PyTorch not to record it: the step is a change to $\param$, not part of the loss. Without it, PyTorch would record the in-place subtraction on `theta`, and it raises an error for a recorded in-place change to a [tensor](#def-tensor) that was created with `requires_grad=True`.
 
 > **NOTE:**
 >
@@ -746,7 +758,7 @@ where \\\outvar_i\\ is 1 if image \\i\\ is a 1 and 0 if it is a 0.
 >
 > The trained `SoftRule` has its cutoff at 6.5996, where the loop of [Solution 14](#sol-autograd-descent) ended, exactly. The code splits that loop into the parts that `torch.optim` expects:
 >
-> - [`nn.functional.binary_cross_entropy`](https://docs.pytorch.org/docs/stable/generated/torch.nn.functional.binary_cross_entropy.html) computes the mean [log loss](https://morrison-lab.github.io/lds/chapters/logistic-regression.html#def-log-loss), \\\emprisk\\, from the probabilities and the 0-or-1 labels.
+> - [`nn.functional.binary_cross_entropy`](https://docs.pytorch.org/docs/stable/generated/torch.nn.functional.binary_cross_entropy.html) computes the mean [log loss](https://morrison-lab.github.io/lds/chapters/logistic-regression.html#def-log-loss), $\emprisk$, from the probabilities and the 0-or-1 labels.
 > - `optimizer.zero_grad()` clears the gradient stored from the previous step.
 > - `loss.backward()` computes the derivative of the loss with respect to the cutoff, as `torch.autograd.grad` did, but stores it in the cutoff’s `.grad` instead of returning it.
 > - `optimizer.step()` moves the cutoff by minus the learning rate times its `.grad`, the update that [Solution 14](#sol-autograd-descent) ran inside `torch.no_grad()`.
@@ -783,7 +795,7 @@ where \\\outvar_i\\ is 1 if image \\i\\ is a 1 and 0 if it is a 0.
 >
 >     None -0.3759104821764343 1.5036419287057372
 >
-> The code runs the first [training step](#def-training-step) of [Solution 17](#sol-train-soft-rule) one call at a time. A new [parameter](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter) has no stored gradient, so its `.grad` is `None`. After `loss.backward()`, the cutoff’s `.grad` holds the slope of \\\emprisk\\ at \\\param = 0\\, -0.3759. Then `optimizer.step()` moves the cutoff from 0 to \\0 - 4 \times (-0.3759) = 1.5036\\.
+> The code runs the first [training step](#def-training-step) of [Solution 17](#sol-train-soft-rule) one call at a time. A new [parameter](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter) has no stored gradient, so its `.grad` is `None`. After `loss.backward()`, the cutoff’s `.grad` holds the slope of $\emprisk$ at $\param = 0$, -0.3759. Then `optimizer.step()` moves the cutoff from 0 to $0 - 4 \times (-0.3759) = 1.5036$.
 
 ## 4.2 Leaving out `zero_grad`
 
@@ -827,7 +839,7 @@ where \\\outvar_i\\ is 1 if image \\i\\ is a 1 and 0 if it is a 0.
 >
 >     13 26
 >
-> The cutoff ends at 13.7150, not at 6.5996. `loss.backward()` adds each new gradient to the one already in `.grad`. So without `optimizer.zero_grad()`, the gradient used at each step is the sum of the gradients of every step so far. The first step is the same as in [Example 8](#exm-training-step), with `.grad` at -0.3759. At the second step, `.grad` is -0.6199, the first step’s gradient plus the second’s. At 26 of the 100 steps, the cutoff was already past 6.5996, the lowest point of \\\emprisk\\, and the summed gradient was still negative, so the step moved the cutoff further past it. The cutoff overshoots and swings back. Over the 100 steps, it ranges from -0.20 to 14.86 and crosses 6.5996 13 times. PyTorch adds rather than replaces so that a gradient can be built up over several backward passes, for example over pieces of a batch too large to fit in memory at once.
+> The cutoff ends at 13.7150, not at 6.5996. `loss.backward()` adds each new gradient to the one already in `.grad`. So without `optimizer.zero_grad()`, the gradient used at each step is the sum of the gradients of every step so far. The first step is the same as in [Example 8](#exm-training-step), with `.grad` at -0.3759. At the second step, `.grad` is -0.6199, the first step’s gradient plus the second’s. At 26 of the 100 steps, the cutoff was already past 6.5996, the lowest point of $\emprisk$, and the summed gradient was still negative, so the step moved the cutoff further past it. The cutoff overshoots and swings back. Over the 100 steps, it ranges from -0.20 to 14.86 and crosses 6.5996 13 times. PyTorch adds rather than replaces so that a gradient can be built up over several backward passes, for example over pieces of a batch too large to fit in memory at once.
 
 # References
 

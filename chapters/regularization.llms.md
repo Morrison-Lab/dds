@@ -182,7 +182,7 @@ The exercises use the 1,797 digits of [`data/optdigits-test.csv`](data/optdigits
 
 > **NOTE:**
 >
-> *Remark 1* (Weight decay in PyTorch). [lds defines weight decay](https://morrison-lab.github.io/lds/chapters/regularization.html#def-weight-decay) for gradient descent, with decay coefficient \\\lambda\_{\text{wd}}\\. PyTorch’s optimizers take an argument `weight_decay`, and its meaning depends on the optimizer. `torch.optim.SGD` and `torch.optim.Adam` add \\\lambda\_{\text{wd}} \theta\\ to the [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) of each [parameter](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter) \\\theta\\ before they take their step, an L2 penalty [\[3\]](#ref-pytorch_sgd), [\[4\]](#ref-pytorch_adam). For plain gradient descent, adding \\\lambda\_{\text{wd}} \theta\\ shrinks every parameter by the same factor at each step, so the penalty is weight decay. [Adam](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-adam) divides the added \\\lambda\_{\text{wd}} \theta\\ by its running scale of past [gradients](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient), so the penalty shrinks [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter) with small past gradients more than parameters with large ones [\[5\]](#ref-loshchilov2019decoupled). `torch.optim.AdamW` instead multiplies each parameter by \\1 - \learnrate \lambda\_{\text{wd}}\\ before Adam’s step [\[6\]](#ref-pytorch_adamw), PyTorch’s form of the decoupled weight decay of Loshchilov and Hutter [\[5\]](#ref-loshchilov2019decoupled). `fit()` uses AdamW. `weight_decay` applies to the biases too, unless the optimizer is given them as a separate group with `weight_decay=0`.
+> *Remark 1* (Weight decay in PyTorch). [lds defines weight decay](https://morrison-lab.github.io/lds/chapters/regularization.html#def-weight-decay) for gradient descent, with decay coefficient $\lambda_{\text{wd}}$. PyTorch’s optimizers take an argument `weight_decay`, and its meaning depends on the optimizer. `torch.optim.SGD` and `torch.optim.Adam` add $\lambda_{\text{wd}} \theta$ to the [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) of each [parameter](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter) $\theta$ before they take their step, an L2 penalty [\[3\]](#ref-pytorch_sgd), [\[4\]](#ref-pytorch_adam). For plain gradient descent, adding $\lambda_{\text{wd}} \theta$ shrinks every parameter by the same factor at each step, so the penalty is weight decay. [Adam](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-adam) divides the added $\lambda_{\text{wd}} \theta$ by its running scale of past [gradients](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient), so the penalty shrinks [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter) with small past gradients more than parameters with large ones [\[5\]](#ref-loshchilov2019decoupled). `torch.optim.AdamW` instead multiplies each parameter by $1 - \learnrate \lambda_{\text{wd}}$ before Adam’s step [\[6\]](#ref-pytorch_adamw), PyTorch’s form of the decoupled weight decay of Loshchilov and Hutter [\[5\]](#ref-loshchilov2019decoupled). `fit()` uses AdamW. `weight_decay` applies to the biases too, unless the optimizer is given them as a separate group with `weight_decay=0`.
 
 ## 3.2 Choosing the weight decay
 
@@ -224,7 +224,7 @@ The exercises use the 1,797 digits of [`data/optdigits-test.csv`](data/optdigits
 >     2           1.0      0.0038    0.2762      15.5763
 >     3          10.0      0.2165    0.4598       9.4236
 >
-> `weight_decay` \\= 1\\ ends with the lowest validation loss, 0.276, against 0.363 with no weight decay. Weight decay keeps the weights smaller: their norm after 300 [epochs](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-epoch) falls from 22.9 with no weight decay to 9.4 with `weight_decay` \\= 10\\. At 10 its training loss is 0.216, against 1.5e-04 with no weight decay, so it fits its training images less closely.
+> `weight_decay` $= 1$ ends with the lowest validation loss, 0.276, against 0.363 with no weight decay. Weight decay keeps the weights smaller: their norm after 300 [epochs](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-epoch) falls from 22.9 with no weight decay to 9.4 with `weight_decay` $= 10$. At 10 its training loss is 0.216, against 1.5e-04 with no weight decay, so it fits its training images less closely.
 
 # 4 Switching off units at random
 
@@ -242,7 +242,7 @@ The exercises use the 1,797 digits of [`data/optdigits-test.csv`](data/optdigits
 
 > **NOTE:**
 >
-> **Definition 2 (Dropout)** **Dropout** with rate \\p\\ sets each [unit](../chapters/feedforward-networks.llms.md#def-unit) of a layer to 0 independently with probability \\p\\ at each [training step](../chapters/pytorch-basics.llms.md#def-training-step), and multiplies the [unit](../chapters/feedforward-networks.llms.md#def-unit)s it keeps by \\1 / (1 - p)\\. When the network makes predictions, dropout leaves the layer unchanged [\[1, Sec. 7.12\]](#ref-goodfellow2016deep), [\[7\]](#ref-srivastava2014dropout). Srivastava et al. [\[7\]](#ref-srivastava2014dropout) write \\p\\ for the probability of keeping a unit, and multiply the weights out of the layer at prediction time instead, which gives the same expected values; PyTorch’s `nn.Dropout` scales during training [\[8\]](#ref-pytorch_dropout).
+> **Definition 2 (Dropout)** **Dropout** with rate $p$ sets each [unit](../chapters/feedforward-networks.llms.md#def-unit) of a layer to 0 independently with probability $p$ at each [training step](../chapters/pytorch-basics.llms.md#def-training-step), and multiplies the [unit](../chapters/feedforward-networks.llms.md#def-unit)s it keeps by $1 / (1 - p)$. When the network makes predictions, dropout leaves the layer unchanged [\[1, Sec. 7.12\]](#ref-goodfellow2016deep), [\[7\]](#ref-srivastava2014dropout). Srivastava et al. [\[7\]](#ref-srivastava2014dropout) write $p$ for the probability of keeping a unit, and multiply the weights out of the layer at prediction time instead, which gives the same expected values; PyTorch’s `nn.Dropout` scales during training [\[8\]](#ref-pytorch_dropout).
 
 > **NOTE:**
 >
@@ -269,19 +269,19 @@ The exercises use the 1,797 digits of [`data/optdigits-test.csv`](data/optdigits
 >
 >     tensor([1., 1., 1., 1., 1., 1., 1., 1.])
 >
-> In training mode, `nn.Dropout(p=0.5)` sets each entry of a vector of 8 ones to 0 with probability \\\frac{1}{2}\\, and multiplies the others by \\1 / (1 - \frac{1}{2}) = 2\\. After `.eval()` it returns its input unchanged. `net.train()` and `net.eval()` switch every [dropout](#def-dropout) layer of a network, which is why `fit()` and `accuracy()` call them.
+> In training mode, `nn.Dropout(p=0.5)` sets each entry of a vector of 8 ones to 0 with probability $\frac{1}{2}$, and multiplies the others by $1 / (1 - \frac{1}{2}) = 2$. After `.eval()` it returns its input unchanged. `net.train()` and `net.eval()` switch every [dropout](#def-dropout) layer of a network, which is why `fit()` and `accuracy()` call them.
 
 ## 4.3 Why scale the units that are kept?
 
 > **NOTE:**
 >
-> **Exercise 4 (Why scale the units that are kept?)** Why does [dropout](#def-dropout) multiply the [units](../chapters/feedforward-networks.llms.md#def-unit) it keeps by \\1 / (1 - p)\\?
+> **Exercise 4 (Why scale the units that are kept?)** Why does [dropout](#def-dropout) multiply the [units](../chapters/feedforward-networks.llms.md#def-unit) it keeps by $1 / (1 - p)$?
 
 > **NOTE:**
 >
-> *Solution 4*. So that each [unit](../chapters/feedforward-networks.llms.md#def-unit)’s expected value during training equals its value at prediction time. A [unit](../chapters/feedforward-networks.llms.md#def-unit) with value \\h\\ becomes \\D = 0\\ with probability \\p\\, and \\D = h / (1 - p)\\ with probability \\1 - p\\, so its expected value is
+> *Solution 4*. So that each [unit](../chapters/feedforward-networks.llms.md#def-unit)’s expected value during training equals its value at prediction time. A [unit](../chapters/feedforward-networks.llms.md#def-unit) with value $h$ becomes $D = 0$ with probability $p$, and $D = h / (1 - p)$ with probability $1 - p$, so its expected value is
 >
-> \\ \E{D} = p \cdot 0 + (1 - p) \cdot \frac{h}{1 - p} = h. \\
+> $$\E{D} = p \cdot 0 + (1 - p) \cdot \frac{h}{1 - p} = h.$$
 >
 > The next layer then sees inputs of the same size on average in both modes.
 >
@@ -427,7 +427,7 @@ The exercises use the 1,797 digits of [`data/optdigits-test.csv`](data/optdigits
 
 > **NOTE:**
 >
-> **Exercise 9 (Training on shifted digits)** Suppose instead each training image is moved at random by \\-1\\, 0 or 1 pixels in each direction at every [epoch](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-epoch). Is the lowest validation loss of `make_net()` then lower than without shifts?
+> **Exercise 9 (Training on shifted digits)** Suppose instead each training image is moved at random by $-1$, 0 or 1 pixels in each direction at every [epoch](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-epoch). Is the lowest validation loss of `make_net()` then lower than without shifts?
 
 > **NOTE:**
 >

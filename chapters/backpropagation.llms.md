@@ -75,16 +75,16 @@ The exercises use the same digits, split and network as the [feedforward network
 
 > **NOTE:**
 >
-> **Exercise 1 (From an image to its loss)** List, in order, the operations that take one image \\\vx\\ with true digit \\y\\ to the [MLP](../chapters/feedforward-networks.llms.md#def-feedforward-network)’s [cross-entropy](https://morrison-lab.github.io/pds/expectation.html#def-cross-entropy) loss.
+> **Exercise 1 (From an image to its loss)** List, in order, the operations that take one image $\vx$ with true digit $y$ to the [MLP](../chapters/feedforward-networks.llms.md#def-feedforward-network)’s [cross-entropy](https://morrison-lab.github.io/pds/expectation.html#def-cross-entropy) loss.
 
 > **NOTE:**
 >
-> *Solution 1*. Write \\\matr{W}\_1, \vecf{b}\_1\\ for the first layer’s [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter) and \\\matr{W}\_2, \vecf{b}\_2\\ for the second’s.
+> *Solution 1*. Write $\matr{W}_1, \vecf{b}_1$ for the first layer’s [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter) and $\matr{W}_2, \vecf{b}_2$ for the second’s.
 >
-> 1.  \\\vz_1 = \matr{W}\_1 \vx + \vecf{b}\_1\\, an [affine function](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-affine-function) of the pixels;
-> 2.  \\\vhidval = \operatorname{ReLU}(\vz_1)\\, entry by entry;
-> 3.  \\\vz_2 = \matr{W}\_2 \vhidval + \vecf{b}\_2\\, the [logits](../chapters/feedforward-networks.llms.md#def-logits);
-> 4.  \\\loss = -\log \operatorname{softmax}(\vz_2)\_y\\, the [cross-entropy](https://morrison-lab.github.io/pds/expectation.html#def-cross-entropy) loss, where softmax is the [softmax function](https://morrison-lab.github.io/lds/chapters/multiclass-logistic-regression.html#def-softmax).
+> 1.  $\vz_1 = \matr{W}_1 \vx + \vecf{b}_1$, an [affine function](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-affine-function) of the pixels;
+> 2.  $\vhidval = \operatorname{ReLU}(\vz_1)$, entry by entry;
+> 3.  $\vz_2 = \matr{W}_2 \vhidval + \vecf{b}_2$, the [logits](../chapters/feedforward-networks.llms.md#def-logits);
+> 4.  $\loss = -\log \operatorname{softmax}(\vz_2)_y$, the [cross-entropy](https://morrison-lab.github.io/pds/expectation.html#def-cross-entropy) loss, where softmax is the [softmax function](https://morrison-lab.github.io/lds/chapters/multiclass-logistic-regression.html#def-softmax).
 >
 > Each step uses only the input and the results of earlier steps.
 
@@ -120,10 +120,10 @@ The exercises use the same digits, split and network as the [feedforward network
 >
 > For the first training image, PyTorch’s [computational graph](#def-computational-graph) holds the four steps of [Solution 1](#sol-loss-operations), read from the loss back to the input. Each `grad_fn` names the operation that made a [tensor](../chapters/pytorch-basics.llms.md#def-tensor):
 >
-> - `NllLossBackward0` and `LogSoftmaxBackward0` are step 4, which `nn.CrossEntropyLoss` computes as a log softmax followed by picking out entry \\y\\;
+> - `NllLossBackward0` and `LogSoftmaxBackward0` are step 4, which `nn.CrossEntropyLoss` computes as a log softmax followed by picking out entry $y$;
 > - `AddmmBackward0` (“add matrix multiply”) is each affine step, 3 and then 1;
 > - `ReluBackward0` is step 2;
-> - `TBackward0` is the transpose of \\\matr{W}\_1\\ in `x @ weight.T`.
+> - `TBackward0` is the transpose of $\matr{W}_1$ in `x @ weight.T`.
 >
 > The chain stops at the transpose, since the image itself was not made with `requires_grad=True`.
 
@@ -133,7 +133,7 @@ The exercises use the same digits, split and network as the [feedforward network
 
 > **NOTE:**
 >
-> **Exercise 2 (The gradient at the logits)** Find the derivative of the [cross-entropy](https://morrison-lab.github.io/pds/expectation.html#def-cross-entropy) loss \\\loss = -\log \operatorname{softmax}(\vz)\_y\\, where softmax is the [softmax function](https://morrison-lab.github.io/lds/chapters/multiclass-logistic-regression.html#def-softmax), with respect to each [logit](../chapters/feedforward-networks.llms.md#def-logits) \\z_m\\, for \\m = 1, \dots, C\\, where \\C\\ is the number of classes.
+> **Exercise 2 (The gradient at the logits)** Find the derivative of the [cross-entropy](https://morrison-lab.github.io/pds/expectation.html#def-cross-entropy) loss $\loss = -\log \operatorname{softmax}(\vz)_y$, where softmax is the [softmax function](https://morrison-lab.github.io/lds/chapters/multiclass-logistic-regression.html#def-softmax), with respect to each [logit](../chapters/feedforward-networks.llms.md#def-logits) $z_m$, for $m = 1, \dots, C$, where $C$ is the number of classes.
 >
 > > **TIP:**
 > >
@@ -141,21 +141,33 @@ The exercises use the same digits, split and network as the [feedforward network
 
 > **NOTE:**
 >
-> *Solution 2*. By [the log softmax theorem](../chapters/feedforward-networks.llms.md#thm-log-softmax), \\\loss = \operatorname{LSE}(\vz) - z_y\\, where \\\operatorname{LSE}\\ is [log-sum-exp](../chapters/feedforward-networks.llms.md#def-log-sum-exp).
+> *Solution 2*. By [the log softmax theorem](../chapters/feedforward-networks.llms.md#thm-log-softmax), $\loss = \operatorname{LSE}(\vz) - z_y$, where $\operatorname{LSE}$ is [log-sum-exp](../chapters/feedforward-networks.llms.md#def-log-sum-exp).
 >
-> \\ \begin{aligned} \derivf{\operatorname{LSE}(\vz)}{z_m} &= \derivf{}{z_m} \log \sumto{k}{C} \e{z_k} && \text{(definition of \$\operatorname{LSE}\$)} \\ &= \frac{1}{\sumto{k}{C} \e{z_k}} \derivf{}{z_m} \sumto{k}{C} \e{z_k} && \text{(chain rule for \$\log\$)} \\ &= \frac{1}{\sumto{k}{C} \e{z_k}} \derivf{}{z_m} \e{z_m} && \text{(only term \$k = m\$ depends on \$z_m\$)} \\ &= \frac{\e{z_m}}{\sumto{k}{C} \e{z_k}} && \text{(derivative of the exponential)} \\ &= \operatorname{softmax}(\vz)\_m && \text{(definition of softmax)} \end{aligned} \\
+> $$\begin{aligned}
+> \derivf{\operatorname{LSE}(\vz)}{z_m}
+> &= \derivf{}{z_m} \log \sumto{k}{C} \e{z_k}
+> && \text{(definition of $\operatorname{LSE}$)} \\
+> &= \frac{1}{\sumto{k}{C} \e{z_k}} \derivf{}{z_m} \sumto{k}{C} \e{z_k}
+> && \text{(chain rule for $\log$)} \\
+> &= \frac{1}{\sumto{k}{C} \e{z_k}} \derivf{}{z_m} \e{z_m}
+> && \text{(only term $k = m$ depends on $z_m$)} \\
+> &= \frac{\e{z_m}}{\sumto{k}{C} \e{z_k}}
+> && \text{(derivative of the exponential)} \\
+> &= \operatorname{softmax}(\vz)_m
+> && \text{(definition of softmax)}
+> \end{aligned}$$
 >
-> The second term, \\z_y\\, has derivative 1 with respect to \\z_y\\ and 0 with respect to every other [logit](../chapters/feedforward-networks.llms.md#def-logits). So
+> The second term, $z_y$, has derivative 1 with respect to $z_y$ and 0 with respect to every other [logit](../chapters/feedforward-networks.llms.md#def-logits). So
 >
-> \\ \derivf{\loss}{z_m} = \operatorname{softmax}(\vz)\_m - \indicf{m = y}. \\
+> $$\derivf{\loss}{z_m} = \operatorname{softmax}(\vz)_m - \indicf{m = y}.$$
 
 > **NOTE:**
 >
-> **Theorem 1 (Gradient of the cross-entropy loss at the logits)** For [logits](../chapters/feedforward-networks.llms.md#def-logits) \\\vz \in \reals^C\\ and true class \\y\\, the [cross-entropy](https://morrison-lab.github.io/pds/expectation.html#def-cross-entropy) loss \\\loss = -\log \operatorname{softmax}(\vz)\_y\\, where softmax is the [softmax function](https://morrison-lab.github.io/lds/chapters/multiclass-logistic-regression.html#def-softmax), has [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient)
+> **Theorem 1 (Gradient of the cross-entropy loss at the logits)** For [logits](../chapters/feedforward-networks.llms.md#def-logits) $\vz \in \reals^C$ and true class $y$, the [cross-entropy](https://morrison-lab.github.io/pds/expectation.html#def-cross-entropy) loss $\loss = -\log \operatorname{softmax}(\vz)_y$, where softmax is the [softmax function](https://morrison-lab.github.io/lds/chapters/multiclass-logistic-regression.html#def-softmax), has [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient)
 >
-> \\ \gradwrt{\vz} \loss = \operatorname{softmax}(\vz) - \ve_y, \\
+> $$\gradwrt{\vz} \loss = \operatorname{softmax}(\vz) - \ve_y,$$
 >
-> where \\\ve_y\\ has 1 in entry \\y\\ and 0 in every other entry.
+> where $\ve_y$ has 1 in entry $y$ and 0 in every other entry.
 
 > **NOTE:**
 >
@@ -194,59 +206,73 @@ The exercises use the same digits, split and network as the [feedforward network
 >
 >     1.4901161193847656e-08
 >
-> For the first training image, a 0, autograd’s [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) at the [logits](../chapters/feedforward-networks.llms.md#def-logits) matches [Theorem 1](#thm-ce-logit-grad) to within 1.5e-08. Every entry is a predicted probability, near \\\frac{1}{10}\\, except entry 0, the true digit, which is that probability minus 1.
+> For the first training image, a 0, autograd’s [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) at the [logits](../chapters/feedforward-networks.llms.md#def-logits) matches [Theorem 1](#thm-ce-logit-grad) to within 1.5e-08. Every entry is a predicted probability, near $\frac{1}{10}$, except entry 0, the true digit, which is that probability minus 1.
 
 ## 3.2 Through a linear layer
 
 > **NOTE:**
 >
-> **Exercise 3 (Gradient for a layer’s weight matrix)** A layer computes \\\vz = \matr{W} \vhidval + \vecf{b}\\, and the [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) \\\vbackerr = \gradwrt{\vz} \loss\\ of the loss with respect to its output is known. What is the gradient of \\\loss\\ with respect to \\\matr{W}\\?
+> **Exercise 3 (Gradient for a layer’s weight matrix)** A layer computes $\vz = \matr{W} \vhidval + \vecf{b}$, and the [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) $\vbackerr = \gradwrt{\vz} \loss$ of the loss with respect to its output is known. What is the gradient of $\loss$ with respect to $\matr{W}$?
 
 > **NOTE:**
 >
-> *Solution 3*. Entry \\j\\ of the output is \\z_j = \sum_k W\_{jk} h_k + b_j\\, so \\W\_{jk}\\ affects \\\loss\\ only through \\z_j\\.
+> *Solution 3*. Entry $j$ of the output is $z_j = \sum_k W_{jk} h_k + b_j$, so $W_{jk}$ affects $\loss$ only through $z_j$.
 >
-> \\ \begin{aligned} \derivf{\loss}{W\_{jk}} &= \derivf{\loss}{z_j} \derivf{z_j}{W\_{jk}} && \text{(chain rule through \$z_j\$)} \\ &= \backerr_j h_k && \text{(since \$\derivf{z_j}{W\_{jk}} = h_k\$)} \end{aligned} \\
+> $$\begin{aligned}
+> \derivf{\loss}{W_{jk}}
+> &= \derivf{\loss}{z_j} \derivf{z_j}{W_{jk}}
+> && \text{(chain rule through $z_j$)} \\
+> &= \backerr_j h_k
+> && \text{(since $\derivf{z_j}{W_{jk}} = h_k$)}
+> \end{aligned}$$
 >
 > As a matrix,
 >
-> \\ \gradwrt{\matr{W}} \loss = \oprod{\vbackerr}{\vhidval}, \\
+> $$\gradwrt{\matr{W}} \loss = \oprod{\vbackerr}{\vhidval},$$
 >
-> an \\m \times n\\ outer product for a layer with \\n\\ inputs and \\m\\ outputs, with the same [shape](../chapters/pytorch-basics.llms.md#def-shape) as \\\matr{W}\\.
+> an $m \times n$ outer product for a layer with $n$ inputs and $m$ outputs, with the same [shape](../chapters/pytorch-basics.llms.md#def-shape) as $\matr{W}$.
 
 > **NOTE:**
 >
-> **Exercise 4 (Gradient for a layer’s bias)** For the layer of [Exercise 3](#exr-linear-param-grad), what is the [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) of \\\loss\\ with respect to \\\vecf{b}\\?
+> **Exercise 4 (Gradient for a layer’s bias)** For the layer of [Exercise 3](#exr-linear-param-grad), what is the [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) of $\loss$ with respect to $\vecf{b}$?
 
 > **NOTE:**
 >
-> *Solution 4*. Bias \\b_j\\ affects \\\loss\\ only through \\z_j\\, and \\\derivf{z_j}{b_j} = 1\\, so \\\derivf{\loss}{b_j} = \backerr_j \cdot 1 = \backerr_j\\, and
+> *Solution 4*. Bias $b_j$ affects $\loss$ only through $z_j$, and $\derivf{z_j}{b_j} = 1$, so $\derivf{\loss}{b_j} = \backerr_j \cdot 1 = \backerr_j$, and
 >
-> \\ \gradwrt{\vecf{b}} \loss = \vbackerr. \\
+> $$\gradwrt{\vecf{b}} \loss = \vbackerr.$$
 
 > **NOTE:**
 >
-> **Exercise 5 (The gradient passed back)** For the layer of [Exercise 3](#exr-linear-param-grad), find the [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) of \\\loss\\ with respect to the layer’s input \\\vhidval\\.
+> **Exercise 5 (The gradient passed back)** For the layer of [Exercise 3](#exr-linear-param-grad), find the [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) of $\loss$ with respect to the layer’s input $\vhidval$.
 
 > **NOTE:**
 >
-> *Solution 5*. Input \\h_k\\ affects every output \\z_j\\, so the chain rule adds up a term for each:
+> *Solution 5*. Input $h_k$ affects every output $z_j$, so the chain rule adds up a term for each:
 >
-> \\ \begin{aligned} \derivf{\loss}{h_k} &= \sum_j \derivf{\loss}{z_j} \derivf{z_j}{h_k} && \text{(chain rule through every \$z_j\$)} \\ &= \sum_j \backerr_j W\_{jk} && \text{(since \$\derivf{z_j}{h_k} = W\_{jk}\$)} \\ &= \paren{\tp{\matr{W}} \vbackerr}\_k && \text{(entry \$k\$ of a matrix-vector product)} \end{aligned} \\
+> $$\begin{aligned}
+> \derivf{\loss}{h_k}
+> &= \sum_j \derivf{\loss}{z_j} \derivf{z_j}{h_k}
+> && \text{(chain rule through every $z_j$)} \\
+> &= \sum_j \backerr_j W_{jk}
+> && \text{(since $\derivf{z_j}{h_k} = W_{jk}$)} \\
+> &= \paren{\tp{\matr{W}} \vbackerr}_k
+> && \text{(entry $k$ of a matrix-vector product)}
+> \end{aligned}$$
 >
-> So \\\gradwrt{\vhidval} \loss = \tp{\matr{W}} \vbackerr\\: the [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) travels back through the layer by the transpose of its weight matrix.
+> So $\gradwrt{\vhidval} \loss = \tp{\matr{W}} \vbackerr$: the [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) travels back through the layer by the transpose of its weight matrix.
 
 ## 3.3 Through the ReLU
 
 > **NOTE:**
 >
-> **Exercise 6 (Back through the ReLU)** The [hidden layer](../chapters/feedforward-networks.llms.md#def-hidden-layer) is \\\vhidval = \operatorname{ReLU}(\vz_1)\\, entry by entry, and \\\gradwrt{\vhidval} \loss\\ is known. Find \\\gradwrt{\vz_1} \loss\\.
+> **Exercise 6 (Back through the ReLU)** The [hidden layer](../chapters/feedforward-networks.llms.md#def-hidden-layer) is $\vhidval = \operatorname{ReLU}(\vz_1)$, entry by entry, and $\gradwrt{\vhidval} \loss$ is known. Find $\gradwrt{\vz_1} \loss$.
 
 > **NOTE:**
 >
-> *Solution 6*. Entry \\h_k = \maxf{0, z\_{1k}}\\ depends only on \\z\_{1k}\\, with derivative 1 where \\z\_{1k} \> 0\\ and 0 where \\z\_{1k} \< 0\\; at \\z\_{1k} = 0\\ PyTorch, and these notes, take it to be 0, as in [the slopes of the activation functions](../chapters/feedforward-networks.llms.md#sol-activation-slopes). So
+> *Solution 6*. Entry $h_k = \maxf{0, z_{1k}}$ depends only on $z_{1k}$, with derivative 1 where $z_{1k} > 0$ and 0 where $z_{1k} < 0$; at $z_{1k} = 0$ PyTorch, and these notes, take it to be 0, as in [the slopes of the activation functions](../chapters/feedforward-networks.llms.md#sol-activation-slopes). So
 >
-> \\ \derivf{\loss}{z\_{1k}} = \derivf{\loss}{h_k} \\ \indicf{z\_{1k} \> 0}: \\
+> $$\derivf{\loss}{z_{1k}} = \derivf{\loss}{h_k} \, \indicf{z_{1k} > 0}:$$
 >
 > the [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) passes through each [unit](../chapters/feedforward-networks.llms.md#def-unit) that was positive and stops at each unit that was 0.
 
@@ -254,7 +280,7 @@ The exercises use the same digits, split and network as the [feedforward network
 
 > **NOTE:**
 >
-> **Exercise 7 (The backward pass by hand)** Computed by hand from [Theorem 1](#thm-ce-logit-grad), [Solution 3](#sol-linear-param-grad), [Solution 4](#sol-linear-bias-grad), [Solution 5](#sol-linear-input-grad) and [Solution 6](#sol-relu-grad), without `.backward()`, how closely does the [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) of the [MLP](../chapters/feedforward-networks.llms.md#def-feedforward-network)’s mean loss over the [training set](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-training-set) with respect to \\\matr{W}\_1\\, \\\vecf{b}\_1\\, \\\matr{W}\_2\\ and \\\vecf{b}\_2\\ match the one `loss.backward()` gives?
+> **Exercise 7 (The backward pass by hand)** Computed by hand from [Theorem 1](#thm-ce-logit-grad), [Solution 3](#sol-linear-param-grad), [Solution 4](#sol-linear-bias-grad), [Solution 5](#sol-linear-input-grad) and [Solution 6](#sol-relu-grad), without `.backward()`, how closely does the [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) of the [MLP](../chapters/feedforward-networks.llms.md#def-feedforward-network)’s mean loss over the [training set](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-training-set) with respect to $\matr{W}_1$, $\vecf{b}_1$, $\matr{W}_2$ and $\vecf{b}_2$ match the one `loss.backward()` gives?
 
 > **NOTE:**
 >
@@ -294,7 +320,7 @@ The exercises use the same digits, split and network as the [feedforward network
 >
 > The four [gradients](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) match autograd’s to within 7.5e-09. The code runs the steps of [Solution 1](#sol-loss-operations) forward, then their derivatives in reverse:
 >
-> - `g2` is \\\gradwrt{\vz_2} \loss\\ from [Theorem 1](#thm-ce-logit-grad), for every image at once, divided by 1200 because the loss is the mean over that many images;
+> - `g2` is $\gradwrt{\vz_2} \loss$ from [Theorem 1](#thm-ce-logit-grad), for every image at once, divided by 1200 because the loss is the mean over that many images;
 > - `grad_W2` and `grad_b2` are [Solution 3](#sol-linear-param-grad) and [Solution 4](#sol-linear-bias-grad), with the outer products of the images added up by one matrix product;
 > - `grad_h` is [Solution 5](#sol-linear-input-grad), written for rows instead of columns;
 > - `grad_z1` is [Solution 6](#sol-relu-grad);
@@ -310,7 +336,7 @@ The exercises use the same digits, split and network as the [feedforward network
 
 > **NOTE:**
 >
-> **Example 3 (Backpropagation through the MLP)** [Solution 7](#sol-manual-backward) is [backpropagation](#def-backpropagation) through the four steps of [Solution 1](#sol-loss-operations). It visits them in reverse order: the loss gives the [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) at the [logits](../chapters/feedforward-networks.llms.md#def-logits) `g2`; the second affine step gives the [gradients](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) of \\\matr{W}\_2\\, \\\vecf{b}\_2\\ and the [hidden layer](../chapters/feedforward-networks.llms.md#def-hidden-layer); the [ReLU](../chapters/feedforward-networks.llms.md#def-relu) gives the gradient at \\\vz_1\\; and the first affine step gives the gradients of \\\matr{W}\_1\\ and \\\vecf{b}\_1\\.
+> **Example 3 (Backpropagation through the MLP)** [Solution 7](#sol-manual-backward) is [backpropagation](#def-backpropagation) through the four steps of [Solution 1](#sol-loss-operations). It visits them in reverse order: the loss gives the [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) at the [logits](../chapters/feedforward-networks.llms.md#def-logits) `g2`; the second affine step gives the [gradients](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) of $\matr{W}_2$, $\vecf{b}_2$ and the [hidden layer](../chapters/feedforward-networks.llms.md#def-hidden-layer); the [ReLU](../chapters/feedforward-networks.llms.md#def-relu) gives the gradient at $\vz_1$; and the first affine step gives the gradients of $\matr{W}_1$ and $\vecf{b}_1$.
 
 # 4 Cost
 
@@ -318,11 +344,11 @@ The exercises use the same digits, split and network as the [feedforward network
 
 > **NOTE:**
 >
-> **Exercise 8 (The cost of finite differences)** A finite difference, \\\paren{\loss(\theta_i + \smallconst) - \loss(\theta_i)} / \smallconst\\ for a small \\\smallconst\\, estimates the derivative of the [MLP](../chapters/feedforward-networks.llms.md#def-feedforward-network)’s mean training loss \\\loss\\ with respect to one [parameter](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter) \\\theta_i\\, with every other parameter held fixed. How many evaluations of the loss does that take to estimate the [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) with respect to \\P\\ [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter)?
+> **Exercise 8 (The cost of finite differences)** A finite difference, $\paren{\loss(\theta_i + \smallconst) - \loss(\theta_i)} / \smallconst$ for a small $\smallconst$, estimates the derivative of the [MLP](../chapters/feedforward-networks.llms.md#def-feedforward-network)’s mean training loss $\loss$ with respect to one [parameter](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter) $\theta_i$, with every other parameter held fixed. How many evaluations of the loss does that take to estimate the [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) with respect to $P$ [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter)?
 
 > **NOTE:**
 >
-> *Solution 8*. \\P + 1\\: one at the current [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter), and one more for each [parameter](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter) nudged. [Backpropagation](#def-backpropagation) gets all \\P\\ derivatives from one forward pass and one backward pass, and each backward step costs a small multiple of its forward step: a matrix product forward becomes two matrix products backward, as in [Solution 3](#sol-linear-param-grad) and [Solution 5](#sol-linear-input-grad), so the two passes together cost about three forward passes.
+> *Solution 8*. $P + 1$: one at the current [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter), and one more for each [parameter](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter) nudged. [Backpropagation](#def-backpropagation) gets all $P$ derivatives from one forward pass and one backward pass, and each backward step costs a small multiple of its forward step: a matrix product forward becomes two matrix products backward, as in [Solution 3](#sol-linear-param-grad) and [Solution 5](#sol-linear-input-grad), so the two passes together cost about three forward passes.
 >
 > Show code
 >
@@ -353,7 +379,7 @@ The exercises use the same digits, split and network as the [feedforward network
 >
 >     0.005830402300000514 0.15436204900004213 0.00044121919199824333
 >
-> One forward and backward pass over the [training set](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-training-set) took 5.83 milliseconds, for every parameter of the [MLP](../chapters/feedforward-networks.llms.md#def-feedforward-network). Finite differences for only the 320 entries of \\\matr{W}\_2\\ took 154 milliseconds, 26 times as long, and agree with backpropagation only to within 0.00044, since a finite difference is an approximation. Timings vary from run to run; the ratio grows with the number of [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter).
+> One forward and backward pass over the [training set](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-training-set) took 5.83 milliseconds, for every parameter of the [MLP](../chapters/feedforward-networks.llms.md#def-feedforward-network). Finite differences for only the 320 entries of $\matr{W}_2$ took 154 milliseconds, 26 times as long, and agree with backpropagation only to within 0.00044, since a finite difference is an approximation. Timings vary from run to run; the ratio grows with the number of [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter).
 
 > **NOTE:**
 >
@@ -410,23 +436,26 @@ The exercises use the same digits, split and network as the [feedforward network
 >
 >     {'logistic': 129510900.18186893, 'ReLU': 251.30350519888285}
 >
-> The size of a matrix here is the square root of the sum of its squared entries. In both networks the weight [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) is largest at the last layer. With the [logistic function](https://morrison-lab.github.io/mds/functions.html#def-logistic-function), the weight gradient shrinks at every layer going back, and the last layer’s weight gradient is about \\10^{8}\\ times the first layer’s. With the [ReLU](../chapters/feedforward-networks.llms.md#def-relu), the weight gradient shrinks over the last few layers and then levels off, and the last layer’s is 251 times the first layer’s. A [training step](../chapters/pytorch-basics.llms.md#def-training-step) with one [learning rate](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-learning-rate) would move the logistic network’s first layers almost not at all.
+> The size of a matrix here is the square root of the sum of its squared entries. In both networks the weight [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) is largest at the last layer. With the [logistic function](https://morrison-lab.github.io/mds/functions.html#def-logistic-function), the weight gradient shrinks at every layer going back, and the last layer’s weight gradient is about $10^{8}$ times the first layer’s. With the [ReLU](../chapters/feedforward-networks.llms.md#def-relu), the weight gradient shrinks over the last few layers and then levels off, and the last layer’s is 251 times the first layer’s. A [training step](../chapters/pytorch-basics.llms.md#def-training-step) with one [learning rate](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-learning-rate) would move the logistic network’s first layers almost not at all.
 
 ## 5.2 Why they shrink
 
 > **NOTE:**
 >
-> **Exercise 10 (Why the gradient shrinks)** In a deep [MLP](../chapters/feedforward-networks.llms.md#def-feedforward-network), [hidden layer](../chapters/feedforward-networks.llms.md#def-hidden-layer) \\\layeridx\\ is \\\vhidval\_{\layeridx} = g\paren{\vz\_{\layeridx}}\\ with \\\vz\_{\layeridx} = \matr{W}\_{\layeridx} \vhidval\_{\layeridx - 1} + \vecf{b}\_{\layeridx}\\. Why does the [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) shrink from layer to layer, going back, when \\g\\ is the [logistic function](https://morrison-lab.github.io/mds/functions.html#def-logistic-function)?
+> **Exercise 10 (Why the gradient shrinks)** In a deep [MLP](../chapters/feedforward-networks.llms.md#def-feedforward-network), [hidden layer](../chapters/feedforward-networks.llms.md#def-hidden-layer) $\layeridx$ is $\vhidval_{\layeridx} = g\paren{\vz_{\layeridx}}$ with $\vz_{\layeridx} = \matr{W}_{\layeridx} \vhidval_{\layeridx - 1} + \vecf{b}_{\layeridx}$. Why does the [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) shrink from layer to layer, going back, when $g$ is the [logistic function](https://morrison-lab.github.io/mds/functions.html#def-logistic-function)?
 
 > **NOTE:**
 >
-> *Solution 10*. Applying [Solution 6](#sol-relu-grad)’s reasoning to \\g\\, then [Solution 5](#sol-linear-input-grad), takes the [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) back one layer:
+> *Solution 10*. Applying [Solution 6](#sol-relu-grad)’s reasoning to $g$, then [Solution 5](#sol-linear-input-grad), takes the [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) back one layer:
 >
-> \\ \gradwrt{\vhidval\_{\layeridx - 1}} \loss = \tp{\matr{W}\_{\layeridx}} \vbackerr\_{\layeridx}, \qquad \vbackerr\_{\layeridx} = \gradwrt{\vz\_{\layeridx}} \loss = g'(\vz\_{\layeridx}) \odot \gradwrt{\vhidval\_{\layeridx}} \loss, \\
+> $$\gradwrt{\vhidval_{\layeridx - 1}} \loss
+> = \tp{\matr{W}_{\layeridx}} \vbackerr_{\layeridx},
+> \qquad
+> \vbackerr_{\layeridx} = \gradwrt{\vz_{\layeridx}} \loss = g'(\vz_{\layeridx}) \odot \gradwrt{\vhidval_{\layeridx}} \loss,$$
 >
-> where \\\odot\\ multiplies entry by entry. Each layer back multiplies the gradient by the slopes \\g'(\vz\_{\layeridx})\\ and by \\\tp{\matr{W}\_{\layeridx}}\\. The [logistic function](https://morrison-lab.github.io/mds/functions.html#def-logistic-function)’s slope is at most \\\frac{1}{4}\\ ([lds’s bound on it](https://morrison-lab.github.io/lds/chapters/logistic-regression.html#thm-logistic-derivative-bound)), and less where [unit](../chapters/feedforward-networks.llms.md#def-unit)s [saturate](https://morrison-lab.github.io/lds/chapters/backpropagation.html#def-saturation), so unless the weights are large, every layer shrinks the gradient by a factor less than 1, and 10 layers multiply 10 such factors. The [ReLU](../chapters/feedforward-networks.llms.md#def-relu)’s slope has no \\\frac{1}{4}\\ bound: it is 1 at each [unit](../chapters/feedforward-networks.llms.md#def-unit) that is positive and 0 at each unit that is not. In the ReLU network of [Solution 9](#sol-deep-grad-norms), the gradient going back still shrinks, both because the weights PyTorch starts with are small and because the [unit](../chapters/feedforward-networks.llms.md#def-unit)s at 0 pass none of it back.
+> where $\odot$ multiplies entry by entry. Each layer back multiplies the gradient by the slopes $g'(\vz_{\layeridx})$ and by $\tp{\matr{W}_{\layeridx}}$. The [logistic function](https://morrison-lab.github.io/mds/functions.html#def-logistic-function)’s slope is at most $\frac{1}{4}$ ([lds’s bound on it](https://morrison-lab.github.io/lds/chapters/logistic-regression.html#thm-logistic-derivative-bound)), and less where [unit](../chapters/feedforward-networks.llms.md#def-unit)s [saturate](https://morrison-lab.github.io/lds/chapters/backpropagation.html#def-saturation), so unless the weights are large, every layer shrinks the gradient by a factor less than 1, and 10 layers multiply 10 such factors. The [ReLU](../chapters/feedforward-networks.llms.md#def-relu)’s slope has no $\frac{1}{4}$ bound: it is 1 at each [unit](../chapters/feedforward-networks.llms.md#def-unit) that is positive and 0 at each unit that is not. In the ReLU network of [Solution 9](#sol-deep-grad-norms), the gradient going back still shrinks, both because the weights PyTorch starts with are small and because the [unit](../chapters/feedforward-networks.llms.md#def-unit)s at 0 pass none of it back.
 >
-> The weight gradient of layer \\\layeridx\\ is \\\oprod{\vbackerr\_{\layeridx}}{\vhidval\_{\layeridx - 1}}\\, by [Solution 3](#sol-linear-param-grad), so its size depends on the layer’s input \\\vhidval\_{\layeridx - 1}\\ as well as on the gradient \\\vbackerr\_{\layeridx}\\ at its output. In the ReLU network the layer inputs grow toward the first layers, which is why its weight [gradients](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) level off there while the gradients \\\vbackerr\_{\layeridx}\\ keep shrinking.
+> The weight gradient of layer $\layeridx$ is $\oprod{\vbackerr_{\layeridx}}{\vhidval_{\layeridx - 1}}$, by [Solution 3](#sol-linear-param-grad), so its size depends on the layer’s input $\vhidval_{\layeridx - 1}$ as well as on the gradient $\vbackerr_{\layeridx}$ at its output. In the ReLU network the layer inputs grow toward the first layers, which is why its weight [gradients](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) level off there while the gradients $\vbackerr_{\layeridx}$ keep shrinking.
 
 > **NOTE:**
 >
@@ -436,11 +465,11 @@ The exercises use the same digits, split and network as the [feedforward network
 
 > **NOTE:**
 >
-> **Example 4 (The deep logistic network)** The 10-hidden-layer logistic network of [Solution 9](#sol-deep-grad-norms) has a [vanishing gradient](#def-vanishing-gradient): its first layer’s weight [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) is about \\10^{-8}\\ times its last layer’s.
+> **Example 4 (The deep logistic network)** The 10-hidden-layer logistic network of [Solution 9](#sol-deep-grad-norms) has a [vanishing gradient](#def-vanishing-gradient): its first layer’s weight [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) is about $10^{-8}$ times its last layer’s.
 
 > **NOTE:**
 >
-> *Remark 2* (What keeps gradients from vanishing). The [ReLU](../chapters/feedforward-networks.llms.md#def-relu) removes the \\\frac{1}{4}\\ bound on each layer’s slopes. Other remedies are starting the weights at a scale that keeps the [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient)’s size steady from layer to layer, such as [He initialization](https://morrison-lab.github.io/lds/chapters/backpropagation.html#def-he-initialization) or [Glorot initialization](https://morrison-lab.github.io/lds/chapters/backpropagation.html#def-glorot-initialization), normalizing each layer’s values, and [residual connections](https://morrison-lab.github.io/lds/chapters/backpropagation.html#def-residual-connection), which give the gradient a path around each layer. [lds’s experiment on depth](https://morrison-lab.github.io/lds/chapters/backpropagation.html#sec-vanishing-experiment) measures the same effect.
+> *Remark 2* (What keeps gradients from vanishing). The [ReLU](../chapters/feedforward-networks.llms.md#def-relu) removes the $\frac{1}{4}$ bound on each layer’s slopes. Other remedies are starting the weights at a scale that keeps the [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient)’s size steady from layer to layer, such as [He initialization](https://morrison-lab.github.io/lds/chapters/backpropagation.html#def-he-initialization) or [Glorot initialization](https://morrison-lab.github.io/lds/chapters/backpropagation.html#def-glorot-initialization), normalizing each layer’s values, and [residual connections](https://morrison-lab.github.io/lds/chapters/backpropagation.html#def-residual-connection), which give the gradient a path around each layer. [lds’s experiment on depth](https://morrison-lab.github.io/lds/chapters/backpropagation.html#sec-vanishing-experiment) measures the same effect.
 
 ## 5.3 Further reading
 

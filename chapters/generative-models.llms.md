@@ -223,29 +223,38 @@ print(autoencoder)
 
 > **NOTE:**
 >
-> **Exercise 3 (Codes we can draw)** The codes of [Solution 2](#sol-ae-codes) follow no distribution we know. What could the encoder output, and the loss add, so that the codes of the training images follow \\\dNf{\vzero, \idmat}\\?
+> **Exercise 3 (Codes we can draw)** The codes of [Solution 2](#sol-ae-codes) follow no distribution we know. What could the encoder output, and the loss add, so that the codes of the training images follow $\dNf{\vzero, \idmat}$?
 
 > **NOTE:**
 >
-> *Solution 3*. Let the encoder output a normal distribution for each image, with a mean and a standard deviation for each coordinate of the code, and train the decoder on draws from it. Then add to the loss the [KL divergence](https://morrison-lab.github.io/pds/expectation.html#def-kl-divergence) of each of those distributions from \\\dNf{0, 1}\\. The penalty pulls every image’s distribution toward the standard normal, so a draw from \\\dNf{\vzero, \idmat}\\ lands where the decoder has seen codes. This needs two results: the KL divergence between two normal distributions, and a way to differentiate through a random draw.
+> *Solution 3*. Let the encoder output a normal distribution for each image, with a mean and a standard deviation for each coordinate of the code, and train the decoder on draws from it. Then add to the loss the [KL divergence](https://morrison-lab.github.io/pds/expectation.html#def-kl-divergence) of each of those distributions from $\dNf{0, 1}$. The penalty pulls every image’s distribution toward the standard normal, so a draw from $\dNf{\vzero, \idmat}$ lands where the decoder has seen codes. This needs two results: the KL divergence between two normal distributions, and a way to differentiate through a random draw.
 
 ## 3.2 Distance from a standard normal
 
 > **NOTE:**
 >
-> **Exercise 4 (How far is a normal distribution from the standard normal?)** Let \\q = \dNf{\mu, \sigma^2}\\ and \\p = \dNf{0, 1}\\. Find the [KL divergence](https://morrison-lab.github.io/pds/expectation.html#def-kl-divergence) \\\kldivf{q}{p}\\ as a formula in \\\mu\\ and \\\sigma\\.
+> **Exercise 4 (How far is a normal distribution from the standard normal?)** Let $q = \dNf{\mu, \sigma^2}$ and $p = \dNf{0, 1}$. Find the [KL divergence](https://morrison-lab.github.io/pds/expectation.html#def-kl-divergence) $\kldivf{q}{p}$ as a formula in $\mu$ and $\sigma$.
 
 > **NOTE:**
 >
-> *Solution 4*. Let \\Z \sim q\\, so \\\E{Z} = \mu\\ and \\\Var{Z} = \sigma^2\\. The log densities are \\\logf{q(z)} = -\frac{1}{2} \logf{2 \pi} - \frac{1}{2} \logf{\sigma^2} - \frac{(z - \mu)^2}{2 \sigma^2}\\ and \\\logf{p(z)} = -\frac{1}{2} \logf{2 \pi} - \frac{z^2}{2}\\. Then
+> *Solution 4*. Let $Z \sim q$, so $\E{Z} = \mu$ and $\Var{Z} = \sigma^2$. The log densities are $\logf{q(z)} = -\frac{1}{2} \logf{2 \pi} - \frac{1}{2} \logf{\sigma^2} - \frac{(z - \mu)^2}{2 \sigma^2}$ and $\logf{p(z)} = -\frac{1}{2} \logf{2 \pi} - \frac{z^2}{2}$. Then
 >
-> \\ \begin{aligned} \kldivf{q}{p} &= \E{\logf{q(Z)} - \logf{p(Z)}} && \text{(definition of KL divergence)} \\ &= \E{-\frac{1}{2} \logf{\sigma^2} - \frac{(Z - \mu)^2}{2 \sigma^2} + \frac{Z^2}{2}} && \text{(the } \logf{2 \pi} \text{ terms cancel)} \\ &= -\frac{1}{2} \logf{\sigma^2} - \frac{\E{(Z - \mu)^2}}{2 \sigma^2} + \frac{\E{Z^2}}{2} && \text{(linearity of expectation)} \\ &= -\frac{1}{2} \logf{\sigma^2} - \frac{\sigma^2}{2 \sigma^2} + \frac{\E{Z^2}}{2} && \text{(} \E{(Z - \mu)^2} = \Var{Z} = \sigma^2 \text{)} \\ &= -\frac{1}{2} \logf{\sigma^2} - \frac{\sigma^2}{2 \sigma^2} + \frac{\sigma^2 + \mu^2}{2} && \text{(} \E{Z^2} = \Var{Z} + \E{Z}^2 \text{)} \\ &= -\frac{1}{2} \logf{\sigma^2} - \frac{1}{2} + \frac{\sigma^2 + \mu^2}{2} && \text{(cancel } \sigma^2 \text{)} \\ &= \frac{1}{2} \paren{\mu^2 + \sigma^2 - 1 - \logf{\sigma^2}}. && \text{(collect terms)} \end{aligned} \\
+> $$\begin{aligned}
+> \kldivf{q}{p}
+> &= \E{\logf{q(Z)} - \logf{p(Z)}} && \text{(definition of KL divergence)} \\
+> &= \E{-\frac{1}{2} \logf{\sigma^2} - \frac{(Z - \mu)^2}{2 \sigma^2} + \frac{Z^2}{2}} && \text{(the } \logf{2 \pi} \text{ terms cancel)} \\
+> &= -\frac{1}{2} \logf{\sigma^2} - \frac{\E{(Z - \mu)^2}}{2 \sigma^2} + \frac{\E{Z^2}}{2} && \text{(linearity of expectation)} \\
+> &= -\frac{1}{2} \logf{\sigma^2} - \frac{\sigma^2}{2 \sigma^2} + \frac{\E{Z^2}}{2} && \text{(} \E{(Z - \mu)^2} = \Var{Z} = \sigma^2 \text{)} \\
+> &= -\frac{1}{2} \logf{\sigma^2} - \frac{\sigma^2}{2 \sigma^2} + \frac{\sigma^2 + \mu^2}{2} && \text{(} \E{Z^2} = \Var{Z} + \E{Z}^2 \text{)} \\
+> &= -\frac{1}{2} \logf{\sigma^2} - \frac{1}{2} + \frac{\sigma^2 + \mu^2}{2} && \text{(cancel } \sigma^2 \text{)} \\
+> &= \frac{1}{2} \paren{\mu^2 + \sigma^2 - 1 - \logf{\sigma^2}}. && \text{(collect terms)}
+> \end{aligned}$$
 
 > **NOTE:**
 >
-> **Theorem 1 (KL divergence from the standard normal)** For \\\mu \in \reals\\ and \\\sigma \> 0\\,
+> **Theorem 1 (KL divergence from the standard normal)** For $\mu \in \reals$ and $\sigma > 0$,
 >
-> \\ \kldivf{\dNf{\mu, \sigma^2}}{\dNf{0, 1}} = \frac{1}{2} \paren{\mu^2 + \sigma^2 - 1 - \logf{\sigma^2}} \\
+> $$\kldivf{\dNf{\mu, \sigma^2}}{\dNf{0, 1}} = \frac{1}{2} \paren{\mu^2 + \sigma^2 - 1 - \logf{\sigma^2}}$$
 >
 > Kingma and Welling [\[2\]](#ref-kingma2014auto) derive it in their appendix B.
 
@@ -269,21 +278,21 @@ print(autoencoder)
 >
 >     0.8181471824645996 0.8181471805599453
 >
-> For \\\mu = 1\\ and \\\sigma = 0.5\\, [Theorem 1](#thm-kl-normal) gives \\\frac{1}{2} \paren{1 + 0.25 - 1 - \logf{0.25}} = 0.8181\\, and `torch.distributions.kl_divergence` [\[3\]](#ref-pytorch_distributions) gives the same value. The divergence is 0 only at \\\mu = 0\\ and \\\sigma = 1\\.
+> For $\mu = 1$ and $\sigma = 0.5$, [Theorem 1](#thm-kl-normal) gives $\frac{1}{2} \paren{1 + 0.25 - 1 - \logf{0.25}} = 0.8181$, and `torch.distributions.kl_divergence` [\[3\]](#ref-pytorch_distributions) gives the same value. The divergence is 0 only at $\mu = 0$ and $\sigma = 1$.
 
 ## 3.3 Differentiating through a draw
 
 > **NOTE:**
 >
-> **Exercise 5 (A gradient through a random draw)** An encoder outputs \\\mu\\ and \\\sigma\\, and the next layer gets a draw \\z\\ from \\\dNf{\mu, \sigma^2}\\. How can we write \\z\\ so that the [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) of the loss reaches \\\mu\\ and \\\sigma\\?
+> **Exercise 5 (A gradient through a random draw)** An encoder outputs $\mu$ and $\sigma$, and the next layer gets a draw $z$ from $\dNf{\mu, \sigma^2}$. How can we write $z$ so that the [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) of the loss reaches $\mu$ and $\sigma$?
 
 > **NOTE:**
 >
-> *Solution 5*. Draw \\\noise \sim \dNf{0, 1}\\ first, with no [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter) involved, and set \\z = \mu + \sigma \noise\\. Then \\z \sim \dNf{\mu, \sigma^2}\\, and \\z\\ is a differentiable function of \\\mu\\ and \\\sigma\\, with \\\derivf{z}{\mu} = 1\\ and \\\derivf{z}{\sigma} = \noise\\.
+> *Solution 5*. Draw $\noise \sim \dNf{0, 1}$ first, with no [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter) involved, and set $z = \mu + \sigma \noise$. Then $z \sim \dNf{\mu, \sigma^2}$, and $z$ is a differentiable function of $\mu$ and $\sigma$, with $\derivf{z}{\mu} = 1$ and $\derivf{z}{\sigma} = \noise$.
 
 > **NOTE:**
 >
-> **Definition 1 (Reparameterization trick)** The **reparameterization trick** writes a draw \\\vz\\ from a distribution with [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter) \\\vth\\ as \\\vz = g\_{\vth}(\vnoise)\\, where \\\vnoise\\ is drawn from a fixed distribution and \\g\_{\vth}\\ is differentiable in \\\vth\\ [\[2, Sec. 2.4\]](#ref-kingma2014auto). For a normal distribution with mean \\\vecf{\mu}\\ and standard deviations \\\vecf{\sigma}\\, \\\vz = \vecf{\mu} + \vecf{\sigma} \odot \vnoise\\ with \\\vnoise \sim \dNf{\vzero, \idmat}\\, where \\\odot\\ multiplies entry by entry.
+> **Definition 1 (Reparameterization trick)** The **reparameterization trick** writes a draw $\vz$ from a distribution with [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter) $\vth$ as $\vz = g_{\vth}(\vnoise)$, where $\vnoise$ is drawn from a fixed distribution and $g_{\vth}$ is differentiable in $\vth$ [\[2, Sec. 2.4\]](#ref-kingma2014auto). For a normal distribution with mean $\vecf{\mu}$ and standard deviations $\vecf{\sigma}$, $\vz = \vecf{\mu} + \vecf{\sigma} \odot \vnoise$ with $\vnoise \sim \dNf{\vzero, \idmat}$, where $\odot$ multiplies entry by entry.
 
 > **NOTE:**
 >
@@ -302,13 +311,13 @@ print(autoencoder)
 >
 >     1.5409960746765137 1.0 1.5409960746765137
 >
-> With the [reparameterization trick](#def-reparameterization), autograd finds \\\derivf{z}{\mu} = 1\\ and \\\derivf{z}{\sigma} = 1.541\\, the value of \\\noise\\ drawn.
+> With the [reparameterization trick](#def-reparameterization), autograd finds $\derivf{z}{\mu} = 1$ and $\derivf{z}{\sigma} = 1.541$, the value of $\noise$ drawn.
 
 ## 3.4 The model
 
 > **NOTE:**
 >
-> **Definition 2 (Variational autoencoder)** A **variational autoencoder** has an encoder that maps an input \\\vx\\ to vectors \\\vecf{\mu}(\vx)\\ and \\\vecf{\sigma}(\vx)\\ in \\\reals^k\\, and a decoder that maps a code \\\vz \in \reals^k\\ back to the space of inputs. In training, the code is a draw \\\vz = \vecf{\mu}(\vx) + \vecf{\sigma}(\vx) \odot \vnoise\\ by the [reparameterization trick](#def-reparameterization). The loss for \\\vx\\ is the reconstruction loss of the decoded \\\vz\\ plus \\\sumto{j}{k} \kldivf{\dNf{\mu_j(\vx), \sigma_j(\vx)^2}}{\dNf{0, 1}}\\ [\[2, Secs. 2.3, 3\]](#ref-kingma2014auto). To make a new input, decode a draw from \\\dNf{\vzero, \idmat}\\.
+> **Definition 2 (Variational autoencoder)** A **variational autoencoder** has an encoder that maps an input $\vx$ to vectors $\vecf{\mu}(\vx)$ and $\vecf{\sigma}(\vx)$ in $\reals^k$, and a decoder that maps a code $\vz \in \reals^k$ back to the space of inputs. In training, the code is a draw $\vz = \vecf{\mu}(\vx) + \vecf{\sigma}(\vx) \odot \vnoise$ by the [reparameterization trick](#def-reparameterization). The loss for $\vx$ is the reconstruction loss of the decoded $\vz$ plus $\sumto{j}{k} \kldivf{\dNf{\mu_j(\vx), \sigma_j(\vx)^2}}{\dNf{0, 1}}$ [\[2, Secs. 2.3, 3\]](#ref-kingma2014auto). To make a new input, decode a draw from $\dNf{\vzero, \idmat}$.
 
 > **NOTE:**
 >
@@ -362,17 +371,17 @@ print(autoencoder)
 > assert all(abs(s - 1) < 0.2 for s in vae_code_sd)
 > ```
 >
-> `VAE` is a [variational autoencoder](#def-vae) with codes of 2 numbers, the same layers as `Autoencoder`, and the KL term of [Theorem 1](#thm-kl-normal) added to `ae_loss()`. Its encoder outputs \\\logf{\sigma^2}\\ rather than \\\sigma\\, so that any real output gives a valid \\\sigma\\. After the same training, one draw of the code for each training image gives codes with means 0.03 and 0.04 and standard deviations 1.01 and 1.02, close to the means of 0 and standard deviations of 1 of the standard normal that new codes are drawn from. Decoding \\\vecf{\mu}(\vx)\\ gives a test mean squared error of 0.037, against 0.036 for the [autoencoder](https://morrison-lab.github.io/lds/chapters/neural-nets.html#def-autoencoder) of [Solution 1](#sol-reconstruct).
+> `VAE` is a [variational autoencoder](#def-vae) with codes of 2 numbers, the same layers as `Autoencoder`, and the KL term of [Theorem 1](#thm-kl-normal) added to `ae_loss()`. Its encoder outputs $\logf{\sigma^2}$ rather than $\sigma$, so that any real output gives a valid $\sigma$. After the same training, one draw of the code for each training image gives codes with means 0.03 and 0.04 and standard deviations 1.01 and 1.02, close to the means of 0 and standard deviations of 1 of the standard normal that new codes are drawn from. Decoding $\vecf{\mu}(\vx)$ gives a test mean squared error of 0.037, against 0.036 for the [autoencoder](https://morrison-lab.github.io/lds/chapters/neural-nets.html#def-autoencoder) of [Solution 1](#sol-reconstruct).
 
 > **NOTE:**
 >
-> *Remark 1* (The loss as a bound). When the reconstruction loss is the negative log probability that the decoder gives \\\vx\\, as the binary [cross-entropy](https://morrison-lab.github.io/pds/expectation.html#def-cross-entropy) of `vae_loss()` would be for pixels that are each 0 or 1, the negative of the [variational autoencoder](#def-vae)’s loss is a one-draw estimate [\[2, Sec. 2.3\]](#ref-kingma2014auto) of what Kingma and Welling [\[2, Sec. 2.2\]](#ref-kingma2014auto) call the variational lower bound, a lower bound on the log probability of \\\vx\\. Many sources call it the evidence lower bound (ELBO).
+> *Remark 1* (The loss as a bound). When the reconstruction loss is the negative log probability that the decoder gives $\vx$, as the binary [cross-entropy](https://morrison-lab.github.io/pds/expectation.html#def-cross-entropy) of `vae_loss()` would be for pixels that are each 0 or 1, the negative of the [variational autoencoder](#def-vae)’s loss is a one-draw estimate [\[2, Sec. 2.3\]](#ref-kingma2014auto) of what Kingma and Welling [\[2, Sec. 2.2\]](#ref-kingma2014auto) call the variational lower bound, a lower bound on the log probability of $\vx$. Many sources call it the evidence lower bound (ELBO).
 
 ## 3.5 Sampling
 
 > **NOTE:**
 >
-> **Exercise 6 (New digits)** Decode 32 draws from \\\dNf{\vzero, \idmat}\\ with the trained `vae`.
+> **Exercise 6 (New digits)** Decode 32 draws from $\dNf{\vzero, \idmat}$ with the trained `vae`.
 
 > **NOTE:**
 >
@@ -468,11 +477,11 @@ The rest of the lecture uses smaller data: a local copy, [`data/faithful.csv`](d
 
 > **NOTE:**
 >
-> **Definition 3 (Generative adversarial network (GAN))** A **generative adversarial network**, or **GAN**, has a generator \\G\\, which maps a draw \\\vz\\ of noise to a data point \\G(\vz)\\, and a discriminator \\D\\, which gives the probability \\D(\vx)\\ that a data point \\\vx\\ is real. They are trained in turn, \\D\\ to maximize and \\G\\ to minimize
+> **Definition 3 (Generative adversarial network (GAN))** A **generative adversarial network**, or **GAN**, has a generator $G$, which maps a draw $\vz$ of noise to a data point $G(\vz)$, and a discriminator $D$, which gives the probability $D(\vx)$ that a data point $\vx$ is real. They are trained in turn, $D$ to maximize and $G$ to minimize
 >
-> \\ V(D, G) = \E{\logf{D(\vecf{X})}} + \E{\logf{1 - D(G(\vecf{Z}))}}, \\
+> $$V(D, G) = \E{\logf{D(\vecf{X})}} + \E{\logf{1 - D(G(\vecf{Z}))}},$$
 >
-> where \\\vecf{X}\\ is a real data point and \\\vecf{Z}\\ is the noise [\[7, Sec. 3\]](#ref-goodfellow2014generative).
+> where $\vecf{X}$ is a real data point and $\vecf{Z}$ is the noise [\[7, Sec. 3\]](#ref-goodfellow2014generative).
 
 > **NOTE:**
 >
@@ -538,35 +547,41 @@ The rest of the lecture uses smaller data: a local copy, [`data/faithful.csv`](d
 > >
 > > Figure 4: The real eruptions and 1,000 made by the [GAN](#def-gan)’s generator.
 >
-> Both networks are [MLPs](../chapters/feedforward-networks.llms.md#def-feedforward-network) with two [hidden layers](../chapters/feedforward-networks.llms.md#def-hidden-layer) of 64 [units](../chapters/feedforward-networks.llms.md#def-unit), trained for 3,000 steps on the `standardized` eruptions. The discriminator returns a [logit](../chapters/feedforward-networks.llms.md#def-logits), so `binary_cross_entropy_with_logits`, with label 1 for the real points and 0 for the made-up ones, is \\-V(D, G)\\ for a minibatch. The generator’s loss is \\-\logf{D(G(\vz))}\\, rather than \\V(D, G)\\. Of the made-up eruptions, 63% last longer than 3 minutes, against 64% of the real ones. But the made-up points lie along one thin curve. Along the long end of that curve, the generator gives each eruption length nearly one wait; along the short end, it gives nearly one length for a range of waits. Among the eruptions longer than 3 minutes, the waits have standard deviation 3.7 minutes, against 6.0 for the real ones. The generator matches where the data lie better than how they spread.
+> Both networks are [MLPs](../chapters/feedforward-networks.llms.md#def-feedforward-network) with two [hidden layers](../chapters/feedforward-networks.llms.md#def-hidden-layer) of 64 [units](../chapters/feedforward-networks.llms.md#def-unit), trained for 3,000 steps on the `standardized` eruptions. The discriminator returns a [logit](../chapters/feedforward-networks.llms.md#def-logits), so `binary_cross_entropy_with_logits`, with label 1 for the real points and 0 for the made-up ones, is $-V(D, G)$ for a minibatch. The generator’s loss is $-\logf{D(G(\vz))}$, rather than $V(D, G)$. Of the made-up eruptions, 63% last longer than 3 minutes, against 64% of the real ones. But the made-up points lie along one thin curve. Along the long end of that curve, the generator gives each eruption length nearly one wait; along the short end, it gives nearly one length for a range of waits. Among the eruptions longer than 3 minutes, the waits have standard deviation 3.7 minutes, against 6.0 for the real ones. The generator matches where the data lie better than how they spread.
 
 > **NOTE:**
 >
-> *Remark 2* (The generator’s loss in practice). [Example 4](#exm-gan) follows Goodfellow et al. [\[7, Sec. 3\]](#ref-goodfellow2014generative), who train \\G\\ to maximize \\\logf{D(G(\vecf{Z}))}\\ instead of minimizing \\V(D, G)\\. This gives larger [gradients](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) early in training, when \\D\\ rejects the made-up points easily.
+> *Remark 2* (The generator’s loss in practice). [Example 4](#exm-gan) follows Goodfellow et al. [\[7, Sec. 3\]](#ref-goodfellow2014generative), who train $G$ to maximize $\logf{D(G(\vecf{Z}))}$ instead of minimizing $V(D, G)$. This gives larger [gradients](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) early in training, when $D$ rejects the made-up points easily.
 
 ## 4.3 The best detective
 
 > **NOTE:**
 >
-> **Exercise 8 (The best discriminator)** Fix the generator, and let \\p_g\\ be the density of its made-up points and \\p\\ that of the real ones. Which \\D(\vx)\\ maximizes \\V(D, G)\\ of [Definition 3](#def-gan)?
+> **Exercise 8 (The best discriminator)** Fix the generator, and let $p_g$ be the density of its made-up points and $p$ that of the real ones. Which $D(\vx)$ maximizes $V(D, G)$ of [Definition 3](#def-gan)?
 
 > **NOTE:**
 >
-> *Solution 8*. A point \\G(\vecf{Z})\\ made up by the generator has density \\p_g\\, so \\\E{\logf{1 - D(G(\vecf{Z}))}} = \int p_g(\vx) \logf{1 - D(\vx)} \\ d\vx\\. Writing the first expectation the same way puts \\V\\ in one integral over \\\vx\\:
+> *Solution 8*. A point $G(\vecf{Z})$ made up by the generator has density $p_g$, so $\E{\logf{1 - D(G(\vecf{Z}))}} = \int p_g(\vx) \logf{1 - D(\vx)} \, d\vx$. Writing the first expectation the same way puts $V$ in one integral over $\vx$:
 >
-> \\ V(D, G) = \int \paren{p(\vx) \logf{D(\vx)} + p_g(\vx) \logf{1 - D(\vx)}} \\ d\vx. \\
+> $$V(D, G) = \int \paren{p(\vx) \logf{D(\vx)} + p_g(\vx) \logf{1 - D(\vx)}} \, d\vx.$$
 >
-> The integral is largest when \\D(\vx)\\ maximizes the integrand at each \\\vx\\ separately. With \\a = p(\vx)\\, \\b = p_g(\vx)\\ and \\u = D(\vx)\\, the integrand is \\f(u) = a \logf{u} + b \logf{1 - u}\\ on \\0 \< u \< 1\\. For \\a, b \> 0\\,
+> The integral is largest when $D(\vx)$ maximizes the integrand at each $\vx$ separately. With $a = p(\vx)$, $b = p_g(\vx)$ and $u = D(\vx)$, the integrand is $f(u) = a \logf{u} + b \logf{1 - u}$ on $0 < u < 1$. For $a, b > 0$,
 >
-> \\ \begin{aligned} f'(u) &= \frac{a}{u} - \frac{b}{1 - u} && \text{(differentiate)} \\ 0 &= \frac{a}{u} - \frac{b}{1 - u} && \text{(set } f'(u) = 0 \text{)} \\ 0 &= a (1 - u) - b u && \text{(multiply by } u (1 - u) \text{)} \\ 0 &= a - (a + b) u && \text{(collect the terms in } u \text{)} \\ u &= \frac{a}{a + b}. && \text{(solve for } u \text{)} \end{aligned} \\
+> $$\begin{aligned}
+> f'(u) &= \frac{a}{u} - \frac{b}{1 - u} && \text{(differentiate)} \\
+> 0 &= \frac{a}{u} - \frac{b}{1 - u} && \text{(set } f'(u) = 0 \text{)} \\
+> 0 &= a (1 - u) - b u && \text{(multiply by } u (1 - u) \text{)} \\
+> 0 &= a - (a + b) u && \text{(collect the terms in } u \text{)} \\
+> u &= \frac{a}{a + b}. && \text{(solve for } u \text{)}
+> \end{aligned}$$
 >
-> \\f''(u) = -a / u^2 - b / (1 - u)^2 \< 0\\, so that \\u\\ is the maximum. Where \\b = 0\\ the integrand increases toward \\u = 1\\, and where \\a = 0\\ it increases toward \\u = 0\\; \\a / (a + b)\\ gives those values too. The best discriminator is \\D(\vx) = p(\vx) / \paren{p(\vx) + p_g(\vx)}\\. Where the generator’s density equals the data’s, the best discriminator is \\\frac{1}{2}\\.
+> $f''(u) = -a / u^2 - b / (1 - u)^2 < 0$, so that $u$ is the maximum. Where $b = 0$ the integrand increases toward $u = 1$, and where $a = 0$ it increases toward $u = 0$; $a / (a + b)$ gives those values too. The best discriminator is $D(\vx) = p(\vx) / \paren{p(\vx) + p_g(\vx)}$. Where the generator’s density equals the data’s, the best discriminator is $\frac{1}{2}$.
 
 > **NOTE:**
 >
-> **Theorem 2 (The optimal discriminator)** For a fixed generator whose points have density \\p_g\\, and data with density \\p\\, the discriminator that maximizes \\V(D, G)\\ is
+> **Theorem 2 (The optimal discriminator)** For a fixed generator whose points have density $p_g$, and data with density $p$, the discriminator that maximizes $V(D, G)$ is
 >
-> \\ D^\*(\vx) = \frac{p(\vx)}{p(\vx) + p_g(\vx)} \\
+> $$D^*(\vx) = \frac{p(\vx)}{p(\vx) + p_g(\vx)}$$
 >
 > Goodfellow et al. [\[7, Sec. 4.1\]](#ref-goodfellow2014generative) prove it as their proposition 1.
 
@@ -590,7 +605,7 @@ The rest of the lecture uses smaller data: a local copy, [`data/faithful.csv`](d
 >
 >     0.5009837746620178 0.5033958554267883
 >
-> If the generator of [Example 4](#exm-gan) matched the data exactly, [Theorem 2](#thm-best-discriminator) says the best discriminator would give \\\frac{1}{2}\\ to every point. The trained discriminator gives the real eruptions an average probability of 0.50 of being real, and the made-up ones 0.50. The generator does not match the data, as [Figure 4](#fig-gan) shows, so this is not the best discriminator: a small network, trained a step at a time against a moving generator, has stopped telling the two apart on average, though the theorem says a better one could.
+> If the generator of [Example 4](#exm-gan) matched the data exactly, [Theorem 2](#thm-best-discriminator) says the best discriminator would give $\frac{1}{2}$ to every point. The trained discriminator gives the real eruptions an average probability of 0.50 of being real, and the made-up ones 0.50. The generator does not match the data, as [Figure 4](#fig-gan) shows, so this is not the best discriminator: a small network, trained a step at a time against a moving generator, has stopped telling the two apart on average, though the theorem says a better one could.
 
 # 5 Adding and removing noise
 
@@ -598,31 +613,43 @@ The rest of the lecture uses smaller data: a local copy, [`data/faithful.csv`](d
 
 > **NOTE:**
 >
-> **Exercise 9 (Adding noise twice)** Start from a data point \\\vx_0\\, and add noise twice:
+> **Exercise 9 (Adding noise twice)** Start from a data point $\vx_0$, and add noise twice:
 >
-> \\ \vx_1 = \sqrt{1 - \beta_1} \\ \vx_0 + \sqrt{\beta_1} \\ \vnoise_1, \qquad \vx_2 = \sqrt{1 - \beta_2} \\ \vx_1 + \sqrt{\beta_2} \\ \vnoise_2, \\
+> $$\vx_1 = \sqrt{1 - \beta_1} \, \vx_0 + \sqrt{\beta_1} \, \vnoise_1,
+> \qquad
+> \vx_2 = \sqrt{1 - \beta_2} \, \vx_1 + \sqrt{\beta_2} \, \vnoise_2,$$
 >
-> with \\\vnoise_1\\ and \\\vnoise_2\\ independent draws from \\\dNf{\vzero, \idmat}\\. What is the distribution of \\\vx_2\\ given \\\vx_0\\?
+> with $\vnoise_1$ and $\vnoise_2$ independent draws from $\dNf{\vzero, \idmat}$. What is the distribution of $\vx_2$ given $\vx_0$?
 
 > **NOTE:**
 >
-> *Solution 9*. Substitute \\\vx_1\\ into \\\vx_2\\:
+> *Solution 9*. Substitute $\vx_1$ into $\vx_2$:
 >
-> \\ \begin{aligned} \vx_2 &= \sqrt{1 - \beta_2} \paren{\sqrt{1 - \beta_1} \\ \vx_0 + \sqrt{\beta_1} \\ \vnoise_1} + \sqrt{\beta_2} \\ \vnoise_2 && \text{(substitute } \vx_1 \text{)} \\ &= \sqrt{1 - \beta_2} \sqrt{1 - \beta_1} \\ \vx_0 + \sqrt{1 - \beta_2} \sqrt{\beta_1} \\ \vnoise_1 + \sqrt{\beta_2} \\ \vnoise_2 && \text{(distribute)} \\ &= \sqrt{(1 - \beta_1)(1 - \beta_2)} \\ \vx_0 + \sqrt{(1 - \beta_2) \beta_1} \\ \vnoise_1 + \sqrt{\beta_2} \\ \vnoise_2. && \text{(} \sqrt{a} \sqrt{b} = \sqrt{a b} \text{)} \end{aligned} \\
+> $$\begin{aligned}
+> \vx_2
+> &= \sqrt{1 - \beta_2} \paren{\sqrt{1 - \beta_1} \, \vx_0 + \sqrt{\beta_1} \, \vnoise_1} + \sqrt{\beta_2} \, \vnoise_2 && \text{(substitute } \vx_1 \text{)} \\
+> &= \sqrt{1 - \beta_2} \sqrt{1 - \beta_1} \, \vx_0 + \sqrt{1 - \beta_2} \sqrt{\beta_1} \, \vnoise_1 + \sqrt{\beta_2} \, \vnoise_2 && \text{(distribute)} \\
+> &= \sqrt{(1 - \beta_1)(1 - \beta_2)} \, \vx_0 + \sqrt{(1 - \beta_2) \beta_1} \, \vnoise_1 + \sqrt{\beta_2} \, \vnoise_2. && \text{(} \sqrt{a} \sqrt{b} = \sqrt{a b} \text{)}
+> \end{aligned}$$
 >
-> The last two terms are independent normal vectors with mean \\\vzero\\, so their sum is normal with mean \\\vzero\\ and covariance
+> The last two terms are independent normal vectors with mean $\vzero$, so their sum is normal with mean $\vzero$ and covariance
 >
-> \\ \begin{aligned} \paren{(1 - \beta_2) \beta_1 + \beta_2} \idmat &= \paren{\beta_1 - \beta_1 \beta_2 + \beta_2} \idmat && \text{(expand)} \\ &= \paren{1 - (1 - \beta_1)(1 - \beta_2)} \idmat. && \text{(factor)} \end{aligned} \\
+> $$\begin{aligned}
+> \paren{(1 - \beta_2) \beta_1 + \beta_2} \idmat
+> &= \paren{\beta_1 - \beta_1 \beta_2 + \beta_2} \idmat && \text{(expand)} \\
+> &= \paren{1 - (1 - \beta_1)(1 - \beta_2)} \idmat. && \text{(factor)}
+> \end{aligned}$$
 >
-> So \\\vx_2\\ given \\\vx_0\\ is \\\dNf{\sqrt{\bar\alpha_2} \\ \vx_0, (1 - \bar\alpha_2) \idmat}\\, where \\\bar\alpha_2 = (1 - \beta_1)(1 - \beta_2)\\.
+> So $\vx_2$ given $\vx_0$ is $\dNf{\sqrt{\bar\alpha_2} \, \vx_0, (1 - \bar\alpha_2) \idmat}$, where $\bar\alpha_2 = (1 - \beta_1)(1 - \beta_2)$.
 
 > **NOTE:**
 >
-> **Definition 4 (Forward diffusion process)** A **forward diffusion process** with noise levels \\\beta_1, \dots, \beta_T\\ between 0 and 1 turns a data point \\\vx_0\\ into \\\vx_1, \dots, \vx_T\\ by
+> **Definition 4 (Forward diffusion process)** A **forward diffusion process** with noise levels $\beta_1, \dots, \beta_T$ between 0 and 1 turns a data point $\vx_0$ into $\vx_1, \dots, \vx_T$ by
 >
-> \\ \vx_t = \sqrt{1 - \beta_t} \\ \vx\_{t - 1} + \sqrt{\beta_t} \\ \vnoise_t, \qquad t = 1, \dots, T, \\
+> $$\vx_t = \sqrt{1 - \beta_t} \, \vx_{t - 1} + \sqrt{\beta_t} \, \vnoise_t,
+> \qquad t = 1, \dots, T,$$
 >
-> with independent \\\vnoise_t \sim \dNf{\vzero, \idmat}\\ [\[8, Sec. 2\]](#ref-ho2020denoising). We write \\\bar\alpha_t \eqdef \prod\_{s = 1}^{t} (1 - \beta_s)\\; Ho et al. [\[8, Sec. 2\]](#ref-ho2020denoising) also write \\\alpha_t\\ for \\1 - \beta_t\\, which these notes do not use.
+> with independent $\vnoise_t \sim \dNf{\vzero, \idmat}$ [\[8, Sec. 2\]](#ref-ho2020denoising). We write $\bar\alpha_t \eqdef \prod_{s = 1}^{t} (1 - \beta_s)$; Ho et al. [\[8, Sec. 2\]](#ref-ho2020denoising) also write $\alpha_t$ for $1 - \beta_t$, which these notes do not use.
 
 > **NOTE:**
 >
@@ -639,15 +666,15 @@ The rest of the lecture uses smaller data: a local copy, [`data/faithful.csv`](d
 >
 >     tensor([0.9545, 0.2830, 0.0056])
 >
-> With \\T = 100\\ steps and \\\beta_t\\ rising evenly from 0.0001 to 0.1, \\\bar\alpha_t\\ is 0.95 after 10 steps, 0.283 after 50 and 0.0056 after 100. Ho et al. [\[8, Sec. 4\]](#ref-ho2020denoising) use \\T = 1000\\ steps, with \\\beta_t\\ from 0.0001 to 0.02.
+> With $T = 100$ steps and $\beta_t$ rising evenly from 0.0001 to 0.1, $\bar\alpha_t$ is 0.95 after 10 steps, 0.283 after 50 and 0.0056 after 100. Ho et al. [\[8, Sec. 4\]](#ref-ho2020denoising) use $T = 1000$ steps, with $\beta_t$ from 0.0001 to 0.02.
 
 > **NOTE:**
 >
-> **Theorem 3 (Noise added in one step)** In a [forward diffusion process](#def-forward-process), \\\vx_t\\ given \\\vx_0\\ is \\\dNf{\sqrt{\bar\alpha_t} \\ \vx_0, (1 - \bar\alpha_t) \idmat}\\, so \\\vx_t = \sqrt{\bar\alpha_t} \\ \vx_0 + \sqrt{1 - \bar\alpha_t} \\ \vnoise\\ with \\\vnoise \sim \dNf{\vzero, \idmat}\\ [\[8, Sec. 2\]](#ref-ho2020denoising).
+> **Theorem 3 (Noise added in one step)** In a [forward diffusion process](#def-forward-process), $\vx_t$ given $\vx_0$ is $\dNf{\sqrt{\bar\alpha_t} \, \vx_0, (1 - \bar\alpha_t) \idmat}$, so $\vx_t = \sqrt{\bar\alpha_t} \, \vx_0 + \sqrt{1 - \bar\alpha_t} \, \vnoise$ with $\vnoise \sim \dNf{\vzero, \idmat}$ [\[8, Sec. 2\]](#ref-ho2020denoising).
 
 > **NOTE:**
 >
-> *Proof*. By induction on \\t\\. For \\t = 1\\, \\\bar\alpha_1 = 1 - \beta_1\\ and the statement is the definition. If it holds for \\t - 1\\, then \\\vx_t = \sqrt{1 - \beta_t} \paren{\sqrt{\bar\alpha\_{t - 1}} \\ \vx_0 + \sqrt{1 - \bar\alpha\_{t - 1}} \\ \vnoise'} + \sqrt{\beta_t} \\ \vnoise_t\\, where \\\vnoise' \sim \dNf{\vzero, \idmat}\\ depends only on \\\vnoise_1, \dots, \vnoise\_{t - 1}\\ and so is independent of \\\vnoise_t\\. The steps of [Solution 9](#sol-noise-twice), with \\\bar\alpha\_{t - 1}\\ in place of \\1 - \beta_1\\ and \\\beta_t\\ in place of \\\beta_2\\, give mean \\\sqrt{\bar\alpha_t} \\ \vx_0\\ and covariance \\(1 - \bar\alpha_t) \idmat\\.
+> *Proof*. By induction on $t$. For $t = 1$, $\bar\alpha_1 = 1 - \beta_1$ and the statement is the definition. If it holds for $t - 1$, then $\vx_t = \sqrt{1 - \beta_t} \paren{\sqrt{\bar\alpha_{t - 1}} \, \vx_0 + \sqrt{1 - \bar\alpha_{t - 1}} \, \vnoise'} + \sqrt{\beta_t} \, \vnoise_t$, where $\vnoise' \sim \dNf{\vzero, \idmat}$ depends only on $\vnoise_1, \dots, \vnoise_{t - 1}$ and so is independent of $\vnoise_t$. The steps of [Solution 9](#sol-noise-twice), with $\bar\alpha_{t - 1}$ in place of $1 - \beta_1$ and $\beta_t$ in place of $\beta_2$, give mean $\sqrt{\bar\alpha_t} \, \vx_0$ and covariance $(1 - \bar\alpha_t) \idmat$.
 
 > **NOTE:**
 >
@@ -673,31 +700,31 @@ The rest of the lecture uses smaller data: a local copy, [`data/faithful.csv`](d
 > >
 > > [![Four scatter plots of the standardized eruptions after 0, 10, 50 and 100 steps of added noise. The two clusters are clear at step 0, slightly spread at step 10, and mostly merged at step 50; at step 100 the points form one round cloud centred at 0.](generative-models_files/figure-html/unnamed-chunk-17-9.png)](generative-models_files/figure-html/unnamed-chunk-17-9.png "Figure 5: The standardized eruptions after t steps of a forward diffusion process, with the noise schedule of Example 6.")
 > >
-> > Figure 5: The standardized eruptions after \\t\\ steps of a [forward diffusion process](#def-forward-process), with the noise schedule of [Example 6](#exm-forward-process).
+> > Figure 5: The standardized eruptions after $t$ steps of a [forward diffusion process](#def-forward-process), with the noise schedule of [Example 6](#exm-forward-process).
 >
-> [Figure 5](#fig-forward-process) draws each step at once from [Theorem 3](#thm-forward-marginal), without computing the steps before it. By step 100, \\\vx_T\\ is close to a draw from \\\dNf{\vzero, \idmat}\\.
+> [Figure 5](#fig-forward-process) draws each step at once from [Theorem 3](#thm-forward-marginal), without computing the steps before it. By step 100, $\vx_T$ is close to a draw from $\dNf{\vzero, \idmat}$.
 
 ## 5.2 Removing noise
 
 > **NOTE:**
 >
-> **Exercise 10 (Undoing the noise)** A network looks at \\\vx_t\\ and guesses the noise \\\est{\vnoise}\\ that [Theorem 3](#thm-forward-marginal) added to \\\vx_0\\. What estimate of \\\vx_0\\ follows from its guess?
+> **Exercise 10 (Undoing the noise)** A network looks at $\vx_t$ and guesses the noise $\est{\vnoise}$ that [Theorem 3](#thm-forward-marginal) added to $\vx_0$. What estimate of $\vx_0$ follows from its guess?
 
 > **NOTE:**
 >
-> *Solution 10*. Solve \\\vx_t = \sqrt{\bar\alpha_t} \\ \vx_0 + \sqrt{1 - \bar\alpha_t} \\ \est{\vnoise}\\ for \\\vx_0\\:
+> *Solution 10*. Solve $\vx_t = \sqrt{\bar\alpha_t} \, \vx_0 + \sqrt{1 - \bar\alpha_t} \, \est{\vnoise}$ for $\vx_0$:
 >
-> \\ \est{\vx}\_0 = \frac{\vx_t - \sqrt{1 - \bar\alpha_t} \\ \est{\vnoise}}{\sqrt{\bar\alpha_t}}. \\
+> $$\est{\vx}_0 = \frac{\vx_t - \sqrt{1 - \bar\alpha_t} \, \est{\vnoise}}{\sqrt{\bar\alpha_t}}.$$
 >
 > A network that predicts the noise well can remove it, so predicting the noise is a way to predict the data.
 
 > **NOTE:**
 >
-> **Definition 5 (Denoising diffusion model (denoising diffusion probabilistic model, DDPM))** A **denoising diffusion model**, which Ho et al. [\[8\]](#ref-ho2020denoising) call a **denoising diffusion probabilistic model** (**DDPM**), is defined for a [forward diffusion process](#def-forward-process). It trains a network \\\vnoise\_{\vth}(\vx_t, t)\\ to predict the noise in \\\vx_t\\, by minimizing \\\normsq{\vnoise - \vnoise\_{\vth}\paren{\sqrt{\bar\alpha_t} \\ \vx_0 + \sqrt{1 - \bar\alpha_t} \\ \vnoise, t}}\\ over data points \\\vx_0\\, steps \\t\\ drawn uniformly from \\1, \dots, T\\, and \\\vnoise \sim \dNf{\vzero, \idmat}\\. To make a new point, it draws \\\vx_T \sim \dNf{\vzero, \idmat}\\ and steps back, for \\t = T, \dots, 1\\:
+> **Definition 5 (Denoising diffusion model (denoising diffusion probabilistic model, DDPM))** A **denoising diffusion model**, which Ho et al. [\[8\]](#ref-ho2020denoising) call a **denoising diffusion probabilistic model** (**DDPM**), is defined for a [forward diffusion process](#def-forward-process). It trains a network $\vnoise_{\vth}(\vx_t, t)$ to predict the noise in $\vx_t$, by minimizing $\normsq{\vnoise - \vnoise_{\vth}\paren{\sqrt{\bar\alpha_t} \, \vx_0 + \sqrt{1 - \bar\alpha_t} \, \vnoise, t}}$ over data points $\vx_0$, steps $t$ drawn uniformly from $1, \dots, T$, and $\vnoise \sim \dNf{\vzero, \idmat}$. To make a new point, it draws $\vx_T \sim \dNf{\vzero, \idmat}$ and steps back, for $t = T, \dots, 1$:
 >
-> \\ \vx\_{t - 1} = \frac{1}{\sqrt{1 - \beta_t}} \paren{\vx_t - \frac{\beta_t}{\sqrt{1 - \bar\alpha_t}} \\ \vnoise\_{\vth}(\vx_t, t)} + \sqrt{\beta_t} \\ \vz_t, \\
+> $$\vx_{t - 1} = \frac{1}{\sqrt{1 - \beta_t}} \paren{\vx_t - \frac{\beta_t}{\sqrt{1 - \bar\alpha_t}} \, \vnoise_{\vth}(\vx_t, t)} + \sqrt{\beta_t} \, \vz_t,$$
 >
-> with \\\vz_t \sim \dNf{\vzero, \idmat}\\ for \\t \> 1\\ and \\\vz_1 = \vzero\\ [\[8, Secs. 3.2, 3.4\]](#ref-ho2020denoising).
+> with $\vz_t \sim \dNf{\vzero, \idmat}$ for $t > 1$ and $\vz_1 = \vzero$ [\[8, Secs. 3.2, 3.4\]](#ref-ho2020denoising).
 
 > **NOTE:**
 >
@@ -763,7 +790,7 @@ The rest of the lecture uses smaller data: a local copy, [`data/faithful.csv`](d
 > >
 > > Figure 6: The real eruptions and 1,000 made by the [denoising diffusion model](#def-diffusion-model).
 >
-> `NoisePredictor` is an [MLP](../chapters/feedforward-networks.llms.md#def-feedforward-network) that takes the noised point and \\t / T\\, trained for 4,000 steps of the [denoising diffusion model](#def-diffusion-model)’s loss on the noise schedule of [Example 6](#exm-forward-process). Sampling starts from 1,000 draws of pure noise and takes all 100 steps back. Of the points it makes, 62% last longer than 3 minutes, against 64% of the real eruptions. Unlike the [GAN](#def-gan)’s points, they spread around each cluster: among the eruptions longer than 3 minutes, the waits have standard deviation 5.5 minutes, against 6.0 for the real ones.
+> `NoisePredictor` is an [MLP](../chapters/feedforward-networks.llms.md#def-feedforward-network) that takes the noised point and $t / T$, trained for 4,000 steps of the [denoising diffusion model](#def-diffusion-model)’s loss on the noise schedule of [Example 6](#exm-forward-process). Sampling starts from 1,000 draws of pure noise and takes all 100 steps back. Of the points it makes, 62% last longer than 3 minutes, against 64% of the real eruptions. Unlike the [GAN](#def-gan)’s points, they spread around each cluster: among the eruptions longer than 3 minutes, the waits have standard deviation 5.5 minutes, against 6.0 for the real ones.
 
 ## 5.3 Further reading
 

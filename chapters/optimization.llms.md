@@ -128,7 +128,7 @@ The exercises use the 1,797 digits of [`data/optdigits-test.csv`](data/optdigits
 
 > **NOTE:**
 >
-> **Exercise 2 (How noisy is a minibatch gradient?)** [lds’s exercise on minibatches](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#exr-minibatch) shows that, for minibatches drawn with replacement, the minibatch [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient)’s variance is \\1/b\\ times that of one image’s gradient, for batch size \\b\\. For a fresh [MLP](../chapters/feedforward-networks.llms.md#def-feedforward-network) at its starting [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter), and 200 minibatches each of sizes 8, 32 and 128, does \\b\\ times the mean squared distance between the minibatch gradient and the full-batch gradient stay about the same?
+> **Exercise 2 (How noisy is a minibatch gradient?)** [lds’s exercise on minibatches](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#exr-minibatch) shows that, for minibatches drawn with replacement, the minibatch [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient)’s variance is $1/b$ times that of one image’s gradient, for batch size $b$. For a fresh [MLP](../chapters/feedforward-networks.llms.md#def-feedforward-network) at its starting [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter), and 200 minibatches each of sizes 8, 32 and 128, does $b$ times the mean squared distance between the minibatch gradient and the full-batch gradient stay about the same?
 
 > **NOTE:**
 >
@@ -161,7 +161,7 @@ The exercises use the 1,797 digits of [`data/optdigits-test.csv`](data/optdigits
 >
 >     {8: 4.55, 32: 4.6, 128: 4.44}
 >
-> Yes. The mean squared distance falls from 0.569 at \\b = 8\\ to 0.035 at \\b = 128\\, and \\b\\ times it stays between 4.4 and 4.6. The mean squared distance is the sum of the variances of the [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient)’s entries, so it falls as \\1/b\\, as each variance does. Quadrupling the batch size only halves the typical distance, which is one reason small batches are a good use of each gradient computation.
+> Yes. The mean squared distance falls from 0.569 at $b = 8$ to 0.035 at $b = 128$, and $b$ times it stays between 4.4 and 4.6. The mean squared distance is the sum of the variances of the [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient)’s entries, so it falls as $1/b$, as each variance does. Quadrupling the batch size only halves the typical distance, which is one reason small batches are a good use of each gradient computation.
 
 # 3 Momentum and Adam
 
@@ -169,21 +169,29 @@ The exercises use the 1,797 digits of [`data/optdigits-test.csv`](data/optdigits
 
 > **NOTE:**
 >
-> *Remark 1* (Momentum in PyTorch). `torch.optim.SGD(params, lr=alpha, momentum=beta)` takes the steps of [lds’s momentum](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-momentum), \\\vv_t = \beta \vv\_{t - 1} + \vg_t\\ and \\\vcoef_t = \vcoef\_{t - 1} - \learnrate \vv_t\\, where \\\vg_t\\ is the [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) at step \\t\\ and \\\vcoef_t\\ the [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter) after it. Its first step sets \\\vv_1 = \vg_1\\, as \\\vv_0 = \vzero\\ would [\[3\]](#ref-pytorch_sgd). Some sources scale the gradient term by \\1 - \beta\\ or fold \\\learnrate\\ into \\\vv_t\\; the steps are the same up to a rescaled [learning rate](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-learning-rate).
+> *Remark 1* (Momentum in PyTorch). `torch.optim.SGD(params, lr=alpha, momentum=beta)` takes the steps of [lds’s momentum](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-momentum), $\vv_t = \beta \vv_{t - 1} + \vg_t$ and $\vcoef_t = \vcoef_{t - 1} - \learnrate \vv_t$, where $\vg_t$ is the [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) at step $t$ and $\vcoef_t$ the [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter) after it. Its first step sets $\vv_1 = \vg_1$, as $\vv_0 = \vzero$ would [\[3\]](#ref-pytorch_sgd). Some sources scale the gradient term by $1 - \beta$ or fold $\learnrate$ into $\vv_t$; the steps are the same up to a rescaled [learning rate](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-learning-rate).
 
 ## 3.2 Momentum on a steady slope
 
 > **NOTE:**
 >
-> **Exercise 3 (Momentum on a steady slope)** Suppose the [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) is the same vector \\\vg\\ at every step, and [momentum](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-momentum), updated as in [Remark 1](#rem-pytorch-momentum), starts from \\\vv_0 = \vzero\\. What does the step \\\learnrate \vv_t\\ approach as \\t\\ grows?
+> **Exercise 3 (Momentum on a steady slope)** Suppose the [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) is the same vector $\vg$ at every step, and [momentum](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-momentum), updated as in [Remark 1](#rem-pytorch-momentum), starts from $\vv_0 = \vzero$. What does the step $\learnrate \vv_t$ approach as $t$ grows?
 
 > **NOTE:**
 >
-> *Solution 3*. Unrolling \\\vv_t = \beta \vv\_{t - 1} + \vg\\ from \\\vv_0 = \vzero\\:
+> *Solution 3*. Unrolling $\vv_t = \beta \vv_{t - 1} + \vg$ from $\vv_0 = \vzero$:
 >
-> \\ \begin{aligned} \vv_t &= \vg + \beta \vg + \dots + \beta^{t - 1} \vg && \text{(apply the update \$t\$ times)} \\ &= \frac{1 - \beta^t}{1 - \beta} \vg && \text{(sum of a geometric series, for \$0 \le \beta \< 1\$)} \\ &\to \frac{1}{1 - \beta} \vg && \text{(since \$\beta^t \to 0\$)} \end{aligned} \\
+> $$\begin{aligned}
+> \vv_t
+> &= \vg + \beta \vg + \dots + \beta^{t - 1} \vg
+> && \text{(apply the update $t$ times)} \\
+> &= \frac{1 - \beta^t}{1 - \beta} \vg
+> && \text{(sum of a geometric series, for $0 \le \beta < 1$)} \\
+> &\to \frac{1}{1 - \beta} \vg
+> && \text{(since $\beta^t \to 0$)}
+> \end{aligned}$$
 >
-> So the step approaches \\\frac{\learnrate}{1 - \beta} \vg\\: on a steady slope, [momentum](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-momentum) moves like plain [gradient descent](https://morrison-lab.github.io/mds/optimization.html#def-gradient-descent) with [learning rate](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-learning-rate) \\\learnrate / (1 - \beta)\\. With \\\beta = 0.9\\, that learning rate is 10 times \\\learnrate\\.
+> So the step approaches $\frac{\learnrate}{1 - \beta} \vg$: on a steady slope, [momentum](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-momentum) moves like plain [gradient descent](https://morrison-lab.github.io/mds/optimization.html#def-gradient-descent) with [learning rate](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-learning-rate) $\learnrate / (1 - \beta)$. With $\beta = 0.9$, that learning rate is 10 times $\learnrate$.
 
 ## 3.3 Three optimizers on the digits
 
@@ -228,21 +236,29 @@ The exercises use the 1,797 digits of [`data/optdigits-test.csv`](data/optdigits
 >
 >     {'SGD': 0.8860971331596375, 'momentum': 0.8844221234321594, 'Adam': 0.94807368516922}
 >
-> [Adam](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-adam) reaches the lowest training loss, 0.11, against 0.53 for plain SGD and 0.59 with [momentum](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-momentum). It also classifies the most images of the [test set](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-test-set) correctly, 94.8%. Momentum and plain SGD end close together, as [Solution 3](#sol-momentum-long-run) predicts: [learning rate](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-learning-rate) 0.01 with \\\beta = 0.9\\ moves like learning rate 0.1 on a steady slope. A comparison like this depends on the learning rates chosen for each method, so a fair one tunes each method’s learning rate separately.
+> [Adam](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-adam) reaches the lowest training loss, 0.11, against 0.53 for plain SGD and 0.59 with [momentum](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-momentum). It also classifies the most images of the [test set](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-test-set) correctly, 94.8%. Momentum and plain SGD end close together, as [Solution 3](#sol-momentum-long-run) predicts: [learning rate](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-learning-rate) 0.01 with $\beta = 0.9$ moves like learning rate 0.1 on a steady slope. A comparison like this depends on the learning rates chosen for each method, so a fair one tunes each method’s learning rate separately.
 
 ## 3.4 Adam’s first step
 
 > **NOTE:**
 >
-> **Exercise 5 (Adam’s first step)** At [Adam](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-adam)’s first step, one [parameter](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter) has [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) \\g \neq 0\\. Ignoring \\\smallconst\\, how far does that step move the parameter?
+> **Exercise 5 (Adam’s first step)** At [Adam](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-adam)’s first step, one [parameter](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter) has [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) $g \neq 0$. Ignoring $\smallconst$, how far does that step move the parameter?
 
 > **NOTE:**
 >
-> *Solution 5*. With \\m_0 = u_0 = 0\\, the first averages are \\m_1 = (1 - \beta_1) g\\ and \\u_1 = (1 - \beta_2) g^2\\.
+> *Solution 5*. With $m_0 = u_0 = 0$, the first averages are $m_1 = (1 - \beta_1) g$ and $u_1 = (1 - \beta_2) g^2$.
 >
-> \\ \begin{aligned} \frac{\est{m}\_1}{\sqrt{\est{u}\_1}} &= \frac{m_1 / (1 - \beta_1)}{\sqrt{u_1 / (1 - \beta_2)}} && \text{(bias corrections at \$t = 1\$)} \\ &= \frac{g}{\sqrt{g^2}} && \text{(substitute \$m_1\$ and \$u_1\$)} \\ &= \frac{g}{\abs{g}} && \text{(\$\sqrt{g^2} = \abs{g}\$)} \end{aligned} \\
+> $$\begin{aligned}
+> \frac{\est{m}_1}{\sqrt{\est{u}_1}}
+> &= \frac{m_1 / (1 - \beta_1)}{\sqrt{u_1 / (1 - \beta_2)}}
+> && \text{(bias corrections at $t = 1$)} \\
+> &= \frac{g}{\sqrt{g^2}}
+> && \text{(substitute $m_1$ and $u_1$)} \\
+> &= \frac{g}{\abs{g}}
+> && \text{($\sqrt{g^2} = \abs{g}$)}
+> \end{aligned}$$
 >
-> So the first step moves the [parameter](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter) by exactly \\\learnrate\\, against the sign of \\g\\, whatever the size of \\g\\.
+> So the first step moves the [parameter](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter) by exactly $\learnrate$, against the sign of $g$, whatever the size of $g$.
 >
 > Show code
 >
@@ -257,7 +273,7 @@ The exercises use the 1,797 digits of [`data/optdigits-test.csv`](data/optdigits
 >
 >     [0.009999990463256836, 0.009999871253967285]
 >
-> [Gradients](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) of 1,000 and 0.001 move their [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter) by 0.0100000 and 0.0099999, both close to the [learning rate](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-learning-rate), 0.01. The small difference is the effect of \\\smallconst\\. So the learning rate of [Adam](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-adam) sets the size of each step on the [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter)’ own scale. Later steps are also bounded by about the learning rate [\[4, Sec. 2.1\]](#ref-kingma2015adam). A step of plain [gradient descent](https://morrison-lab.github.io/mds/optimization.html#def-gradient-descent) is instead the learning rate times the [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient).
+> [Gradients](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) of 1,000 and 0.001 move their [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter) by 0.0100000 and 0.0099999, both close to the [learning rate](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-learning-rate), 0.01. The small difference is the effect of $\smallconst$. So the learning rate of [Adam](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-adam) sets the size of each step on the [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter)’ own scale. Later steps are also bounded by about the learning rate [\[4, Sec. 2.1\]](#ref-kingma2015adam). A step of plain [gradient descent](https://morrison-lab.github.io/mds/optimization.html#def-gradient-descent) is instead the learning rate times the [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient).
 
 # 4 Changing the learning rate
 
@@ -265,7 +281,7 @@ The exercises use the 1,797 digits of [`data/optdigits-test.csv`](data/optdigits
 
 > **NOTE:**
 >
-> **Definition 1 (Learning-rate warmup)** **Learning-rate warmup** raises the [learning rate](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-learning-rate) from a small value to its target over the first steps of training, usually linearly, before the rest of the schedule takes over [\[5, Sec. 2.2\]](#ref-goyal2017accurate). With linear warmup over \\T_w\\ steps to a target learning rate \\\learnrate\\, step \\t = 0, 1, \dots, T_w - 1\\ uses learning rate \\\learnrate (t + 1) / T_w\\.
+> **Definition 1 (Learning-rate warmup)** **Learning-rate warmup** raises the [learning rate](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-learning-rate) from a small value to its target over the first steps of training, usually linearly, before the rest of the schedule takes over [\[5, Sec. 2.2\]](#ref-goyal2017accurate). With linear warmup over $T_w$ steps to a target learning rate $\learnrate$, step $t = 0, 1, \dots, T_w - 1$ uses learning rate $\learnrate (t + 1) / T_w$.
 
 > **NOTE:**
 >
@@ -281,7 +297,7 @@ The exercises use the 1,797 digits of [`data/optdigits-test.csv`](data/optdigits
 >
 >     {0: 0.001, 49: 0.05, 99: 0.1}
 >
-> With \\T_w = 100\\ and \\\learnrate = 0.1\\, [learning-rate warmup](#def-warmup) uses [learning rate](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-learning-rate) 0.001 at step 0, 0.05 at step 49, and 0.1 at step 99, the last step of the [warmup](#def-warmup).
+> With $T_w = 100$ and $\learnrate = 0.1$, [learning-rate warmup](#def-warmup) uses [learning rate](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-learning-rate) 0.001 at step 0, 0.05 at step 49, and 0.1 at step 99, the last step of the [warmup](#def-warmup).
 
 ## 4.2 A schedule in PyTorch
 
@@ -331,7 +347,7 @@ The exercises use the 1,797 digits of [`data/optdigits-test.csv`](data/optdigits
 > rate_550 = rates[550]
 > ```
 >
-> 0.050. Step 550 is halfway through the cosine part, from step 100 to step 1,000, and halfway there [cosine decay](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-cosine-decay) gives half the base [learning rate](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-learning-rate), since \\\frac{1}{2}\paren{1 + \cosf{\frac{\pi}{2}}} = \frac{1}{2}\\. The loop calls `scheduler.step()` after `sgd.step()`, the order PyTorch expects, and `train()` in [Solution 1](#sol-minibatch-epochs) does the same at every minibatch. Here `sgd.step()` changes nothing, since no [gradients](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) have been computed; it is there only to show the order.
+> 0.050. Step 550 is halfway through the cosine part, from step 100 to step 1,000, and halfway there [cosine decay](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-cosine-decay) gives half the base [learning rate](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-learning-rate), since $\frac{1}{2}\paren{1 + \cosf{\frac{\pi}{2}}} = \frac{1}{2}$. The loop calls `scheduler.step()` after `sgd.step()`, the order PyTorch expects, and `train()` in [Solution 1](#sol-minibatch-epochs) does the same at every minibatch. Here `sgd.step()` changes nothing, since no [gradients](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) have been computed; it is there only to show the order.
 
 > **NOTE:**
 >
@@ -343,7 +359,7 @@ The exercises use the 1,797 digits of [`data/optdigits-test.csv`](data/optdigits
 
 > **NOTE:**
 >
-> **Exercise 7 (How the starting scale grows or shrinks)** Suppose the training images are pushed through 10 layers, each computing \\\operatorname{ReLU}\paren{\matr{W} \vhidval}\\ with [width](https://morrison-lab.github.io/lds/chapters/neural-nets.html#def-width) 256 and no bias. Every weight is drawn independently from a normal distribution with mean 0 and standard deviation \\\sigma\\. How does the standard deviation of the last layer’s values depend on \\\sigma\\, for \\\sigma = 0.01\\, for \\\sigma = \sqrt{2 / n\_{\text{in}}}\\, where \\n\_{\text{in}}\\ is the layer’s number of inputs, and for \\\sigma = 0.2\\?
+> **Exercise 7 (How the starting scale grows or shrinks)** Suppose the training images are pushed through 10 layers, each computing $\operatorname{ReLU}\paren{\matr{W} \vhidval}$ with [width](https://morrison-lab.github.io/lds/chapters/neural-nets.html#def-width) 256 and no bias. Every weight is drawn independently from a normal distribution with mean 0 and standard deviation $\sigma$. How does the standard deviation of the last layer’s values depend on $\sigma$, for $\sigma = 0.01$, for $\sigma = \sqrt{2 / n_{\text{in}}}$, where $n_{\text{in}}$ is the layer’s number of inputs, and for $\sigma = 0.2$?
 
 > **NOTE:**
 >
@@ -374,21 +390,30 @@ The exercises use the 1,797 digits of [`data/optdigits-test.csv`](data/optdigits
 >
 >     {'small': 5.173762460120024e-11, 'he': 0.30115261673927307, 'large': 529.7935180664062, 'pixels': 0.37631645798683167}
 >
-> The pixels have standard deviation 0.38. After 10 layers, \\\sigma = 0.01\\ leaves values with standard deviation about \\10^{-10}\\, \\\sigma = 0.2\\ gives about \\10^{3}\\, and \\\sigma = \sqrt{2 / n\_{\text{in}}}\\ gives 0.30, close to where it started. Each layer multiplies the typical size of the values by about \\\sigma \sqrt{n\_{\text{in}} / 2}\\: the weighted sum of \\n\_{\text{in}}\\ values has variance proportional to \\n\_{\text{in}} \sigma^2\\, and the [ReLU](../chapters/feedforward-networks.llms.md#def-relu) zeroes about half of the results. That factor is 1 for \\\sigma^2 = 2 / n\_{\text{in}}\\, which is [He initialization](https://morrison-lab.github.io/lds/chapters/backpropagation.html#def-he-initialization) [\[7\]](#ref-he2015delving). Since [backpropagation](../chapters/backpropagation.llms.md#def-backpropagation) multiplies by the same weight matrices on the way back, the [gradients](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) shrink or grow layer by layer in the same way.
+> The pixels have standard deviation 0.38. After 10 layers, $\sigma = 0.01$ leaves values with standard deviation about $10^{-10}$, $\sigma = 0.2$ gives about $10^{3}$, and $\sigma = \sqrt{2 / n_{\text{in}}}$ gives 0.30, close to where it started. Each layer multiplies the typical size of the values by about $\sigma \sqrt{n_{\text{in}} / 2}$: the weighted sum of $n_{\text{in}}$ values has variance proportional to $n_{\text{in}} \sigma^2$, and the [ReLU](../chapters/feedforward-networks.llms.md#def-relu) zeroes about half of the results. That factor is 1 for $\sigma^2 = 2 / n_{\text{in}}$, which is [He initialization](https://morrison-lab.github.io/lds/chapters/backpropagation.html#def-he-initialization) [\[7\]](#ref-he2015delving). Since [backpropagation](../chapters/backpropagation.llms.md#def-backpropagation) multiplies by the same weight matrices on the way back, the [gradients](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) shrink or grow layer by layer in the same way.
 
 ## 5.2 PyTorch’s default
 
 > **NOTE:**
 >
-> **Exercise 8 (PyTorch’s starting weights)** `nn.Linear(n_in, n_out)` draws each weight independently and uniformly from the interval \\\paren{-1 / \sqrt{n\_{\text{in}}}, 1 / \sqrt{n\_{\text{in}}}}\\ [\[8\]](#ref-pytorch_linear). What is the variance of each weight?
+> **Exercise 8 (PyTorch’s starting weights)** `nn.Linear(n_in, n_out)` draws each weight independently and uniformly from the interval $\paren{-1 / \sqrt{n_{\text{in}}}, 1 / \sqrt{n_{\text{in}}}}$ [\[8\]](#ref-pytorch_linear). What is the variance of each weight?
 
 > **NOTE:**
 >
-> *Solution 8*. A weight \\w\\ drawn uniformly from \\(-a, a)\\ has mean 0, so its variance is
+> *Solution 8*. A weight $w$ drawn uniformly from $(-a, a)$ has mean 0, so its variance is
 >
-> \\ \begin{aligned} \Var{w} &= \E{w^2} && \text{(the mean is 0)} \\ &= \int\_{-a}^{a} w^2 \frac{1}{2a} \\ dw && \text{(the density is \$\frac{1}{2a}\$ on \$(-a, a)\$)} \\ &= \frac{1}{2a} \cdot \frac{2 a^3}{3} && \text{(integrate \$w^2\$ from \$-a\$ to \$a\$)} \\ &= \frac{a^2}{3}, \end{aligned} \\
+> $$\begin{aligned}
+> \Var{w}
+> &= \E{w^2}
+> && \text{(the mean is 0)} \\
+> &= \int_{-a}^{a} w^2 \frac{1}{2a} \, dw
+> && \text{(the density is $\frac{1}{2a}$ on $(-a, a)$)} \\
+> &= \frac{1}{2a} \cdot \frac{2 a^3}{3}
+> && \text{(integrate $w^2$ from $-a$ to $a$)} \\
+> &= \frac{a^2}{3},
+> \end{aligned}$$
 >
-> so with \\a = 1 / \sqrt{n\_{\text{in}}}\\ each weight has variance \\1 / (3 n\_{\text{in}})\\.
+> so with $a = 1 / \sqrt{n_{\text{in}}}$ each weight has variance $1 / (3 n_{\text{in}})$.
 >
 > Show code
 >
@@ -401,7 +426,7 @@ The exercises use the 1,797 digits of [`data/optdigits-test.csv`](data/optdigits
 >
 >     0.33143436908721924
 >
-> For `nn.Linear(256, 256)` the sample variance of the weights times 256 is 0.331, close to \\\frac{1}{3}\\. This variance is \\\frac{1}{6}\\ of [He initialization](https://morrison-lab.github.io/lds/chapters/backpropagation.html#def-he-initialization)’s \\2 / n\_{\text{in}}\\, so by [Solution 7](#sol-init-scale) each [ReLU](../chapters/feedforward-networks.llms.md#def-relu) layer with PyTorch’s starting weights shrinks the values by a factor of about \\1 / \sqrt{6}\\. `nn.init.kaiming_normal_` gives a layer He initialization instead.
+> For `nn.Linear(256, 256)` the sample variance of the weights times 256 is 0.331, close to $\frac{1}{3}$. This variance is $\frac{1}{6}$ of [He initialization](https://morrison-lab.github.io/lds/chapters/backpropagation.html#def-he-initialization)’s $2 / n_{\text{in}}$, so by [Solution 7](#sol-init-scale) each [ReLU](../chapters/feedforward-networks.llms.md#def-relu) layer with PyTorch’s starting weights shrinks the values by a factor of about $1 / \sqrt{6}$. `nn.init.kaiming_normal_` gives a layer He initialization instead.
 
 ## 5.3 Starting every weight at the same value
 

@@ -97,7 +97,7 @@ The Optical Recognition of Handwritten Digits data [\[1\]](#ref-alpaydin1998optd
 
 > **NOTE:**
 >
-> *Remark 1* (One image, two arrangements). The file stores each image as a row of 64 numbers, a [feature vector](https://morrison-lab.github.io/lds/chapters/course-overview.html#def-feature-vector) in \\\reals^{64}\\, the form that models such as [logistic regression](https://morrison-lab.github.io/lds/chapters/logistic-regression.html) take as input. [Figure 1](#fig-digits-grid) draws the same 64 numbers as an 8 by 8 grid: with rows and columns counted from 0, the pixel in row \\i\\ and column \\j\\ is entry \\8i + j\\ of the vector. `pixels.reshape(-1, 8, 8)` turns the rows of the file into grids, and nothing about the numbers changes. Models that look at pixels’ neighbors, such as convolutional networks, keep the grid.
+> *Remark 1* (One image, two arrangements). The file stores each image as a row of 64 numbers, a [feature vector](https://morrison-lab.github.io/lds/chapters/course-overview.html#def-feature-vector) in $\reals^{64}$, the form that models such as [logistic regression](https://morrison-lab.github.io/lds/chapters/logistic-regression.html) take as input. [Figure 1](#fig-digits-grid) draws the same 64 numbers as an 8 by 8 grid: with rows and columns counted from 0, the pixel in row $i$ and column $j$ is entry $8i + j$ of the vector. `pixels.reshape(-1, 8, 8)` turns the rows of the file into grids, and nothing about the numbers changes. Models that look at pixels’ neighbors, such as convolutional networks, keep the grid.
 
 ## 2.2 Writing a feature by hand
 
@@ -240,7 +240,15 @@ zerosOnes = digitRows
 >
 > *Solution 5*. A pair can start with any of the 10 digits and end with any of the other 9, and that counts each pair twice, once in each order:
 >
-> \\ \begin{aligned} \text{number of pairs} &= \frac{10 \times 9}{2} && \text{(first digit, second digit, divided by the 2 orders of a pair)} \\ &= \frac{90}{2} && \text{(multiply)} \\ &= 45 && \text{(divide)} \end{aligned} \\
+> $$\begin{aligned}
+> \text{number of pairs}
+> &= \frac{10 \times 9}{2}
+> && \text{(first digit, second digit, divided by the 2 orders of a pair)} \\
+> &= \frac{90}{2}
+> && \text{(multiply)} \\
+> &= 45
+> && \text{(divide)}
+> \end{aligned}$$
 >
 > That is 45 [features](https://morrison-lab.github.io/lds/chapters/course-overview.html#def-feature) to design and test by hand, and [Solution 4](#sol-three-or-eight) shows that some pairs need more than one.
 

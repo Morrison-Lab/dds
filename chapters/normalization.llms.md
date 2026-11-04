@@ -124,7 +124,7 @@ print(make_deep()[:3])
       )
     )
 
-The exercises use the digits split of the [feedforward networks chapter](../chapters/feedforward-networks.llms.md), with 1,200 training images. `make_deep()` builds an [MLP](../chapters/feedforward-networks.llms.md#def-feedforward-network) with 21 [hidden layers](../chapters/feedforward-networks.llms.md#def-hidden-layer) of 64 [ReLU](../chapters/feedforward-networks.llms.md#def-relu) [units](../chapters/feedforward-networks.llms.md#def-unit): a first layer from the pixels, then 20 copies of `Block`. `train()` runs 5 [epochs](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-epoch) of minibatch stochastic [gradient descent](https://morrison-lab.github.io/mds/optimization.html#def-gradient-descent), with batch size 32 and [learning rate](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-learning-rate) 0.01. `first_layer_grad()` measures the size of the [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) that reaches the first layer. The exercises count a network as having learned something when its training loss after `train()` is below 90% of \\\log 10 \approx 2.303\\, the loss of predicting \\\frac{1}{10}\\ for every digit.
+The exercises use the digits split of the [feedforward networks chapter](../chapters/feedforward-networks.llms.md), with 1,200 training images. `make_deep()` builds an [MLP](../chapters/feedforward-networks.llms.md#def-feedforward-network) with 21 [hidden layers](../chapters/feedforward-networks.llms.md#def-hidden-layer) of 64 [ReLU](../chapters/feedforward-networks.llms.md#def-relu) [units](../chapters/feedforward-networks.llms.md#def-unit): a first layer from the pixels, then 20 copies of `Block`. `train()` runs 5 [epochs](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-epoch) of minibatch stochastic [gradient descent](https://morrison-lab.github.io/mds/optimization.html#def-gradient-descent), with batch size 32 and [learning rate](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-learning-rate) 0.01. `first_layer_grad()` measures the size of the [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) that reaches the first layer. The exercises count a network as having learned something when its training loss after `train()` is below 90% of $\log 10 \approx 2.303$, the loss of predicting $\frac{1}{10}$ for every digit.
 
 # 2 A deep network
 
@@ -149,7 +149,7 @@ The exercises use the digits split of the [feedforward networks chapter](../chap
 >
 >     1.927740855833804e-09 2.3031463623046875 0.1072026789188385 0.035105034708976746
 >
-> No. Its training loss after 5 [epochs](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-epoch) is 2.303, against \\\log 10 \approx 2.303\\ for probabilities of \\\frac{1}{10}\\. It classifies 10.7% of the test images correctly. The [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) that reaches its first layer has size 1.9e-09. The last block’s output has standard deviation 3.5e-02. So the gradient vanishes before it reaches the first layer, as in the [backpropagation chapter](../chapters/backpropagation.llms.md#def-vanishing-gradient).
+> No. Its training loss after 5 [epochs](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-epoch) is 2.303, against $\log 10 \approx 2.303$ for probabilities of $\frac{1}{10}$. It classifies 10.7% of the test images correctly. The [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) that reaches its first layer has size 1.9e-09. The last block’s output has standard deviation 3.5e-02. So the gradient vanishes before it reaches the first layer, as in the [backpropagation chapter](../chapters/backpropagation.llms.md#def-vanishing-gradient).
 
 # 3 Batch normalization
 
@@ -157,15 +157,17 @@ The exercises use the digits split of the [feedforward networks chapter](../chap
 
 > **NOTE:**
 >
-> **Definition 1 (Batch normalization)** **Batch normalization** rescales each [pre-activation](../chapters/feedforward-networks.llms.md#def-pre-activation) of a layer across the examples of a minibatch. For a minibatch of \\B\\ examples, let \\z\_{ij}\\ be pre-activation \\j\\ for example \\i\\, with mean and variance over the minibatch
+> **Definition 1 (Batch normalization)** **Batch normalization** rescales each [pre-activation](../chapters/feedforward-networks.llms.md#def-pre-activation) of a layer across the examples of a minibatch. For a minibatch of $B$ examples, let $z_{ij}$ be pre-activation $j$ for example $i$, with mean and variance over the minibatch
 >
-> \\ \mu_j = \frac{1}{B} \sumto{i}{B} z\_{ij}, \qquad \sigma_j^2 = \frac{1}{B} \sumto{i}{B} \paren{z\_{ij} - \mu_j}^2. \\
+> $$\mu_j = \frac{1}{B} \sumto{i}{B} z_{ij},
+> \qquad
+> \sigma_j^2 = \frac{1}{B} \sumto{i}{B} \paren{z_{ij} - \mu_j}^2.$$
 >
-> Batch normalization replaces \\z\_{ij}\\ with
+> Batch normalization replaces $z_{ij}$ with
 >
-> \\ \gamma_j \frac{z\_{ij} - \mu_j}{\sqrt{\sigma_j^2 + \smallconst}} + \beta_j, \\
+> $$\gamma_j \frac{z_{ij} - \mu_j}{\sqrt{\sigma_j^2 + \smallconst}} + \beta_j,$$
 >
-> where \\\gamma_j\\ and \\\beta_j\\ are [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter) learned with the rest and \\\smallconst\\ is a small constant that keeps the division finite [\[1\]](#ref-ioffe2015batch), [\[2, Sec. 8.7.1\]](#ref-goodfellow2016deep). When the network makes predictions, running averages of \\\mu_j\\ and \\\sigma_j^2\\ from training take the place of the minibatch’s. PyTorch’s running average of the variance divides by \\B - 1\\ instead of \\B\\ [\[3\]](#ref-pytorch_batchnorm1d).
+> where $\gamma_j$ and $\beta_j$ are [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter) learned with the rest and $\smallconst$ is a small constant that keeps the division finite [\[1\]](#ref-ioffe2015batch), [\[2, Sec. 8.7.1\]](#ref-goodfellow2016deep). When the network makes predictions, running averages of $\mu_j$ and $\sigma_j^2$ from training take the place of the minibatch’s. PyTorch’s running average of the variance divides by $B - 1$ instead of $B$ [\[3\]](#ref-pytorch_batchnorm1d).
 
 > **NOTE:**
 >
@@ -198,7 +200,7 @@ The exercises use the digits split of the [feedforward networks chapter](../chap
 > std_max = normed.std(dim=0, correction=0).max().item()
 > ```
 >
-> `nn.BatchNorm1d(64)` applies [batch normalization](#def-batch-norm) to 64 [pre-activation](../chapters/feedforward-networks.llms.md#def-pre-activation)s. It starts with every \\\gamma_j = 1\\ and every \\\beta_j = 0\\ [\[3\]](#ref-pytorch_batchnorm1d). For 32 training images, the first 4 pre-activations of a random layer have the means and standard deviations on the first line. After batch normalization, on the second line, no column’s mean is farther from 0 than 3.3e-07, and the standard deviations run from 0.999 to 1.000.
+> `nn.BatchNorm1d(64)` applies [batch normalization](#def-batch-norm) to 64 [pre-activation](../chapters/feedforward-networks.llms.md#def-pre-activation)s. It starts with every $\gamma_j = 1$ and every $\beta_j = 0$ [\[3\]](#ref-pytorch_batchnorm1d). For 32 training images, the first 4 pre-activations of a random layer have the means and standard deviations on the first line. After batch normalization, on the second line, no column’s mean is farther from 0 than 3.3e-07, and the standard deviations run from 0.999 to 1.000.
 
 ## 3.2 A batch of one
 
@@ -208,7 +210,7 @@ The exercises use the digits split of the [feedforward networks chapter](../chap
 
 > **NOTE:**
 >
-> *Solution 2*. A minibatch of one image has \\\mu_j = z\_{1j}\\ and \\\sigma_j^2 = 0\\, so every normalized [pre-activation](../chapters/feedforward-networks.llms.md#def-pre-activation) would be 0, whatever the image. The prediction would not depend on the image at all.
+> *Solution 2*. A minibatch of one image has $\mu_j = z_{1j}$ and $\sigma_j^2 = 0$, so every normalized [pre-activation](../chapters/feedforward-networks.llms.md#def-pre-activation) would be 0, whatever the image. The prediction would not depend on the image at all.
 >
 > Show code
 >
@@ -268,11 +270,13 @@ The exercises use the digits split of the [feedforward networks chapter](../chap
 
 > **NOTE:**
 >
-> **Definition 2 (Layer normalization)** **Layer normalization** rescales the [pre-activation](../chapters/feedforward-networks.llms.md#def-pre-activation)s of a layer across the [units](../chapters/feedforward-networks.llms.md#def-unit) of one example. For an example with pre-activations \\z_1, \dots, z_L\\, it uses their mean and variance
+> **Definition 2 (Layer normalization)** **Layer normalization** rescales the [pre-activation](../chapters/feedforward-networks.llms.md#def-pre-activation)s of a layer across the [units](../chapters/feedforward-networks.llms.md#def-unit) of one example. For an example with pre-activations $z_1, \dots, z_L$, it uses their mean and variance
 >
-> \\ \mu = \frac{1}{L} \sumto{j}{L} z_j, \qquad \sigma^2 = \frac{1}{L} \sumto{j}{L} \paren{z_j - \mu}^2, \\
+> $$\mu = \frac{1}{L} \sumto{j}{L} z_j,
+> \qquad
+> \sigma^2 = \frac{1}{L} \sumto{j}{L} \paren{z_j - \mu}^2,$$
 >
-> and replaces each \\z_j\\ with \\\gamma_j \paren{z_j - \mu} / \sqrt{\sigma^2 + \smallconst} + \beta_j\\ [\[4\]](#ref-ba2016layer). It does the same in training and in prediction, since it never looks at other examples.
+> and replaces each $z_j$ with $\gamma_j \paren{z_j - \mu} / \sqrt{\sigma^2 + \smallconst} + \beta_j$ [\[4\]](#ref-ba2016layer). It does the same in training and in prediction, since it never looks at other examples.
 
 > **NOTE:**
 >
@@ -318,7 +322,7 @@ The exercises use the digits split of the [feedforward networks chapter](../chap
 
 > **NOTE:**
 >
-> *Remark 1* (Residual connections in `Block`). `Block(width, residual=True)` returns \\\vhidval + \operatorname{ReLU}\paren{\matr{W} \vhidval + \vecf{b}}\\ for its input \\\vhidval\\, a [residual connection](https://morrison-lab.github.io/lds/chapters/backpropagation.html#def-residual-connection) around one [hidden layer](../chapters/feedforward-networks.llms.md#def-hidden-layer). This block is simpler than those of He et al. [\[6\]](#ref-he2016resnet), which go around two or three convolutional layers and apply the [ReLU](../chapters/feedforward-networks.llms.md#def-relu) after the sum. The input and output have the same [width](https://morrison-lab.github.io/lds/chapters/neural-nets.html#def-width), 64, so the sum is defined.
+> *Remark 1* (Residual connections in `Block`). `Block(width, residual=True)` returns $\vhidval + \operatorname{ReLU}\paren{\matr{W} \vhidval + \vecf{b}}$ for its input $\vhidval$, a [residual connection](https://morrison-lab.github.io/lds/chapters/backpropagation.html#def-residual-connection) around one [hidden layer](../chapters/feedforward-networks.llms.md#def-hidden-layer). This block is simpler than those of He et al. [\[6\]](#ref-he2016resnet), which go around two or three convolutional layers and apply the [ReLU](../chapters/feedforward-networks.llms.md#def-relu) after the sum. The input and output have the same [width](https://morrison-lab.github.io/lds/chapters/neural-nets.html#def-width), 64, so the sum is defined.
 
 ## 5.2 Gradients with residual connections
 
@@ -339,7 +343,7 @@ The exercises use the digits split of the [feedforward networks chapter](../chap
 >
 >     25.32086181640625 1.927740855833804e-09
 >
-> The [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) has size 2.5e+01, against 1.9e-09 without [residual connections](https://morrison-lab.github.io/lds/chapters/backpropagation.html#def-residual-connection). A block computes \\\vhidval + f(\vhidval)\\, with \\f(\vhidval) = \operatorname{ReLU}\paren{\matr{W} \vhidval + \vecf{b}}\\ from [Remark 1](#rem-residual-block), so its derivative with respect to \\\vhidval\\ is the identity matrix plus the derivative of \\f\\. Going back through a block, the gradient keeps a copy of itself through the identity. It keeps that copy however small the derivative of \\f\\ is. Without the [residual connection](https://morrison-lab.github.io/lds/chapters/backpropagation.html#def-residual-connection), the gradient passes only through the derivative of \\f\\, and shrinks when that derivative is small. Across 20 blocks these derivatives multiply. So when each factor is below 1 in size, the gradient shrinks geometrically.
+> The [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) has size 2.5e+01, against 1.9e-09 without [residual connections](https://morrison-lab.github.io/lds/chapters/backpropagation.html#def-residual-connection). A block computes $\vhidval + f(\vhidval)$, with $f(\vhidval) = \operatorname{ReLU}\paren{\matr{W} \vhidval + \vecf{b}}$ from [Remark 1](#rem-residual-block), so its derivative with respect to $\vhidval$ is the identity matrix plus the derivative of $f$. Going back through a block, the gradient keeps a copy of itself through the identity. It keeps that copy however small the derivative of $f$ is. Without the [residual connection](https://morrison-lab.github.io/lds/chapters/backpropagation.html#def-residual-connection), the gradient passes only through the derivative of $f$, and shrinks when that derivative is small. Across 20 blocks these derivatives multiply. So when each factor is below 1 in size, the gradient shrinks geometrically.
 
 ## 5.3 Four networks
 

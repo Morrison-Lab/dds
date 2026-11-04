@@ -109,7 +109,7 @@ print(x_train.shape, x_test.shape)
 
     torch.Size([1200, 1, 8, 8]) torch.Size([597, 1, 8, 8])
 
-The exercises use the UCI optical digits [\[1\]](#ref-alpaydin1998optdigits), split as in the [feedforward networks chapter](../chapters/feedforward-networks.llms.md), with 1,200 training images, but keep each image as a grid: a [tensor](../chapters/pytorch-basics.llms.md#def-tensor) of [shape](../chapters/pytorch-basics.llms.md#def-shape) \\1 \times 8 \times 8\\, for one [channel](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-channel) of 8 rows and 8 columns. `train()` runs minibatch stochastic [gradient descent](https://morrison-lab.github.io/mds/optimization.html#def-gradient-descent) with [momentum](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-momentum) 0.9, [learning rate](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-learning-rate) 0.05 and batch size 32. `make_cnn()` builds a small convolutional network, with 3,818 [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter). `make_mlp()` builds an [MLP](../chapters/feedforward-networks.llms.md#def-feedforward-network) with one [hidden layer](../chapters/feedforward-networks.llms.md#def-hidden-layer) of 64 [ReLU](../chapters/feedforward-networks.llms.md#def-relu) [units](../chapters/feedforward-networks.llms.md#def-unit), with 4,810 parameters.
+The exercises use the UCI optical digits [\[1\]](#ref-alpaydin1998optdigits), split as in the [feedforward networks chapter](../chapters/feedforward-networks.llms.md), with 1,200 training images, but keep each image as a grid: a [tensor](../chapters/pytorch-basics.llms.md#def-tensor) of [shape](../chapters/pytorch-basics.llms.md#def-shape) $1 \times 8 \times 8$, for one [channel](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-channel) of 8 rows and 8 columns. `train()` runs minibatch stochastic [gradient descent](https://morrison-lab.github.io/mds/optimization.html#def-gradient-descent) with [momentum](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-momentum) 0.9, [learning rate](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-learning-rate) 0.05 and batch size 32. `make_cnn()` builds a small convolutional network, with 3,818 [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter). `make_mlp()` builds an [MLP](../chapters/feedforward-networks.llms.md#def-feedforward-network) with one [hidden layer](../chapters/feedforward-networks.llms.md#def-hidden-layer) of 64 [ReLU](../chapters/feedforward-networks.llms.md#def-relu) [units](../chapters/feedforward-networks.llms.md#def-unit), with 4,810 parameters.
 
 # 2 Convolutional layers in PyTorch
 
@@ -117,7 +117,7 @@ The exercises use the UCI optical digits [\[1\]](#ref-alpaydin1998optdigits), sp
 
 > **NOTE:**
 >
-> **Exercise 1 (The shape of a convolution’s output)** `nn.Conv2d(1, 8, 3, padding=1)` is a [convolutional layer](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-convolutional-layer) with 1 input [channel](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-channel), 8 output [channels](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-channel), \\3 \times 3\\ [filters](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-filter) and [padding](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-padding) 1. What [shape](../chapters/pytorch-basics.llms.md#def-shape) is its output for the first 32 training images?
+> **Exercise 1 (The shape of a convolution’s output)** `nn.Conv2d(1, 8, 3, padding=1)` is a [convolutional layer](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-convolutional-layer) with 1 input [channel](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-channel), 8 output [channels](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-channel), $3 \times 3$ [filters](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-filter) and [padding](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-padding) 1. What [shape](../chapters/pytorch-basics.llms.md#def-shape) is its output for the first 32 training images?
 >
 > > **TIP:**
 > >
@@ -137,7 +137,7 @@ The exercises use the UCI optical digits [\[1\]](#ref-alpaydin1998optdigits), sp
 >
 >     torch.Size([32, 8, 8, 8])
 >
-> `conv_out` has [shape](../chapters/pytorch-basics.llms.md#def-shape) \\32 \times 8 \times 8 \times 8\\: 32 images, each with 8 [channels](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-channel) of 8 rows and 8 columns. With [padding](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-padding) 1 and [stride](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-stride) 1, each side is \\\floor{(8 + 2 - 3) / 1} + 1 = 8\\ pixels long, the same as the input’s. PyTorch orders the dimensions as images, channels, rows and columns [\[2\]](#ref-pytorch_conv2d).
+> `conv_out` has [shape](../chapters/pytorch-basics.llms.md#def-shape) $32 \times 8 \times 8 \times 8$: 32 images, each with 8 [channels](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-channel) of 8 rows and 8 columns. With [padding](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-padding) 1 and [stride](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-stride) 1, each side is $\floor{(8 + 2 - 3) / 1} + 1 = 8$ pixels long, the same as the input’s. PyTorch orders the dimensions as images, channels, rows and columns [\[2\]](#ref-pytorch_conv2d).
 
 # 3 What one output can see
 
@@ -145,7 +145,7 @@ The exercises use the UCI optical digits [\[1\]](#ref-alpaydin1998optdigits), sp
 
 > **NOTE:**
 >
-> **Exercise 2 (What one output can see)** `two_convs` below stacks two `nn.Conv2d(1, 1, 3, padding=1)` layers. Which pixels of an \\8 \times 8\\ input can change the output in row 4, column 4? Count rows and columns from 0.
+> **Exercise 2 (What one output can see)** `two_convs` below stacks two `nn.Conv2d(1, 1, 3, padding=1)` layers. Which pixels of an $8 \times 8$ input can change the output in row 4, column 4? Count rows and columns from 0.
 >
 > Show code
 >
@@ -187,7 +187,7 @@ The exercises use the UCI optical digits [\[1\]](#ref-alpaydin1998optdigits), sp
 >             [0, 0, 1, 1, 1, 1, 1, 0],
 >             [0, 0, 0, 0, 0, 0, 0, 0]], dtype=torch.int32)
 >
-> At \\(4, 4)\\, the second layer’s output reads a \\3 \times 3\\ block of the first layer’s output, rows and columns 3 to 5. Each of those 9 outputs of the first layer reads its own \\3 \times 3\\ block of the input, so together they read rows and columns 2 to 6. The [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) of that one output with respect to the input, printed as 1 where it is not 0, is not 0 on a block of 5 rows by 5 columns. Every other pixel leaves the output unchanged.
+> At $(4, 4)$, the second layer’s output reads a $3 \times 3$ block of the first layer’s output, rows and columns 3 to 5. Each of those 9 outputs of the first layer reads its own $3 \times 3$ block of the input, so together they read rows and columns 2 to 6. The [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) of that one output with respect to the input, printed as 1 where it is not 0, is not 0 on a block of 5 rows by 5 columns. Every other pixel leaves the output unchanged.
 
 > **NOTE:**
 >
@@ -217,21 +217,21 @@ The exercises use the UCI optical digits [\[1\]](#ref-alpaydin1998optdigits), sp
 >
 >     (5, 5) (6, 6)
 >
-> `make_cnn()` stacks two \\3 \times 3\\ [convolutional layers](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-convolutional-layer), each followed by a [ReLU](../chapters/feedforward-networks.llms.md#def-relu), then \\2 \times 2\\ max [pooling](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-pooling). A [unit](../chapters/feedforward-networks.llms.md#def-unit) of the second [convolutional layer](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-convolutional-layer) has a [receptive field](#def-receptive-field) of 5 by 5 pixels. A unit after the pooling layer takes the largest of a \\2 \times 2\\ block of those [units](../chapters/feedforward-networks.llms.md#def-unit). Its receptive field is 6 by 6 pixels.
+> `make_cnn()` stacks two $3 \times 3$ [convolutional layers](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-convolutional-layer), each followed by a [ReLU](../chapters/feedforward-networks.llms.md#def-relu), then $2 \times 2$ max [pooling](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-pooling). A [unit](../chapters/feedforward-networks.llms.md#def-unit) of the second [convolutional layer](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-convolutional-layer) has a [receptive field](#def-receptive-field) of 5 by 5 pixels. A unit after the pooling layer takes the largest of a $2 \times 2$ block of those [units](../chapters/feedforward-networks.llms.md#def-unit). Its receptive field is 6 by 6 pixels.
 
 > **NOTE:**
 >
-> *Remark 1* (How fast a receptive field grows). A \\k \times k\\ [convolutional layer](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-convolutional-layer) with [stride](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-stride) 1 makes each side of the [receptive field](#def-receptive-field) \\k - 1\\ pixels longer. So \\L\\ such layers of \\3 \times 3\\ [filters](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-filter) give a receptive field of \\(2L + 1) \times (2L + 1)\\ pixels, away from the edges of the image. [Solution 2](#sol-receptive-field) found \\L = 2\\ layers and a \\5 \times 5\\ block. [Pooling](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-pooling) and [stride](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-stride) make the receptive field grow faster, since each step of a later layer then moves farther across the input [\[3, Sec. 9.2\]](#ref-goodfellow2016deep).
+> *Remark 1* (How fast a receptive field grows). A $k \times k$ [convolutional layer](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-convolutional-layer) with [stride](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-stride) 1 makes each side of the [receptive field](#def-receptive-field) $k - 1$ pixels longer. So $L$ such layers of $3 \times 3$ [filters](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-filter) give a receptive field of $(2L + 1) \times (2L + 1)$ pixels, away from the edges of the image. [Solution 2](#sol-receptive-field) found $L = 2$ layers and a $5 \times 5$ block. [Pooling](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-pooling) and [stride](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-stride) make the receptive field grow faster, since each step of a later layer then moves farther across the input [\[3, Sec. 9.2\]](#ref-goodfellow2016deep).
 
 ## 3.2 Small filters
 
 > **NOTE:**
 >
-> **Exercise 3 (Two small filters or one large one)** Two stacked \\3 \times 3\\ [convolutional layers](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-convolutional-layer) and one \\5 \times 5\\ layer have the same [receptive field](#def-receptive-field). Suppose every layer has \\C\\ input [channels](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-channel) and \\C\\ output channels. Which of the two designs has fewer weights, not counting biases?
+> **Exercise 3 (Two small filters or one large one)** Two stacked $3 \times 3$ [convolutional layers](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-convolutional-layer) and one $5 \times 5$ layer have the same [receptive field](#def-receptive-field). Suppose every layer has $C$ input [channels](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-channel) and $C$ output channels. Which of the two designs has fewer weights, not counting biases?
 
 > **NOTE:**
 >
-> *Solution 3*. A \\k \times k\\ layer from \\C\\ [channels](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-channel) to \\C\\ channels has one \\k \times k \times C\\ [filter](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-filter) per output [channel](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-channel), so \\k^2 C^2\\ weights. Two \\3 \times 3\\ layers have \\2 \times 9 C^2 = 18 C^2\\ weights, and one \\5 \times 5\\ layer has \\25 C^2\\. So the two small layers have fewer weights, 72% as many. They can also apply an [activation function](../chapters/feedforward-networks.llms.md#def-activation-function) between them, as `make_cnn()` does, so they can compute functions of the patch that one layer cannot. The VGG networks are built from stacks of \\3 \times 3\\ layers for these two reasons [\[4, Sec. 2.3\]](#ref-simonyan2015vgg).
+> *Solution 3*. A $k \times k$ layer from $C$ [channels](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-channel) to $C$ channels has one $k \times k \times C$ [filter](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-filter) per output [channel](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-channel), so $k^2 C^2$ weights. Two $3 \times 3$ layers have $2 \times 9 C^2 = 18 C^2$ weights, and one $5 \times 5$ layer has $25 C^2$. So the two small layers have fewer weights, 72% as many. They can also apply an [activation function](../chapters/feedforward-networks.llms.md#def-activation-function) between them, as `make_cnn()` does, so they can compute functions of the patch that one layer cannot. The VGG networks are built from stacks of $3 \times 3$ layers for these two reasons [\[4, Sec. 2.3\]](#ref-simonyan2015vgg).
 >
 > Show code
 >
@@ -246,7 +246,7 @@ The exercises use the UCI optical digits [\[1\]](#ref-alpaydin1998optdigits), sp
 >
 >     4608 6400
 >
-> For \\C = 16\\, PyTorch’s layers have 4,608 and 6,400 weights.
+> For $C = 16$, PyTorch’s layers have 4,608 and 6,400 weights.
 
 # 4 Shifted digits
 
@@ -300,7 +300,7 @@ The exercises use the UCI optical digits [\[1\]](#ref-alpaydin1998optdigits), sp
 
 > **NOTE:**
 >
-> **Definition 2 (Translation equivariance)** A function \\f\\ from images to images is **translation equivariant** when shifting its input shifts its output by the same amount: \\f(\operatorname{shift}(x)) = \operatorname{shift}(f(x))\\ for every image \\x\\ and every shift [\[3, Sec. 9.2\]](#ref-goodfellow2016deep). A [convolutional layer](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-convolutional-layer) with [stride](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-stride) 1 is translation equivariant, up to what happens at the edges of the image.
+> **Definition 2 (Translation equivariance)** A function $f$ from images to images is **translation equivariant** when shifting its input shifts its output by the same amount: $f(\operatorname{shift}(x)) = \operatorname{shift}(f(x))$ for every image $x$ and every shift [\[3, Sec. 9.2\]](#ref-goodfellow2016deep). A [convolutional layer](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-convolutional-layer) with [stride](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-stride) 1 is translation equivariant, up to what happens at the edges of the image.
 
 > **NOTE:**
 >
@@ -323,7 +323,7 @@ The exercises use the UCI optical digits [\[1\]](#ref-alpaydin1998optdigits), sp
 >
 >     0.0 [4, 4] 0.45514941215515137 0.5029639601707458
 >
-> A [ReLU](../chapters/feedforward-networks.llms.md#def-relu) acts on each pixel separately. So a ReLU is [translation equivariant](#def-equivariance) with no edge effect. On the [feature maps](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-feature-map) of `conv` for a test digit, `relu(shift_right(maps))` and `shift_right(relu(maps))` agree exactly. A \\2 \times 2\\ max [pooling](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-pooling) layer is not translation equivariant. Its output is 4 by 4. A shift of one input pixel is half an output pixel, and no whole-pixel shift of the pooled maps matches a half-pixel shift. The pooled maps of the shifted input differ by up to 0.46 from those of the unshifted input, and by up to 0.50 from those maps shifted one pixel right.
+> A [ReLU](../chapters/feedforward-networks.llms.md#def-relu) acts on each pixel separately. So a ReLU is [translation equivariant](#def-equivariance) with no edge effect. On the [feature maps](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-feature-map) of `conv` for a test digit, `relu(shift_right(maps))` and `shift_right(relu(maps))` agree exactly. A $2 \times 2$ max [pooling](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-pooling) layer is not translation equivariant. Its output is 4 by 4. A shift of one input pixel is half an output pixel, and no whole-pixel shift of the pooled maps matches a half-pixel shift. The pooled maps of the shifted input differ by up to 0.46 from those of the unshifted input, and by up to 0.50 from those maps shifted one pixel right.
 
 ## 4.2 A convolutional network and an MLP
 
@@ -395,7 +395,7 @@ The exercises use the UCI optical digits [\[1\]](#ref-alpaydin1998optdigits), sp
 >
 > - LeNet-5 read handwritten digits with three [convolutional layers](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-convolutional-layer), the first two each followed by subsampling, then a [fully connected](https://morrison-lab.github.io/lds/chapters/neural-nets.html#def-fully-connected) layer and an output layer [\[5, Sec. II.B\]](#ref-lecun1998gradient).
 > - AlexNet won the 2012 ImageNet competition with 5 convolutional layers, [ReLU](../chapters/feedforward-networks.llms.md#def-relu) activations, [dropout](../chapters/regularization.llms.md#def-dropout) and training on GPUs [\[6, Sec. 3\]](#ref-krizhevsky2012imagenet).
-> - VGG networks stacked \\3 \times 3\\ convolutional layers, up to 19 weight layers deep [\[4, Sec. 2.3\]](#ref-simonyan2015vgg), for the reasons in [Solution 3](#sol-two-small-filters).
+> - VGG networks stacked $3 \times 3$ convolutional layers, up to 19 weight layers deep [\[4, Sec. 2.3\]](#ref-simonyan2015vgg), for the reasons in [Solution 3](#sol-two-small-filters).
 > - ResNets added [residual connections](https://morrison-lab.github.io/lds/chapters/backpropagation.html#def-residual-connection) around pairs or triples of convolutional layers, and trained networks of more than 100 layers [\[7\]](#ref-he2016resnet). The [normalization chapter](../chapters/normalization.llms.md#rem-residual-block) used residual connections around single fully connected layers.
 
 # 6 Starting from another task

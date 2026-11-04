@@ -66,7 +66,7 @@ print(images.shape, center_ink[:5], left_ink[:5])
 
 > **NOTE:**
 >
-> *Solution 1*. Every rule of the form “a 1 when the center ink is above \\\param\\, and a 0 otherwise”, one rule for each number \\\param\\. The number \\\param\\ that picks one rule out of this set is the rule’s one [parameter](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter). A deep network picks one function out of a much larger set, with many [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter) instead of one.
+> *Solution 1*. Every rule of the form “a 1 when the center ink is above $\param$, and a 0 otherwise”, one rule for each number $\param$. The number $\param$ that picks one rule out of this set is the rule’s one [parameter](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter). A deep network picks one function out of a much larger set, with many [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter) instead of one.
 
 ## 2.2 The loss
 
@@ -84,7 +84,7 @@ print(images.shape, center_ink[:5], left_ink[:5])
 
 > **NOTE:**
 >
-> **Exercise 3 (The error rate against the cutoff)** Among the 0s and 1s, plot the [error rate](https://morrison-lab.github.io/lds/chapters/metrics.html#def-error-rate) of the 0-or-1 rule against its cutoff \\\param\\, for every \\\param\\ from 0 to 16 in steps of 0.01.
+> **Exercise 3 (The error rate against the cutoff)** Among the 0s and 1s, plot the [error rate](https://morrison-lab.github.io/lds/chapters/metrics.html#def-error-rate) of the 0-or-1 rule against its cutoff $\param$, for every $\param$ from 0 to 16 in steps of 0.01.
 
 > **NOTE:**
 >
@@ -141,7 +141,7 @@ print(images.shape, center_ink[:5], left_ink[:5])
 >
 >     99
 >
-> No. The curve in [Figure 1](#fig-error-rate-curve) is a staircase. The [error rate](https://morrison-lab.github.io/lds/chapters/metrics.html#def-error-rate) changes only where \\\param\\ crosses one of the 99 values that the center ink takes, and it is flat everywhere in between, so its slope is 0 wherever the slope exists. Gradient descent would never move.
+> No. The curve in [Figure 1](#fig-error-rate-curve) is a staircase. The [error rate](https://morrison-lab.github.io/lds/chapters/metrics.html#def-error-rate) changes only where $\param$ crosses one of the 99 values that the center ink takes, and it is flat everywhere in between, so its slope is 0 wherever the slope exists. Gradient descent would never move.
 >
 > The grid of cutoffs in steps of 0.01 reaches the lowest error rate, 2.2% (8 of the 360 images), on 3 separate stretches between 5.63 and 6.49, and it found them by trying each cutoff in turn. That works for one [parameter](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter), but a network has thousands of weights, and trying every combination of their values is out of reach.
 
@@ -151,16 +151,16 @@ print(images.shape, center_ink[:5], left_ink[:5])
 >
 > **Exercise 5 (The log loss against the cutoff)** Swap the 0-or-1 rule for a soft version, which gives each image a probability of being a 1:
 >
-> \\\hprob = \sigmoidf{\predvar - \param},\\
+> $$\hprob = \sigmoidf{\predvar - \param},$$
 >
 > where
 >
-> - \\\predvar\\ is the image’s center ink,
-> - \\\param\\ is the cutoff, the rule’s one [parameter](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter),
-> - \\\sigmoid\\ is the [logistic function](https://morrison-lab.github.io/lds/chapters/logistic-regression.html#exm-logistic-function), \\\sigmoidf{z} = 1 / (1 + \expf{-z})\\,
-> - and \\\hprob\\ is the probability the rule gives that the image is a 1.
+> - $\predvar$ is the image’s center ink,
+> - $\param$ is the cutoff, the rule’s one [parameter](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter),
+> - $\sigmoid$ is the [logistic function](https://morrison-lab.github.io/lds/chapters/logistic-regression.html#exm-logistic-function), $\sigmoidf{z} = 1 / (1 + \expf{-z})$,
+> - and $\hprob$ is the probability the rule gives that the image is a 1.
 >
-> Among the 0s and 1s, plot the mean [log loss](https://morrison-lab.github.io/lds/chapters/logistic-regression.html#def-log-loss) of this rule against \\\param\\, over the cutoffs of [Exercise 3](#exr-error-rate-curve).
+> Among the 0s and 1s, plot the mean [log loss](https://morrison-lab.github.io/lds/chapters/logistic-regression.html#def-log-loss) of this rule against $\param$, over the cutoffs of [Exercise 3](#exr-error-rate-curve).
 
 > **NOTE:**
 >
@@ -209,7 +209,7 @@ print(images.shape, center_ink[:5], left_ink[:5])
 >
 > Yes. The curve in [Figure 2](#fig-log-loss-curve) is smooth, with one lowest point. Its slope is nonzero at every other cutoff, so a step against the slope always goes downhill, and gradient descent has a direction to follow.
 >
-> The lowest [log loss](https://morrison-lab.github.io/lds/chapters/logistic-regression.html#def-log-loss) is at \\\param\\ = 6.60. The hard rule with that cutoff gets 11 of the 360 images of 0s and 1s wrong, against 8 for the best cutoffs in [Solution 4](#sol-train-on-errors). Minimizing the log loss does not minimize the [error rate](https://morrison-lab.github.io/lds/chapters/metrics.html#def-error-rate), but, unlike the error rate, it can be minimized by gradient descent.
+> The lowest [log loss](https://morrison-lab.github.io/lds/chapters/logistic-regression.html#def-log-loss) is at $\param$ = 6.60. The hard rule with that cutoff gets 11 of the 360 images of 0s and 1s wrong, against 8 for the best cutoffs in [Solution 4](#sol-train-on-errors). Minimizing the log loss does not minimize the [error rate](https://morrison-lab.github.io/lds/chapters/metrics.html#def-error-rate), but, unlike the error rate, it can be minimized by gradient descent.
 >
 > Deep networks are trained the same way: on a smooth loss such as the log loss, which is also called [cross-entropy](https://morrison-lab.github.io/lds/chapters/logistic-regression.html#def-log-loss), while their error rate or [accuracy](https://morrison-lab.github.io/lds/chapters/metrics.html#def-accuracy) is what gets reported.
 
@@ -289,7 +289,7 @@ print(images.shape, center_ink[:5], left_ink[:5])
 > | Piece | On this page | In a deep network |
 > |----|----|----|
 > | Candidate rules | Cutoff rules on one [feature](https://morrison-lab.github.io/lds/chapters/course-overview.html#def-feature) | Networks of one architecture |
-> | [Parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter) | The cutoff \\\param\\ | The weights of every layer |
+> | [Parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter) | The cutoff $\param$ | The weights of every layer |
 > | Training loss | [Log loss](https://morrison-lab.github.io/lds/chapters/logistic-regression.html#def-log-loss) of the soft rule | [Cross-entropy](https://morrison-lab.github.io/lds/chapters/logistic-regression.html#def-log-loss), the log loss of a [softmax](https://morrison-lab.github.io/lds/chapters/logistic-regression.html#sec-multiclass) output |
 > | Fitting | A search over a grid of cutoffs | [Stochastic gradient descent](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#sec-sgd) on minibatches of the loss |
 > | Judging | [Accuracy](https://morrison-lab.github.io/lds/chapters/metrics.html#def-accuracy) of the digit-average and nearest-neighbor rules on a held-out [test set](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-test-set) | Accuracy on held-out images |
