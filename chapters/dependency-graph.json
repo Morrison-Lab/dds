@@ -3,6 +3,51 @@
  "meaning": "edge [A, B] means A uses B: B is a prerequisite of A, A a postrequisite of B",
  "nodes": [
   {
+   "id": "dds/applications#def-in-context-learning",
+   "site": "dds",
+   "page": "applications",
+   "div": "def-in-context-learning",
+   "kind": "def",
+   "title": "In-context learning",
+   "external": false
+  },
+  {
+   "id": "dds/applications#def-large-language-model",
+   "site": "dds",
+   "page": "applications",
+   "div": "def-large-language-model",
+   "kind": "def",
+   "title": "Large language model (LLM)",
+   "external": false
+  },
+  {
+   "id": "dds/applications#def-lora",
+   "site": "dds",
+   "page": "applications",
+   "div": "def-lora",
+   "kind": "def",
+   "title": "Low-rank adaptation (LoRA)",
+   "external": false
+  },
+  {
+   "id": "dds/applications#def-spectrogram",
+   "site": "dds",
+   "page": "applications",
+   "div": "def-spectrogram",
+   "kind": "def",
+   "title": "Spectrogram",
+   "external": false
+  },
+  {
+   "id": "dds/applications#def-vision-transformer",
+   "site": "dds",
+   "page": "applications",
+   "div": "def-vision-transformer",
+   "kind": "def",
+   "title": "Vision Transformer (ViT)",
+   "external": false
+  },
+  {
    "id": "dds/attention-transformers#def-attention",
    "site": "dds",
    "page": "attention-transformers",
@@ -598,6 +643,16 @@
    "url": "https://morrison-lab.github.io/mds/functions.html#def-logistic-function"
   },
   {
+   "id": "mds/linear-algebra-subspaces#def-rank",
+   "site": "mds",
+   "page": "linear-algebra-subspaces",
+   "div": "def-rank",
+   "kind": "def",
+   "title": "rank",
+   "external": true,
+   "url": "https://morrison-lab.github.io/mds/linear-algebra-subspaces.html#def-rank"
+  },
+  {
    "id": "mds/linear-algebra-vectors#def-dot-product",
    "site": "mds",
    "page": "linear-algebra-vectors",
@@ -629,6 +684,42 @@
   }
  ],
  "edges": [
+  [
+   "dds/applications#def-in-context-learning",
+   "dds/attention-transformers#def-pretraining"
+  ],
+  [
+   "dds/applications#def-in-context-learning",
+   "dds/language-models#def-language-model"
+  ],
+  [
+   "dds/applications#def-large-language-model",
+   "dds/attention-transformers#def-pretraining"
+  ],
+  [
+   "dds/applications#def-large-language-model",
+   "dds/attention-transformers#def-transformer-block"
+  ],
+  [
+   "dds/applications#def-large-language-model",
+   "dds/language-models#def-language-model"
+  ],
+  [
+   "dds/applications#def-lora",
+   "dds/attention-transformers#def-pretraining"
+  ],
+  [
+   "dds/applications#def-lora",
+   "mds/linear-algebra-subspaces#def-rank"
+  ],
+  [
+   "dds/applications#def-vision-transformer",
+   "dds/attention-transformers#def-positional-encoding"
+  ],
+  [
+   "dds/applications#def-vision-transformer",
+   "dds/attention-transformers#def-transformer-block"
+  ],
   [
    "dds/attention-transformers#def-attention",
    "mds/linear-algebra-vectors#def-dot-product"
