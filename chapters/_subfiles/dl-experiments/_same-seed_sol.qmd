@@ -1,0 +1,17 @@
+::: {#sol-same-seed}
+
+```{python}
+#| code-fold: show
+first, second = train_and_score(64, 0.1, 0), train_and_score(64, 0.1, 0)
+print(first == second, first[-1])
+print(torch.__version__)
+assert first == second
+```
+
+Yes: all 20 validation [accuracies](https://morrison-lab.github.io/lds/chapters/metrics.html#def-accuracy) agree,
+because each call reseeds both generators of @sol-random-draws before it draws anything.
+That holds on one machine,
+with one version of each library.
+The printed `torch.__version__` is the PyTorch version that rendered this page.
+
+:::

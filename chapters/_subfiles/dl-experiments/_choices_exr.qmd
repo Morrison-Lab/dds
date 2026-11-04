@@ -1,0 +1,7 @@
+::: {#exr-choices}
+
+#### Settings that training does not learn
+
+List the numbers that `train_and_score()` uses but [SGD](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-sgd) never changes.
+
+:::

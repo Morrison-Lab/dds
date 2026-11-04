@@ -1,0 +1,11 @@
+::: {#exr-rate-sweep}
+
+#### A learning-rate sweep
+
+For each [width](https://morrison-lab.github.io/lds/chapters/neural-nets.html#def-width), 8 and 512,
+train with each [learning rate](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-learning-rate) in 0.003, 0.01, 0.03, 0.1, 0.3, 1 and 3,
+and with seeds 0, 1 and 2.
+How much higher is width 512's mean validation [accuracy](https://morrison-lab.github.io/lds/chapters/metrics.html#def-accuracy) than width 8's,
+when each width uses the learning rate that suits it best?
+
+:::

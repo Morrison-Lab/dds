@@ -1,0 +1,15 @@
+::: {#sol-boundary}
+
+[Width](https://morrison-lab.github.io/lds/chapters/neural-nets.html#def-width) 512's best [learning rate](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-learning-rate) would then be the largest one tried.
+A larger rate might do better still,
+and the sweep could not say.
+When the best value sits at the edge of the range searched,
+the range is suspect,
+and the next step is to extend it in that direction [@godbole2023playbook].
+The actual sweep went one step further, to 3,
+where width 512's mean validation [accuracy](https://morrison-lab.github.io/lds/chapters/metrics.html#def-accuracy) drops to `r sprintf("%.3f", py$edge_accuracy_512)`,
+about the 0.1 that guessing a digit at random would score.
+So the rate that suits width 512 best lies between 0.3 and 3,
+and a finer sweep in that range could pin it down.
+
+:::

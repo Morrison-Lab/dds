@@ -1,0 +1,19 @@
+::: {#rem-reproducibility}
+
+#### Seeds are not enough
+
+PyTorch's documentation warns that completely reproducible results are not guaranteed
+across PyTorch releases or platforms,
+or between a CPU and a GPU,
+even with identical seeds [@pytorch_randomness].
+Some GPU operations are nondeterministic,
+and `torch.use_deterministic_algorithms(True)` makes PyTorch choose deterministic ones,
+often more slowly,
+or raise an error where it has none [@pytorch_randomness].
+So record more than the seed:
+the [hyperparameters](https://morrison-lab.github.io/lds/chapters/model-selection.html#sec-hyperparameters),
+the versions of the code, the data and the libraries,
+and the trained weights themselves.
+[lds's section on tracking runs](https://morrison-lab.github.io/lds/chapters/ml-experimentation.html#tracking-runs) gives the habits that make a result traceable a month later. <!-- check-term-links: allow -->
+
+:::

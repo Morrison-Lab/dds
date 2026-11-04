@@ -1,0 +1,9 @@
+::: {#exr-fixed-rate}
+
+#### A fair comparison
+
+A classmate wants to know whether a network of [width](https://morrison-lab.github.io/lds/chapters/neural-nets.html#def-width) 512 classifies the digits better than one of width 8.
+They train one of each with [learning rate](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-learning-rate) 0.1.
+What could make that comparison unfair?
+
+:::

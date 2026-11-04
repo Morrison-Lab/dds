@@ -1,0 +1,42 @@
+::: {#sol-longer}
+
+```{python}
+#| code-fold: show
+long_run = train_and_score(512, best_rate[512], 0, n_epochs=100)
+at_20, best_long = long_run[19], max(long_run)
+best_epoch = long_run.index(best_long) + 1
+print(at_20, best_long, best_epoch, long_run[-1])
+# Stop the render if the prose below stops being true.
+assert best_long - at_20 < seed_high - seed_low
+assert min(long_run[19:]) > at_20 - 0.01
+# Stop the render if the figure's alt text stops being true.
+assert abs(at_20 - 0.95) < 0.015
+assert all(abs(score - at_20) < 0.015 for score in long_run[19:])
+```
+
+::: {#fig-longer}
+
+```{python}
+#| fig-alt: "Validation accuracy against epoch, from 1 to 100, for width 512 at its best learning rate. The curve climbs to about 0.95 by epoch 20 and stays within about one percentage point of that for the remaining 80 epochs."
+fig, ax = plt.subplots(figsize=(6, 3))
+ax.plot(range(1, 101), long_run);
+ax.axvline(20, linestyle="--", color="gray");
+ax.set_xlabel("epoch");
+ax.set_ylabel("validation accuracy");
+fig.tight_layout();
+plt.show()
+```
+
+Validation [accuracy](https://morrison-lab.github.io/lds/chapters/metrics.html#def-accuracy) after each [epoch](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-epoch) of one 100-epoch run of [width](https://morrison-lab.github.io/lds/chapters/neural-nets.html#def-width) 512 at [learning rate](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-learning-rate) `r py$best_rate_512`;
+the dashed line marks epoch 20.
+
+:::
+
+Hardly.
+After 20 [epochs](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-epoch) the validation [accuracy](https://morrison-lab.github.io/lds/chapters/metrics.html#def-accuracy) is `r sprintf("%.3f", py$at_20)`.
+Its highest value over 100 epochs is `r sprintf("%.3f", py$best_long)`, at [epoch](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-epoch) `r py$best_epoch`,
+less above the 20-epoch value than the seed alone moved [width](https://morrison-lab.github.io/lds/chapters/neural-nets.html#def-width) 64 in @sol-seed-spread.
+With the [learning rate](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-learning-rate) the sweep tuned for 20 epochs,
+training 5 times as long buys nothing that this experiment can detect.
+
+:::

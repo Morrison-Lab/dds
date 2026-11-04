@@ -1,0 +1,7 @@
+::: {#def-scientific-hyperparameter}
+
+#### Scientific hyperparameter
+
+A **scientific hyperparameter** of an experiment is a [hyperparameter](https://morrison-lab.github.io/lds/chapters/model-selection.html#sec-hyperparameters) whose effect on the model's performance the experiment is meant to measure [@godbole2023playbook].
+
+:::

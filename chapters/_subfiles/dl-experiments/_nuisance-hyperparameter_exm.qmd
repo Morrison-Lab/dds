@@ -1,0 +1,10 @@
+::: {#exm-nuisance-hyperparameter}
+
+#### The learning rate in the sweep
+
+In @sol-rate-sweep,
+the [learning rate](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-learning-rate) is a [nuisance hyperparameter](#def-nuisance-hyperparameter).
+The sweep tunes it for each [width](https://morrison-lab.github.io/lds/chapters/neural-nets.html#def-width), 8 and 512,
+and compares the [widths](https://morrison-lab.github.io/lds/chapters/neural-nets.html#def-width) at their own best rates.
+
+:::

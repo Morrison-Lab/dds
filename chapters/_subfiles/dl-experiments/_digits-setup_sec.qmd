@@ -1,0 +1,51 @@
+```{python}
+#| code-fold: show
+import pandas as pd
+import torch
+from torch import nn
+import matplotlib.pyplot as plt
+
+digits = pd.read_csv("data/optdigits-test.csv", header=None)
+x = torch.tensor(digits.iloc[:, :64].to_numpy(), dtype=torch.float32) / 16
+y = torch.tensor(digits[64].to_numpy())
+order = torch.randperm(len(x), generator=torch.Generator().manual_seed(481))
+train_idx, val_idx = order[:500], order[500:1000]
+n_train, n_val = len(train_idx), len(val_idx)
+n_unused = len(x) - n_train - n_val
+loss_fn = nn.CrossEntropyLoss()
+
+
+def train_and_score(width, lr, seed, n_epochs=20, batch_size=50):
+    # One training run: an MLP with one hidden layer of `width` ReLU units,
+    # trained by minibatch SGD. Returns the validation accuracy after each epoch.
+    torch.manual_seed(seed)
+    net = nn.Sequential(nn.Linear(64, width), nn.ReLU(), nn.Linear(width, 10))
+    optimizer = torch.optim.SGD(net.parameters(), lr=lr)
+    shuffler = torch.Generator().manual_seed(seed)
+    scores = []
+    for epoch in range(n_epochs):
+        for batch in torch.randperm(len(train_idx), generator=shuffler).split(batch_size):
+            rows = train_idx[batch]
+            optimizer.zero_grad()
+            loss_fn(net(x[rows]), y[rows]).backward()
+            optimizer.step()
+        with torch.no_grad():
+            correct = net(x[val_idx]).argmax(dim=1) == y[val_idx]
+        scores.append(correct.float().mean().item())
+    return scores
+
+
+print(n_train, n_val, n_unused)
+```
+
+The exercises use the `r format(nrow(py$digits), big.mark = ",")` digits of [`data/optdigits-test.csv`](data/optdigits-test.csv) [@alpaydin1998optdigits],
+each an 8 by 8 image with 64 pixels.
+`r py$n_train` random images form the [training set](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-training-set)
+and another `r py$n_val` the [validation set](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-validation-set).
+The other `r py$n_unused` stay unused,
+as a [test set](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-test-set) would until the model is final.
+`train_and_score()` builds an [MLP](feedforward-networks.qmd#def-feedforward-network) with one [hidden layer](feedforward-networks.qmd#def-hidden-layer) of `width` [ReLU](feedforward-networks.qmd#def-relu) [units](feedforward-networks.qmd#def-unit).
+It trains the MLP by [minibatch](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-minibatch) [SGD](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-sgd) with [learning rate](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-learning-rate) `lr`,
+50 images to a minibatch,
+for 20 [epochs](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-epoch) unless asked for more.
+It returns the [accuracy](https://morrison-lab.github.io/lds/chapters/metrics.html#def-accuracy) on the validation set after each [epoch](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-epoch).

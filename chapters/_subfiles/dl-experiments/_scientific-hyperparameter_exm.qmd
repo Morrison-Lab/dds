@@ -1,0 +1,9 @@
+::: {#exm-scientific-hyperparameter}
+
+#### The width in the sweep
+
+In @sol-rate-sweep,
+the [width](https://morrison-lab.github.io/lds/chapters/neural-nets.html#def-width) is the [scientific hyperparameter](#def-scientific-hyperparameter):
+the sweep asks whether width 512 classifies the digits better than width 8.
+
+:::

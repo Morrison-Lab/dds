@@ -1,0 +1,8 @@
+::: {#exr-seed-spread}
+
+#### Ten seeds
+
+Train a network of [width](https://morrison-lab.github.io/lds/chapters/neural-nets.html#def-width) 64 with [learning rate](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-learning-rate) 0.1 once for each seed from 0 to 9.
+How much does the final validation [accuracy](https://morrison-lab.github.io/lds/chapters/metrics.html#def-accuracy) vary?
+
+:::

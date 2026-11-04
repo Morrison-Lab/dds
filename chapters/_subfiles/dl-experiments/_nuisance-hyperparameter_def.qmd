@@ -1,0 +1,8 @@
+::: {#def-nuisance-hyperparameter}
+
+#### Nuisance hyperparameter
+
+A **nuisance hyperparameter** of an experiment is a [hyperparameter](https://morrison-lab.github.io/lds/chapters/model-selection.html#sec-hyperparameters) that the experiment tunes for each value of its [scientific hyperparameter](#def-scientific-hyperparameter)s,
+so that those values are compared fairly [@godbole2023playbook].
+
+:::
