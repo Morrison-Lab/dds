@@ -1,0 +1,22 @@
+::: {#sol-image-tokens}
+
+```{python}
+#| code-fold: show
+patches = x.reshape(-1, 4, 2, 4, 2).permute(0, 1, 3, 2, 4).reshape(-1, 16, 4)
+n_tokens, token_length = patches.shape[1], patches.shape[2]
+print(patches.shape)
+square = x[0].reshape(8, 8)[2:4, 2:4].flatten()
+print(square, patches[0, 5])
+# Stop the render if the prose below stops being true.
+assert torch.equal(square, patches[0, 5])
+```
+
+The 8 by 8 grid holds 4 by 4 squares,
+so each digit becomes a sequence of `r py$n_tokens` vectors,
+each holding the `r py$token_length` pixels of one square.
+The second print checks that the sixth vector holds the square in rows 3 and 4 and columns 3 and 4,
+since the squares run along each row of squares before moving down.
+`reshape` and `permute` group the rows and columns into squares,
+and no pixel moves from one digit to another.
+
+:::

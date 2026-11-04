@@ -1,0 +1,54 @@
+::: {#exm-spectrogram}
+
+#### A spoken seven
+
+```{python}
+#| code-fold: show
+with wave.open("data/7_jackson_0.wav") as recording:
+    sample_rate = recording.getframerate()
+    samples = np.frombuffer(recording.readframes(recording.getnframes()), dtype=np.int16)
+sound = torch.tensor(samples, dtype=torch.float32) / 32768
+window = 256
+spectrogram = torch.stft(sound, n_fft=window, hop_length=window // 4,
+                         window=torch.hann_window(window), return_complex=True).abs()
+seconds = len(sound) / sample_rate
+n_samples = len(sound)
+n_freqs, n_frames = spectrogram.shape
+freqs = torch.linspace(0, sample_rate / 2, n_freqs)
+cutoff = 1000
+power = spectrogram**2
+low_share = (power[freqs < cutoff].sum() / power.sum()).item()
+print(sample_rate, len(sound), seconds, spectrogram.shape)
+```
+
+::: {#fig-spectrogram}
+
+```{python}
+#| fig-alt: "Two panels for one recording of the word seven, over about 0.43 seconds. Above, the waveform: silence for the first 0.03 seconds, a loud burst until about 0.2 seconds, a short dip, then a quieter second burst that fades out by the end. Below, its spectrogram, time across and frequency up to 4,000 hertz: bright horizontal bands below about 1,000 hertz during both bursts, brightest near 700 hertz early in the first, fainter bands near 1,500 and 2,500 hertz, and almost nothing above 3,000 hertz."
+fig, axes = plt.subplots(2, 1, figsize=(6, 4.5), sharex=True)
+times = np.arange(len(sound)) / sample_rate
+axes[0].plot(times, sound.numpy(), linewidth=0.5);
+axes[0].set_ylabel("pressure");
+axes[1].imshow(spectrogram.log1p().numpy(), origin="lower", aspect="auto",
+               extent=[0, seconds, 0, sample_rate / 2], cmap="magma");
+axes[1].set_xlabel("time (seconds)");
+axes[1].set_ylabel("frequency (Hz)");
+fig.tight_layout();
+plt.show()
+```
+
+A recording of the word "seven" and its [spectrogram](#def-spectrogram), on a log scale.
+
+:::
+
+[`data/7_jackson_0.wav`](data/7_jackson_0.wav) is one speaker saying "seven",
+from the Free Spoken Digit Dataset [@jackson2018fsdd].
+It holds `r format(py$n_samples, big.mark = ",")` readings at `r format(py$sample_rate, big.mark = ",")` a second,
+`r sprintf("%.2f", py$seconds)` seconds.
+Windows of `r py$window` readings,
+each starting `r py$window / 4` readings after the one before,
+give a [spectrogram](#def-spectrogram) with `r py$n_freqs` frequency rows and `r py$n_frames` time columns.
+Frequencies below `r format(py$cutoff, big.mark = ",")` hertz hold `r sprintf("%.0f%%", 100 * py$low_share)` of the recording's power,
+in a few bright bands during the two vowels.
+
+:::

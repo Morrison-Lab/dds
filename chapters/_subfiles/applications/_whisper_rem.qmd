@@ -1,0 +1,13 @@
+::: {#rem-whisper}
+
+#### Spectrograms in speech recognition
+
+Whisper,
+a speech recognizer,
+turns each recording into a [spectrogram](#def-spectrogram) on the mel scale,
+which spaces its rows more finely at low frequencies than at high ones,
+with 80 rows and one column every 10 milliseconds.
+An encoder of [Transformer block](attention-transformers.qmd#def-transformer-block)s reads the [spectrogram](#def-spectrogram),
+and a decoder writes out the text [@radford2023robust, section 2.2].
+
+:::

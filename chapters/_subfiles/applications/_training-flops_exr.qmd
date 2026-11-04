@@ -1,0 +1,12 @@
+::: {#exr-training-flops}
+
+#### The cost of training
+
+Training a [language model](language-models.qmd#def-language-model) with $N$ [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter) on $D$ tokens takes about $6 N D$ floating-point operations,
+or FLOPs [@hoffmann2022training, section 3.3].
+@hoffmann2022training trained Chinchilla,
+a model with 70 billion parameters,
+on 1.4 trillion tokens.
+How many FLOPs did that take?
+
+:::

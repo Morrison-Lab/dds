@@ -1,0 +1,10 @@
+::: {#exr-lora-count}
+
+#### A low-rank update
+
+[Fine-tuning](cnns.qmd#def-fine-tuning) a $768 \times 768$ weight matrix $\matr{W}$ trains all of its entries.
+Suppose instead that the update to $\matr{W}$ is the product $\matr{B}\matr{A}$
+of a $768 \times 8$ matrix $\matr{B}$ and an $8 \times 768$ matrix $\matr{A}$.
+How many numbers does training the update learn?
+
+:::

@@ -1,0 +1,13 @@
+::: {#def-vision-transformer}
+
+#### Vision Transformer (ViT)
+
+A **vision Transformer**,
+or **ViT**,
+cuts an image into square patches,
+maps each patch to a vector with one linear layer,
+adds a learned [positional encoding](attention-transformers.qmd#def-positional-encoding),
+and passes the sequence through [Transformer block](attention-transformers.qmd#def-transformer-block)s [@dosovitskiy2021image, section 3.1].
+A classifier then reads one vector summarizing the sequence.
+
+:::

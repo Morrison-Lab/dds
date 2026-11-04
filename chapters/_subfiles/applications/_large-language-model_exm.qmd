@@ -1,0 +1,15 @@
+::: {#exm-large-language-model}
+
+#### GPT-3
+
+GPT-3 is a [large language model](#def-large-language-model) with 175 billion [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter) [@brown2020language, section 2.1].
+
+```{python}
+#| code-fold: show
+gpt3_ratio = 175e9 / gpt2_params
+print(gpt3_ratio)
+```
+
+That count is `r format(round(py$gpt3_ratio), big.mark = ",")` times GPT-2's `r format(py$gpt2_params, big.mark = ",")`.
+
+:::

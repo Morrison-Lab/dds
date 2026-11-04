@@ -1,0 +1,166 @@
+---
+title: "Applications and Current Topics"
+format:
+  html: default
+  revealjs:
+    output-file: applications-slides.html
+  pdf:
+    output-file: applications-handout.pdf
+resources:
+  - data/optdigits-test.csv
+  - data/7_jackson_0.wav
+---
+
+```{r}
+# The Python chunks on this page import these; reticulate provisions them.
+# Attaching reticulate gives the inline R its `py` object.
+library(reticulate)
+source("../tools/use-torch.R")
+use_torch(c("numpy", "pandas", "matplotlib"))
+```
+
+::: notes
+Brian Hutchinson's CSCI 481/581 sets the order of topics in these notes,
+which follow it with his permission.
+His course has no module on these topics,
+so this page is new, exercises included.
+:::
+
+# Welcome
+
+## Plan for this lecture
+
+{{< include _subfiles/applications/_plan_sec.qmd >}}
+
+## The digits
+
+{{< include _subfiles/applications/_digits-setup_sec.qmd >}}
+
+# Large language models
+
+## How many parameters
+
+<!-- heading shares the slide; do not re-flag -->
+
+{{< include _subfiles/applications/_gpt2-size_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/applications/_gpt2-size_sol.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/applications/_large-language-model_def.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/applications/_large-language-model_exm.qmd >}}
+
+## The cost of training
+
+<!-- heading shares the slide; do not re-flag -->
+
+{{< include _subfiles/applications/_training-flops_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/applications/_training-flops_sol.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/applications/_compute-optimal_rem.qmd >}}
+
+## Tasks from the prompt
+
+<!-- heading shares the slide; do not re-flag -->
+
+{{< include _subfiles/applications/_translate_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/applications/_translate_sol.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/applications/_in-context-learning_def.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/applications/_in-context-learning_exm.qmd >}}
+
+# Adapting a large model
+
+## A low-rank update
+
+<!-- heading shares the slide; do not re-flag -->
+
+{{< include _subfiles/applications/_lora-count_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/applications/_lora-count_sol.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/applications/_lora_def.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/applications/_lora_exm.qmd >}}
+
+## Following instructions
+
+{{< include _subfiles/applications/_instruction-tuning_rem.qmd >}}
+
+# Speech
+
+## Sound as a picture
+
+<!-- heading shares the slide; do not re-flag -->
+
+{{< include _subfiles/applications/_sound-image_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/applications/_sound-image_sol.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/applications/_spectrogram_def.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/applications/_spectrogram_exm.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/applications/_whisper_rem.qmd >}}
+
+# Vision
+
+## Images as sequences
+
+<!-- heading shares the slide; do not re-flag -->
+
+{{< include _subfiles/applications/_image-tokens_exr.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/applications/_image-tokens_sol.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/applications/_vision-transformer_def.qmd >}}
+
+{{< slidebreak >}}
+
+{{< include _subfiles/applications/_vision-transformer_exm.qmd >}}
+
+## Further reading
+
+{{< include _subfiles/applications/_applications_read.qmd >}}
+
+# References
+
+::: {#refs}
+:::

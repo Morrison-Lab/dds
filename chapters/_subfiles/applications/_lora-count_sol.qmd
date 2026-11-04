@@ -1,0 +1,15 @@
+::: {#sol-lora-count}
+
+```{python}
+#| code-fold: show
+full_count = 768 * 768
+low_rank_count = 768 * 8 + 8 * 768
+print(full_count, low_rank_count, low_rank_count / full_count)
+```
+
+$\matr{B}$ and $\matr{A}$ hold `r format(py$low_rank_count, big.mark = ",")` numbers between them,
+`r sprintf("%.0f%%", 100 * py$low_rank_count / py$full_count)` of the `r format(py$full_count, big.mark = ",")` in $\matr{W}$.
+The product $\matr{B}\matr{A}$ is still a $768 \times 768$ matrix,
+but its [rank](https://morrison-lab.github.io/mds/linear-algebra-subspaces.html#def-rank) is at most 8.
+
+:::

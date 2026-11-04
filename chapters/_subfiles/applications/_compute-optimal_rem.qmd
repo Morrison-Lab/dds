@@ -1,0 +1,14 @@
+::: {#rem-compute-optimal}
+
+#### Spending a compute budget
+
+For a fixed number of FLOPs,
+a larger model sees fewer tokens.
+@hoffmann2022training trained over 400 [language model](language-models.qmd#def-language-model)s to find the best split,
+and found that the number of [parameter](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter)s and the number of tokens should grow equally:
+each doubling of model size should come with a doubling of the tokens.
+Chinchilla's `r py$tokens_per_param` tokens per parameter follow that rule,
+and it outperformed Gopher,
+a model 4 times its size trained with the same compute on fewer tokens [@hoffmann2022training].
+
+:::

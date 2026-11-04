@@ -1,0 +1,10 @@
+Earlier chapters built small networks and trained them in seconds.
+This lecture looks at what the same parts become at scale,
+and where they are used:
+
+1.  how many [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter) a [language model](language-models.qmd#def-language-model) built from [Transformer block](attention-transformers.qmd#def-transformer-block)s has,
+    and how much computation training it takes;
+2.  how a [pretrained](attention-transformers.qmd#def-pretraining) model can do a new task from examples in its input alone;
+3.  how to adapt a large model by training a small number of new parameters;
+4.  how speech becomes an input that image networks can read;
+5.  how a Transformer can classify images.

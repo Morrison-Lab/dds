@@ -1,0 +1,10 @@
+::: {#def-spectrogram}
+
+#### Spectrogram
+
+The **spectrogram** of a recording is the array whose entry in row $f$ and column $t$ is the magnitude of frequency $f$ in the $t$th window of the recording.
+The windows are short and overlap,
+and the magnitudes come from a Fourier transform of each window,
+the short-time Fourier transform.
+
+:::

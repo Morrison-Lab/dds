@@ -1,0 +1,9 @@
+::: {#exr-sound-image}
+
+#### Sound for an image network
+
+A recording is a sequence of air-pressure readings,
+thousands of them a second.
+How could a network built from [convolutional layer](https://morrison-lab.github.io/lds/chapters/cnn-rnn.html#def-convolutional-layer)s for images take a recording as its input?
+
+:::

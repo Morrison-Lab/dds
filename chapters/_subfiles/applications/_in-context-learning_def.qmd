@@ -1,0 +1,10 @@
+::: {#def-in-context-learning}
+
+#### In-context learning
+
+**In-context learning** is a [pretrained](attention-transformers.qmd#def-pretraining) [language model](language-models.qmd#def-language-model) doing a task from a description of it,
+or a few examples of it,
+written into its input,
+with no change to its [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter) [@brown2020language, sections 1, 2].
+
+:::
