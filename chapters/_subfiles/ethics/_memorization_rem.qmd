@@ -1,0 +1,17 @@
+::: {#rem-memorization}
+
+#### Overfitting and memorization
+
+@yeom2018privacy [section 3.2] show that if an attack guesses "trained on" whenever a classifier is right,
+the share of training points it flags minus the share of other points it flags
+equals the classifier's [generalization gap](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-generalization-gap) in [accuracy](https://morrison-lab.github.io/lds/chapters/metrics.html#def-accuracy).
+The network of @sol-membership is right on `r sprintf("%.0f%%", 100 * py$member_acc)` of its training digits
+and `r sprintf("%.0f%%", 100 * py$outsider_acc)` of the others,
+so that guess is right `r sprintf("%.0f%%", 50 * (1 + py$member_acc - py$outsider_acc))` of the time on a half-and-half set.
+A network that [overfits](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-overfitting) gives away more about its [training set](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-training-set).
+
+[Large language model](applications.qmd#def-large-language-model)s can give away the training text itself,
+as [Ethics and Fairness](https://morrison-lab.github.io/lds/chapters/ethics.html#misinformation-and-privacy) in the DATA 471 notes describes;
+@carlini2021extracting found text that appeared in only one document of GPT-2's [training data](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-training-set) among its outputs.
+
+:::

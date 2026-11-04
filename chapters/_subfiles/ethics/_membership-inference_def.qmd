@@ -1,0 +1,8 @@
+::: {#def-membership-inference}
+
+#### Membership inference attack
+
+A **membership inference attack** uses a trained model's outputs on a data point
+to guess whether that point was in the model's [training set](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-training-set) [@shokri2017membership].
+
+:::

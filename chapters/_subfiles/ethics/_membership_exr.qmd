@@ -1,0 +1,9 @@
+::: {#exr-membership}
+
+#### Guessing the training set
+
+Someone has a trained network and one digit image,
+but not the network's [training set](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-training-set).
+How could they guess whether that image was in the training set?
+
+:::

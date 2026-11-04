@@ -1,0 +1,29 @@
+::: {#exm-datasheet}
+
+#### A datasheet for the digits
+
+Part of a [datasheet](#def-datasheet) for the digits of this page,
+from the description that comes with them [@alpaydin1998optdigits]:
+
+- **Why:** the description does not say;
+  the first use it lists is a 1995 thesis on combining classifiers to recognize handwritten digits.
+- **What:** 5,620 images of digits in all,
+  each an 8 by 8 grid of counts from 0 to 16,
+  with its digit as the label.
+  43 people wrote them:
+  30 wrote the 3,823 training images,
+  and 13 others wrote the 1,797 test images used on this page.
+  No other facts about the writers are recorded.
+- **Collection:** the digits were written on a preprinted form,
+  and programs from the United States National Institute of Standards and Technology turned them into 32 by 32 bitmaps.
+- **Cleaning:** each 32 by 32 image was cut into 4 by 4 blocks,
+  and the number of on pixels in each block counted.
+- **Uses:** the authors kept the test writers apart from the training writers,
+  to measure [accuracy](https://morrison-lab.github.io/lds/chapters/metrics.html#def-accuracy) on new writers.
+- **Distribution:** the UCI Machine Learning Repository, <!-- check-term-links: allow -->
+  under a CC BY 4.0 license.
+
+The description does not say who maintains the data.
+A [model card](#def-model-card) for a network trained on these digits can point to this datasheet for its training and evaluation data.
+
+:::

@@ -1,0 +1,14 @@
+::: {#exm-membership-inference}
+
+#### Attacks on machine learning services
+
+@shokri2017membership [section I] ran [membership inference attack](#def-membership-inference)s
+on classifiers trained by Google's and Amazon's [machine learning](https://morrison-lab.github.io/lds/chapters/course-overview.html#def-machine-learning) services,
+which do not reveal the models they train.
+Against those models,
+their attacks guessed membership with a median [accuracy](https://morrison-lab.github.io/lds/chapters/metrics.html#def-accuracy) of 94% and 74%.
+On a data set of hospital stays in Texas,
+where knowing that a record was in the [training set](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-training-set) is itself sensitive,
+their attack was right over 70% of the time.
+
+:::

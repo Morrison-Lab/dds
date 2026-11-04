@@ -1,0 +1,8 @@
+::: {#exr-few-eights}
+
+#### Too few eights
+
+A network is trained on the [training set](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-training-set) with all but 10 of its eights removed.
+Would its [accuracy](https://morrison-lab.github.io/lds/chapters/metrics.html#def-accuracy) on the whole [validation set](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-validation-set) show that it has trouble with eights?
+
+:::

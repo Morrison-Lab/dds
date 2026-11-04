@@ -1,0 +1,10 @@
+::: {#def-pue}
+
+#### Power usage effectiveness (PUE)
+
+The **power usage effectiveness**,
+or **PUE**,
+of a datacenter is the energy it uses in all
+divided by the energy its computing equipment uses [@patterson2021carbon, section 2.3].
+
+:::

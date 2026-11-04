@@ -1,0 +1,31 @@
+::: {#sol-gpt3-energy}
+
+```{python}
+#| code-fold: show
+flops, flops_per_second, watts = 3.14e23, 24.6e12, 330
+gpu_seconds = flops / flops_per_second
+gpu_years = gpu_seconds / (365.25 * 24 * 3600)
+days_on_10k = gpu_seconds / 10_000 / (24 * 3600)
+joules = gpu_seconds * watts
+gpu_mwh = joules / 3.6e9
+
+
+def sci(value):
+    # A number as LaTeX scientific notation with 3 significant digits.
+    mantissa, exponent = f"{value:.2e}".split("e")
+    return f"${mantissa} \\times 10^{{{int(exponent)}}}$"
+
+
+seconds_text, joules_text = sci(gpu_seconds), sci(joules)
+print(seconds_text, gpu_years, days_on_10k, joules_text, gpu_mwh)
+```
+
+Dividing the operations by the rate gives `r py$seconds_text` GPU-seconds,
+about `r sprintf("%.0f", py$gpu_years)` GPU-years,
+or `r sprintf("%.1f", py$days_on_10k)` days on 10,000 GPUs.
+At `r py$watts` watts each,
+the GPUs used `r py$joules_text` joules.
+A megawatt-hour is $3.6 \times 10^9$ joules,
+so that is `r format(round(py$gpu_mwh), big.mark = ",")` megawatt-hours.
+
+:::

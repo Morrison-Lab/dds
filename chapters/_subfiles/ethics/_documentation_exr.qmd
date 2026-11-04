@@ -1,0 +1,8 @@
+::: {#exr-documentation}
+
+#### What a user needs to know
+
+The network of @sol-few-eights trained on every eight is about to be shared.
+What should someone deciding whether to use it be told?
+
+:::

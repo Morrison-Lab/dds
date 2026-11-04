@@ -1,0 +1,40 @@
+::: {#exm-disaggregated-evaluation}
+
+#### Accuracy for each digit
+
+```{python}
+#| code-fold: show
+full_by_digit = digit_accuracy(full_net, val_idx)
+few_by_digit = digit_accuracy(few_net, val_idx)
+by_digit = pd.DataFrame({
+    "digit": range(10),
+    "images": (y[val_idx][:, None] == torch.arange(10)).sum(dim=0).numpy(),
+    "all eights": full_by_digit.to_numpy(),
+    "10 eights": few_by_digit.to_numpy(),
+})
+worst_digit, best_digit = full_by_digit.idxmin(), full_by_digit.idxmax()
+fewest_images, most_images = by_digit["images"].min(), by_digit["images"].max()
+print(worst_digit, best_digit, fewest_images, most_images)
+```
+
+::: {#tbl-by-digit}
+
+```{r}
+knitr::kable(py$by_digit, digits = 2)
+```
+
+The [accuracy](https://morrison-lab.github.io/lds/chapters/metrics.html#def-accuracy) of the two networks of @sol-few-eights on each digit of the [validation set](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-validation-set).
+
+:::
+
+@tbl-by-digit is a [disaggregated evaluation](#def-disaggregated-evaluation) of the two networks,
+with the digits as the groups.
+Removing eights lowers the [accuracy](https://morrison-lab.github.io/lds/chapters/metrics.html#def-accuracy) on eights most.
+Even the network trained on every eight does better on some digits than on others,
+from `r sprintf("%.0f%%", 100 * py$full_by_digit[[as.character(py$worst_digit)]])` on `r py$worst_digit`s
+to `r sprintf("%.0f%%", 100 * py$full_by_digit[[as.character(py$best_digit)]])` on `r py$best_digit`s.
+Each digit has between `r py$fewest_images` and `r py$most_images` images in the [validation set](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-validation-set),
+so one image moves a digit's accuracy by more than one percentage point,
+and differences of a point or two between digits could change with another random split.
+
+:::

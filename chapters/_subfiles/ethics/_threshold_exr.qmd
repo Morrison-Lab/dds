@@ -1,0 +1,13 @@
+::: {#exr-threshold}
+
+#### Where to draw the line
+
+The attacker of @exr-membership knows how the network was trained:
+its architecture,
+its [width](https://morrison-lab.github.io/lds/chapters/neural-nets.html#def-width),
+its number of [training step](pytorch-basics.qmd#def-training-step)s,
+and that it saw 100 digits.
+The attacker does not know which [loss](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-loss-function) counts as small for this network.
+How could the attacker choose a threshold?
+
+:::

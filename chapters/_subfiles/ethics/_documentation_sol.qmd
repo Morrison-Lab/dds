@@ -1,0 +1,14 @@
+::: {#sol-documentation}
+
+What it is,
+what it was trained on,
+what it is meant for,
+how well it does,
+on which inputs it does worse,
+and what it was never tested on.
+A single [accuracy](https://morrison-lab.github.io/lds/chapters/metrics.html#def-accuracy) answers only the fourth.
+Its [training set](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-training-set) and [validation set](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-validation-set) hold digits from the same 13 writers,
+so how well it reads another person's handwriting is unknown,
+and its users should be told so.
+
+:::

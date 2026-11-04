@@ -1,0 +1,15 @@
+::: {#rem-energy}
+
+#### What sweeps cost
+
+A sweep multiplies the cost of training by the number of trials.
+@strubell2019energy add up one research project that ran 123 small hyperparameter grid searches,
+4,789 training runs in all,
+which used 27 GPU-years over six months.
+They recommend that papers report training time and how sensitive a model is to its hyperparameters [@strubell2019energy, section 5],
+so that readers can weigh what a result cost.
+@patterson2021carbon find that the choice of model,
+datacenter and processor can change the carbon footprint of training by up to 100 to 1,000 times.
+[Running Deep Learning Experiments](dl-experiments.qmd) shows how to plan a sweep so that each trial answers a question.
+
+:::

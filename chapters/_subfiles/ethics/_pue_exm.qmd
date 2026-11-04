@@ -1,0 +1,11 @@
+::: {#exm-pue}
+
+#### Two datacenters
+
+@patterson2021carbon [section 2.3] give 1.58 as the average [PUE](#def-pue) of datacenters in the United States in 2018,
+and 1.11 for the Google datacenter in Iowa where they trained one of their models.
+For each kilowatt-hour its computers used,
+the Iowa datacenter used 1.11 in all;
+the other 0.11 was overhead beyond powering the computing equipment.
+
+:::

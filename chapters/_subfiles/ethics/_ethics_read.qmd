@@ -1,0 +1,6 @@
+::: {.reading}
+- @mitchell2019model proposed model cards. <!-- check-term-links: allow -->
+- @gebru2021datasheets proposed datasheets. <!-- check-term-links: allow -->
+- @carlini2021extracting extracted training data from GPT-2. <!-- check-term-links: allow -->
+- @patterson2021carbon estimated the energy and carbon cost of training large language models. <!-- check-term-links: allow -->
+:::
