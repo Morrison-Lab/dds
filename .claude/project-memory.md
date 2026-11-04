@@ -21,3 +21,8 @@ Learned while writing the dl-experiments, applications and ethics chapters.
 - Pretraining a small MLP on half of optdigits gains nothing over training it fresh,
   so do not build a lesson on that comparison.
 - Guard every claim in a figure's alt text with an `assert`; the Claude review asks for one.
+- A thread with several chapters can run them through its one branch in turn:
+  once its PR merges, restart the branch from main for the next chapter,
+  rather than asking for extra branches (2026-11-04, dds#34 then dds#36).
+- gpt-oss:120b on Ollama cloud misreads reshapes and R indexing of `py$` values;
+  answer with the shape or value the render printed, then re-run it.
