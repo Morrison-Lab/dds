@@ -51,8 +51,9 @@ and width 512 with `r py$best_rate_512`.
 At learning rate 0.1,
 width 512's mean [accuracy](https://morrison-lab.github.io/lds/chapters/metrics.html#def-accuracy) is higher by `r sprintf("%.3f", py$gap_at_01)`.
 With each width at its own best rate,
-it is higher by `r sprintf("%.3f", py$gap_at_best)`.
-The wider network does classify better,
-by about a third as much as the comparison at one rate said.
+width 512's mean accuracy is higher by `r sprintf("%.3f", py$gap_at_best)`,
+`r sprintf("%.0f", py$gap_at_best / py$seed_sd)` times the seed-to-seed standard deviation of @sol-seed-spread.
+So the wider network does classify better,
+by `r sprintf("%.0f%%", 100 * py$gap_at_best / py$gap_at_01)` of what the comparison at one rate said.
 
 :::

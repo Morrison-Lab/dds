@@ -1,4 +1,4 @@
-Every chapter so far has trained networks with settings picked for it:
+Earlier chapters trained networks with settings picked for them:
 a [learning rate](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-learning-rate),
 a [width](https://morrison-lab.github.io/lds/chapters/neural-nets.html#def-width),
 a number of [epochs](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-epoch).

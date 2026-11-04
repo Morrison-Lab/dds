@@ -10,8 +10,8 @@ print(even_rates.round(4))
 
 Evenly spread rates go up by `r sprintf("%.4f", py$even_rates[2] - py$even_rates[1])` at each step,
 so the second is already `r sprintf("%.4f", py$even_rates[2])`.
-Nothing between 0.003 and that would be tried,
-and that range holds [width](https://morrison-lab.github.io/lds/chapters/neural-nets.html#def-width) 8's best [learning rate](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-learning-rate), `r py$best_rate_8`,
+Nothing between 0.003 and `r sprintf("%.4f", py$even_rates[2])` would be tried,
+and that interval holds [width](https://morrison-lab.github.io/lds/chapters/neural-nets.html#def-width) 8's best [learning rate](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-learning-rate), `r py$best_rate_8`,
 and every rate at which width 512 was still improving in @fig-rate-sweep.
 Good [learning rates](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-learning-rate) can differ by factors of 10 or more,
 so a sweep spaces them by a constant factor:

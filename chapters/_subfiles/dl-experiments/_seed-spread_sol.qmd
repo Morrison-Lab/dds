@@ -12,7 +12,7 @@ print(seed_low, seed_high, seed_sd)
 The ten validation [accuracies](https://morrison-lab.github.io/lds/chapters/metrics.html#def-accuracy) run from `r sprintf("%.3f", py$seed_low)` to `r sprintf("%.3f", py$seed_high)`,
 with standard deviation `r sprintf("%.3f", py$seed_sd)`.
 Only the seed changed between the runs.
-It sets the starting weights and the order of the [minibatches](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-minibatch).
+The seed sets the starting weights and the order of the [minibatches](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-minibatch).
 So two runs can differ by about `r sprintf("%.2f", py$seed_high - py$seed_low)` in validation [accuracy](https://morrison-lab.github.io/lds/chapters/metrics.html#def-accuracy)
 with every [hyperparameter](https://morrison-lab.github.io/lds/chapters/model-selection.html#sec-hyperparameters) the same.
 
