@@ -2,7 +2,8 @@
 
 #### Compute-bound
 
-Training is **compute-bound** when how long we are willing to train limits the model's performance,
+Training is **compute-bound**
+when how long we are willing to train limits the model's performance,
 rather than the amount of data or anything else [@godbole2023playbook].
 Then training longer,
 with the [hyperparameters](https://morrison-lab.github.io/lds/chapters/model-selection.html#sec-hyperparameters) tuned for the longer run,

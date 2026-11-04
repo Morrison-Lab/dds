@@ -22,7 +22,12 @@ print(mean_accuracy.round(3))
 print(best_rate.to_dict(), gap_at_01, gap_at_best)
 # Stop the render if the prose below stops being true.
 assert best_rate[8] < best_rate[512] < max(rates)
-assert 0 < gap_at_best < gap_at_01
+assert 2 * seed_sd < gap_at_best < gap_at_01
+# Stop the render if the figure's alt text stops being true.
+assert best_rate[8] == 0.3 and best_rate[512] == 1
+assert abs(best_accuracy[512] - 0.95) < 0.015
+assert abs(best_accuracy[8] - 0.88) < 0.015
+assert mean_accuracy.loc[3].max() < 0.15
 ```
 
 ::: {#fig-rate-sweep}

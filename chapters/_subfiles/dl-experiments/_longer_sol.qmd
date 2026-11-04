@@ -9,6 +9,9 @@ print(at_20, best_long, best_epoch, long_run[-1])
 # Stop the render if the prose below stops being true.
 assert best_long - at_20 < seed_high - seed_low
 assert min(long_run[19:]) > at_20 - 0.01
+# Stop the render if the figure's alt text stops being true.
+assert abs(at_20 - 0.95) < 0.015
+assert all(abs(score - at_20) < 0.015 for score in long_run[19:])
 ```
 
 ::: {#fig-longer}

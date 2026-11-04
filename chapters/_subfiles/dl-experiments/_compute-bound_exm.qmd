@@ -14,6 +14,9 @@ assert slow_run[-1] - slow_run[19] > seed_high - seed_low
 assert slow_run[-1] < at_20
 assert all(s < l for s, l in zip(slow_run[19:], long_run[19:]))
 assert best_long_tuned - at_20 < seed_high - seed_low
+# Stop the render if the figure's alt text stops being true.
+assert abs(slow_run[19] - 0.88) < 0.015
+assert abs(slow_run[-1] - 0.91) < 0.015
 ```
 
 ::: {#fig-compute-bound}
