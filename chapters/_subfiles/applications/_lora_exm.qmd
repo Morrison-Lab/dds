@@ -57,7 +57,8 @@ and raises the [accuracy](https://morrison-lab.github.io/lds/chapters/metrics.ht
 [Fine-tuning](cnns.qmd#def-fine-tuning) all `r format(py$full_count_digits, big.mark = ",")` [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter) on the same images reaches `r sprintf("%.0f%%", 100 * py$full_acc)`.
 A new network trained on the `r py$n_adapt` mirrored digits alone reaches `r sprintf("%.0f%%", 100 * py$fresh_acc)`,
 so in this run the first training gains this small network nothing.
-LoRA pays off where a [pretrained](attention-transformers.qmd#def-pretraining) model is too large to copy and train for each task:
+LoRA pays off
+where a [pretrained](attention-transformers.qmd#def-pretraining) model is too large to copy and train for each task:
 @hu2022lora report that,
 for GPT-3,
 it cuts the trainable parameters by a factor of 10,000.
