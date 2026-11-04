@@ -20,7 +20,8 @@ Learned while writing the dl-experiments, applications and ethics chapters.
   so a new definition (such as "model card") can make it flag a sentence on another page.
 - Pretraining a small MLP on half of optdigits gains nothing over training it fresh,
   so do not build a lesson on that comparison.
-- Guard every claim in a figure's alt text with an `assert`; the Claude review asks for one.
+- Guard every claim in a figure's alt text with an `assert`;
+  the Claude review asks for one.
 - A thread with several chapters can run them through its one branch in turn:
   once its PR merges, restart the branch from main for the next chapter,
   rather than asking for extra branches (2026-11-04, dds#34 then dds#36).
@@ -32,5 +33,6 @@ Learned while writing the dl-experiments, applications and ethics chapters.
   The script is `check-definite-antecedents/check-definite-antecedents.py` in gha at `v3`.
 - Before saying a term is undefined on lds, mds, pds or sds, search for its `def-` anchor (2026-11-04, dds#36).
   **Do:** grep the lds checkout and search the other sites for `def-<term>` first.
-  **Don't:** answer a "link this term" finding from memory; mds defines `def-rank` and lds `def-reinforcement` (on anatomy.html).
+  **Don't:** answer a "link this term" finding from memory;
+  mds defines `def-rank` and lds `def-reinforcement` (on anatomy.html).
   Mechanism: https://github.com/Morrison-Lab/ai-config/issues/4949
