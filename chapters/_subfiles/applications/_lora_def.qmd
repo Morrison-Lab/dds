@@ -6,7 +6,7 @@
 or **LoRA**,
 adapts a [pretrained](attention-transformers.qmd#def-pretraining) layer with weight matrix $\matr{W}_0$ by keeping $\matr{W}_0$ fixed
 and learning an $m \times r$ matrix $\matr{B}$ and an $r \times n$ matrix $\matr{A}$,
-where $\matr{W}_0$ is $m \times n$ and the rank $r$ is much smaller than $m$ and $n$.
+where $\matr{W}_0$ is $m \times n$ and the [rank](https://morrison-lab.github.io/mds/linear-algebra-subspaces.html#def-rank) $r$ is much smaller than $m$ and $n$.
 The adapted layer maps $\vx$ to $\matr{W}_0 \vx + \matr{B}\matr{A}\vx$
 [@hu2022lora, section 4.1].
 $\matr{B}$ starts at zero,

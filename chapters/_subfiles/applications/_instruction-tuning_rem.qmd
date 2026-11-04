@@ -9,7 +9,7 @@ just because it is asked one.
 First they train it on prompts paired with answers that people wrote.
 Then people rank several of the model's answers to each prompt,
 a second network learns to predict those rankings,
-and reinforcement learning trains the model toward answers that the second network rates highly.
+and [reinforcement learning](https://morrison-lab.github.io/lds/chapters/anatomy.html#def-reinforcement) trains the model toward answers that the second network rates highly.
 The second stage is reinforcement learning from human feedback, or RLHF.
 
 :::
