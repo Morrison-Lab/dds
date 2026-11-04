@@ -20,7 +20,7 @@ print(per_block, block_rest, embeddings, gpt2_params)
 ```
 
 Building one block from PyTorch's layers and counting its [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter) gives `r format(py$per_block, big.mark = ",")` per block.
-Of these, the attention's four $d \times d$ weight matrices hold $4d^2$,
+Of these parameters, the attention's four $d \times d$ weight matrices hold $4d^2$,
 and the [MLP](feedforward-networks.qmd#def-feedforward-network)'s two weight matrices hold $8d^2$,
 `r format(py$block_weights, big.mark = ",")` in all.
 The biases and the two [layer normalization](normalization.qmd#def-layer-norm)s hold the other `r format(py$block_rest, big.mark = ",")`.

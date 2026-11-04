@@ -10,6 +10,6 @@ gpt3_ratio = 175e9 / gpt2_params
 print(gpt3_ratio)
 ```
 
-That is `r format(round(py$gpt3_ratio), big.mark = ",")` times GPT-2's `r format(py$gpt2_params, big.mark = ",")`.
+That count is `r format(round(py$gpt3_ratio), big.mark = ",")` times GPT-2's `r format(py$gpt2_params, big.mark = ",")`.
 
 :::
