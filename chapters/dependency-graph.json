@@ -264,6 +264,51 @@
    "external": false
   },
   {
+   "id": "dds/ethics#def-datasheet",
+   "site": "dds",
+   "page": "ethics",
+   "div": "def-datasheet",
+   "kind": "def",
+   "title": "Datasheet",
+   "external": false
+  },
+  {
+   "id": "dds/ethics#def-disaggregated-evaluation",
+   "site": "dds",
+   "page": "ethics",
+   "div": "def-disaggregated-evaluation",
+   "kind": "def",
+   "title": "Disaggregated evaluation",
+   "external": false
+  },
+  {
+   "id": "dds/ethics#def-membership-inference",
+   "site": "dds",
+   "page": "ethics",
+   "div": "def-membership-inference",
+   "kind": "def",
+   "title": "Membership inference attack",
+   "external": false
+  },
+  {
+   "id": "dds/ethics#def-model-card",
+   "site": "dds",
+   "page": "ethics",
+   "div": "def-model-card",
+   "kind": "def",
+   "title": "Model card",
+   "external": false
+  },
+  {
+   "id": "dds/ethics#def-pue",
+   "site": "dds",
+   "page": "ethics",
+   "div": "def-pue",
+   "kind": "def",
+   "title": "Power usage effectiveness (PUE)",
+   "external": false
+  },
+  {
    "id": "dds/feedforward-networks#def-activation-function",
    "site": "dds",
    "page": "feedforward-networks",
@@ -811,6 +856,10 @@
   [
    "dds/dl-experiments#def-nuisance-hyperparameter",
    "dds/dl-experiments#def-scientific-hyperparameter"
+  ],
+  [
+   "dds/ethics#def-model-card",
+   "dds/ethics#def-disaggregated-evaluation"
   ],
   [
    "dds/feedforward-networks#def-activation-function",
