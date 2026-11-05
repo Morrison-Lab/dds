@@ -30,7 +30,7 @@ and near 0, $\sigmoid$ is close to its tangent line,
 $\frac{1}{2} + \frac{z}{4}$.
 Training can move the numbers to where $\sigmoid$ bends.
 
-The [logistic function](https://morrison-lab.github.io/mds/functions.html#def-logistic-function) bends each of the 32 numbers,
+The [logistic function](https://morrison-lab.github.io/mcs/functions.html#def-logistic-function) bends each of the 32 numbers,
 so each of the 10 outputs is an affine function of 32 bent [features](https://morrison-lab.github.io/lds/chapters/anatomy.html#def-feature),
 not of the pixels.
 Training moves $\matr{W}_1$ and $\vecf{b}_1$ as well as $\matr{W}_2$ and $\vecf{b}_2$,

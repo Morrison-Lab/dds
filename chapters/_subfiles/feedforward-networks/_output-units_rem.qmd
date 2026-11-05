@@ -9,7 +9,7 @@ each the negative log-likelihood of a distribution for the target
 | Target | Output layer | Distribution | PyTorch loss |
 |:--|:--|:--|:--|
 | A real number | One number, no activation | Normal with fixed variance | `nn.MSELoss` |
-| One of 2 classes | One [logit](#def-logits), [logistic function](https://morrison-lab.github.io/mds/functions.html#def-logistic-function) | Bernoulli | `nn.BCEWithLogitsLoss` |
+| One of 2 classes | One [logit](#def-logits), [logistic function](https://morrison-lab.github.io/mcs/functions.html#def-logistic-function) | Bernoulli | `nn.BCEWithLogitsLoss` |
 | One of $C$ classes | $C$ [logits](#def-logits), softmax | Categorical | `nn.CrossEntropyLoss` |
 
 :::

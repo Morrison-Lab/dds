@@ -35,7 +35,7 @@ print(shrink)
 
 The size of a matrix here is the square root of the sum of its squared entries.
 In both networks the weight [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) is largest at the last layer.
-With the [logistic function](https://morrison-lab.github.io/mds/functions.html#def-logistic-function),
+With the [logistic function](https://morrison-lab.github.io/mcs/functions.html#def-logistic-function),
 the weight gradient shrinks at every layer going back,
 and the last layer's weight gradient is about $10^{`r round(log10(py$shrink[["logistic"]]))`}$ times the first layer's.
 With the [ReLU](feedforward-networks.qmd#def-relu),

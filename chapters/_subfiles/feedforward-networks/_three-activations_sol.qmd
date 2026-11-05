@@ -31,7 +31,7 @@ plt.show()
   and $\tanhf{z}$ levels off at $-1$,
   while $\maxf{0, z}$ is exactly 0 for every negative $z$.
 
-$\tanh$ is a rescaled [logistic function](https://morrison-lab.github.io/mds/functions.html#def-logistic-function), $\tanhf{z} = 2 \sigmoidf{2z} - 1$,
+$\tanh$ is a rescaled [logistic function](https://morrison-lab.github.io/mcs/functions.html#def-logistic-function), $\tanhf{z} = 2 \sigmoidf{2z} - 1$,
 so its graph is the same S curve,
 centred on 0 instead of $\frac{1}{2}$.
 
