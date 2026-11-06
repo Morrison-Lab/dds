@@ -316,9 +316,9 @@ The exercises use the same digits, split and network as the [feedforward network
 > print(backward_gap)
 > ```
 >
->     7.450580596923828e-09
+>     3.725290298461914e-09
 >
-> The four [gradients](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) match autograd’s to within 7.5e-09. The code runs the steps of [Solution 1](#sol-loss-operations) forward, then their derivatives in reverse:
+> The four [gradients](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) match autograd’s to within 3.7e-09. The code runs the steps of [Solution 1](#sol-loss-operations) forward, then their derivatives in reverse:
 >
 > - `g2` is $\gradwrt{\vz_2} \loss$ from [Theorem 1](#thm-ce-logit-grad), for every image at once, divided by 1200 because the loss is the mean over that many images;
 > - `grad_W2` and `grad_b2` are [Solution 3](#sol-linear-param-grad) and [Solution 4](#sol-linear-bias-grad), with the outer products of the images added up by one matrix product;
@@ -377,9 +377,9 @@ The exercises use the same digits, split and network as the [feedforward network
 > print(backprop_seconds, difference_seconds, fd_gap)
 > ```
 >
->     0.005830402300000514 0.15436204900004213 0.00044121919199824333
+>     0.010847503450000318 0.18783793299996887 0.000441218726336956
 >
-> One forward and backward pass over the [training set](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-training-set) took 5.83 milliseconds, for every parameter of the [MLP](../chapters/feedforward-networks.llms.md#def-feedforward-network). Finite differences for only the 320 entries of $\matr{W}_2$ took 154 milliseconds, 26 times as long, and agree with backpropagation only to within 0.00044, since a finite difference is an approximation. Timings vary from run to run; the ratio grows with the number of [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter).
+> One forward and backward pass over the [training set](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-training-set) took 10.85 milliseconds, for every parameter of the [MLP](../chapters/feedforward-networks.llms.md#def-feedforward-network). Finite differences for only the 320 entries of $\matr{W}_2$ took 188 milliseconds, 17 times as long, and agree with backpropagation only to within 0.00044, since a finite difference is an approximation. Timings vary from run to run; the ratio grows with the number of [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter).
 
 > **NOTE:**
 >
@@ -391,7 +391,7 @@ The exercises use the same digits, split and network as the [feedforward network
 
 > **NOTE:**
 >
-> **Exercise 9 (Gradients in a deep network)** Take two [MLPs](../chapters/feedforward-networks.llms.md#def-feedforward-network) for the digits with 10 [hidden layers](../chapters/feedforward-networks.llms.md#def-hidden-layer) of 32 [unit](../chapters/feedforward-networks.llms.md#def-unit)s each, one with the [logistic function](https://morrison-lab.github.io/mds/functions.html#def-logistic-function) as its [activation function](../chapters/feedforward-networks.llms.md#def-activation-function) and one with the [ReLU](../chapters/feedforward-networks.llms.md#def-relu). At their starting weights, how does the size of the [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) of the mean training loss with respect to each layer’s weight matrix change from the last layer to the first?
+> **Exercise 9 (Gradients in a deep network)** Take two [MLPs](../chapters/feedforward-networks.llms.md#def-feedforward-network) for the digits with 10 [hidden layers](../chapters/feedforward-networks.llms.md#def-hidden-layer) of 32 [unit](../chapters/feedforward-networks.llms.md#def-unit)s each, one with the [logistic function](https://morrison-lab.github.io/mcs/functions.html#def-logistic-function) as its [activation function](../chapters/feedforward-networks.llms.md#def-activation-function) and one with the [ReLU](../chapters/feedforward-networks.llms.md#def-relu). At their starting weights, how does the size of the [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) of the mean training loss with respect to each layer’s weight matrix change from the last layer to the first?
 
 > **NOTE:**
 >
@@ -434,15 +434,15 @@ The exercises use the same digits, split and network as the [feedforward network
 > print(shrink)
 > ```
 >
->     {'logistic': 129510900.18186893, 'ReLU': 251.30350519888285}
+>     {'logistic': 129510924.3979597, 'ReLU': 251.30356569772417}
 >
-> The size of a matrix here is the square root of the sum of its squared entries. In both networks the weight [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) is largest at the last layer. With the [logistic function](https://morrison-lab.github.io/mds/functions.html#def-logistic-function), the weight gradient shrinks at every layer going back, and the last layer’s weight gradient is about $10^{8}$ times the first layer’s. With the [ReLU](../chapters/feedforward-networks.llms.md#def-relu), the weight gradient shrinks over the last few layers and then levels off, and the last layer’s is 251 times the first layer’s. A [training step](../chapters/pytorch-basics.llms.md#def-training-step) with one [learning rate](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-learning-rate) would move the logistic network’s first layers almost not at all.
+> The size of a matrix here is the square root of the sum of its squared entries. In both networks the weight [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) is largest at the last layer. With the [logistic function](https://morrison-lab.github.io/mcs/functions.html#def-logistic-function), the weight gradient shrinks at every layer going back, and the last layer’s weight gradient is about $10^{8}$ times the first layer’s. With the [ReLU](../chapters/feedforward-networks.llms.md#def-relu), the weight gradient shrinks over the last few layers and then levels off, and the last layer’s is 251 times the first layer’s. A [training step](../chapters/pytorch-basics.llms.md#def-training-step) with one [learning rate](https://morrison-lab.github.io/lds/chapters/gradient-descent.html#def-learning-rate) would move the logistic network’s first layers almost not at all.
 
 ## 5.2 Why they shrink
 
 > **NOTE:**
 >
-> **Exercise 10 (Why the gradient shrinks)** In a deep [MLP](../chapters/feedforward-networks.llms.md#def-feedforward-network), [hidden layer](../chapters/feedforward-networks.llms.md#def-hidden-layer) $\layeridx$ is $\vhidval_{\layeridx} = g\paren{\vz_{\layeridx}}$ with $\vz_{\layeridx} = \matr{W}_{\layeridx} \vhidval_{\layeridx - 1} + \vecf{b}_{\layeridx}$. Why does the [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) shrink from layer to layer, going back, when $g$ is the [logistic function](https://morrison-lab.github.io/mds/functions.html#def-logistic-function)?
+> **Exercise 10 (Why the gradient shrinks)** In a deep [MLP](../chapters/feedforward-networks.llms.md#def-feedforward-network), [hidden layer](../chapters/feedforward-networks.llms.md#def-hidden-layer) $\layeridx$ is $\vhidval_{\layeridx} = g\paren{\vz_{\layeridx}}$ with $\vz_{\layeridx} = \matr{W}_{\layeridx} \vhidval_{\layeridx - 1} + \vecf{b}_{\layeridx}$. Why does the [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) shrink from layer to layer, going back, when $g$ is the [logistic function](https://morrison-lab.github.io/mcs/functions.html#def-logistic-function)?
 
 > **NOTE:**
 >
@@ -453,7 +453,7 @@ The exercises use the same digits, split and network as the [feedforward network
 > \qquad
 > \vbackerr_{\layeridx} = \gradwrt{\vz_{\layeridx}} \loss = g'(\vz_{\layeridx}) \odot \gradwrt{\vhidval_{\layeridx}} \loss,$$
 >
-> where $\odot$ multiplies entry by entry. Each layer back multiplies the gradient by the slopes $g'(\vz_{\layeridx})$ and by $\tp{\matr{W}_{\layeridx}}$. The [logistic function](https://morrison-lab.github.io/mds/functions.html#def-logistic-function)’s slope is at most $\frac{1}{4}$ ([lds’s bound on it](https://morrison-lab.github.io/lds/chapters/logistic-regression.html#thm-logistic-derivative-bound)), and less where [unit](../chapters/feedforward-networks.llms.md#def-unit)s [saturate](https://morrison-lab.github.io/lds/chapters/backpropagation.html#def-saturation), so unless the weights are large, every layer shrinks the gradient by a factor less than 1, and 10 layers multiply 10 such factors. The [ReLU](../chapters/feedforward-networks.llms.md#def-relu)’s slope has no $\frac{1}{4}$ bound: it is 1 at each [unit](../chapters/feedforward-networks.llms.md#def-unit) that is positive and 0 at each unit that is not. In the ReLU network of [Solution 9](#sol-deep-grad-norms), the gradient going back still shrinks, both because the weights PyTorch starts with are small and because the [unit](../chapters/feedforward-networks.llms.md#def-unit)s at 0 pass none of it back.
+> where $\odot$ multiplies entry by entry. Each layer back multiplies the gradient by the slopes $g'(\vz_{\layeridx})$ and by $\tp{\matr{W}_{\layeridx}}$. The [logistic function](https://morrison-lab.github.io/mcs/functions.html#def-logistic-function)’s slope is at most $\frac{1}{4}$ ([lds’s bound on it](https://morrison-lab.github.io/lds/chapters/logistic-regression.html#thm-logistic-derivative-bound)), and less where [unit](../chapters/feedforward-networks.llms.md#def-unit)s [saturate](https://morrison-lab.github.io/lds/chapters/backpropagation.html#def-saturation), so unless the weights are large, every layer shrinks the gradient by a factor less than 1, and 10 layers multiply 10 such factors. The [ReLU](../chapters/feedforward-networks.llms.md#def-relu)’s slope has no $\frac{1}{4}$ bound: it is 1 at each [unit](../chapters/feedforward-networks.llms.md#def-unit) that is positive and 0 at each unit that is not. In the ReLU network of [Solution 9](#sol-deep-grad-norms), the gradient going back still shrinks, both because the weights PyTorch starts with are small and because the [unit](../chapters/feedforward-networks.llms.md#def-unit)s at 0 pass none of it back.
 >
 > The weight gradient of layer $\layeridx$ is $\oprod{\vbackerr_{\layeridx}}{\vhidval_{\layeridx - 1}}$, by [Solution 3](#sol-linear-param-grad), so its size depends on the layer’s input $\vhidval_{\layeridx - 1}$ as well as on the gradient $\vbackerr_{\layeridx}$ at its output. In the ReLU network the layer inputs grow toward the first layers, which is why its weight [gradients](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) level off there while the gradients $\vbackerr_{\layeridx}$ keep shrinking.
 

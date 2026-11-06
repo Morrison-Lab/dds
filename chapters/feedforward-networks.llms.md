@@ -94,15 +94,15 @@ The exercises use the 1,797 handwritten digits from the [course overview](../cha
 > print(weight.shape, bias.shape, stack_gap)
 > ```
 >
->     torch.Size([10, 64]) torch.Size([10]) 1.4901161193847656e-07
+>     torch.Size([10, 64]) torch.Size([10]) 1.7881393432617188e-07
 >
-> On the 597 test images, the stack and the single layer agree to within 1.5e-07, a rounding error. `nn.Linear` stores $\matr{W}$ with one row per output, and computes `x @ weight.T + bias` for a [tensor](../chapters/pytorch-basics.llms.md#def-tensor) `x` with one row per image.
+> On the 597 test images, the stack and the single layer agree to within 1.8e-07, a rounding error. `nn.Linear` stores $\matr{W}$ with one row per output, and computes `x @ weight.T + bias` for a [tensor](../chapters/pytorch-basics.llms.md#def-tensor) `x` with one row per image.
 
 ## 2.2 A function between the layers
 
 > **NOTE:**
 >
-> **Exercise 2 (A function between the layers)** Suppose the [logistic function](https://morrison-lab.github.io/mds/functions.html#def-logistic-function), $\sigmoidf{z} = 1 / \paren{1 + \e{-z}}$, is applied to each of the 32 numbers between the two layers of [Exercise 1](#exr-two-linear), giving `second(torch.sigmoid(first(x)))`. Is that stack still an [affine function](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-affine-function) of $\vx$?
+> **Exercise 2 (A function between the layers)** Suppose the [logistic function](https://morrison-lab.github.io/mcs/functions.html#def-logistic-function), $\sigmoidf{z} = 1 / \paren{1 + \e{-z}}$, is applied to each of the 32 numbers between the two layers of [Exercise 1](#exr-two-linear), giving `second(torch.sigmoid(first(x)))`. Is that stack still an [affine function](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-affine-function) of $\vx$?
 >
 > > **TIP:**
 > >
@@ -126,11 +126,11 @@ The exercises use the 1,797 handwritten digits from the [course overview](../cha
 > print(gap_linear, gap_logistic, mean_abs_pre)
 > ```
 >
->     5.960464477539063e-08 0.0003224015235900879 0.2633136212825775
+>     5.960464477539063e-08 0.0003224611282348633 0.2633136212825775
 >
 > No. Take the first two test images, which show the digits 2 and 8. For them, the stack with nothing between its layers maps their midpoint to the midpoint of their outputs, to within 6e-08, a rounding error. With $\sigmoid$ between the layers it misses by up to 0.00032, far more than a rounding error, so it is not an [affine function](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-affine-function). Even so, $\sigmoid$ bends the untrained stack only a little. The untrained first layer’s numbers for these two images have a mean absolute value of 0.26, and near 0, $\sigmoid$ is close to its tangent line, $\frac{1}{2} + \frac{z}{4}$. Training can move the numbers to where $\sigmoid$ bends.
 >
-> The [logistic function](https://morrison-lab.github.io/mds/functions.html#def-logistic-function) bends each of the 32 numbers, so each of the 10 outputs is an affine function of 32 bent [features](https://morrison-lab.github.io/lds/chapters/anatomy.html#def-feature), not of the pixels. Training moves $\matr{W}_1$ and $\vecf{b}_1$ as well as $\matr{W}_2$ and $\vecf{b}_2$, so it chooses those features.
+> The [logistic function](https://morrison-lab.github.io/mcs/functions.html#def-logistic-function) bends each of the 32 numbers, so each of the 10 outputs is an affine function of 32 bent [features](https://morrison-lab.github.io/lds/chapters/anatomy.html#def-feature), not of the pixels. Training moves $\matr{W}_1$ and $\vecf{b}_1$ as well as $\matr{W}_2$ and $\vecf{b}_2$, so it chooses those features.
 
 > **NOTE:**
 >
@@ -200,7 +200,7 @@ The exercises use the 1,797 handwritten digits from the [course overview](../cha
 >
 >     [0.387 0.423 0.483 0.412]
 >
-> In [Example 1](#exm-hidden-layer) the [activation function](#def-activation-function) is the [logistic function](https://morrison-lab.github.io/mds/functions.html#def-logistic-function), $g(z) = \sigmoidf{z} = 1 / \paren{1 + \e{-z}}$. The first line printed holds the first 4 entries of $\matr{W}_1 \vx + \vecf{b}_1$ for the first test image, and the second holds the logistic function of each. The logistic function maps each entry separately: entry 1 of the output depends only on entry 1 of the input.
+> In [Example 1](#exm-hidden-layer) the [activation function](#def-activation-function) is the [logistic function](https://morrison-lab.github.io/mcs/functions.html#def-logistic-function), $g(z) = \sigmoidf{z} = 1 / \paren{1 + \e{-z}}$. The first line printed holds the first 4 entries of $\matr{W}_1 \vx + \vecf{b}_1$ for the first test image, and the second holds the logistic function of each. The logistic function maps each entry separately: entry 1 of the output depends only on entry 1 of the input.
 
 > **NOTE:**
 >
@@ -214,7 +214,7 @@ The exercises use the 1,797 handwritten digits from the [course overview](../cha
 
 > **NOTE:**
 >
-> **Exercise 3 (Three activation functions)** How do the [logistic function](https://morrison-lab.github.io/mds/functions.html#def-logistic-function) $\sigmoidf{z}$, the hyperbolic tangent $\tanhf{z}$, and the function $\maxf{0, z}$ behave as $\abs{z}$ grows large?
+> **Exercise 3 (Three activation functions)** How do the [logistic function](https://morrison-lab.github.io/mcs/functions.html#def-logistic-function) $\sigmoidf{z}$, the hyperbolic tangent $\tanhf{z}$, and the function $\maxf{0, z}$ behave as $\abs{z}$ grows large?
 
 > **NOTE:**
 >
@@ -244,7 +244,7 @@ The exercises use the 1,797 handwritten digits from the [course overview](../cha
 > - **Large positive** $z$. $\sigmoidf{z}$ levels off at 1, and $\tanhf{z}$ levels off at 1, while $\maxf{0, z} = z$ keeps growing.
 > - **Large negative** $z$. $\sigmoidf{z}$ levels off at 0, and $\tanhf{z}$ levels off at $-1$, while $\maxf{0, z}$ is exactly 0 for every negative $z$.
 >
-> $\tanh$ is a rescaled [logistic function](https://morrison-lab.github.io/mds/functions.html#def-logistic-function), $\tanhf{z} = 2 \sigmoidf{2z} - 1$, so its graph is the same S curve, centred on 0 instead of $\frac{1}{2}$.
+> $\tanh$ is a rescaled [logistic function](https://morrison-lab.github.io/mcs/functions.html#def-logistic-function), $\tanhf{z} = 2 \sigmoidf{2z} - 1$, so its graph is the same S curve, centred on 0 instead of $\frac{1}{2}$.
 
 > **NOTE:**
 >
@@ -309,7 +309,7 @@ The exercises use the 1,797 handwritten digits from the [course overview](../cha
 > - **tanh.** Its derivative peaks at 1 at $z = 0$ and is also close to 0 for large $\abs{z}$.
 > - **[ReLU](#def-relu).** Its derivative is 1 for every positive $z$ and exactly 0 for every negative $z$. At $z = 0$ it has no derivative; PyTorch uses 0 there.
 >
-> A [unit](#def-unit) whose [pre-activation](#def-pre-activation) sits where the derivative is near 0 is [saturated](https://morrison-lab.github.io/lds/chapters/backpropagation.html#def-saturation): a small change in its weights barely changes its output, so the gradient that training follows is small too. The [logistic function](https://morrison-lab.github.io/mds/functions.html#def-logistic-function) and $\tanh$ [saturate](https://morrison-lab.github.io/lds/chapters/backpropagation.html#def-saturation) on both sides, and ReLU only on its negative side.
+> A [unit](#def-unit) whose [pre-activation](#def-pre-activation) sits where the derivative is near 0 is [saturated](https://morrison-lab.github.io/lds/chapters/backpropagation.html#def-saturation): a small change in its weights barely changes its output, so the gradient that training follows is small too. The [logistic function](https://morrison-lab.github.io/mcs/functions.html#def-logistic-function) and $\tanh$ [saturate](https://morrison-lab.github.io/lds/chapters/backpropagation.html#def-saturation) on both sides, and ReLU only on its negative side.
 
 ## 2.4 Feedforward networks
 
@@ -435,9 +435,9 @@ The exercises use the 1,797 handwritten digits from the [course overview](../cha
 > print(softmax_gap)
 > ```
 >
->     2.9802322387695312e-08
+>     2.2351741790771484e-08
 >
-> The [logits](#def-logits) of the first test image are the 10 numbers printed. Adding 5 to each changes the softmax probabilities by at most 3e-08, a rounding error.
+> The [logits](#def-logits) of the first test image are the 10 numbers printed. Adding 5 to each changes the softmax probabilities by at most 2.2e-08, a rounding error.
 
 > **NOTE:**
 >
@@ -454,7 +454,7 @@ The exercises use the 1,797 handwritten digits from the [course overview](../cha
 > print(start_loss, np.log(10))
 > ```
 >
->     2.3070168495178223 2.302585092994046
+>     2.307016611099243 2.302585092994046
 >
 > `nn.functional.cross_entropy` takes the [logits](#def-logits) and the true digits, and returns the mean loss over the [test set](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-test-set), 2.307, close to $\log 10 \approx 2.303$. A training run whose first loss is far from $\log C$, for $C$ classes, is worth checking for a bug before it runs further.
 
@@ -546,7 +546,7 @@ The exercises use the 1,797 handwritten digits from the [course overview](../cha
 > print(lse, largest_logit, largest_logit + np.log(10))
 > ```
 >
->     2.360166072845459 0.4042101502418518 2.7067952432358977
+>     2.360166072845459 0.40421009063720703 2.706795183631253
 >
 > For the first test image’s [logits](#def-logits), $\operatorname{LSE}$ is 2.360, between the largest [logit](#def-logits), 0.404, and that logit plus $\log 10$.
 
@@ -581,9 +581,9 @@ The exercises use the 1,797 handwritten digits from the [course overview](../cha
 > print(log_softmax_gap)
 > ```
 >
->     2.384185791015625e-07
+>     0.0
 >
-> For the first test image, the [logits](#def-logits) minus their [log-sum-exp](#def-log-sum-exp) agree with PyTorch’s `torch.log_softmax` to within 2.4e-07. Each is near $\log \frac{1}{10} \approx -2.30$.
+> For the first test image, the [logits](#def-logits) minus their [log-sum-exp](#def-log-sum-exp) agree with PyTorch’s `torch.log_softmax` to within 0. Each is near $\log \frac{1}{10} \approx -2.30$.
 
 > **NOTE:**
 >
@@ -635,7 +635,7 @@ The exercises use the 1,797 handwritten digits from the [course overview](../cha
 > print(shifted_lse, torch.logsumexp(z, dim=0).item())
 > ```
 >
->     404.21014404296875 404.21014404296875
+>     404.2100830078125 404.2100830078125
 >
 > Show code
 >
@@ -643,8 +643,8 @@ The exercises use the 1,797 handwritten digits from the [course overview](../cha
 > print(torch.log_softmax(z, dim=0))
 > ```
 >
->     tensor([-403.7620, -428.0196, -292.4266, -324.3521,    0.0000, -364.2654,
->             -537.2988, -308.9668, -359.2179, -561.8227])
+>     tensor([-403.7619, -428.0195, -292.4266, -324.3521,    0.0000, -364.2653,
+>             -537.2987, -308.9668, -359.2178, -561.8226])
 >
 > For the [logits](#def-logits) times 1,000 of [Solution 7](#sol-naive-softmax), shifting by their largest entry gives $\operatorname{LSE} = 404.2$, the same value `torch.logsumexp` returns, and `torch.log_softmax` gives finite log probabilities where the formula gave `nan`.
 
@@ -660,7 +660,7 @@ The exercises use the 1,797 handwritten digits from the [course overview](../cha
 
 > **NOTE:**
 >
-> *Solution 11*. One number $z$, the [logit](#def-logits) of a 1, turned into a probability by the [logistic function](https://morrison-lab.github.io/mds/functions.html#def-logistic-function), $\sigmoidf{z}$. That is the [soft 0-or-1 rule](../chapters/pytorch-basics.llms.md#sol-soft-rule-module) of the PyTorch chapter, with $z$ computed by a network instead of from one [feature](https://morrison-lab.github.io/lds/chapters/anatomy.html#def-feature).
+> *Solution 11*. One number $z$, the [logit](#def-logits) of a 1, turned into a probability by the [logistic function](https://morrison-lab.github.io/mcs/functions.html#def-logistic-function), $\sigmoidf{z}$. That is the [soft 0-or-1 rule](../chapters/pytorch-basics.llms.md#sol-soft-rule-module) of the PyTorch chapter, with $z$ computed by a network instead of from one [feature](https://morrison-lab.github.io/lds/chapters/anatomy.html#def-feature).
 >
 > Two outputs with softmax would also work, but they carry one number too many: $\operatorname{softmax}(z_1, z_2)_2 = \sigmoidf{z_2 - z_1}$, so only the difference of the two [logits](#def-logits) matters.
 
@@ -678,7 +678,7 @@ The exercises use the 1,797 handwritten digits from the [course overview](../cha
 
 > **NOTE:**
 >
-> *Solution 13*. One number, with no [activation function](#def-activation-function): any real number can be a prediction, and squashing it with the [logistic function](https://morrison-lab.github.io/mds/functions.html#def-logistic-function) or the [ReLU](#def-relu) would rule some out.
+> *Solution 13*. One number, with no [activation function](#def-activation-function): any real number can be a prediction, and squashing it with the [logistic function](https://morrison-lab.github.io/mcs/functions.html#def-logistic-function) or the [ReLU](#def-relu) would rule some out.
 
 > **NOTE:**
 >
@@ -695,7 +695,7 @@ The exercises use the 1,797 handwritten digits from the [course overview](../cha
 > | Target | Output layer | Distribution | PyTorch loss |
 > |:---|:---|:---|:---|
 > | A real number | One number, no activation | Normal with fixed variance | `nn.MSELoss` |
-> | One of 2 classes | One [logit](#def-logits), [logistic function](https://morrison-lab.github.io/mds/functions.html#def-logistic-function) | Bernoulli | `nn.BCEWithLogitsLoss` |
+> | One of 2 classes | One [logit](#def-logits), [logistic function](https://morrison-lab.github.io/mcs/functions.html#def-logistic-function) | Bernoulli | `nn.BCEWithLogitsLoss` |
 > | One of $C$ classes | $C$ [logits](#def-logits), softmax | Categorical | `nn.CrossEntropyLoss` |
 
 # 4 Representational power
@@ -727,7 +727,7 @@ The exercises use the 1,797 handwritten digits from the [course overview](../cha
 > print(loss.item(), test_accuracy)
 > ```
 >
->     0.044963538646698 0.9698492288589478
+>     0.044963542371988297 0.9698492288589478
 >
 > The trained network classifies 97.0% of the 597 test images correctly, against 10% for guessing. The loop is the [training step](../chapters/pytorch-basics.llms.md#def-training-step) of the PyTorch chapter, and the predicted digit is the one with the largest [logit](#def-logits), which is also the one with the largest softmax probability.
 
@@ -781,7 +781,7 @@ The exercises use the 1,797 handwritten digits from the [course overview](../cha
 
 > **NOTE:**
 >
-> **Theorem 3 (Universal approximation)** Let $g$ be a continuous [activation function](#def-activation-function) that is not a polynomial, such as the [logistic function](https://morrison-lab.github.io/mds/functions.html#def-logistic-function) or the [ReLU](#def-relu). For every continuous function $f$ on a closed and bounded set $\mathcal{X} \subset \reals^{\inputdim}$ and every $\epsilon > 0$, there is a [width](https://morrison-lab.github.io/lds/chapters/neural-nets.html#def-width) $L$ and [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter) $\vw_i \in \reals^{\inputdim}$ and $b_i, v_i, c \in \reals$ such that
+> **Theorem 3 (Universal approximation)** Let $g$ be a continuous [activation function](#def-activation-function) that is not a polynomial, such as the [logistic function](https://morrison-lab.github.io/mcs/functions.html#def-logistic-function) or the [ReLU](#def-relu). For every continuous function $f$ on a closed and bounded set $\mathcal{X} \subset \reals^{\inputdim}$ and every $\epsilon > 0$, there is a [width](https://morrison-lab.github.io/lds/chapters/neural-nets.html#def-width) $L$ and [parameters](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter) $\vw_i \in \reals^{\inputdim}$ and $b_i, v_i, c \in \reals$ such that
 >
 > $$\abs{f(\vx) - \paren{c + \sumto{i}{L} v_i \, g\paren{\tp{\vw_i} \vx + b_i}}} < \epsilon
 > \quad \text{for every } \vx \in \mathcal{X}.$$
@@ -860,7 +860,7 @@ The exercises use the 1,797 handwritten digits from the [course overview](../cha
 > print(auto_mse)
 > ```
 >
->     {1: 19.619924545288086, 3: 18.540300369262695, 20: 18.385217666625977}
+>     {1: 19.619924545288086, 3: 18.540285110473633, 20: 18.385215759277344}
 >
 > The [Auto data](https://morrison-lab.github.io/lds/chapters/course-overview.html#def-auto-data) hold 392 cars from the UCI Auto MPG dataset [\[8\]](#ref-quinlan1993auto), from a local copy, [`data/auto.csv`](data/auto.csv), of the version in lds. Each network fits miles per gallon on horsepower, rescaled to mean 0 and standard deviation 1, by 3,000 steps of [gradient descent](https://morrison-lab.github.io/mds/optimization.html#def-gradient-descent) on the mean squared error. With 1 [unit](#def-unit) the fit can bend only once, and its training mean squared error is 19.6. With 3 [unit](#def-unit)s it is 18.5, and with 20 it is 18.4. So the error falls as the network gets wider. [Theorem 3](#thm-universal-approximation) says that a wide enough network can follow any continuous curve; it does not say that following the [training data](https://morrison-lab.github.io/lds/chapters/anatomy.html#def-training-data) more closely predicts new cars better.
 

@@ -678,14 +678,14 @@
    "external": false
   },
   {
-   "id": "mds/functions#def-logistic-function",
-   "site": "mds",
+   "id": "mcs/functions#def-logistic-function",
+   "site": "mcs",
    "page": "functions",
    "div": "def-logistic-function",
    "kind": "def",
    "title": "logistic function",
    "external": true,
-   "url": "https://morrison-lab.github.io/mds/functions.html#def-logistic-function"
+   "url": "https://morrison-lab.github.io/mcs/functions.html#def-logistic-function"
   },
   {
    "id": "mds/linear-algebra-subspaces#def-rank",
@@ -911,7 +911,7 @@
   ],
   [
    "dds/feedforward-networks#thm-universal-approximation",
-   "mds/functions#def-logistic-function"
+   "mcs/functions#def-logistic-function"
   ],
   [
    "dds/generative-models#def-diffusion-model",
