@@ -7,6 +7,6 @@ In a deep [MLP](feedforward-networks.qmd#def-feedforward-network),
 with $\vz_{\layeridx} = \matr{W}_{\layeridx} \vhidval_{\layeridx - 1} + \vecf{b}_{\layeridx}$.
 Why does the [gradient](https://morrison-lab.github.io/lds/chapters/linear-regression.html#def-gradient) shrink from layer to layer,
 going back,
-when $g$ is the [logistic function](https://morrison-lab.github.io/mds/functions.html#def-logistic-function)?
+when $g$ is the [logistic function](https://morrison-lab.github.io/mcs/functions.html#def-logistic-function)?
 
 :::

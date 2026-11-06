@@ -41,7 +41,7 @@ A [unit](#def-unit) whose [pre-activation](#def-pre-activation) sits where the d
 is [saturated](https://morrison-lab.github.io/lds/chapters/backpropagation.html#def-saturation):
 a small change in its weights barely changes its output,
 so the gradient that training follows is small too.
-The [logistic function](https://morrison-lab.github.io/mds/functions.html#def-logistic-function) and $\tanh$ [saturate](https://morrison-lab.github.io/lds/chapters/backpropagation.html#def-saturation) on both sides,
+The [logistic function](https://morrison-lab.github.io/mcs/functions.html#def-logistic-function) and $\tanh$ [saturate](https://morrison-lab.github.io/lds/chapters/backpropagation.html#def-saturation) on both sides,
 and ReLU only on its negative side.
 
 :::
