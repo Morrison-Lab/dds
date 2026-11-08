@@ -1,16 +1,31 @@
 # Gates every finished workflow run: any CI annotation fails it unless allowlisted (gha#1099).
 # For a repository whose checks are spread over many workflow files: this
 # gates each run that finishes and posts an `annotation-gate` check run on the
-# run's commit, so it shows on the pull request. Add that check to the
-# repository ruleset as required. Each gated run posts its own check run of
-# that name, so a commit with several workflows can carry both a passing and a
-# failing one; the failing one blocks a required check.
+# commit, so it shows on the pull request. Add that check to the repository
+# ruleset as required. With `all-runs` it gates the latest completed run of
+# every workflow on the commit and posts one check run of that name.
 name: Annotation gate
 
 on: # zizmor: ignore[dangerous-triggers] -- the gate checks out nothing and runs no code from the triggering run
   workflow_run:
     workflows: ["*"]
     types: [completed]
+  workflow_dispatch:
+    inputs:
+      head-sha:
+        description: >-
+          Commit to gate again, with no new commit and no re-run of any other
+          workflow. Use it when a gate failure has been fixed upstream, or when
+          a pull request touches only files no workflow watches (gha#1610).
+        required: true
+        type: string
+
+# One gate per commit: a newer completion on the same commit cancels the older
+# gate, which `all-runs` has already superseded because it re-checks every
+# workflow's latest run on the commit (sds#553).
+concurrency:
+  group: annotation-gate-${{ github.event.workflow_run.head_sha || inputs.head-sha }}
+  cancel-in-progress: true
 
 jobs:
   gate:
@@ -24,7 +39,8 @@ jobs:
     with:
       run-id: ${{ github.event.workflow_run.id }}
       run-attempt: ${{ github.event.workflow_run.run_attempt }}
-      head-sha: ${{ github.event.workflow_run.head_sha }}
+      head-sha: ${{ github.event.workflow_run.head_sha || inputs.head-sha }}
+      all-runs: true
       # Tracked exception (gha#1103): the only submodule, Morrison-Lab/macros,
       # is public, so the review workflow's anonymous-clone notice is harmless.
       # Remove this if a private submodule is ever added.
