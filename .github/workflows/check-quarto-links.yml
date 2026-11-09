@@ -22,7 +22,6 @@ jobs:
     with:
       # `**`, not `*`: gha's matcher stops a single `*` at a `/`.
       # `_extensions/` holds vendored Quarto extensions,
-      # `latex-macros/` is the shared macros submodule,
-      # and `renv/` holds the restored package library.
+      # and `latex-macros/` is the shared macros submodule.
       paths-ignore: '_extensions/**,latex-macros/**'
       check-fragments: true
