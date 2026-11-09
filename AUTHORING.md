@@ -185,7 +185,7 @@ Each applies to every page, not only the one that prompted it.
   no week or day in a subtitle, no "on Tuesday", "Wednesday's lecture",
   "next week" or "the last week of the course".
   Point to the page that covers a topic instead,
-  as in "[Gradient Descent](gradient-descent.qmd) starts on that."
+  as in "`[Gradient Descent](gradient-descent.qmd)` starts on that."
   Each reshuffle of the schedule left such references stale.
   Citing a source's own week numbering ("the Week 6 lecture notes") is not a schedule reference.
   Reading order is fine ("the next chapter", "so far"),
