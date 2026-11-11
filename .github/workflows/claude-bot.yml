@@ -15,7 +15,7 @@
 # detector step is `continue-on-error`, and an empty result is read as
 # proceed: the callee fails OPEN on a detector error, by design.
 #
-# Assignment ALONE is not a summon method here. At gha@v2 an `issues` event
+# Assignment ALONE is not a summon method here. At gha@v3 an `issues` event
 # reaches the agent only when the body or title carries the mention and the
 # author is trusted, or when the assignee is listed in `dispatch-on-assignee`
 # -- an input that defaults to `[]` and that this caller does not set, so that
@@ -25,7 +25,7 @@
 # its own gate.
 #
 # Both clauses are in `claude.yml`'s `mention-filter` job `if:`, as of
-# gha@27721bd6. Cited by commit rather than by line number, because `@v2` is a
+# gha@27721bd6. Cited by commit rather than by line number, because `@v3` is a
 # floating tag and a line reference goes stale the next time it slides.
 name: Claude Code
 
@@ -78,7 +78,7 @@ jobs:
       issues: write
       id-token: write
       actions: write
-    uses: Morrison-Lab/gha/.github/workflows/claude.yml@v2
+    uses: Morrison-Lab/gha/.github/workflows/claude.yml@v3
     secrets:
       CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
       ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
