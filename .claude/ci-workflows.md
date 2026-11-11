@@ -1,6 +1,6 @@
 # CI workflows
 
-Most workflows call a reusable workflow in [`Morrison-Lab/gha`](https://github.com/Morrison-Lab/gha), pinned at `@v2` or `@v3`.
+Most workflows call a reusable workflow in [`Morrison-Lab/gha`](https://github.com/Morrison-Lab/gha), pinned at `@v3`.
 Each file's header comment says what it checks and why it is set up that way;
 read it before editing that workflow.
 
