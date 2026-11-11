@@ -17,7 +17,7 @@ jobs:
   check-junk-files:
     permissions:
       contents: read
-    uses: Morrison-Lab/gha/.github/workflows/check-junk-files.yml@v2
+    uses: Morrison-Lab/gha/.github/workflows/check-junk-files.yml@v3
     with:
       # The upstream default plus `*-tmp.yml`, which matches the
       # temporary profile files a Quarto render can leave behind.
