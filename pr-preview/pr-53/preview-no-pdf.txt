@@ -1,0 +1,1 @@
+Rendered without the PDF handouts (tools/skip-pdf-in-previews.py).
