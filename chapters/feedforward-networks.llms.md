@@ -798,7 +798,7 @@ The exercises use the 1,797 handwritten digits from the [course overview](../cha
 
 > **NOTE:**
 >
-> **Exercise 18 (Wider networks on the Auto data)** Fit networks with one [hidden layer](#def-hidden-layer) of [ReLU](#def-relu) [unit](#def-unit)s, of [width](https://morrison-lab.github.io/lds/chapters/neural-nets.html#def-width) 1, 3 and 20, to miles per gallon on horsepower in the [Auto data](https://morrison-lab.github.io/lds/chapters/course-overview.html#def-auto-data). How does the training mean squared error change as the width grows?
+> **Exercise 18 (Wider networks on the Auto data)** Fit networks with one [hidden layer](#def-hidden-layer) of [ReLU](#def-relu) [unit](#def-unit)s, of [width](https://morrison-lab.github.io/lds/chapters/neural-nets.html#def-width) 1, 3 and 20, to miles per gallon on horsepower in the [Auto data](https://morrison-lab.github.io/lds/chapters/course-overview.html#dat-auto). How does the training mean squared error change as the width grows?
 
 > **NOTE:**
 >
@@ -862,7 +862,7 @@ The exercises use the 1,797 handwritten digits from the [course overview](../cha
 >
 >     {1: 19.619924545288086, 3: 18.540285110473633, 20: 18.385215759277344}
 >
-> The [Auto data](https://morrison-lab.github.io/lds/chapters/course-overview.html#def-auto-data) hold 392 cars from the UCI Auto MPG dataset [\[8\]](#ref-quinlan1993auto), from a local copy, [`data/auto.csv`](data/auto.csv), of the version in lds. Each network fits miles per gallon on horsepower, rescaled to mean 0 and standard deviation 1, by 3,000 steps of [gradient descent](https://morrison-lab.github.io/mds/optimization.html#def-gradient-descent) on the mean squared error. With 1 [unit](#def-unit) the fit can bend only once, and its training mean squared error is 19.6. With 3 [unit](#def-unit)s it is 18.5, and with 20 it is 18.4. So the error falls as the network gets wider. [Theorem 3](#thm-universal-approximation) says that a wide enough network can follow any continuous curve; it does not say that following the [training data](https://morrison-lab.github.io/lds/chapters/anatomy.html#def-training-data) more closely predicts new cars better.
+> The [Auto data](https://morrison-lab.github.io/lds/chapters/course-overview.html#dat-auto) hold 392 cars from the UCI Auto MPG dataset [\[8\]](#ref-quinlan1993auto), from a local copy, [`data/auto.csv`](data/auto.csv), of the version in lds. Each network fits miles per gallon on horsepower, rescaled to mean 0 and standard deviation 1, by 3,000 steps of [gradient descent](https://morrison-lab.github.io/mds/optimization.html#def-gradient-descent) on the mean squared error. With 1 [unit](#def-unit) the fit can bend only once, and its training mean squared error is 19.6. With 3 [unit](#def-unit)s it is 18.5, and with 20 it is 18.4. So the error falls as the network gets wider. [Theorem 3](#thm-universal-approximation) says that a wide enough network can follow any continuous curve; it does not say that following the [training data](https://morrison-lab.github.io/lds/chapters/anatomy.html#def-training-data) more closely predicts new cars better.
 
 > **NOTE:**
 >
