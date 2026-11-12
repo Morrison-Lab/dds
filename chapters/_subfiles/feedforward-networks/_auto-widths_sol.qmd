@@ -42,7 +42,7 @@ plt.show()
 print(auto_mse)
 ```
 
-The [Auto data](https://morrison-lab.github.io/lds/chapters/course-overview.html#def-auto-data) hold `r nrow(py$auto)` cars from the UCI Auto MPG dataset [@quinlan1993auto],
+The [Auto data](https://morrison-lab.github.io/lds/chapters/course-overview.html#dat-auto) hold `r nrow(py$auto)` cars from the UCI Auto MPG dataset [@quinlan1993auto],
 from a local copy, [`data/auto.csv`](data/auto.csv), of the version in lds.
 Each network fits miles per gallon on horsepower,
 rescaled to mean 0 and standard deviation 1,
