@@ -15,6 +15,11 @@ jobs:
     permissions:
       contents: read
     uses: Morrison-Lab/gha/.github/workflows/check-term-links.yml@v3
+    # The default terms-from list for dds ends with lds, which is private.
+    # Without a token that can read it, the clone only warns, and that
+    # warning fails the annotation gate (dds#54).
+    secrets:
+      WORKFLOW_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
     with:
       # `**`, not `*`: gha's matcher stops a single `*` at a `/`.
       # `chapters/outtakes/` holds text kept exactly as its author wrote it.
