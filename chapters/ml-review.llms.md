@@ -155,7 +155,7 @@ print(images.shape, center_ink[:5], left_ink[:5])
 >
 > where
 >
-> - $\predvar$ is the image’s center ink,
+> - $\predvar$ is the image’s [center ink](../chapters/course-overview.llms.md#sol-zero-or-one),
 > - $\param$ is the cutoff, the rule’s one [parameter](https://morrison-lab.github.io/lds/chapters/big-ideas.html#def-parameter),
 > - $\sigmoid$ is the [logistic function](https://morrison-lab.github.io/lds/chapters/logistic-regression.html#exm-logistic-function), $\sigmoidf{z} = 1 / (1 + \expf{-z})$,
 > - and $\hprob$ is the probability the rule gives that the image is a 1.
